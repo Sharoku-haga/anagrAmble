@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sl\Common\slDefine.h" />
+    <ClInclude Include="sl\Common\slInputEnum.h" />
+    <ClInclude Include="sl\Common\slStruct.h" />
+    <ClInclude Include="sl\Common\slTemplate.h" />
+    <ClInclude Include="sl\Common\slTypes.h" />
+    <ClInclude Include="sl\Common\slVECTOR\slVECTOR2.h" />
+    <ClInclude Include="sl\Common\slVECTOR\slVECTOR3.h" />
+    <ClInclude Include="sl\Library\Graphics\dx11GraphicsDevice\dx11GraphicsDevice.h" />
+    <ClInclude Include="sl\Library\Input\DirectInput\diGamePad.h" />
+    <ClInclude Include="sl\Library\Input\DirectInput\diInputManager.h" />
+    <ClInclude Include="sl\Library\Input\DirectInput\diKeyDevice.h" />
+    <ClInclude Include="sl\Library\Input\slCustomizeInputManager.h" />
+    <ClInclude Include="sl\Library\Input\XInput\xiGamePad.h" />
+    <ClInclude Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.h" />
+    <ClInclude Include="sl\Library\slDX11Library.h" />
+    <ClInclude Include="sl\Library\Texture\dx11Texture\dx11TextureManager.h" />
+    <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex.h" />
+    <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2D.h" />
+    <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2DManager.h" />
+    <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11VertexManager.h" />
+    <ClInclude Include="sl\Library\Window\dx11Window\dx11Window.h" />
+    <ClInclude Include="sl\sl.h" />
+    <ClInclude Include="sl\slBuild.h" />
+    <ClInclude Include="sl\slISharokuLibrary.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sl\Common\slVECTOR\slVECTOR2.cpp" />
+    <ClCompile Include="sl\Common\slVECTOR\slVECTOR3.cpp" />
+    <ClCompile Include="sl\Library\Graphics\dx11GraphicsDevice\dx11GraphicsDevice.cpp" />
+    <ClCompile Include="sl\Library\Input\DirectInput\diGamePad.cpp" />
+    <ClCompile Include="sl\Library\Input\DirectInput\diInputManager.cpp" />
+    <ClCompile Include="sl\Library\Input\DirectInput\diKeyDevice.cpp" />
+    <ClCompile Include="sl\Library\Input\slCustomizeInputManager.cpp" />
+    <ClCompile Include="sl\Library\Input\XInput\xiGamePad.cpp" />
+    <ClCompile Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.cpp" />
+    <ClCompile Include="sl\Library\slDX11Library.cpp" />
+    <ClCompile Include="sl\Library\Texture\dx11Texture\dx11TextureManager.cpp" />
+    <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex.cpp" />
+    <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2D.cpp" />
+    <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2DManager.cpp" />
+    <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11VertexManager.cpp" />
+    <ClCompile Include="sl\Library\Window\dx11Window\dx11Window.cpp" />
+    <ClCompile Include="sl\slISharokuLibrary.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="sl\Library\Vertex\dx11Vertex\dx11CommonHLSL\dx11CommonPS.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="sl\Library\Vertex\dx11Vertex\dx11CommonHLSL\dx11CommonVS.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A3AB129B-0E5A-442C-975B-196F3EF35FF3}</ProjectGuid>
+    <RootNamespace>SharokuLibrary</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
