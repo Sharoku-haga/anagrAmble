@@ -19,7 +19,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	pMainGame = new ar::MainGame();
 
-	pMainGame->Roop();
+	pMainGame->Loop();
 
 	delete pMainGame;
 

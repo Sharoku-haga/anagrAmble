@@ -17,6 +17,8 @@ class ISharokuLibrary;
 namespace ar
 {
 
+class SceneManager;
+
 //======================================================================//
 //!< ゲーム本体クラス
 //!< ライブラリの初期化やゲームループなどを行う
@@ -32,11 +34,11 @@ public:
 	~MainGame(void);
 
 	/** ゲームループ関数 */
-	void Roop(void);
+	void Loop(void);
 
 private:
-	sl::ISharokuLibrary*			m_pLibrary;			//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
-
+	sl::ISharokuLibrary*			m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
+	SceneManager*					m_pSceneManager;		//!< SceneManagerクラスのインスタンスへのポインタ
 };
 
 } // namespace ar
