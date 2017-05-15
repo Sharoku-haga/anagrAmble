@@ -7,6 +7,30 @@
     <Filter Include="anagrAmble\MainGame">
       <UniqueIdentifier>{03f0cf58-8cec-4d5a-b37f-33d150c8613e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager">
+      <UniqueIdentifier>{bcf84cdb-34b1-410c-9dc6-228009d4c32b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene">
+      <UniqueIdentifier>{c16295c3-f1a9-42ed-9604-80d2a21be389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\GameDataManager">
+      <UniqueIdentifier>{162c3357-8aec-44d0-a8f2-113bea1a8e0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\LogoScene">
+      <UniqueIdentifier>{07f66fab-1421-4782-aa74-ded68eb23730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\TitleScene">
+      <UniqueIdentifier>{e9ce6b88-2568-4b0b-ad18-74c15f737240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene">
+      <UniqueIdentifier>{f0d849ef-0f45-4f0e-8c0d-46f3147ff402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameClearScene">
+      <UniqueIdentifier>{c5e634a1-88a5-4bb6-9e5d-f8d76e845699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\CreditsRollScene">
+      <UniqueIdentifier>{c450ea80-846c-4148-931a-a76f6f071e42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -15,10 +39,64 @@
     <ClCompile Include="MainGame\MainGame.cpp">
       <Filter>anagrAmble\MainGame</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\SceneFactory.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\SceneManager.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\Scene.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\GameDataManager\GameDataManager.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameScene.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameClearScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\CreditsRollScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
       <Filter>anagrAmble\MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\SceneFactory.h">
+      <Filter>anagrAmble\MainGame\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\SceneManager.h">
+      <Filter>anagrAmble\MainGame\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\Scene.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\GameDataManager\GameDataManager.h">
+      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameScene.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameClearScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\CreditsRollScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
