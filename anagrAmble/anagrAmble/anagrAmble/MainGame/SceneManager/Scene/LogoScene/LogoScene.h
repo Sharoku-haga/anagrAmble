@@ -12,6 +12,9 @@
 namespace ar
 {
 
+class LogoBackground;
+class LogoText;
+
 //======================================================================//
 //!< anagrAmbleにおけるロゴシーンのクラス
 //======================================================================//
@@ -25,6 +28,9 @@ public:
 	virtual ~LogoScene(void);
 
 private:
+	LogoBackground*			m_pBackground;			//!< LogoBackgroundクラスのインスタンスへのポインタ
+	LogoText*				m_pText;				//!< LogoTextクラスのインスタンスへのポインタ
+
 	/** 
 	* コントロール関数 
 	* @return 次のSceneID
