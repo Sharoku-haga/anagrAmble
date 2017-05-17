@@ -12,6 +12,10 @@
 namespace ar
 {
 
+class TitleBackground;
+class TitleText;
+class TitleMenu;
+
 //======================================================================//
 //!< anagrAmbleにおけるタイトルシーンのクラス
 //======================================================================//
@@ -26,6 +30,10 @@ public:
 	virtual ~TitleScene(void);
 
 private:
+	TitleBackground*		m_pBackground;			//!< TitleBackgroundクラスのインスタンスへのポインタ
+	TitleText*				m_pText;				//!< TitleTextクラスのインスタンスへのポインタ
+	TitleMenu*				m_pMenu;				//!< TitleMenuクラスのインスタンスへのポインタ 
+
 	/** 
 	* コントロール関数 
 	* @return 次のSceneID

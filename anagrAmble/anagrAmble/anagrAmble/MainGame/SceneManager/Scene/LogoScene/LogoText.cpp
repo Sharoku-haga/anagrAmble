@@ -41,7 +41,6 @@ LogoText::~LogoText(void)
 
 bool LogoText::Control(void)
 {
-
 	if(m_DispTimeCount == DispTime)
 	{
 		m_IsEnd = true;
