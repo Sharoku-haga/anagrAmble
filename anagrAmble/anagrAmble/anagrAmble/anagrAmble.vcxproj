@@ -125,7 +125,9 @@
     <ClCompile Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameScene.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoText.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\Scene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.cpp" />
   </ItemGroup>
@@ -137,7 +139,9 @@
     <ClInclude Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameScene.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoText.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\Scene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.h" />
   </ItemGroup>

@@ -25,7 +25,7 @@ namespace
 {
 
 const UINT	AppFPS				= 60;									// アプリケーションのFPS
-const float ClearColor[4]		= { 0.0f, 0.0f, 0.0f, 0.0f};			// 画面をクリアする色、RGBAの順
+const float ClearColor[4]		= { 1.0f, 1.0f, 1.0f, 1.0f};			// 画面をクリアする色、RGBAの順
 
 }
 
