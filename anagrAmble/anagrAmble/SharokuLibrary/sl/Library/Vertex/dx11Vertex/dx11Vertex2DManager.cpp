@@ -127,7 +127,6 @@ void Vertex2DManager::ReleaseVertex2D(int id)
 {
 	delete m_Vertex2Ds[id];
 	m_Vertex2Ds[id] = NULL;
-	m_Vertex2Ds.erase((m_Vertex2Ds.begin() + id));
 }
 
 void Vertex2DManager::ReleaseALL(void)
@@ -277,7 +276,7 @@ bool Vertex2DManager::InitBlendState(void)
 	ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
 	blendDesc.AlphaToCoverageEnable					= false;							// アルファトゥカバレッジをマルチサンプリング テクニックとして使用の有無。現在は無効
 	blendDesc.IndependentBlendEnable				= false;							// 同時処理のレンダー ターゲットで独立したブレンディング→TRUE, RenderTarget[0] のメンバーのみが使用→false
-	blendDesc.RenderTarget[0].BlendEnable			= false;								// ブレンディングの有無. 現在は設定は有効
+	blendDesc.RenderTarget[0].BlendEnable			= false;							// ブレンディングの有無. 現在は設定は有効
 	blendDesc.RenderTarget[0].SrcBlend				= D3D11_BLEND_SRC_ALPHA;			// 最初のRGBデータソースを指定
 	blendDesc.RenderTarget[0].DestBlend				= D3D11_BLEND_INV_SRC_ALPHA;		// 2番目のRGBデータソースを指定
 	blendDesc.RenderTarget[0].BlendOp				= D3D11_BLEND_OP_ADD;				// RGBデータソースの組合せ方法

@@ -31,6 +31,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\CreditsRollScene">
       <UniqueIdentifier>{c450ea80-846c-4148-931a-a76f6f071e42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\Button">
+      <UniqueIdentifier>{fb3a40f1-e74f-4506-8176-937b3ca1cf50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -72,6 +75,21 @@
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoText.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleText.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleBackground.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\Button\BasicButton.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\Button\Button.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -109,6 +127,21 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoText.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleText.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleBackground.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\Button\BasicButton.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\Button\Button.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -122,6 +122,8 @@
     <ClCompile Include="MainGame\SceneManager\GameDataManager\GameDataManager.cpp" />
     <ClCompile Include="MainGame\SceneManager\SceneFactory.cpp" />
     <ClCompile Include="MainGame\SceneManager\SceneManager.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\Button\BasicButton.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\Button\Button.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameScene.cpp" />
@@ -129,13 +131,18 @@
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoText.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\Scene.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleBackground.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h" />
     <ClInclude Include="MainGame\SceneManager\GameDataManager\GameDataManager.h" />
     <ClInclude Include="MainGame\SceneManager\SceneFactory.h" />
     <ClInclude Include="MainGame\SceneManager\SceneManager.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\Button\BasicButton.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\Button\Button.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameScene.h" />
@@ -143,7 +150,10 @@
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoText.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\Scene.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleBackground.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleText.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
