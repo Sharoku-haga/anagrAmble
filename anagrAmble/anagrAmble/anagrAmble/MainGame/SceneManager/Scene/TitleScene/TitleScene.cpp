@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		TitleScene.cpp
-//!< @brief		TitleSceneクラス実装
+//!< @brief		ar::TitleSceneクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -60,9 +60,9 @@ Scene::ID TitleScene::Control(void)
 
 void TitleScene::Draw(void)
 {
-	m_pMenu->Draw();
-	m_pText->Draw();
 	m_pBackground->Draw();
+	m_pText->Draw();
+	m_pMenu->Draw();
 }
 
 }	// namespace ar

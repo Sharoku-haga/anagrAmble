@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		SceneManager.cpp
-//!< @brief		SceneManagerクラス実装
+//!< @brief		ar::SceneManagerクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -25,7 +25,7 @@ SceneManager::SceneManager(void)
 	, m_pGameDataManager(nullptr)
 {
 #ifdef _DEBUG
-	m_NextSceneID = Scene::TITLE;
+	//m_NextSceneID = Scene::TITLE;
 #endif
 
 	m_pGameDataManager = new GameDataManager();

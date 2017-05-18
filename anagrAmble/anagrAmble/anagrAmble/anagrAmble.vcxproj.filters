@@ -143,5 +143,8 @@
     <ClInclude Include="MainGame\SceneManager\Scene\Button\Button.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
     </ClInclude>
+    <ClInclude Include="MainGame\ControllerEnum.h">
+      <Filter>anagrAmble\MainGame</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

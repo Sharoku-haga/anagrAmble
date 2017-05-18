@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11Vertex2D.cpp
-//!< @brief		dx11::Vertex2Dクラス実装
+//!< @brief		sl::dx11::Vertex2Dクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -8,8 +8,6 @@
 
 #include "../../../Common/slTemplate.h"
 #include "dx11Vertex2D.h"
-
-/* Namespace -------------------------------------------------------------------------------------------------- */
 
 namespace sl
 {
@@ -25,7 +23,6 @@ namespace
 const D3DXCOLOR  DefaultColor = 0xffffffff;				// デフォルトのカラーの値(テスト用)
 
 }
-
 
 /* Static Variavle -------------------------------------------------------------------------------------------- */
 
@@ -44,7 +41,7 @@ Vertex2D::~Vertex2D(void)
 	ReleaseBuffer();
 }
 
-void Vertex2D::ReleaseBuffer()
+void Vertex2D::ReleaseBuffer(void)
 {
 	ReleaseSafely(m_pVertexBuffer);
 }
@@ -68,39 +65,54 @@ bool Vertex2D::CreateNewBuffer(const fRect& rSize, const fRect& rUV)
 	return (CreateBuffer());
 }
 
-void Vertex2D::SetSize(fRect size)
+void Vertex2D::SetSize(const fRect& rSize)
 {
-	m_Vertexs[0].m_Pos = D3DXVECTOR3( size.m_Left, size.m_Top, 0.0f);
-	m_Vertexs[1].m_Pos = D3DXVECTOR3( size.m_Right, size.m_Top, 0.0f);
-	m_Vertexs[2].m_Pos = D3DXVECTOR3( size.m_Left, size.m_Bottom, 0.0f);
-	m_Vertexs[3].m_Pos = D3DXVECTOR3( size.m_Right, size.m_Bottom, 0.0f);
+	m_Vertexs[0].m_Pos = D3DXVECTOR3( rSize.m_Left, rSize.m_Top, 0.0f);
+	m_Vertexs[1].m_Pos = D3DXVECTOR3( rSize.m_Right, rSize.m_Top, 0.0f);
+	m_Vertexs[2].m_Pos = D3DXVECTOR3( rSize.m_Left, rSize.m_Bottom, 0.0f);
+	m_Vertexs[3].m_Pos = D3DXVECTOR3( rSize.m_Right, rSize.m_Bottom, 0.0f);
+
+	if(RESULT_FAILED(RewriteVertexBuffer()))
+	{
+		MessageBox(0, "頂点バッファの再書き込みに失敗しました", NULL, MB_OK);
+	}
 }
-void Vertex2D::SetUV(fRect uv)
+void Vertex2D::SetUV(const fRect& rUv)
 {
-	m_Vertexs[0].m_UV = D3DXVECTOR2( uv.m_Left, uv.m_Top);
-	m_Vertexs[1].m_UV = D3DXVECTOR2( uv.m_Right, uv.m_Top);
-	m_Vertexs[2].m_UV = D3DXVECTOR2( uv.m_Left, uv.m_Bottom);
-	m_Vertexs[3].m_UV = D3DXVECTOR2( uv.m_Right, uv.m_Bottom);
+	m_Vertexs[0].m_UV = D3DXVECTOR2( rUv.m_Left, rUv.m_Top);
+	m_Vertexs[1].m_UV = D3DXVECTOR2( rUv.m_Right, rUv.m_Top);
+	m_Vertexs[2].m_UV = D3DXVECTOR2( rUv.m_Left, rUv.m_Bottom);
+	m_Vertexs[3].m_UV = D3DXVECTOR2( rUv.m_Right, rUv.m_Bottom);
+	
+	if(RESULT_FAILED(RewriteVertexBuffer()))
+	{
+		MessageBox(0, "頂点バッファの再書き込みに失敗しました", NULL, MB_OK);
+	}
 }
 
-void Vertex2D::SetColor(D3DXCOLOR color)
+void Vertex2D::SetColor(const D3DXCOLOR& rColor)
 {
-	m_Vertexs[3].m_Color = color;
-	m_Vertexs[0].m_Color = color;
-	m_Vertexs[1].m_Color = color;
-	m_Vertexs[2].m_Color = color;
+	m_Vertexs[0].m_Color = rColor;
+	m_Vertexs[1].m_Color = rColor;
+	m_Vertexs[2].m_Color = rColor;
+	m_Vertexs[3].m_Color = rColor;
+
+	if(RESULT_FAILED(RewriteVertexBuffer()))
+	{
+		MessageBox(0, "頂点バッファの再書き込みに失敗しました", NULL, MB_OK);
+	}
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
-bool Vertex2D::CreateBuffer()
+bool Vertex2D::CreateBuffer(void)
 {
 	D3D11_BUFFER_DESC bufferDesc;
 	ZeroMemory(&bufferDesc, sizeof(D3D11_BUFFER_DESC));
 	bufferDesc.ByteWidth			= sizeof(BasicVertex) * m_VertexCount;				// バッファーのサイズ (バイト単位)
-	bufferDesc.Usage				= D3D11_USAGE_DEFAULT;								// バッファーで想定されている読み込みおよび書き込みの方法
+	bufferDesc.Usage				= D3D11_USAGE_DYNAMIC;								// バッファーで想定されている読み込みおよび書き込みの方法
 	bufferDesc.BindFlags			= D3D11_BIND_VERTEX_BUFFER;							// バッファーをどのようにパイプラインにバインドするかの識別
-	bufferDesc.CPUAccessFlags		= 0;												// CPU アクセスのフラグ
+	bufferDesc.CPUAccessFlags		= D3D11_CPU_ACCESS_WRITE;							// CPU アクセスのフラグ
 	bufferDesc.MiscFlags			= 0;												// リソースに使用される、あまり一般的でないその他のオプションのフラグ
 	bufferDesc.StructureByteStride	= 0;												// 構造体が構造化バッファーを表す場合のその構造体のサイズ 
 
@@ -115,6 +127,24 @@ bool Vertex2D::CreateBuffer()
 	}
 
 	return true;
+}
+
+bool Vertex2D::RewriteVertexBuffer(void)
+{
+	D3D11_MAPPED_SUBRESOURCE mappedResource;	// サブリソースデータにアクセスできるようにするための構造体
+	if(SUCCEEDED(m_pDeviceContext->Map(m_pVertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource)))
+	{
+		memcpy_s( mappedResource.pData, 
+			      mappedResource.RowPitch,
+				  m_Vertexs,
+				  sizeof(BasicVertex) * m_VertexCount);
+
+		m_pDeviceContext->Unmap(m_pVertexBuffer, 0);
+
+		return true;
+	}
+
+	return false;
 }
 
 }	// namespace dx11

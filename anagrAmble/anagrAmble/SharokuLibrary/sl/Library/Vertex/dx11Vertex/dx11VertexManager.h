@@ -1,11 +1,11 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11VertexManager.h
-//!< @brief		dx11::VertexManagerクラスヘッダ
+//!< @brief		sl::dx11::VertexManagerクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
-#ifndef DX11_VERTEX_MANAGER_H
-#define DX11_VERTEX_MANAGER_H
+#ifndef SL_DX11_VERTEX_MANAGER_H
+#define SL_DX11_VERTEX_MANAGER_H
 
 namespace sl
 {
@@ -16,15 +16,18 @@ class VertexManager
 {
 
 public:
-	VertexManager();
-	~VertexManager();
+	/**Constructor */
+	VertexManager(void);
 
-};
+	/** Destructor */
+	~VertexManager(void);
+
+};	// class VertexManager
 
 }	// namespace dx11
 }	// namespace sl
 
-#endif	// DX11_VERTEX_MANAGER_H
+#endif	// SL_DX11_VERTEX_MANAGER_H
 
 //==================================================================================================================================//
 // END OF FILE

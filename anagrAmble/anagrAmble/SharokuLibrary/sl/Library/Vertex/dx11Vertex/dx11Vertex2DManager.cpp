@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11Vertex2DManager.cpp
-//!< @brief		dx11::Vertex2DManagerクラス実装
+//!< @brief		sl::dx11::Vertex2DManagerクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -8,8 +8,6 @@
 
 #include "../../../Common/slTemplate.h"
 #include "dx11Vertex2DManager.h"
-
-/* Namespace -------------------------------------------------------------------------------------------------- */
 
 namespace sl
 {
@@ -117,21 +115,36 @@ int Vertex2DManager::CreateVertex(const fRect& rSize, const fRect& rUV)
 		return INT_MAX;
 	}
 
-	id = m_Vertex2Ds.size();
-	m_Vertex2Ds.push_back(pVeretex2D);
+	id = m_pVertex2Ds.size();
+	m_pVertex2Ds.push_back(pVeretex2D);
 
 	return id;
 }
 
+void Vertex2DManager::SetSize(int id, const fRect& rSize)
+{
+	m_pVertex2Ds[id]->SetSize(rSize);
+}
+
+void Vertex2DManager::SetUV(int id, const fRect& rUv)
+{
+	m_pVertex2Ds[id]->SetUV(rUv);
+}
+
+void Vertex2DManager::SetColor(int id, const D3DXCOLOR& rColor)
+{
+	m_pVertex2Ds[id]->SetColor(rColor);
+}
+
 void Vertex2DManager::ReleaseVertex2D(int id)
 {
-	delete m_Vertex2Ds[id];
-	m_Vertex2Ds[id] = NULL;
+	delete m_pVertex2Ds[id];
+	m_pVertex2Ds[id] = NULL;
 }
 
 void Vertex2DManager::ReleaseALL(void)
 {
-	for(auto& vtx2D : m_Vertex2Ds)
+	for(auto& vtx2D : m_pVertex2Ds)
 	{
 		if(vtx2D != NULL)
 		{
@@ -139,7 +152,7 @@ void Vertex2DManager::ReleaseALL(void)
 			vtx2D = NULL;
 		}
 	}
-	std::vector<Vertex2D*>().swap(m_Vertex2Ds);
+	std::vector<Vertex2D*>().swap(m_pVertex2Ds);
 }
 
 void Vertex2DManager::SetupShadar(void)
@@ -154,14 +167,14 @@ void Vertex2DManager::SetupBlendState(void)
 	m_pDeviceContext->OMSetBlendState(m_pBlendState, NULL, 0xffffffff);
 }
 
-void Vertex2DManager::SetupConstantBuffer(const D3DXVECTOR2& pos, const D3DXVECTOR3& scale, float angle)
+void Vertex2DManager::SetupConstantBuffer(const D3DXVECTOR2& rPos, const D3DXVECTOR3& rScale, float angle)
 {
 	D3DXMATRIX matWorld, matTranslate,matRotate;
 	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixScaling(&matWorld, scale.x, scale.y, 1.0f);
+	D3DXMatrixScaling(&matWorld, rScale.x, rScale.y, 1.0f);
 	D3DXMatrixRotationZ(&matRotate, angle);
 	D3DXMatrixMultiply(&matWorld, &matWorld, &matRotate);
-	D3DXMatrixTranslation(&matTranslate, pos.x, pos.y, 0);
+	D3DXMatrixTranslation(&matTranslate, rPos.x, rPos.y, 0);
 	D3DXMatrixMultiply(&matWorld, &matWorld, &matTranslate);
 
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -276,7 +289,7 @@ bool Vertex2DManager::InitBlendState(void)
 	ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
 	blendDesc.AlphaToCoverageEnable					= false;							// アルファトゥカバレッジをマルチサンプリング テクニックとして使用の有無。現在は無効
 	blendDesc.IndependentBlendEnable				= false;							// 同時処理のレンダー ターゲットで独立したブレンディング→TRUE, RenderTarget[0] のメンバーのみが使用→false
-	blendDesc.RenderTarget[0].BlendEnable			= false;							// ブレンディングの有無. 現在は設定は有効
+	blendDesc.RenderTarget[0].BlendEnable			= true;								// ブレンディングの有無. 現在は設定は有効
 	blendDesc.RenderTarget[0].SrcBlend				= D3D11_BLEND_SRC_ALPHA;			// 最初のRGBデータソースを指定
 	blendDesc.RenderTarget[0].DestBlend				= D3D11_BLEND_INV_SRC_ALPHA;		// 2番目のRGBデータソースを指定
 	blendDesc.RenderTarget[0].BlendOp				= D3D11_BLEND_OP_ADD;				// RGBデータソースの組合せ方法

@@ -1,11 +1,11 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11ShaderManager.h
-//!< @brief		dx11::ShaderManagerクラスヘッダ
+//!< @brief		sll::dx11::ShaderManagerクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
-#ifndef DX11_SHADER_MANAGER_H
-#define DX11_SHADER_MANAGER_H
+#ifndef SL_DX11_SHADER_MANAGER_H
+#define SL_DX11_SHADER_MANAGER_H
 
 #include <d3dx11.h>
 #include <vector>
@@ -88,7 +88,7 @@ private:
 }	// namespace dx11
 }	// namespace sl
 
-#endif	// DX11_SHADER_MANAGER_H
+#endif	// SL_DX11_SHADER_MANAGER_H
 
 //==================================================================================================================================//
 // END OF FILE

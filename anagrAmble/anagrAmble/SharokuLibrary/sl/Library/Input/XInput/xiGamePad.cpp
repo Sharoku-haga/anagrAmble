@@ -1,6 +1,6 @@
 //==================================================================================================================================//
 //!< @file		xiGamePad.h
-//!< @brief		xi::GamePadクラスヘッダ
+//!< @brief		sl::xi::GamePadクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -73,7 +73,7 @@ DEVICE_STATE GamePad::CheckState(int actionID, int padNum)
 	DEVICE_STATE result;
 	if(RESULT_FAILED(m_Pads[padNum].m_IsConnected))
 	{
-		OutputDebugString("指定されたコントローラーは接続されていません\n");
+		// OutputDebugString("指定されたコントローラーは接続されていません\n");
 		return (result = OFF);
 	}
 

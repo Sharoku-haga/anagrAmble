@@ -26,8 +26,8 @@ float4 PS(PS_INPUT Input) : SV_Target
 {
 	float4 OutColor;
 	OutColor = g_Texture.Sample(g_Sampler, Input.m_UV);
-	//OutColor *= Input.m_Color;
-	//////OutColor = Input.m_Color;;
+	OutColor *= Input.m_Color;	
+	//OutColor.w = Input.m_Color.w;
 	return OutColor;
 	//return g_Texture.Sample(g_Sampler, Input.m_UV);
 }

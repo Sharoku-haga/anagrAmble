@@ -8,6 +8,7 @@
 #define SL_CUSTOMIZE_INPUT_MANAGER_H
 
 #include <map>
+#include <vector>
 #include "../../Common/slInputEnum.h"
 
 namespace sl
@@ -58,10 +59,12 @@ public:
 
 	/** 
 	* 状態チェック関数
-	* @param[in] ID			登録したID
-	* @param[in] deviceNum	デバイス番号.デフォルトは0
+	* @param[in] ID				登録したID
+	* @param[in] checkState		チェックしたいデバイス状態
+	* @param[in] deviceNum		デバイス番号.デフォルトは0
+	* @return	その状態かどうか true→チェックしたい状態である false →チェックしたい状態でない
 	*/
-	DEVICE_STATE CheckState(int ID, int deviceNum = 0);
+	bool CheckState(int ID, DEVICE_STATE  checkState, int deviceNum = 0);
 
 private:
 	/** カスタマイズ情報構造体 */
@@ -69,13 +72,18 @@ private:
 	{
 		HID_TYPE	m_DeviceType;			//!< デバイスタイプ
 		int			m_InputType;			//!< インプットタイプ
+
+		CUSTOMIZE_INFO(HID_TYPE	deviceType, int inputType)
+			: m_DeviceType(deviceType)
+			, m_InputType(inputType)
+		{}
 	};
 
 	di::KeyDevice*					m_pKeyDevice;			//!< di::KeyDeviceクラスのインスタンスへのポインタ
 	xi::GamePad*					m_pXiGamePad;			//!< xi::GamePadクラスのインスタンスへのポインタ
-	std::map<int, CUSTOMIZE_INFO>	m_CustomizeInfos;		//!< カスタマイズした情報を格納したmap
+	std::map<int, std::vector<CUSTOMIZE_INFO>>	m_CustomizeInfos;		//!< カスタマイズした情報を格納したmap
 
-};
+};	// class CustomizeInputManager
 
 }	// namespace sl
 

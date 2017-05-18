@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		diKeyDevice.h
-//!< @brief		di::KeyDeviceクラスヘッダ
+//!< @brief		sl::di::KeyDeviceクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -61,7 +61,8 @@ private:
 	* @param[in] keyID キーのID slInputEnum.hのKEY_TYPE
 	*/
 	void CheckState(int keyID);
-};
+
+};	// class KeyDevice
 
 }	// namespace di 
 }	// namespace sl

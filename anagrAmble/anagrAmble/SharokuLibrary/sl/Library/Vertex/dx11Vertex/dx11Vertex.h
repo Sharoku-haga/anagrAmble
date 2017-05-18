@@ -1,11 +1,11 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11Vertex.h
-//!< @brief		dx11::Vertexクラスヘッダ
+//!< @brief		sl::dx11::Vertexクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
-#ifndef DX11_VERTEX_H
-#define DX11_VERTEX_H
+#ifndef SL_DX11_VERTEX_H
+#define SL_DX11_VERTEX_H
 
 namespace sl
 {
@@ -15,14 +15,18 @@ namespace dx11
 class Vertex
 {
 public:
-	Vertex();
-	~Vertex();
-};
+	/** Constructor */
+	Vertex(void);
+
+	/** Destructor */
+	~Vertex(void);
+
+};	// class Vertex
 
 }	// namespace dx11
 }	// namespace sl
 
-#endif // DX11_VERTEX_H
+#endif // SL_DX11_VERTEX_H
 
 //==================================================================================================================================//
 // END OF FILE
