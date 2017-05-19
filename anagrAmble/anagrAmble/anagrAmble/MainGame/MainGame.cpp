@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		MainGame.cpp
-//!< @brief		MainGameクラス実装
+//!< @brief		ar::MainGameクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -9,6 +9,7 @@
 #include "MainGame.h"
 #include "../SharokuLibrary/sl/sl.h"
 #include "SceneManager/SceneManager.h"
+#include "ControllerEnum.h"
 
 namespace ar
 {
@@ -27,6 +28,12 @@ MainGame::MainGame(void)
 	int			windowWidth		= 1920;					// ウィンドウの横幅
 	int			windowHeight	= 1080;					// ウィンドウの縦幅
 	m_pLibrary->Initialize(windowTitle, windowWidth, windowHeight);
+
+	// デバイスインプットのカスタマイズ
+	CustomizeInput();
+#ifdef _DEBUG
+	CutomizeInputDebug();
+#endif // _DEBUG
 
 	m_pSceneManager = new SceneManager();
 }
@@ -54,6 +61,170 @@ void MainGame::Loop(void)
 		}
 	}
 }
+
+/* Private Functions------------------------------------------------------------------------------------------- */
+
+void MainGame::CustomizeInput(void)
+{
+	// 上ボタン: UP
+	{
+
+	}
+
+	// 下のボタン : DOWN
+	{
+
+	}
+
+	// 右ボタン	: RIGHT
+	{
+
+	}
+
+	// 左ボタン : LEFT
+	{
+
+	}
+
+	// 決定 : ENTER
+	{
+
+	}
+
+	// プレイヤーのモード切替 : MODE_CHANGE
+	{
+
+	}
+
+	// プレイヤーのモード解除 : MODE_RELEASE
+	{
+
+	}
+
+	// 空間入れ替え : SPACE_CHANGE
+	{
+
+	}
+
+	// 空間反転 : SPACE_INVERTED
+	{
+
+	}
+
+	// アンカ-セット : ANCHOR_SET
+	{
+
+	}
+
+	// ジャンプ : JUMP
+	{
+
+	}
+
+	// しゃがむ : SQUAT
+	{
+
+	}
+
+	// 特殊アクション : SPECIAL_ACTION
+	{
+
+	}
+
+	//  時もどしの左ボタン : TIME_RETURN_L
+	{
+
+	}
+
+	//  時もどしの右ボタン : TIME_RETURN_R
+	{
+
+	}
+}
+
+#ifdef _DEBUG
+
+/** @todo 2017/05/19現在 仮実装 */
+void MainGame::CutomizeInputDebug(void)
+{
+	// 上ボタン: UP
+	{
+		m_pLibrary->RegisterCustomizeType(UP, sl::KEYBOARD, sl::K_UP);
+	}
+
+	// 下のボタン : DOWN
+	{
+		m_pLibrary->RegisterCustomizeType(DOWN, sl::KEYBOARD, sl::K_DOWN);
+	}
+
+	// 右ボタン	: RIGHT
+	{
+		m_pLibrary->RegisterCustomizeType(RIGHT, sl::KEYBOARD, sl::K_RIGHT);
+	}
+
+	// 左ボタン : LEFT
+	{
+		m_pLibrary->RegisterCustomizeType(LEFT, sl::KEYBOARD, sl::K_LEFT);
+	}
+
+	// 決定 : ENTER
+	{
+
+	}
+
+	// プレイヤーのモード切替 : MODE_CHANGE
+	{
+
+	}
+
+	// プレイヤーのモード解除 : MODE_RELEASE
+	{
+
+	}
+
+	// 空間入れ替え : SPACE_CHANGE
+	{
+
+	}
+
+	// 空間反転 : SPACE_INVERTED
+	{
+
+	}
+
+	// アンカ-セット : ANCHOR_SET
+	{
+
+	}
+
+	// ジャンプ : JUMP
+	{
+
+	}
+
+	// しゃがむ : SQUAT
+	{
+
+	}
+
+	// 特殊アクション : SPECIAL_ACTION
+	{
+
+	}
+
+	//  時もどしの左ボタン : TIME_RETURN_L
+	{
+
+	}
+
+	//  時もどしの右ボタン : TIME_RETURN_R
+	{
+
+	}
+}
+
+#endif // _DEBUG
+
 
 } // namespace ar
 

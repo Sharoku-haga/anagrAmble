@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		TitleBackground.h
-//!< @brief		TitleBackgroundクラスヘッダ
+//!< @brief		ar::TitleBackgroundクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -33,10 +33,10 @@ public:
 
 private:
 	sl::SLVECTOR2			m_Pos;					//!< 位置座標
-	sl::GraphicsIDs			m_ID;					//!< グラフィック関連のIDをまとめた構造体
-	sl::ISharokuLibrary*	m_pLibrary;				//!< ISharokuLibraryクラスのインスタンスへのポインタ
+	sl::DrawingID			m_ID;					//!< グラフィック関連のIDをまとめた構造体
+	sl::ISharokuLibrary*	m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
 
-};
+};	// class TitleBackground
 
 }	// namespace ar
 

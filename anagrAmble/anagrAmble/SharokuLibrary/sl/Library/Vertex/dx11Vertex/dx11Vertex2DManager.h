@@ -1,11 +1,11 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11Vertex2DManager.h
-//!< @brief		dx11::Vertex2DManagerクラスヘッダ
+//!< @brief		sl::dx11::Vertex2DManagerクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
-#ifndef DX11_VERTEX2D_MANAGER_H
-#define DX11_VERTEX2D_MANAGER_H
+#ifndef SL_DX11_VERTEX2D_MANAGER_H
+#define SL_DX11_VERTEX2D_MANAGER_H
 
 #include <d3dx11.h>
 #include <d3dx10.h>
@@ -48,6 +48,27 @@ public:
 	int CreateVertex(const fRect& rSize, const fRect& rUV);
 
 	/** 
+	* サイズ情報を設定する関数
+	* @param[in] id		設定したいVertexのID
+	* @param[in] rSize	設定したいサイズ
+	*/
+	void SetSize(int id, const fRect& rSize);
+
+	/**
+	* UV情報を設定する関数
+	* @param[in] id		設定したいVertexのID
+	* @param[in] rUv	設定したいUV値
+	*/
+	void SetUV(int id, const fRect& rUv);
+
+	/**
+	* 色情報を設定する関数
+	* @param[in] id		設定したいVertexのID
+	* @param[in] rColor 設定したい色
+	*/
+	void SetColor(int id, const D3DXCOLOR& rColor);
+
+	/** 
 	* 指定した頂点を解放する関数
 	* @param[in] id 解放したい頂点のid
  	*/
@@ -64,17 +85,17 @@ public:
 
 	/**
 	* コンスタントバッファをセットアップ(書き込む)する関数
-	* @param[in] pos		位置座標
-	* @param[in] scale		スケール. デフォルト値はD3DXVECTOR3(1.f, 1.f, 1.f)
+	* @param[in] rPos		位置座標
+	* @param[in] rScale		スケール. デフォルト値はD3DXVECTOR3(1.f, 1.f, 1.f)
 	* @param[in] angle		角度
 	*/
-	void SetupConstantBuffer(const D3DXVECTOR2& pos, const D3DXVECTOR3& scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f), float angle = 0.0f);
+	void SetupConstantBuffer(const D3DXVECTOR2& rPos, const D3DXVECTOR3& rScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f), float angle = 0.0f);
 	/**
 	* 指定した頂点バッファの取得する関数	
 	* @param[in] index 
 	* @return 指定したバックバッファを取得する関数
 	*/
-	ID3D11Buffer* GetBuffer(int index) { return m_Vertex2Ds[index]->GetBuffer(); } 
+	ID3D11Buffer* GetBuffer(int index) { return m_pVertex2Ds[index]->GetBuffer(); } 
 
 	/**
 	* 頂点数を取得する関数.2Dので4つ
@@ -93,7 +114,7 @@ private:
 	ID3D11PixelShader*			m_pPixelShader;					//!< ピクセルシェーダー
 	ID3D11BlendState*			m_pBlendState;					//!< ブレンドステイト
 	ID3D11Buffer*				m_pConstantBuffer;				//!< コンスタントバッファ
-	std::vector<Vertex2D*>		m_Vertex2Ds;					//!< Veretex2Dを格納する動的配列 
+	std::vector<Vertex2D*>		m_pVertex2Ds;					//!< Veretex2Dを格納する動的配列 
 	float						m_ClientWidth;					//!< クライアント領域の横幅
 	float						m_ClientHeight;					//!< クライアント領域の縦幅
 
@@ -137,12 +158,12 @@ private:
 	 */
 	bool InitConstantBuffer(void);
 
-};
+};	// class Vertex2DManager
 
 }	// namespace dx11
 }	// namespace sl
 
-#endif	// DX11_VERTEX2D_MANAGER_H
+#endif	// SL_DX11_VERTEX2D_MANAGER_H
 
 //==================================================================================================================================//
 // END OF FILE

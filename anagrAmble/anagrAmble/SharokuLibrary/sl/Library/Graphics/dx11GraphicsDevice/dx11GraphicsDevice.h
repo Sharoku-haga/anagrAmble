@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11GraphicsDevice.h
-//!< @brief		dx11::GraphicsDeviceクラスヘッダ
+//!< @brief		sl::dx11::GraphicsDeviceクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -57,6 +57,12 @@ public:
 	* @param[in] isFullScreen		true→フルスクリーン, false→ウィンドウモード
 	*/
 	void ChangeWindowMode(bool isFullScreen);
+
+	/**
+	* ステンシルテストを設定する関数
+	* @param[in] isisStencilTest	true→ステンシルテストON, false→ステンシルテストOFF
+	*/
+	void SetDepthStencilTest(bool isStencilTest);
 
 	/** Getter -------------------------------------------- */
 

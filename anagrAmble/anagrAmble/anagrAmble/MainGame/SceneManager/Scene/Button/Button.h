@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		Button.h
-//!< @brief		Buttonクラスヘッダ
+//!< @brief		ar::Buttonクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -46,7 +46,7 @@ public:
 
 protected:
 	sl::ISharokuLibrary*		m_pLibrary;			//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
-	sl::GraphicsIDs				m_ID;				//!< 描画関連のID群
+	sl::DrawingID				m_ID;				//!< 描画関連のID群
 
 	/** 
 	* 処理実行関数 
@@ -60,7 +60,7 @@ protected:
 	*/
 	virtual void Render(void) = 0;
 
-};
+};	// class Button
 
 }	// namespace ar
 

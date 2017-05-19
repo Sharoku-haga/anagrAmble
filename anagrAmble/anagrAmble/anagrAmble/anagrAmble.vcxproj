@@ -137,6 +137,7 @@
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleText.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MainGame\ControllerEnum.h" />
     <ClInclude Include="MainGame\MainGame.h" />
     <ClInclude Include="MainGame\SceneManager\GameDataManager\GameDataManager.h" />
     <ClInclude Include="MainGame\SceneManager\SceneFactory.h" />

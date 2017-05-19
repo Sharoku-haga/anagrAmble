@@ -119,6 +119,30 @@ public:
 	virtual int CreateVertex2D(const fRect& rSize, const fRect& rUV)override;
 
 	/** 
+	* サイズ情報を設定する関数
+	* @param[in] vtxID	設定したいVertexのID
+	* @param[in] rSize	設定したいサイズ
+	*/
+	virtual void SetVtxSize(int vtxID, const fRect& rSize)override;
+
+	/**
+	* UV情報を設定する関数
+	* @param[in] vtxID	設定したいVertexのID
+	* @param[in] rUv	設定したいUV値
+	*/
+	virtual void SetVtxUV(int vtxID, const fRect& rUv)override;
+
+	/**
+	* 色情報を設定する関数
+	* @param[in] vtxID		設定したいVertexのID
+	* @param[in] red		設定したいr値
+	* @param[in] green		設定したいg値
+	* @param[in] blue		設定したいb値
+	* @param[in] alpha		設定したいアルファ値
+	*/
+	virtual void SetVtxColor(int vtxID, float red, float green, float blue, float alpha)override;
+
+	/** 
 	* 指定した2D頂点バッファを解放する関数
 	* @param[in] vtxID 解放したい頂点のID
  	*/
@@ -130,6 +154,12 @@ public:
 	//-----------------------------------------------------------------//
 	// 描画関連関数
 	//-----------------------------------------------------------------//
+	
+	/**
+	* ステンシルテストを設定する関数
+	* @param[in] isisStencilTest	true→ステンシルテストON, false→ステンシルテストOFF
+	*/
+	virtual void SetDepthStencilTest(bool isStencilTest)override;
 
 	/** 描画開始処理 */
 	virtual void StartRender(void)override;
@@ -140,12 +170,12 @@ public:
 	/** 
 	* 2D描画関数
 	* @todo とりあえず描画チェックの為実装。後で見直し
-	* @param[in] ids	登録した頂点情報IDとテクスチャーID
-	* @param[in] pos	位置座標
-	* @param[in] scale	スケール値. デフォルトは1.0f,1.0f,1.0f
+	* @param[in] rID	登録した頂点情報IDとテクスチャーID
+	* @param[in] rPos	位置座標
+	* @param[in] rScale	スケール値. デフォルトは1.0f,1.0f,1.0f
 	* @param[in] angle	角度
 	*/
-	virtual void Draw2D(GraphicsIDs ids, SLVECTOR2 pos, SLVECTOR3 scale = SLVECTOR3(1.0f, 1.0f, 1.0f), float angle = 0.0f)override;
+	virtual void Draw2D(const DrawingID& rID, const SLVECTOR2& rPos, const SLVECTOR3& rScale = SLVECTOR3(1.0f, 1.0f, 1.0f), float angle = 0.0f)override;
 
 	//-----------------------------------------------------------------//
 	// インプットデバイス関連関数
@@ -157,7 +187,7 @@ public:
 	/** 
 	* キーの状態をチェックする関数 
 	* @param[in] keyID キーのID slInputEnum.hのKEY_TYPE
-	* @return	キーの状態
+	* @return	キーの状態. 状態の種類に関しては Common/slInputEnum.hを参照すること
 	*/
 	virtual DEVICE_STATE CheckKey(int keyID)override;
 
@@ -165,7 +195,7 @@ public:
 	* ゲームパッドの状態をチェックする関数 
 	* @param[in] padPartID	チェックしたいパッドのアクションID. XIGAMEPAD_ACTION_ID参照
 	* @param[in] padNum		チェックしたいゲームパッドの番号.デフォルトは0
-	* @return 状態
+	* @return ゲームパッドの状態. 状態の種類に関しては Common/slInputEnum.hを参照すること
 	*/
 	virtual DEVICE_STATE CheckGamePad(int actionID, int  padNum = 0)override;
 
@@ -178,11 +208,13 @@ public:
 	virtual void RegisterCustomizeType(int ID, HID_TYPE device, int inputType)override;
 
 	/** 
-	* カスタマイズしたボタンなどをチェックする関数
-	* @param[in] ID 登録したID
-	* @param[in] deviceNum	チェックしたいデバイス番号.デフォルトは0
+	* カスタマイズしたボタンの状態チェック関数
+	* @param[in] ID				登録したID
+	* @param[in] checkState		チェックしたいデバイス状態.状態の種類に関しては Common/slInputEnum.hを参照すること
+	* @param[in] deviceNum		デバイス番号.デフォルトは0
+	* @return	その状態かどうか true→チェックしたい状態である false →チェックしたい状態でない
 	*/
-	virtual DEVICE_STATE CheckCustomizeState(int ID, int deviceNum = 0)override;
+	virtual bool CheckCustomizeState(int ID, DEVICE_STATE  checkState, int deviceNum = 0)override;
 
 	//-----------------------------------------------------------------//
 	// その他
@@ -198,7 +230,7 @@ private:
 	xi::GamePad*				m_pGamePad;
 	CustomizeInputManager*		m_pCustomizeInputManager;
 
-};
+};	// class DX11Library 
 
 }	// namespace sl
 

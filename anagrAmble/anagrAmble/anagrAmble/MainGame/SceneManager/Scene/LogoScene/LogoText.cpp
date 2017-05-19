@@ -1,12 +1,14 @@
 ﻿//==================================================================================================================================//
 //!< @file		LogoText.cpp
-//!< @brief		LogoTextクラス実装
+//!< @brief		ar::LogoTextクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
 /* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "LogoText.h"
+#include "../../../ControllerEnum.h"
+#include "../SharokuLibrary/sl/sl.h"
 
 namespace ar
 {
@@ -28,10 +30,10 @@ LogoText::LogoText(int texID)
 	, m_DispTimeCount(0)
 	, m_IsEnd(false)
 {
-	m_ID.m_TexID = texID;
-	sl::fRect	size = {0.0f, 0.0f, 960.f, 960.f};
-	sl::fRect	uv = { 0.0f, 0.0f, 1.0f, 1.0f};
-	m_ID.m_VtxID = m_pLibrary->CreateVertex2D(size, uv);
+	m_ID.m_TexID		= texID;
+	sl::fRect	size	= {0.0f, 0.0f, 960.f, 960.f};
+	sl::fRect	uv		= { 0.0f, 0.0f, 1.0f, 1.0f};
+	m_ID.m_VtxID		= m_pLibrary->CreateVertex2D(size, uv);
 }
 
 LogoText::~LogoText(void)

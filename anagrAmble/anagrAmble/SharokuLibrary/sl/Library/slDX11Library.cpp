@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		slDX11Library.cpp
-//!< @brief		slDX11Libraryクラス実装
+//!< @brief		sl::DX11Libraryクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -16,8 +16,6 @@
 #include "Input\slCustomizeInputManager.h"
 #include "../Common/slTemplate.h"
 #include "../slBuild.h"
-
-/* Namespace -------------------------------------------------------------------------------------------------- */
 
 namespace sl
 {
@@ -107,6 +105,21 @@ int DX11Library::CreateVertex2D(const fRect& rSize, const fRect& rUV)
 	return m_pVertex2DManager->CreateVertex(rSize, rUV);
 }
 
+void DX11Library::SetVtxSize(int vtxID, const fRect& rSize)
+{
+	m_pVertex2DManager->SetSize(vtxID, rSize);
+}
+
+void DX11Library::SetVtxUV(int vtxID, const fRect& rUv)
+{
+	m_pVertex2DManager->SetUV(vtxID, rUv);
+}
+
+void DX11Library::SetVtxColor(int vtxID, float red, float green, float blue, float alpha)
+{
+	m_pVertex2DManager->SetColor(vtxID, D3DXCOLOR(red, green, blue, alpha));
+}
+
 void DX11Library::ReleaseVertex2D(int vtxID)
 {
 	m_pVertex2DManager->ReleaseVertex2D(vtxID);
@@ -115,6 +128,11 @@ void DX11Library::ReleaseVertex2D(int vtxID)
 void DX11Library::ReleaseVertexALL(void)
 {
 	m_pVertex2DManager->ReleaseALL();
+}
+
+void DX11Library::SetDepthStencilTest(bool isStencilTest)
+{
+	m_pGraphicsDevice->SetDepthStencilTest(isStencilTest);
 }
 
 void DX11Library::StartRender(void)
@@ -127,15 +145,15 @@ void DX11Library::EndRender(void)
 	m_pGraphicsDevice->EndRender();
 }
 
-void DX11Library::Draw2D(GraphicsIDs ids, SLVECTOR2 pos, SLVECTOR3 scale, float angle)
+void DX11Library::Draw2D(const DrawingID& rID, const SLVECTOR2& rPos, const SLVECTOR3& rScale, float angle)
 {
 	m_pVertex2DManager->SetupShadar();
-	m_pVertex2DManager->SetupConstantBuffer(D3DXVECTOR2(pos.x, pos.y), D3DXVECTOR3(scale.x, scale.y, scale.z), angle);
+	m_pVertex2DManager->SetupConstantBuffer(D3DXVECTOR2(rPos.x, rPos.y), D3DXVECTOR3(rScale.x, rScale.y, rScale.z), angle);
 	m_pVertex2DManager->SetupBlendState();
-	m_pTextureManager->SetUpTexture(ids.m_TexID);
+	m_pTextureManager->SetUpTexture(rID.m_TexID);
 	UINT stride = sizeof(sl::dx11::BasicVertex);
 	UINT offset = 0;
-	ID3D11Buffer* pVertexBuffer = m_pVertex2DManager->GetBuffer(ids.m_VtxID);
+	ID3D11Buffer* pVertexBuffer = m_pVertex2DManager->GetBuffer(rID.m_VtxID);
 	m_pGraphicsDevice->GetDeviceContext()->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);
 	m_pGraphicsDevice->GetDeviceContext()->Draw(m_pVertex2DManager->GetVertexCount(), 0);
 }
@@ -175,9 +193,9 @@ void DX11Library::RegisterCustomizeType(int ID, HID_TYPE device, int inputType)
 }
 
 
-DEVICE_STATE DX11Library::CheckCustomizeState(int ID, int deviceNum)
+bool DX11Library::CheckCustomizeState(int ID, DEVICE_STATE  checkState, int deviceNum)
 {
-	return m_pCustomizeInputManager->CheckState(ID, deviceNum);
+	return m_pCustomizeInputManager->CheckState(ID, checkState, deviceNum);
 }
 
 }	// namespace sl

@@ -1,8 +1,10 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11VertexManager.cpp
-//!< @brief		dx11::VertexManagerクラス実装
+//!< @brief		sl::dx11::VertexManagerクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
+
+/* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "dx11VertexManager.h"
 
@@ -11,10 +13,12 @@ namespace sl
 namespace dx11
 {
 
-VertexManager::VertexManager()
+/* Public Functions ------------------------------------------------------------------------------------------- */
+
+VertexManager::VertexManager(void)
 {}
 
-VertexManager::~VertexManager()
+VertexManager::~VertexManager(void)
 {}
 
 }	// namespace dx11

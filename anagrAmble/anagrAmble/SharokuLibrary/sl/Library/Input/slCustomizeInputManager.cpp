@@ -4,6 +4,8 @@
 //!< @author	T.Haga
 //==================================================================================================================================//
 
+/* Includes --------------------------------------------------------------------------------------------------- */
+
 #include "slCustomizeInputManager.h"
 #include "DirectInput/diInputManager.h"
 #include "DirectInput\diKeyDevice.h"
@@ -13,47 +15,55 @@
 namespace sl
 {
 
+/* Public Functions ------------------------------------------------------------------------------------------- */
+
 CustomizeInputManager::CustomizeInputManager(di::InputManager* pInputManager, xi::GamePad* pGamePad)
 	: m_pKeyDevice(pInputManager->GetKeyDevice())
 	, m_pXiGamePad(pGamePad)
 {}
 
-CustomizeInputManager::~CustomizeInputManager()
+CustomizeInputManager::~CustomizeInputManager(void)
 {}
 
 void CustomizeInputManager::RegisterCustomizeType(int ID, HID_TYPE device, int inputType)
 {
-	CUSTOMIZE_INFO info = {device, inputType};
-	m_CustomizeInfos[ID] = info;
+	m_CustomizeInfos[ID].emplace_back(CUSTOMIZE_INFO (device, inputType));
 }
 
-DEVICE_STATE CustomizeInputManager::CheckState(int ID, int deviceNum)
+bool CustomizeInputManager::CheckState(int ID, DEVICE_STATE  checkState, int deviceNum)
 {
-	DEVICE_STATE state;
-	CUSTOMIZE_INFO info = m_CustomizeInfos[ID];
+	DEVICE_STATE state = NONE;
+	std::vector<CUSTOMIZE_INFO> customizeInfo = m_CustomizeInfos[ID];
 
-	switch(info.m_DeviceType)
+	for(auto& info : customizeInfo)
 	{
-	case KEYBOARD:
-		state = m_pKeyDevice->CheckKey(info.m_InputType);
-		break;
+		switch(info.m_DeviceType)
+		{
+		case KEYBOARD:
+			state = m_pKeyDevice->CheckKey(info.m_InputType);
+			break;
 
-	case MOUSE:
-		/** @todo ‚Ü‚¾ŽÀ‘•‚µ‚Ä‚¢‚È‚¢*/
-		break;
+		case MOUSE:
+			/** @todo ‚Ü‚¾ŽÀ‘•‚µ‚Ä‚¢‚È‚¢*/
+			break;
 
-	case GAMEPAD:
+		case GAMEPAD:
 #ifdef USING_XI_GAMEPAD
-		state = m_pXiGamePad->CheckState(info.m_InputType, deviceNum);
+			state = m_pXiGamePad->CheckState(info.m_InputType, deviceNum);
 #endif
-		break;
+			break;
 
-	default:
-		// do nothing
-		break;
+		default:
+			// do nothing
+			break;
+		}
+
+		if(state == checkState)
+		{
+			return true;
+		}
 	}
-
-	return state;
+	return false;
 }
 
 }	// namespace sl

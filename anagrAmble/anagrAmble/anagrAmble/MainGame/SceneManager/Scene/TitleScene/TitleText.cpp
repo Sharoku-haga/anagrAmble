@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		TilteText.cpp
-//!< @brief		TilteTextクラス実装
+//!< @brief		ar::TilteTextクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -20,7 +20,7 @@ TitleText::TitleText(int texID)
 	m_ID.m_TexID		= texID;
 	sl::fRect	size	= { 0.0f, 0.0f, 480.f, 480.f};
 	sl::fRect	uv		= { 0.0f, 0.0f, 1.0f, 1.0f};
-	m_ID.m_VtxID = m_pLibrary->CreateVertex2D(size, uv);
+	m_ID.m_VtxID		= m_pLibrary->CreateVertex2D(size, uv);
 }
 
 TitleText::~TitleText(void)

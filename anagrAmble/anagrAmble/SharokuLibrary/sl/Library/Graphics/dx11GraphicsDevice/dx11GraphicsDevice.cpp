@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11GraphicsDevice.cpp
-//!< @brief		dx11::GraphicsDeviceクラス実装
+//!< @brief		sl::dx11::GraphicsDeviceクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -11,8 +11,6 @@
 #include "../../../Common/slTemplate.h"
 #include "../../../slBuild.h"
 #include <crtdbg.h>
-
-/* Namespace -------------------------------------------------------------------------------------------------- */
 
 namespace sl
 {
@@ -43,7 +41,10 @@ GraphicsDevice::GraphicsDevice(void)
 	, m_pDepthStencilView(NULL)
 	, m_pDepthStencilBuffer(NULL)
 	, m_pRasterizerState(NULL)
-{}
+{
+
+
+}
 
 GraphicsDevice::~GraphicsDevice(void)
 {
@@ -119,6 +120,18 @@ void GraphicsDevice::ChangeWindowMode(bool isFullScreen)
 	}
 #endif	// FULL_SCREEN
 
+}
+
+void GraphicsDevice::SetDepthStencilTest(bool isStencilTest)
+{
+	if(isStencilTest)
+	{
+		m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
+	}
+	else
+	{
+		m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, NULL);
+	}	
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
@@ -279,8 +292,13 @@ bool GraphicsDevice::InitView(void)
 		}
 	}
 
+#ifdef STRAT_STECIL_TEST_ON
 	// レンダーターゲットビューと深度ステンシルビューをパイプラインにバインド
 	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, m_pDepthStencilView);
+#else 
+	m_pDeviceContext->OMSetRenderTargets(1, &m_pRenderTargetView, NULL);
+#endif
+	
 
 	// ビューポート設定
 	{

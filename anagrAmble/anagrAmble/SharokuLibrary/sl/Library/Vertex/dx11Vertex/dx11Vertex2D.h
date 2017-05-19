@@ -1,11 +1,11 @@
 ﻿//==================================================================================================================================//
 //!< @file		dx11Vertex2D.h
-//!< @brief		dx11::Vertex2Dクラスヘッダ
+//!< @brief		sl::dx11::Vertex2Dクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
-#ifndef DX11_VERTEX2D_H
-#define DX11_VERTEX2D_H
+#ifndef SL_DX11_VERTEX2D_H
+#define SL_DX11_VERTEX2D_H
 
 #include <d3dx11.h>
 #include <d3dx10.h>
@@ -61,21 +61,21 @@ public:
 
 	/** 
 	* サイズ情報を設定する関数
-	* @param[in] size	設定したいサイズ
+	* @param[in] rSize	設定したいサイズ
 	*/
-	void SetSize(fRect size);
+	void SetSize(const fRect& rSize);
 
 	/**
 	* UV情報を設定する関数
-	* @param[in] uv		設定したいUV値
+	* @param[in] rUv	設定したいUV値
 	*/
-	void SetUV(fRect uv);
+	void SetUV(const fRect& rUv);
 
 	/**
 	* 色情報を設定する関数
-	* @param[in] color
+	* @param[in] rColor	設定したい色
 	*/
-	void SetColor(D3DXCOLOR color);
+	void SetColor(const D3DXCOLOR& rColor);
 
 private:
 	static const int							m_VertexCount = 4;			//!< 頂点数
@@ -89,13 +89,19 @@ private:
 	* @return	結果 true→成功 false→失敗
 	*/
 	bool CreateBuffer(void);
+
+	/** 
+	*  作成した頂点バッファの情報を書き換える関数
+	* @return	結果 true→成功 false→失敗
+	*/
+	bool RewriteVertexBuffer(void);
 			
-};
+};	// class Vertex2D
 
 }	// namespace dx11
 }	// namespace sl
 
-#endif	// DX11_VERTEX2D_H
+#endif	// SL_DX11_VERTEX2D_H
 
 //==================================================================================================================================//
 // END OF FILE

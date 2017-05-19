@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
 //!< @file		LogoText.h
-//!< @brief		LogoTextクラスヘッダ
+//!< @brief		ar::LogoTextクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -35,12 +35,12 @@ public:
 
 private:
 	sl::SLVECTOR2			m_Pos;					//!< 位置座標
-	sl::GraphicsIDs			m_ID;					//!< グラフィック関連のIDをまとめた構造体
-	sl::ISharokuLibrary*	m_pLibrary;				//!< ISharokuLibraryクラスのインスタンスへのポインタ
+	sl::DrawingID			m_ID;					//!< グラフィック関連のIDをまとめた構造体
+	sl::ISharokuLibrary*	m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
 	int						m_DispTimeCount;		//!< 表示時間をカウントする変数
 	bool					m_IsEnd;				//!< 表示が終わったどうかのフラグ
 
-};
+};	// class LogoText
 
 }	// namespace ar
 
