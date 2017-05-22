@@ -1,6 +1,6 @@
-//==================================================================================================================================//
+ï»¿//==================================================================================================================================//
 //!< @file		slCustomizeInputManager.h
-//!< @brief		sl::CustomizeInputManagerƒNƒ‰ƒXƒwƒbƒ_
+//!< @brief		sl::CustomizeInputManagerã‚¯ãƒ©ã‚¹ãƒ˜ãƒƒãƒ€
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -30,9 +30,9 @@ class GamePad;
 }
 
 //======================================================================//
-//!< Input‚ÌÝ’è‚ðƒJƒXƒ^ƒ}ƒCƒY‚µA‚»‚ÌÝ’è‚ðŠÇ—‚·‚éƒNƒ‰ƒX<br>
-//!< ‚±‚±‚Å‚¢‚¤Input‚ÌÝ’è‚Æ‚ÍƒL[‚È‚Ç‚ÌInputƒfƒoƒCƒX‚Ìƒ{ƒ^ƒ“‚È‚Ç‚É
-//!< ƒNƒ‰ƒCƒAƒ“ƒg‘¤‚ÅŽ©—R‚ÉID‚ðÝ’è‚µ‚ÄŽg‚¦‚é‚æ‚¤‚É‚·‚é‚±‚Æ
+//!< Inputã®è¨­å®šã‚’ã‚«ã‚¹ã‚¿ãƒžã‚¤ã‚ºã—ã€ãã®è¨­å®šã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹<br>
+//!< ã“ã“ã§ã„ã†Inputã®è¨­å®šã¨ã¯ã‚­ãƒ¼ãªã©ã®Inputãƒ‡ãƒã‚¤ã‚¹ã®ãƒœã‚¿ãƒ³ãªã©ã«
+//!< ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ã§è‡ªç”±ã«IDã‚’è¨­å®šã—ã¦ä½¿ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹ã“ã¨
 //======================================================================//
 class CustomizeInputManager
 {
@@ -41,8 +41,8 @@ public:
 
 	/** 
 	* Contructor
-	* @param[in] pInputManager di::InputManager‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	* @param[in] pGamePad	   xi::GamePad‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	* @param[in] pInputManager di::InputManagerã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	* @param[in] pGamePad	   xi::GamePadã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	*/
 	CustomizeInputManager(di::InputManager* pInputManager, xi::GamePad* pGamePad);
 
@@ -50,28 +50,28 @@ public:
 	~CustomizeInputManager(void);
 
 	/** 
-	* “o˜^ŠÖ”
-	* @param[in] ID			“o˜^‚µ‚½‚¢ID
-	* @param[in] device		ƒfƒoƒCƒXƒ^ƒCƒv
-	* @param[in] inputType	“o˜^‚µ‚½‚¢ƒCƒ“ƒvƒbƒgƒ^ƒCƒv
+	* ç™»éŒ²é–¢æ•°
+	* @param[in] ID			ç™»éŒ²ã—ãŸã„ID
+	* @param[in] device		ãƒ‡ãƒã‚¤ã‚¹ã‚¿ã‚¤ãƒ—
+	* @param[in] inputType	ç™»éŒ²ã—ãŸã„ã‚¤ãƒ³ãƒ—ãƒƒãƒˆã‚¿ã‚¤ãƒ—
 	*/
 	void RegisterCustomizeType(int ID, HID_TYPE device, int inputType);
 
 	/** 
-	* ó‘Ôƒ`ƒFƒbƒNŠÖ”
-	* @param[in] ID				“o˜^‚µ‚½ID
-	* @param[in] checkState		ƒ`ƒFƒbƒN‚µ‚½‚¢ƒfƒoƒCƒXó‘Ô
-	* @param[in] deviceNum		ƒfƒoƒCƒX”Ô†.ƒfƒtƒHƒ‹ƒg‚Í0
-	* @return	‚»‚Ìó‘Ô‚©‚Ç‚¤‚© true¨ƒ`ƒFƒbƒN‚µ‚½‚¢ó‘Ô‚Å‚ ‚é false ¨ƒ`ƒFƒbƒN‚µ‚½‚¢ó‘Ô‚Å‚È‚¢
+	* çŠ¶æ…‹ãƒã‚§ãƒƒã‚¯é–¢æ•°
+	* @param[in] ID				ç™»éŒ²ã—ãŸID
+	* @param[in] checkState		ãƒã‚§ãƒƒã‚¯ã—ãŸã„ãƒ‡ãƒã‚¤ã‚¹çŠ¶æ…‹
+	* @param[in] deviceNum		ãƒ‡ãƒã‚¤ã‚¹ç•ªå·.ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯0
+	* @return	ãã®çŠ¶æ…‹ã‹ã©ã†ã‹ trueâ†’ãƒã‚§ãƒƒã‚¯ã—ãŸã„çŠ¶æ…‹ã§ã‚ã‚‹ false â†’ãƒã‚§ãƒƒã‚¯ã—ãŸã„çŠ¶æ…‹ã§ãªã„
 	*/
 	bool CheckState(int ID, DEVICE_STATE  checkState, int deviceNum = 0);
 
 private:
-	/** ƒJƒXƒ^ƒ}ƒCƒYî•ñ\‘¢‘Ì */
+	/** ã‚«ã‚¹ã‚¿ãƒžã‚¤ã‚ºæƒ…å ±æ§‹é€ ä½“ */
 	struct CUSTOMIZE_INFO
 	{
-		HID_TYPE	m_DeviceType;			//!< ƒfƒoƒCƒXƒ^ƒCƒv
-		int			m_InputType;			//!< ƒCƒ“ƒvƒbƒgƒ^ƒCƒv
+		HID_TYPE	m_DeviceType;			//!< ãƒ‡ãƒã‚¤ã‚¹ã‚¿ã‚¤ãƒ—
+		int			m_InputType;			//!< ã‚¤ãƒ³ãƒ—ãƒƒãƒˆã‚¿ã‚¤ãƒ—
 
 		CUSTOMIZE_INFO(HID_TYPE	deviceType, int inputType)
 			: m_DeviceType(deviceType)
@@ -79,9 +79,9 @@ private:
 		{}
 	};
 
-	di::KeyDevice*					m_pKeyDevice;			//!< di::KeyDeviceƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	xi::GamePad*					m_pXiGamePad;			//!< xi::GamePadƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	std::map<int, std::vector<CUSTOMIZE_INFO>>	m_CustomizeInfos;		//!< ƒJƒXƒ^ƒ}ƒCƒY‚µ‚½î•ñ‚ðŠi”[‚µ‚½map
+	di::KeyDevice*					m_pKeyDevice;			//!< di::KeyDeviceã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	xi::GamePad*					m_pXiGamePad;			//!< xi::GamePadã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	std::map<int, std::vector<CUSTOMIZE_INFO>>	m_CustomizeInfos;		//!< ã‚«ã‚¹ã‚¿ãƒžã‚¤ã‚ºã—ãŸæƒ…å ±ã‚’æ ¼ç´ã—ãŸmap
 
 };	// class CustomizeInputManager
 

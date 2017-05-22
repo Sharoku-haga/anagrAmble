@@ -34,6 +34,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\Button">
       <UniqueIdentifier>{fb3a40f1-e74f-4506-8176-937b3ca1cf50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager">
+      <UniqueIdentifier>{a2f79aed-8b09-4a7d-98f5-bb8c52e6205a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -90,6 +93,12 @@
     <ClCompile Include="MainGame\SceneManager\Scene\Button\Button.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\GameEventManager.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventLisner.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -145,6 +154,12 @@
     </ClInclude>
     <ClInclude Include="MainGame\ControllerEnum.h">
       <Filter>anagrAmble\MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\GameEventManager.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventLisner.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
