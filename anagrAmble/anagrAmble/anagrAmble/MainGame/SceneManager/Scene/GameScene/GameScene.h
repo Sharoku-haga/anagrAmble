@@ -13,6 +13,9 @@ namespace ar
 {
 
 class GameDataManager;
+class GamePauseMenu;
+class GameEventManager;
+class EventLisner;
 
 //======================================================================//
 //!< anagrAmbleにおけるゲームシーンのクラス
@@ -31,7 +34,19 @@ public:
 	virtual ~GameScene(void);
 
 private:
+	/** GameScene状態 */
+	enum STATE
+	{
+		GAME_PLAY,					//!< ゲームプレイ中
+		PAUSE_MENU,					//!< ポーズメニュー
+		CHANGE_SCENE,				//!< シーン移行
+	};
+
 	GameDataManager*		m_pGameDataManager;		//!< GameDataManagerクラスのインスタンスへのポインタ
+	GameEventManager&		m_rGameEventManager;	//!< GameEventManagerクラスのインスタンスへの参照
+	EventLisner*			m_pEventLisner;			//!< EventLisnerクラスのインスタンスへのポインタ
+	GamePauseMenu*			m_pPauseMenu;			//!< GamePauseMenuクラスのインスタンスへのポインタ
+	STATE					m_CurrentState;			//!< GameSecneの現在の状態
 
 	/** 
 	* コントロール関数 
@@ -41,6 +56,13 @@ private:
 
 	/** 描画関数 */
 	virtual void Draw(void)override;
+
+	/** イベントを処理する関数 */
+	void HandleEvent(void);
+
+	/** イベントを登録する関数 */
+	void RegisterEvent(void);
+
 
 };	// class GameScene
 

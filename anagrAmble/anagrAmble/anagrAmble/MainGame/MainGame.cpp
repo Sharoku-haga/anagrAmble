@@ -140,6 +140,11 @@ void MainGame::CustomizeInput(void)
 	{
 
 	}
+
+	// ポーズボタン : PAUSE
+	{
+
+	}
 }
 
 #ifdef _DEBUG
@@ -169,7 +174,7 @@ void MainGame::CutomizeInputDebug(void)
 
 	// 決定 : ENTER
 	{
-
+		m_pLibrary->RegisterCustomizeType(ENTER, sl::KEYBOARD, sl::K_A);
 	}
 
 	// プレイヤーのモード切替 : MODE_CHANGE
@@ -220,6 +225,11 @@ void MainGame::CutomizeInputDebug(void)
 	//  時もどしの右ボタン : TIME_RETURN_R
 	{
 
+	}
+
+	// ポーズボタン : PAUSE
+	{
+		m_pLibrary->RegisterCustomizeType(PAUSE, sl::KEYBOARD, sl::K_P);
 	}
 }
 

@@ -37,6 +37,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager">
       <UniqueIdentifier>{a2f79aed-8b09-4a7d-98f5-bb8c52e6205a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\GamePauseMenu">
+      <UniqueIdentifier>{9d8209b4-6b3d-49d8-93e7-68fab34fcac0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -99,6 +102,12 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventLisner.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenu.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GamePauseMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenuBackground.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GamePauseMenu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -160,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventLisner.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenu.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GamePauseMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenuBackground.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GamePauseMenu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
