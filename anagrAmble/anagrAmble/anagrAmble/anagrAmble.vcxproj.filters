@@ -31,9 +31,6 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\CreditsRollScene">
       <UniqueIdentifier>{c450ea80-846c-4148-931a-a76f6f071e42}</UniqueIdentifier>
     </Filter>
-    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\Button">
-      <UniqueIdentifier>{fb3a40f1-e74f-4506-8176-937b3ca1cf50}</UniqueIdentifier>
-    </Filter>
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager">
       <UniqueIdentifier>{a2f79aed-8b09-4a7d-98f5-bb8c52e6205a}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,27 @@
     </Filter>
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameOverScene">
       <UniqueIdentifier>{14549d4e-8d59-4e28-a618-4a015ba19937}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager">
+      <UniqueIdentifier>{9d9a0b7e-a18c-4649-880d-9b84f04e9a82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage">
+      <UniqueIdentifier>{f9f49adb-0faf-4608-8d13-359e4aacc6de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button">
+      <UniqueIdentifier>{fb3a40f1-e74f-4506-8176-937b3ca1cf50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase">
+      <UniqueIdentifier>{676690a9-3007-4400-9390-47461d108e17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player">
+      <UniqueIdentifier>{5efa63c2-6569-4236-970f-259695663f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy">
+      <UniqueIdentifier>{9db18ad1-5865-4a3c-9536-b6f87d2a448d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block">
+      <UniqueIdentifier>{7e7862a0-7785-4acc-9b21-bcefdad89d87}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -93,12 +111,6 @@
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleBackground.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\Button\BasicButton.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\Button\Button.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\GameEventManager.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
     </ClCompile>
@@ -113,6 +125,51 @@
     </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\GameOverScene\GameOverScene.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameOverScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataManager.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageManager.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\Stage.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageBackground.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\BasicButton.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\Button.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\BasePoint.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\CollisionManager.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBaseManager.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\ObjBase.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\Player.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block\Block.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Goal.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\GoalKey.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,12 +218,6 @@
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleBackground.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\Button\BasicButton.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\Button\Button.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\Button</Filter>
-    </ClInclude>
     <ClInclude Include="MainGame\ControllerEnum.h">
       <Filter>anagrAmble\MainGame</Filter>
     </ClInclude>
@@ -184,6 +235,51 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameOverScene\GameOverScene.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameOverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataManager.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageManager.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\Stage.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageBackground.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\BasicButton.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\Button.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\BasePoint.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\CollisionManager.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBaseManager.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\ObjBase.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\Player.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block\Block.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Goal.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\GoalKey.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

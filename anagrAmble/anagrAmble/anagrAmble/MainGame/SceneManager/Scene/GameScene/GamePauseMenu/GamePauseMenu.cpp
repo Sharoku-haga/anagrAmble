@@ -7,8 +7,8 @@
 /* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "GamePauseMenu.h"
-#include "../../Button/Button.h"
-#include "../../Button/BasicButton.h"
+#include "../../TitleScene/Button/Button.h"
+#include "../../TitleScene/Button/BasicButton.h"
 #include "../../../../ControllerEnum.h"
 #include "../GameEventManager/GameEventManager.h"
 #include "GamePauseMenuBackground.h"

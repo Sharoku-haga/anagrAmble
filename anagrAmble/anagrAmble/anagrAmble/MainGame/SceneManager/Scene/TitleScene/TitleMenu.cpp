@@ -7,8 +7,8 @@
 /* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "TitleMenu.h"
-#include "../Button/Button.h"
-#include "../Button/BasicButton.h"
+#include "Button/Button.h"
+#include "Button/BasicButton.h"
 #include "../../../ControllerEnum.h"
 
 namespace ar
