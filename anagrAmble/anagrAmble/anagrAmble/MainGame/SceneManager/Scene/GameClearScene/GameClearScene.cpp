@@ -13,18 +13,19 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-GameClearScene::GameClearScene()
-{}
+GameClearScene::GameClearScene(void)
+{
+	m_NextSceneID = Scene::GAME_CLEAR;
+}
 
-GameClearScene::~GameClearScene()
+GameClearScene::~GameClearScene(void)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 Scene::ID GameClearScene::Control(void)
 {
-
-	return Scene::GAME_CLEAR;
+	return m_NextSceneID;
 }
 
 void GameClearScene::Draw(void)

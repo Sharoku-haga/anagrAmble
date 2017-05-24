@@ -20,7 +20,7 @@ LogoScene::LogoScene(void)
 	: m_pBackground(nullptr)
 	, m_pText(nullptr)
 {
-
+	m_NextSceneID = Scene::LOGO;
 	// 背景
 	{
 		int texID = m_pLibrary->LoadTexture("../Resource/LogoScene/LogoBG.png");
@@ -50,10 +50,10 @@ Scene::ID LogoScene::Control(void)
 	if(m_pText->Control())
 	{
 		// ロゴの表示時間が終わったらタイトルシーンへ移行
-		return Scene::TITLE;
+		m_NextSceneID = Scene::TITLE;
 	}
 
-	return Scene::LOGO;
+	return m_NextSceneID;
 }
 
 void LogoScene::Draw(void)

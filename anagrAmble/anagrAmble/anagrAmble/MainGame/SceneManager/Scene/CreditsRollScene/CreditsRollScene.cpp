@@ -14,7 +14,9 @@ namespace ar
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 CreditsRollScene::CreditsRollScene(void)
-{}
+{
+	m_NextSceneID = Scene::CREDITS_ROLL;
+}
 
 CreditsRollScene::~CreditsRollScene(void)
 {}
@@ -24,7 +26,7 @@ CreditsRollScene::~CreditsRollScene(void)
 Scene::ID CreditsRollScene::Control(void)
 {
 
-	return Scene::CREDITS_ROLL;
+	return m_NextSceneID;
 }
 
 void CreditsRollScene::Draw(void)

@@ -54,6 +54,12 @@ public:
 	void HandleSynEvent(std::string eventType);  
 
 	/**
+	* イベントが現在空なのか、もしくはあるのか確認する関数
+	* @return 結果 true→空である false→空でない
+	*/
+	inline bool EmptyCurrentEvent(void) { return m_CuurentEvent.empty(); }
+
+	/**
 	* Getter
 	* 現在受け取っているイベントを取得する関数
 	*/

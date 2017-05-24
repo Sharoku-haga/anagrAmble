@@ -4,7 +4,9 @@
 //!< @author	T.Haga
 //==================================================================================================================================//
 
-#pragma once
+#ifndef AR_CREDIT_ROLL_SCENE_H
+#define AR_CREDIT_ROLL_SCENE_H
+
 #include "../Scene.h"
 
 namespace ar
@@ -36,6 +38,8 @@ private:
 };	// class CreditsRollScene
 
 }	// namespace ar 
+
+#endif	// AR_CREDIT_ROLL_SCENE_H
 
 //==================================================================================================================================//
 // END OF FILE
