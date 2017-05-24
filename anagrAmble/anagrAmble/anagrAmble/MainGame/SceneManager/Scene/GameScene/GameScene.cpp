@@ -12,7 +12,7 @@
 #include "GamePauseMenu/GamePauseMenu.h"
 #include "GameEventManager/GameEventManager.h"
 #include "GameEventManager/EventLisner.h"
-#include <functional>
+//#include <functional>
 #include <iostream>
 #include "../SharokuLibrary/sl/sl.h"
 
@@ -53,7 +53,7 @@ GameScene::~GameScene(void)
 
 Scene::ID GameScene::Control(void)
 {
-	m_rGameEventManager.Update();
+	m_rGameEventManager.Update();		// ゲームイベントを更新
 
 	HandleEvent();
 
@@ -75,6 +75,7 @@ Scene::ID GameScene::Control(void)
 		break;
 
 	case CHANGE_SCENE:
+		// do nothing
 		break;
 
 	default:
@@ -109,16 +110,17 @@ void GameScene::Draw(void)
 
 void GameScene::HandleEvent(void)
 {
-	const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
-
-	if(currentEvents.empty())
+	if(m_pEventLisner->EmptyCurrentEvent())
 	{
 		return;
 	}
 	else
 	{
-		m_CurrentState = CHANGE_SCENE;
-		std::string eventType;
+		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+
+		m_CurrentState = CHANGE_SCENE;			// ゲームシーンの状態をシーン遷移状態にかえる
+
+		std::string eventType;			
 		for(auto& gameEvent : currentEvents)
 		{
 			if(gameEvent == "game_over")
@@ -130,7 +132,7 @@ void GameScene::HandleEvent(void)
 			{
 				m_NextSceneID = Scene::GAME_CLEAR;
 			}
-			else if(gameEvent == "return_title")
+			else if(gameEvent == "title_return")
 			{
 				m_NextSceneID = Scene::TITLE;
 			}
@@ -138,7 +140,6 @@ void GameScene::HandleEvent(void)
 
 		m_pEventLisner->DelEvent();
 	}
-
 }
 
 void GameScene::RegisterEvent(void)
@@ -150,8 +151,7 @@ void GameScene::RegisterEvent(void)
 	m_rGameEventManager.RegisterEventType("game_clear", m_pEventLisner);
 
 	// タイトルへ戻る
-	m_rGameEventManager.RegisterEventType("return_title", m_pEventLisner);
-	
+	m_rGameEventManager.RegisterEventType("title_return", m_pEventLisner);
 }
 
 }	// namespace ar

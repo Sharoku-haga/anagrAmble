@@ -22,6 +22,8 @@ TitleScene::TitleScene(void)
 	, m_pText(nullptr)
 	, m_pMenu(nullptr)
 {
+	m_NextSceneID = Scene::TITLE;
+
 	// 背景クラス生成
 	{
 		int texID = m_pLibrary->LoadTexture("../Resource/TitleScene/TitleBG.png");
@@ -54,8 +56,8 @@ TitleScene::~TitleScene(void)
 
 Scene::ID TitleScene::Control(void)
 {
-	Scene::ID nextSceneID = m_pMenu->Control();
-	return nextSceneID;
+	m_NextSceneID = m_pMenu->Control();
+	return m_NextSceneID;
 }
 
 void TitleScene::Draw(void)

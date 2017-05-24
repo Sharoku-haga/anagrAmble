@@ -9,6 +9,7 @@
 #include "TitleMenu.h"
 #include "../Button/Button.h"
 #include "../Button/BasicButton.h"
+#include "../../../ControllerEnum.h"
 
 namespace ar
 {
@@ -46,10 +47,6 @@ TitleMenu::TitleMenu(int btnTexID)
 
 TitleMenu::~TitleMenu(void)
 {
-	//for(int btnCount = (BTN_MAX -1); btnCount >= 0; --btnCount)
-	//{
-	//	sl::DeleteSafely(m_pButtons[btnCount]);
-	//}
 	for(auto& pBtn : m_pButtons)
 	{
 		sl::DeleteSafely(pBtn);
@@ -64,7 +61,7 @@ Scene::ID TitleMenu::Control(void)
 
 	// Aボタンを押したとき現在選んでいるボタンの種類から
 	// 次のSceneIDを判断してかえす
-	if(m_pLibrary->CheckGamePad(sl::XIGAMEPAD_A) == sl::ON)
+	if(m_pLibrary->CheckCustomizeState( ENTER, sl::PUSH))
 	{
 		switch(m_CurrentSelectBtn)
 		{
@@ -99,16 +96,14 @@ void TitleMenu::SelectButton(void)
 	switch(m_CurrentSelectBtn)
 	{
 	case GAME_START:
-		if(m_pLibrary->CheckGamePad(sl::XIGAMEPAD_LSTICK_DOWN)
-			|| m_pLibrary->CheckGamePad(sl::XIGAMEPAD_DPAD_DOWN))
+		if(m_pLibrary->CheckCustomizeState(DOWN, sl::PUSH))
 		{
 			m_CurrentSelectBtn = GAME_END;
 		}
 		break;
 
 	case GAME_END:
-		if(m_pLibrary->CheckGamePad(sl::XIGAMEPAD_LSTICK_UP)
-			|| m_pLibrary->CheckGamePad(sl::XIGAMEPAD_DPAD_UP))
+		if(m_pLibrary->CheckCustomizeState(UP, sl::PUSH))
 		{
 			m_CurrentSelectBtn = GAME_START;
 		}

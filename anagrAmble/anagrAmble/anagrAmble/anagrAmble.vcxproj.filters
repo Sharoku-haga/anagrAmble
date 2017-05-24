@@ -40,6 +40,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\GamePauseMenu">
       <UniqueIdentifier>{9d8209b4-6b3d-49d8-93e7-68fab34fcac0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameOverScene">
+      <UniqueIdentifier>{14549d4e-8d59-4e28-a618-4a015ba19937}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -108,6 +111,9 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenuBackground.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GamePauseMenu</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameOverScene\GameOverScene.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameOverScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -175,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenuBackground.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GamePauseMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameOverScene\GameOverScene.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameOverScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
