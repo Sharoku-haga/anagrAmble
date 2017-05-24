@@ -35,7 +35,6 @@ public:
 	static GameEventManager& Instance(void) 
 	{
 		static GameEventManager eventManager;
-
 		return eventManager;
 	}
 

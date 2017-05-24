@@ -128,6 +128,8 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventLisner.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\GameEventManager.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenu.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenuBackground.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameScene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.cpp" />
@@ -150,6 +152,8 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventLisner.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\GameEventManager.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenu.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenuBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.h" />

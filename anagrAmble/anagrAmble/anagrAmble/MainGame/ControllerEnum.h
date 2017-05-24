@@ -31,6 +31,7 @@ enum CONTROLLER_ACTION_EVENT
 	SPECIAL_ACTION,		//!< 特殊アクション
 	TIME_RETURN_L,		//!< とき戻しボタン左。※ 下記の右と同時押しで、初めて時が戻せる点に注意
 	TIME_RETURN_R,		//!< とき戻しボタン右。※ 上記の左と同時押しで、初めて時が戻せる点に注意
+	PAUSE,				//!< ポーズ
 };
 
 
