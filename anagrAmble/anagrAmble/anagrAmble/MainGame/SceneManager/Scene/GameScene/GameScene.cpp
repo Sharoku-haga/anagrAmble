@@ -55,7 +55,7 @@ Scene::ID GameScene::Control(void)
 {
 	m_rGameEventManager.Update();		// ゲームイベントを更新
 
-	HandleEvent();
+	HandleEvent();						// GameSceneのイベント処理を行う
 
 	switch(m_CurrentState)
 	{
@@ -126,7 +126,7 @@ void GameScene::HandleEvent(void)
 			if(gameEvent == "game_over")
 			{
 				m_NextSceneID = Scene::GAME_OVER;
-				return;
+				return;								// ゲームオーバーの場合はチェック終了して、即return
 			}
 			else if(gameEvent == "game_clear")
 			{
