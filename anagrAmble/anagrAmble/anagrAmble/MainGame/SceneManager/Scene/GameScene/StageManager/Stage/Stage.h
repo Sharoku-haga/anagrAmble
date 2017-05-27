@@ -18,6 +18,13 @@ class Stage
 {
 
 public:
+	/** ステージのインデックスIDの構造体 */
+	struct INDEX_DATA
+	{
+		int m_YNum;		//!< Y軸のインデックス
+		int m_XNum;		//!< X軸のインデックス
+	};
+
 	/** Constructor */
 	Stage();
 

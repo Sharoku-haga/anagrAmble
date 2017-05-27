@@ -13,10 +13,25 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-Enemy::Enemy()
+Enemy::Enemy(const Stage::INDEX_DATA& rStageIndexData)
+	: ObjBase(rStageIndexData)
 {}
 
 Enemy::~Enemy()
+{}
+
+void Enemy::ProcessCollision(int typeID, bool isDeath)
+{}
+
+/* Private Functions ------------------------------------------------------------------------------------------ */
+
+void Enemy::Run(void)
+{}
+
+void Enemy::Render(void)
+{}
+
+void Enemy::HandleEvent(void)
 {}
 
 }	// namespace ar

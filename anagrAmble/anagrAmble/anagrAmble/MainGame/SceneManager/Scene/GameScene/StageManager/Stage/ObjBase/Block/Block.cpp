@@ -13,10 +13,25 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-Block::Block()
+Block::Block(const Stage::INDEX_DATA& rStageIndexData)
+	: ObjBase(rStageIndexData)
 {}
 
 Block::~Block()
+{}
+
+void Block::ProcessCollision(int typeID, bool isDeath)
+{}
+
+/* Private Functions ------------------------------------------------------------------------------------------ */
+
+void Block::Run(void)
+{}
+
+void Block::Render(void)
+{}
+
+void Block::HandleEvent(void)
 {}
 
 }	// namespace ar
