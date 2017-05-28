@@ -101,7 +101,9 @@ public:
 protected:
 	static	sl::SLVECTOR2	m_BasePointPos;					//!< ベースポイントの位置座標.static
 	static  sl::fRect		m_DisplayArea;					//!< 画面範囲.static
+	static	const float		m_StageChipSize;				//!< ステージチップ1つのサイズ
 
+	sl::ISharokuLibrary*	m_pLibrary;						//!< sl::ISharokuLibrary*クラスのインスタンスへのポインタ
 	sl::SLVECTOR2			m_Pos;							//!< 位置座標
 	sl::fRect				m_RectSize;						//!< 基本矩形サイズ
 	sl::fRect				m_CurrentRectData;				//!< 位置座標 + 基本矩形サイズ
@@ -124,6 +126,13 @@ protected:
 
 	/** イベント処理関数.純粋仮想関数  */
 	virtual void HandleEvent(void) = 0;
+
+	/** 
+	* Constructorの引数で得たインデックスを元に位置座標を計算する関数. 
+	* 位置座標は中心座標で計算する. 純粋仮想関数
+	*/
+	virtual void CalculatePos(void) = 0;
+
 
 };	// class ObjBase
 

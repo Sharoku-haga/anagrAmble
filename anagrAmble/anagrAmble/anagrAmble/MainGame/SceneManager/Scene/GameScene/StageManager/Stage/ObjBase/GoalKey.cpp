@@ -34,6 +34,9 @@ void GoalKey::Render(void)
 void GoalKey::HandleEvent(void)
 {}
 
+void GoalKey::CalculatePos(void)
+{}
+
 }	// namespace ar
 
 //==================================================================================================================================//

@@ -34,6 +34,9 @@ void Player::Render(void)
 void Player::HandleEvent(void)
 {}
 
+void Player::CalculatePos(void)
+{}
+
 }	// namespace ar
 
 //==================================================================================================================================//

@@ -69,6 +69,13 @@ public:
 	void SetColor(int id, const D3DXCOLOR& rColor);
 
 	/** 
+	* VertexのサイズのデータをRect構造体で取得する関数
+	* @param[in] id		サイズデータを取得したいVertexのID
+	* @return サイズデーやを格納したRect構造体
+	*/
+	fRect GetSizeRect(int id) { return m_pVertex2Ds[id]->GetSizeRect(); }
+
+	/** 
 	* 指定した頂点を解放する関数
 	* @param[in] id 解放したい頂点のid
  	*/

@@ -77,6 +77,12 @@ public:
 	*/
 	void SetColor(const D3DXCOLOR& rColor);
 
+	/** 
+	* VertexのサイズのデータをRect構造体で取得する関数
+	* @return サイズデーやを格納したRect構造体
+	*/
+	fRect GetSizeRect(void);
+
 private:
 	static const int							m_VertexCount = 4;			//!< 頂点数
 	ID3D11Device*								m_pDevice;					//!< Direct3Dのデバイス

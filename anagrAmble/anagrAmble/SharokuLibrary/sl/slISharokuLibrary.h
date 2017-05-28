@@ -135,6 +135,13 @@ public:
 	virtual void SetVtxColor(int vtxID, float red, float green, float blue, float alpha) = 0;
 
 	/** 
+	* VertexのサイズのデータをRect構造体で取得する関数
+	* @param[in] vtxID		サイズデータを取得したいVertexのID
+	* @return サイズデーやを格納したRect構造体
+	*/
+	virtual fRect GetSizeRect(int vtxID) = 0;
+
+	/** 
 	* 指定した2D頂点バッファを解放する関数
 	* @param[in] vtxID 解放したい頂点のID
  	*/

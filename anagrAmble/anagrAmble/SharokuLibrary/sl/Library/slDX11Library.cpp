@@ -120,6 +120,11 @@ void DX11Library::SetVtxColor(int vtxID, float red, float green, float blue, flo
 	m_pVertex2DManager->SetColor(vtxID, D3DXCOLOR(red, green, blue, alpha));
 }
 
+fRect DX11Library::GetSizeRect(int vtxID)
+{
+	return m_pVertex2DManager->GetSizeRect(vtxID);
+}
+
 void DX11Library::ReleaseVertex2D(int vtxID)
 {
 	m_pVertex2DManager->ReleaseVertex2D(vtxID);

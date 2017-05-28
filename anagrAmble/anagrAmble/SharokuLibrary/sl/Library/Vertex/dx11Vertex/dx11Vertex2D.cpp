@@ -103,6 +103,17 @@ void Vertex2D::SetColor(const D3DXCOLOR& rColor)
 	}
 }
 
+fRect Vertex2D::GetSizeRect(void)
+{
+	fRect	rectSize;
+	rectSize.m_Left		= m_Vertexs[0].m_Pos.x;
+	rectSize.m_Top		= m_Vertexs[0].m_Pos.y;
+	rectSize.m_Right	= m_Vertexs[1].m_Pos.x;
+	rectSize.m_Bottom	= m_Vertexs[2].m_Pos.y;
+
+	return rectSize;
+}
+
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 bool Vertex2D::CreateBuffer(void)
