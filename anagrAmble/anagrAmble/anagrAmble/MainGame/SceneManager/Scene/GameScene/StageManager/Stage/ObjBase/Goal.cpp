@@ -13,10 +13,25 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-Goal::Goal()
+Goal::Goal(const Stage::INDEX_DATA& rStageIndexData)
+	: ObjBase(rStageIndexData)
 {}
 
 Goal::~Goal()
+{}
+
+void Goal::ProcessCollision(int typeID, bool isDeath)
+{}
+
+/* Private Functions ------------------------------------------------------------------------------------------ */
+
+void Goal::Run(void)
+{}
+
+void Goal::Render(void)
+{}
+
+void Goal::HandleEvent(void)
 {}
 
 }	// namespace ar
