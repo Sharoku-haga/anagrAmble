@@ -42,7 +42,7 @@ private:
 	StageDataManager*			m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*			m_pCollisionManager;		//!< CollisionManagerクラスのインスタンスへのポインタ
 	int							m_TexID;					//!< テクスチャーID
-	sl::fRect					m_BlockSize;				//!< ブロックサイズ
+	sl::fRect					m_BlockSize;				//!< ブロック矩形サイズ
 
 
 
