@@ -58,8 +58,17 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy">
       <UniqueIdentifier>{9db18ad1-5865-4a3c-9536-b6f87d2a448d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block">
-      <UniqueIdentifier>{7e7862a0-7785-4acc-9b21-bcefdad89d87}</UniqueIdentifier>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj">
+      <UniqueIdentifier>{61fede62-d22c-49a8-95e4-7ff0a74e8cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block">
+      <UniqueIdentifier>{47bba483-4006-40ff-8e5a-40cf17522471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal">
+      <UniqueIdentifier>{fe2944c9-f60f-4857-b5f3-e27d0de33078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager">
+      <UniqueIdentifier>{c513112c-37d3-43b1-8b75-309380da2a0b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,9 +159,6 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\CollisionManager.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBaseManager.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\ObjBase.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
     </ClCompile>
@@ -162,14 +168,23 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Goal.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\StageObj.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\GoalKey.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\NormalBlock.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block\NormalBlock.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block</Filter>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal\Goal.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal\GoalKey.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjFactory.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjManager.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,9 +275,6 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\CollisionManager.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBaseManager.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\ObjBase.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
     </ClInclude>
@@ -272,14 +284,23 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Goal.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\StageObj.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\GoalKey.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\NormalBlock.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block\NormalBlock.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block</Filter>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal\Goal.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal\GoalKey.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjFactory.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjManager.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

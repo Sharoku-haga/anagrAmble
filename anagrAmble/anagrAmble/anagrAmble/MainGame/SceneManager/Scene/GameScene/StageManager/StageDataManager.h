@@ -18,10 +18,19 @@ class StageDataManager
 
 public:
 	/** Constructor */
-	StageDataManager();
+	StageDataManager(void);
 
 	/** Destructor */
-	~StageDataManager();
+	~StageDataManager(void);
+
+	/**
+	* Getter. ステージチップのサイズを取得する関数
+	* @return ステージチップのサイズ
+	*/
+	inline float	GetStageChipSize(void) { return m_StageChipSize; }
+
+private:
+	float m_StageChipSize;
 
 };	// class StageDataManager
 

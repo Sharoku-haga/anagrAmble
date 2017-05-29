@@ -29,7 +29,7 @@ public:
 	enum TYPE_ID
 	{
 		BLANK,				//!< 空白.何もなし
-		NOMAL_BLOCK,		//!< 通常ブロック
+		NORMAL_BLOCK,		//!< 通常ブロック
 		PLAYER,				//!< プレイヤー
 		ID_MAX
 	};
