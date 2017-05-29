@@ -9,6 +9,7 @@
 
 #include <windows.h>
 #include "../../../Common/slTypes.h"
+#include "../../../Common/slStruct.h"
 
 namespace sl
 {
@@ -45,7 +46,13 @@ public:
 	* ウィンドウハンドルを取得する関数
 	* @return ウィンドウハンドル
 	*/
-	HWND GetHwnd(void);
+	HWND GetHwnd(void) { return m_hWnd; }
+
+	/**
+	* クライアント領域の矩形サイズを取得する関数
+	* @return クライアント領域の矩形サイズ
+	*/
+	fRect GetClientSize(void) { return m_ClientSize; }
 
 	/**
 	* ウィンドウ更新関数
@@ -57,6 +64,7 @@ protected:
 	HWND		m_hWnd;				//!< ウィンドウハンドル
 	HWND		m_hWndParent;		//!< 親ウィンドウハンドル
 	MSG			m_WinMsg;			//!< メッセージ構造体	
+	fRect		m_ClientSize;		//!< クライアント領域の矩形サイズ
 
 };	// class Window 
 

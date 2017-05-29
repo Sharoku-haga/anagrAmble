@@ -15,7 +15,7 @@ namespace ar
 
 GameDataManager::GameDataManager(void)
 {
-	m_SelectStageName = "StageChipData";
+	m_SelectStageName = "Stage";
 }
 
 GameDataManager::~GameDataManager(void)

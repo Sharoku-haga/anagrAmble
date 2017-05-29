@@ -12,8 +12,9 @@
 #include "GamePauseMenu/GamePauseMenu.h"
 #include "GameEventManager/GameEventManager.h"
 #include "GameEventManager/EventLisner.h"
-#include <iostream>
+#include "StageManager/StageManager.h"
 #include "../SharokuLibrary/sl/sl.h"
+#include <iostream>
 
 namespace ar
 {
@@ -25,6 +26,7 @@ GameScene::GameScene(GameDataManager* pGameDataManager)
 	, m_rGameEventManager(GameEventManager::Instance())
 	, m_pEventLisner(new EventLisner())
 	, m_pPauseMenu(nullptr)
+	, m_pStageManager(nullptr)
 	, m_CurrentState(GAME_PLAY)
 {
 	m_NextSceneID = Scene::GAME;
@@ -37,10 +39,13 @@ GameScene::GameScene(GameDataManager* pGameDataManager)
 		int btnTexID = m_pLibrary->LoadTexture("../Resource/GameScene/PauseMeneBtn.png");
 		m_pPauseMenu = new GamePauseMenu( menuBGTexID, btnTexID);
 	}
+
+	m_pStageManager = new StageManager(m_pGameDataManager);
 }
 
 GameScene::~GameScene(void)
 {
+	sl::DeleteSafely(m_pStageManager);
 	sl::DeleteSafely(m_pPauseMenu);
 	sl::DeleteSafely(m_pEventLisner);
 	m_pLibrary->ReleaseVertexALL();
@@ -63,6 +68,7 @@ Scene::ID GameScene::Control(void)
 		{
 			m_CurrentState = PAUSE_MENU;
 		}
+		m_pStageManager->Contorl();
 		break;
 
 	case PAUSE_MENU:
@@ -87,7 +93,8 @@ Scene::ID GameScene::Control(void)
 
 void GameScene::Draw(void)
 {
-	
+	m_pStageManager->Draw();
+
 	switch(m_CurrentState)
 	{
 	case GAME_PLAY:

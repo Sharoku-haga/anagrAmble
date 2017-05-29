@@ -38,10 +38,10 @@ public:
 
 	/** 
 	* StageObjを生成し、登録する関数
-	* @param[in] rId		オブジェクトのID
+	* @param[in] typeID		オブジェクトのID
 	* @param[in] rIndex		ステージのインデックス番号
 	*/
-	void CreateStageObj(const ObjBase::TYPE_ID& rId, const Stage::INDEX_DATA rIndex);
+	void CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex);
 
 	/** コントロール関数 */
 	void Control(void);

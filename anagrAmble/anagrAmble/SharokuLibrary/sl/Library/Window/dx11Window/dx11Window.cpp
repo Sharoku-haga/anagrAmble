@@ -122,6 +122,15 @@ bool Window::Initialize(t_char*  pWinTitle, int winWidth, int winHeight, HWND hW
 	ShowWindow(m_hWnd, SW_SHOW);
 	UpdateWindow(m_hWnd);
 	SetWindowText(m_hWnd, pWinTitle);
+
+	// 現在のクライアント領域のサイズを保存する
+	RECT clientSize;
+	GetClientRect(m_hWnd, &clientSize);
+	m_ClientSize.m_Left		= 0.0f;
+	m_ClientSize.m_Top		= 0.0f;
+	m_ClientSize.m_Right	= static_cast<float>(clientSize.right - clientSize.left);
+	m_ClientSize.m_Bottom	= static_cast<float>(clientSize.bottom - clientSize.top);
+
 	return true;
 }
 
@@ -135,11 +144,6 @@ void Window::Finalize(void)
 	{
 		MessageBox(0, "破棄すべきウィンドウはありません。", NULL, MB_OK);
 	}
-}
-
-HWND Window::GetHwnd(void) 
-{ 
-	return m_hWnd; 
 }
 
 bool Window::Update(void)

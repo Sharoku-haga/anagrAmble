@@ -85,6 +85,11 @@ void DX11Library::ChangeWindowMode(bool isFullScreen)
 	m_pGraphicsDevice->ChangeWindowMode(isFullScreen);
 }
 
+fRect DX11Library::GetClientSize(void)
+{
+	return m_pWindow->GetClientSize();
+}
+
 int DX11Library::LoadTexture(const t_char* pFileName)
 {
 	return m_pTextureManager->LoadTexture(pFileName);

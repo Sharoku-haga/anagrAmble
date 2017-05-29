@@ -35,9 +35,9 @@ StageObjManager::~StageObjManager(void)
 	sl::DeleteSafely(m_pStageObjFactory);
 }
 
-void StageObjManager::CreateStageObj(const ObjBase::TYPE_ID& rId, const Stage::INDEX_DATA rIndex)
+void StageObjManager::CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex)
 {
-	m_pStageObj.push_back(m_pStageObjFactory->CreateStageObj(rId, rIndex));
+	m_pStageObj.push_back(m_pStageObjFactory->CreateStageObj(typeID, rIndex));
 }
 
 void StageObjManager::Control(void)

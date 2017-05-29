@@ -86,6 +86,12 @@ public:
 	*/
 	virtual void ChangeWindowMode(bool isFullScreen)override;
 
+	/**
+	* クライアント領域の矩形サイズを取得する関数
+	* @return クライアント領域の矩形サイズ
+	*/
+	virtual fRect GetClientSize(void) override;
+
 	//-----------------------------------------------------------------//
 	// テクスチャー関連関数
 	//-----------------------------------------------------------------//

@@ -34,17 +34,17 @@ StageObjFactory::StageObjFactory(StageDataManager* pStageDataManager, CollisionM
 StageObjFactory::~StageObjFactory()
 {}
 
-StageObj* StageObjFactory::CreateStageObj(const ObjBase::TYPE_ID& rId, const Stage::INDEX_DATA rIndex)
+StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex)
 {
 	StageObj* pStageObj = nullptr;
 
-	switch(rId)
+	switch(typeID)
 	{
 
 	case ObjBase::NORMAL_BLOCK:
 	{
 		sl::DrawingID id;
-		sl::fRect	uv = { 0.0f, 0.0f, 1.0f, 1.0f};
+		sl::fRect	uv = { 0.0f, 0.0f, 0.05f, 0.088f};
 		id.m_VtxID = m_pLibrary->CreateVertex2D(m_BlockSize, uv);
 		id.m_TexID = m_TexID;
 		pStageObj = new NormalBlock(rIndex, id);
