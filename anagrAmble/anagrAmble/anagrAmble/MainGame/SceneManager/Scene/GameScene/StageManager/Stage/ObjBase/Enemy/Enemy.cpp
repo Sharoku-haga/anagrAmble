@@ -34,6 +34,9 @@ void Enemy::Render(void)
 void Enemy::HandleEvent(void)
 {}
 
+void Enemy::CalculatePos(void)
+{}
+
 }	// namespace ar
 
 //==================================================================================================================================//

@@ -162,14 +162,14 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block\Block.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Goal.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
     </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\GoalKey.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block\NormalBlock.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -272,14 +272,14 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block\Block.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block</Filter>
-    </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Goal.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\GoalKey.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block\NormalBlock.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Block</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

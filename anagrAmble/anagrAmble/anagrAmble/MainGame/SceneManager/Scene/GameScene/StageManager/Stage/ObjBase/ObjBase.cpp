@@ -7,6 +7,7 @@
 /* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "ObjBase.h"
+#include "../../../GameEventManager/EventLisner.h"
 
 namespace ar
 {
@@ -16,24 +17,28 @@ namespace ar
 namespace
 {
 
-const float AreaCorrectionVal = 96.f;		//!< 表示画面エリアの補正値. この値を使用して少し画面外まで描画するようにする。
+const float AreaCorrectionVal	= 96.f;		//!< 表示画面エリアの補正値. この値を使用して少し画面外まで描画するようにする。
 
 }
 
 /* Static Variable -------------------------------------------------------------------------------------------- */
 
-sl::SLVECTOR2	ObjBase::m_BasePointPos = {0.0f, 0.0f};
-sl::fRect		ObjBase::m_DisplayArea  = {0.0f, 0.0f, 0.0f, 0.0f};
-
+sl::SLVECTOR2	ObjBase::m_BasePointPos		= {0.0f, 0.0f};
+sl::fRect		ObjBase::m_DisplayArea		= {0.0f, 0.0f, 0.0f, 0.0f};
+const float		ObjBase::m_StageChipSize	= 96.f;
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 ObjBase::ObjBase(const Stage::INDEX_DATA& rStageIndexData)
-	: m_StageIndexData(rStageIndexData)
+	: m_pLibrary(sl::ISharokuLibrary::Instance())
+	, m_StageIndexData(rStageIndexData)
+	, m_pEventLisner(new EventLisner())
 {}
 
 ObjBase::~ObjBase(void)
-{}
+{
+	sl::DeleteSafely(m_pEventLisner);
+}
 
 void ObjBase::Control(void)
 {
@@ -54,6 +59,7 @@ void ObjBase::Draw(void)
 		Render();
 	}
 }
+
 
 }	// namespace ar
 

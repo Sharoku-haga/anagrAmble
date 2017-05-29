@@ -25,8 +25,8 @@ SceneManager::SceneManager(void)
 	, m_pGameDataManager(nullptr)
 {
 #ifdef _DEBUG
-	//m_NextSceneID = Scene::GAME;
-#endif
+	m_NextSceneID = Scene::GAME;
+#endif	// _DEBUG
 
 	m_pGameDataManager = new GameDataManager();
 }

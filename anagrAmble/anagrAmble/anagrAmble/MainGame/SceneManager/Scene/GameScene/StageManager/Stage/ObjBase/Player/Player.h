@@ -43,6 +43,12 @@ private:
 	/** イベント処理関数 */
 	virtual void HandleEvent(void)override;
 
+	/** 
+	* Constructorの引数で得たインデックスを元に位置座標を計算する関数. 
+	* 位置座標は中心座標で計算する. 
+	*/
+	virtual void CalculatePos(void)override;
+
 };
 
 }	// namespace ar

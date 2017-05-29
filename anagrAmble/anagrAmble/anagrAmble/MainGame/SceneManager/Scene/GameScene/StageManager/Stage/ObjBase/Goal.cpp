@@ -34,6 +34,9 @@ void Goal::Render(void)
 void Goal::HandleEvent(void)
 {}
 
+void Goal::CalculatePos(void)
+{}
+
 }	// namespace ar
 
 //==================================================================================================================================//
