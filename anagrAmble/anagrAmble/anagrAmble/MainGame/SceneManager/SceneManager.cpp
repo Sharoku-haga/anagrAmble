@@ -29,6 +29,7 @@ SceneManager::SceneManager(void)
 #endif	// _DEBUG
 
 	m_pGameDataManager = new GameDataManager();
+	SceneFactory::Initialize(m_pGameDataManager);
 }
 
 SceneManager::~SceneManager(void)

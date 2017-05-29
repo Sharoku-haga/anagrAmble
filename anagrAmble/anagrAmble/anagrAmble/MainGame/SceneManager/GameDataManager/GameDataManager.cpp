@@ -14,7 +14,9 @@ namespace ar
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 GameDataManager::GameDataManager(void)
-{}
+{
+	m_SelectStageName = "StageChipData";
+}
 
 GameDataManager::~GameDataManager(void)
 {}
