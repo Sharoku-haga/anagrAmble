@@ -12,7 +12,6 @@
 #include "GamePauseMenu/GamePauseMenu.h"
 #include "GameEventManager/GameEventManager.h"
 #include "GameEventManager/EventLisner.h"
-//#include <functional>
 #include <iostream>
 #include "../SharokuLibrary/sl/sl.h"
 

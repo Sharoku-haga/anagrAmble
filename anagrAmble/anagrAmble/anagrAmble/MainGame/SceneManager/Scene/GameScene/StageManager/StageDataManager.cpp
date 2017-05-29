@@ -11,9 +11,20 @@
 namespace ar
 {
 
+/* Unnmaed Namespace ------------------------------------------------------------------------------------------ */
+
+namespace
+{
+
+const	float StageChipSize = 96.f;			//!< ステージのチップのサイズ
+
+}
+
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
+
 StageDataManager::StageDataManager()
+	: m_StageChipSize(StageChipSize)
 {}
 
 StageDataManager::~StageDataManager()
