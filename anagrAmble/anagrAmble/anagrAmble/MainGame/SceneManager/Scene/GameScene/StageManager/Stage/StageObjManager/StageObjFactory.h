@@ -7,6 +7,7 @@
 #ifndef AR_STEGE_OBJ_FACTORY_H
 #define AR_STEGE_OBJ_FACTORY_H
 
+#include <vector>
 #include "../ObjBase/StageObj/StageObj.h"
 #include "../SharokuLibrary/sl/sl.h"
 
@@ -46,9 +47,15 @@ private:
 	StageDataManager*			m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*			m_pCollisionManager;		//!< CollisionManagerクラスのインスタンスへのポインタ
 	int							m_TexID;					//!< テクスチャーID
+	std::vector<int>			m_VtxID;					//!< VertexIDを格納したvector
 	sl::fRect					m_BlockSize;				//!< ブロック矩形サイズ
 
-
+	/** 
+	* Vertex初期化関数 
+	* 各オブジェクトで使用するVertexを作成する
+	* Constructorでよぶ
+	*/
+	void InitializeVertex(void);
 
 };	// class StageObjFactory
 

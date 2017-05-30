@@ -31,7 +31,9 @@ public:
 	enum TYPE_ID
 	{
 		BLANK,				//!< 空白.何もなし
-		NORMAL_BLOCK,		//!< 通常ブロック
+		NORMAL_B,			//!< 通常ブロック
+		GROUND_B,			//!< 地面ブロック
+		STAGE_OBJ_ID_MAX,	
 		PLAYER,				//!< プレイヤー
 		ID_MAX
 	};
