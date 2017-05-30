@@ -40,7 +40,7 @@ public:
 protected:
 	/** 
 	* 処理実行関数.純粋仮想関数 
-	* Constrol()内で使用
+	* Control()内で使用
 	*/
 	virtual void Run(void) = 0;
 
