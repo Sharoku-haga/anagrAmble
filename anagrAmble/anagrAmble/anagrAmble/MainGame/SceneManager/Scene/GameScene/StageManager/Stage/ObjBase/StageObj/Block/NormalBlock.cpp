@@ -13,12 +13,13 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-NormalBlock::NormalBlock(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID)
+NormalBlock::NormalBlock(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
+						, const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
 	CalculatePos();
 	m_DrawingID = rID;
-	m_TypeID = NORMAL_BLOCK;
+	m_TypeID = NORMAL_B;
 	m_RectSize = m_pLibrary->GetSizeRect(m_DrawingID.m_VtxID);
 	m_CurrentRectData.m_Left	= m_Pos.x + m_RectSize.m_Left; 
 	m_CurrentRectData.m_Right	= m_Pos.x + m_RectSize.m_Right;
