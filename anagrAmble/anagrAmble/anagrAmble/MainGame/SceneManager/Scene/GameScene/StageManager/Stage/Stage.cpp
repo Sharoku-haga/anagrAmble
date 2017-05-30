@@ -81,7 +81,7 @@ void Stage::Control(void)
 		// プレイヤー処理
 
 		// 下記はデバック用のベースポイント
-		// m_pBasePoint->Update();
+		m_pBasePoint->Update();
 
 		m_pStageObjManager->Control();
 		m_pBackground->Control();

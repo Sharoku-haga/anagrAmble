@@ -47,7 +47,7 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 		sl::fRect	uv = { 0.0f, 0.0f, 0.05f, 0.088f};
 		id.m_VtxID = m_pLibrary->CreateVertex2D(m_BlockSize, uv);
 		id.m_TexID = m_TexID;
-		pStageObj = new NormalBlock(rIndex, id);
+		pStageObj = new NormalBlock(m_pStageDataManager, m_pCollisionManager, rIndex, id);
 	}
 		break;
 

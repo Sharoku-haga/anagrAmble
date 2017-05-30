@@ -13,8 +13,8 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-NormalBlock::NormalBlock(const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID)
-	: StageObj(rStageIndexData)
+NormalBlock::NormalBlock(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID)
+	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
 	CalculatePos();
 	m_DrawingID = rID;

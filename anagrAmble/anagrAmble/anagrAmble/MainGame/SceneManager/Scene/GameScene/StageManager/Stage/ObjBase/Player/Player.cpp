@@ -13,8 +13,8 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-Player::Player(const Stage::INDEX_DATA& rStageIndexData)
-	: ObjBase(rStageIndexData)
+Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData)
+	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
 {}
 
 Player::~Player()

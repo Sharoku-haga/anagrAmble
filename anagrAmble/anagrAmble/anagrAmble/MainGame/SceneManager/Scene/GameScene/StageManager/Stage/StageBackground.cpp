@@ -63,7 +63,7 @@ void StageBackground::Control(void)
 			backgroundPos.x = cuurentBasePointPos.x + m_RectSize.m_Right;
 		}
 		else if((cuurentBasePointPos.x - backgroundPos.x) < 0.0f && (m_RectSize.m_Right + PosCorrectionVal / 2) < (backgroundPos.x - cuurentBasePointPos.x))
-		{
+		{	// 背景が右の画面外にでたらまた左の画面外に配置しなおす
 			backgroundPos.x = cuurentBasePointPos.x - m_RectSize.m_Right;
 		}
 	}

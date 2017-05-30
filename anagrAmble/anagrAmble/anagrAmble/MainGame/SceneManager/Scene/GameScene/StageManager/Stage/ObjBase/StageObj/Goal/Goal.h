@@ -20,7 +20,7 @@ class Goal : public StageObj
 
 public:
 	/** Constructor */
-	Goal(const Stage::INDEX_DATA& rStageIndexData);
+	Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
 
 	/** Destructor */
 	~Goal();
