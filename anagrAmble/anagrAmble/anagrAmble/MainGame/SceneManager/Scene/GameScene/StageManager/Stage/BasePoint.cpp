@@ -9,6 +9,9 @@
 #include "BasePoint.h"
 #include "../../GameEventManager/GameEventManager.h"
 #include "../../GameEventManager/EventLisner.h"
+#include "ObjBase/ObjBase.h"
+
+#include "../../../../../ControllerEnum.h"
 
 namespace ar
 {
@@ -65,6 +68,17 @@ void BasePoint::Initialize(float stageWidth, const sl::SLVECTOR2& rPlayerPos)
 void BasePoint::Update(void)
 {
 	HandleEvent();
+	if(sl::ISharokuLibrary::Instance()->CheckCustomizeState(RIGHT,sl::ON))
+	{
+		m_Pos.x += 20.f;
+		ObjBase::SetBasePointPos(m_Pos);
+	}
+
+	if(sl::ISharokuLibrary::Instance()->CheckCustomizeState(LEFT,sl::ON))
+	{
+		m_Pos.x -= 20.f;
+		ObjBase::SetBasePointPos(m_Pos);
+	}
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

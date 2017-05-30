@@ -43,7 +43,7 @@ void NormalBlock::Run(void)
 
 void NormalBlock::Render(void)
 {
-	m_pLibrary->Draw2D( m_DrawingID, (m_Pos + m_BasePointPos));
+	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
 }
 
 void NormalBlock::HandleEvent(void)

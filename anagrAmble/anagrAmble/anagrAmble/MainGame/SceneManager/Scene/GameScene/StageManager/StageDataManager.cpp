@@ -36,7 +36,7 @@ bool StageDataManager::LoadDataFile(void)
 {
 	std::string stageName = m_pGameDataManager->GetSelectStageName();
 
-	std::string path = "../Resource/GameScene/" + stageName + ".mpd";
+	std::string path = "../Resource/GameScene/" + stageName + "ChipData.mpd";
 	m_BackGoundTexFileName = "../Resource/GameScene/" + stageName + ".png";
 
 	FILE* fp;

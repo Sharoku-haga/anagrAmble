@@ -34,8 +34,12 @@ public:
 	/** Destructor */
 	~StageObjFactory(void);
 
-	/** StageObjを生成する関数 */
-	StageObj*	CreateStageObj(const ObjBase::TYPE_ID& rId, const Stage::INDEX_DATA rIndex);
+	/** 
+	* StageObjを生成する関数 
+	* @param[in]  typeID オブジェクトID
+	* @param[in]  rIndex インデックスデータ
+	*/
+	StageObj*	CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex);
 
 private:
 	sl::ISharokuLibrary*		m_pLibrary;					//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ

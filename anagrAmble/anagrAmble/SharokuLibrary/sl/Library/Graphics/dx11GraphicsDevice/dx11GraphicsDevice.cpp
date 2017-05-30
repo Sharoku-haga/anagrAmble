@@ -305,8 +305,8 @@ bool GraphicsDevice::InitView(void)
 		D3D11_VIEWPORT viewPort;
 		viewPort.TopLeftX	= 0;
 		viewPort.TopLeftY	= 0;
-		viewPort.Width		= swapChainDesc.BufferDesc.Width;
-		viewPort.Height		= swapChainDesc.BufferDesc.Height;
+		viewPort.Width		= static_cast<FLOAT>(swapChainDesc.BufferDesc.Width);
+		viewPort.Height		= static_cast<FLOAT>(swapChainDesc.BufferDesc.Height);
 		viewPort.MinDepth	= 0.0f;
 		viewPort.MaxDepth	= 1.0f;
 		m_pDeviceContext->RSSetViewports(1, &viewPort);

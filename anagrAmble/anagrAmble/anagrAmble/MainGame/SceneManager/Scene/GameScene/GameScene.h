@@ -16,6 +16,7 @@ class GameDataManager;
 class GamePauseMenu;
 class GameEventManager;
 class EventLisner;
+class StageManager;
 
 //======================================================================//
 //!< anagrAmbleにおけるゲームシーンのクラス
@@ -46,6 +47,7 @@ private:
 	GameEventManager&		m_rGameEventManager;	//!< GameEventManagerクラスのインスタンスへの参照
 	EventLisner*			m_pEventLisner;			//!< EventLisnerクラスのインスタンスへのポインタ
 	GamePauseMenu*			m_pPauseMenu;			//!< GamePauseMenuクラスのインスタンスへのポインタ
+	StageManager*			m_pStageManager;		//!< m_pStageManagerクラスのインスタンスへのポインタ
 	STATE					m_CurrentState;			//!< GameSecneの現在の状態
 
 	/** 
