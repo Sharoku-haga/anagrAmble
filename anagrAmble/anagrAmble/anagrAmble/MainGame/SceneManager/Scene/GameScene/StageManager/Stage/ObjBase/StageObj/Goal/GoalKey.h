@@ -20,7 +20,7 @@ class GoalKey : public StageObj
 
 public:
 	/** Constructor */
-	GoalKey(const Stage::INDEX_DATA& rStageIndexData);
+	GoalKey(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
 
 	/** Destructor */
 	~GoalKey();

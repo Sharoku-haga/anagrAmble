@@ -13,8 +13,8 @@
 namespace ar
 {
 
-StageObj::StageObj(const Stage::INDEX_DATA& rStageIndexData)
-	: ObjBase(rStageIndexData)
+StageObj::StageObj(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData)
+	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
 {}
 
 StageObj::~StageObj(void)

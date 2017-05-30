@@ -13,8 +13,8 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-Enemy::Enemy(const Stage::INDEX_DATA& rStageIndexData)
-	: ObjBase(rStageIndexData)
+Enemy::Enemy(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData)
+	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
 {}
 
 Enemy::~Enemy()

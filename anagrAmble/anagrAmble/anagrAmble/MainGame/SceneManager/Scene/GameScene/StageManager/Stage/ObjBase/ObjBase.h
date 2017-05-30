@@ -14,6 +14,8 @@ namespace ar
 {
 
 class EventLisner;
+class StageDataManager;
+class CollisionManager;
 
 //======================================================================//
 //!< ゲーム画面のオブジェクトの基底クラス
@@ -37,9 +39,11 @@ public:
 	/**  
 	* Constructor
 	* @attention 位置座標はStage::INDEX_DATAから継承クラスごとに設定すること
-	* @param[in] rStageIndexData ステージインデックスデータ
+	* @param[in] pStageDataManager	StageDataManagerクラスのインスタンスへのポインタ
+	* @param[in] pCollisionManager	CollisionManagerクラスのインスタンスへのポインタ
+	* @param[in] rStageIndexData	ステージインデックスデータ
 	*/
-	ObjBase(const Stage::INDEX_DATA& rStageIndexData);
+	ObjBase(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
 
 	/** Destructor */
 	virtual ~ObjBase(void);
@@ -111,6 +115,8 @@ protected:
 	sl::DrawingID			m_DrawingID;					//!< 描画関連のIDをまとめた群
 	TYPE_ID					m_TypeID;						//!< オブジェクトのタイプID
 	EventLisner*			m_pEventLisner;					//!< EventLisnerクラスのインスタンスへのポインタ
+	StageDataManager*		m_pStageDataManager;			//!< StageDataManagerクラスのインスタンスへのポインタ
+	CollisionManager*		m_pCollisionManager;			//!< CollisionManagerクラスのインスタンスへのポインタ
 
 	/** 
 	* 処理実行関数.純粋仮想関数 

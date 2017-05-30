@@ -21,9 +21,11 @@ class StageObj : public ObjBase
 public:
 	/** 
 	* Constructor
+	* @param[in] pStageDataManager	StageDataManagerクラスのインスタンスへのポインタ
+	* @param[in] pCollisionManager	CollisionManagerクラスのインスタンスへのポインタ
 	* @param[in] rStageIndexData ステージインデックスデータ
 	*/
-	StageObj(const Stage::INDEX_DATA& rStageIndexData);
+	StageObj(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
 
 	/** Destructor */
 	virtual ~StageObj(void);

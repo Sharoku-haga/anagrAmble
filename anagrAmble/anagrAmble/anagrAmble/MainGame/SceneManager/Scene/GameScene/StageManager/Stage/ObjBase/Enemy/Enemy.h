@@ -19,8 +19,13 @@ class Enemy : public ObjBase
 {
 
 public:
-	/** Constructor*/
-	Enemy(const Stage::INDEX_DATA& rStageIndexData);
+	/** 
+	* Constructor
+	* @param[in] pStageDataManager	StageDataManagerクラスのインスタンスへのポインタ
+	* @param[in] pCollisionManager	CollisionManagerクラスのインスタンスへのポインタ
+	* @param[in] rStageIndexData	ステージインデックスデータ
+	*/
+	Enemy(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
 
 	/** Destructor */
 	~Enemy();

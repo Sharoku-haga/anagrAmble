@@ -13,8 +13,8 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-Goal::Goal(const Stage::INDEX_DATA& rStageIndexData)
-	: StageObj(rStageIndexData)
+Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData)
+	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {}
 
 Goal::~Goal()

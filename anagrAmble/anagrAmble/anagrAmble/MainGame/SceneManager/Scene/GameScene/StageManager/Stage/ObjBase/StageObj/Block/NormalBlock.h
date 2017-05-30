@@ -20,9 +20,13 @@ class NormalBlock : public StageObj
 
 public:
 	/** 
-	* Constructor 
+	* Constructor
+	* @param[in] pStageDataManager	StageDataManagerクラスのインスタンスへのポインタ
+	* @param[in] pCollisionManager	CollisionManagerクラスのインスタンスへのポインタ
+	* @param[in] rStageIndexData	ステージインデックスデータ
+	* @param[in] rID				描画関連のID
 	*/
-	NormalBlock(const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID);
+	NormalBlock(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID);
 
 	/** Destructor */
 	virtual ~NormalBlock(void);
