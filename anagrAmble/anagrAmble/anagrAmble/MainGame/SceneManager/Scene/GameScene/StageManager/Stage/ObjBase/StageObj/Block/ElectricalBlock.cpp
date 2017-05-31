@@ -50,7 +50,9 @@ ElectricalBlock::ElectricalBlock(StageDataManager* pStageDataManager, CollisionM
 
 
 ElectricalBlock::~ElectricalBlock(void)
-{}
+{
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
 
 void ElectricalBlock::ProcessCollision(int typeID, bool isDeath)
 {}

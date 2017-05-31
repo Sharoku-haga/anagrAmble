@@ -12,6 +12,7 @@
 #include "../ObjBase/StageObj/Block/NormalBlock.h"
 #include "../ObjBase/StageObj/Block/GroundBlock.h"
 #include "../ObjBase/StageObj/Block/ElectricalBlock.h"
+#include "../ObjBase/StageObj/Block/PressureSensitiveBlock.h"
 
 namespace ar
 {
@@ -34,7 +35,7 @@ StageObjFactory::StageObjFactory(StageDataManager* pStageDataManager, CollisionM
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-StageObjFactory::~StageObjFactory()
+StageObjFactory::~StageObjFactory(void)
 {
 	m_pLibrary->ReleaseVertex2D(m_GroundBlockVtxID);
 	m_pLibrary->ReleaseVertex2D(m_NormalBlockVtxID);
@@ -67,6 +68,10 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 
 	case ObjBase::ELECTICAL_B:
 		pStageObj = new ElectricalBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
+		break;
+
+	case ObjBase::PRESSURE_SENSITIVE_B:
+		pStageObj = new PressureSensitiveBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
 		break;
 
 	default:

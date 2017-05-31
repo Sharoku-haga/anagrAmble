@@ -140,6 +140,7 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\ElectricalBlock.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\GroundBlock.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\NormalBlock.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\PressureSensitiveBlock.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal\Goal.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal\GoalKey.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\StageObj.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\ElectricalBlock.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\GroundBlock.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\NormalBlock.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\PressureSensitiveBlock.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal\Goal.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Goal\GoalKey.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\StageObj.h" />
