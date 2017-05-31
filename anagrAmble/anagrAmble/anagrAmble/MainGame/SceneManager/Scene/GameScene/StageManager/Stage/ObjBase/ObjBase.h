@@ -34,6 +34,7 @@ public:
 		NORMAL_B,						//!< 通常ブロック
 		GROUND_B,						//!< 地面ブロック
 		ELECTICAL_B,					//!< 通電ブロック
+		PRESSURE_SENSITIVE_B,			//!< 感圧ブロック					
 		PLAYER,							//!< プレイヤー
 		ID_MAX
 	};
