@@ -19,11 +19,18 @@ class GoalKey : public StageObj
 {
 
 public:
-	/** Constructor */
-	GoalKey(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
+	/** 
+	* Constructor
+	* @param[in] pStageDataManager	StageDataManagerクラスのインスタンスへのポインタ
+	* @param[in] pCollisionManager	CollisionManagerクラスのインスタンスへのポインタ
+	* @param[in] rStageIndexData	ステージインデックスデータ
+	* @param[in] texID				テクスチャーのID
+	*/
+	GoalKey(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
+			, const Stage::INDEX_DATA& rStageIndexData, int texID);
 
 	/** Destructor */
-	~GoalKey();
+	virtual ~GoalKey(void);
 
 	virtual void ProcessCollision(int typeID, bool isDeath = false)override;
 

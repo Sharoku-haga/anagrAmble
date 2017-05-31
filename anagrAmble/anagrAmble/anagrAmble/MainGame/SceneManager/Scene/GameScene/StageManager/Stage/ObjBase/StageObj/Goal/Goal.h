@@ -19,11 +19,19 @@ class Goal : public StageObj
 {
 
 public:
-	/** Constructor */
-	Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
+	/** 
+	* Constructor
+	* @param[in] pStageDataManager	StageDataManagerクラスのインスタンスへのポインタ
+	* @param[in] pCollisionManager	CollisionManagerクラスのインスタンスへのポインタ
+	* @param[in] rStageIndexData	ステージインデックスデータ
+	* @param[in] texID				テクスチャーのID
+	* @param[in] typeID				オブジェクトのタイプID
+	*/
+	Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
+		, const Stage::INDEX_DATA& rStageIndexData, int texID, ObjBase::TYPE_ID typeID);
 
 	/** Destructor */
-	~Goal();
+	virtual ~Goal(void);
 
 	virtual void ProcessCollision(int typeID, bool isDeath = false)override;
 

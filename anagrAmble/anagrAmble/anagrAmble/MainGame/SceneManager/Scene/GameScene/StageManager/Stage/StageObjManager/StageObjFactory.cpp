@@ -14,6 +14,9 @@
 #include "../ObjBase/StageObj/Block/ElectricalBlock.h"
 #include "../ObjBase/StageObj/Block/PressureSensitiveBlock.h"
 
+#include "../ObjBase/StageObj/Goal/Goal.h"
+#include "../ObjBase/StageObj/Goal/GoalKey.h"
+
 namespace ar
 {
 
@@ -72,6 +75,20 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 
 	case ObjBase::PRESSURE_SENSITIVE_B:
 		pStageObj = new PressureSensitiveBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
+		break;
+
+	case ObjBase::LIGHTROAD_B:
+		break;
+
+	case ObjBase::LEVER:
+		break;
+
+	case ObjBase::GOAL:
+		pStageObj = new Goal(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::GOAL);
+		break;
+
+	case ObjBase::GOAL_KEY:
+		pStageObj = new GoalKey(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
 		break;
 
 	default:
