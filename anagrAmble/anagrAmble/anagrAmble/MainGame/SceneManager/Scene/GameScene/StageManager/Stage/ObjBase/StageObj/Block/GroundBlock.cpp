@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
-//!< @file		GroundBlockBlock.cpp
-//!< @brief		ar::GroundBlockBlockBlockクラスヘッダ
+//!< @file		GroundBlock.cpp
+//!< @brief		ar::GroundBlockクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -22,8 +22,8 @@ GroundBlock::GroundBlock(StageDataManager* pStageDataManager, CollisionManager* 
 	m_TypeID = GROUND_B;
 	m_RectSize = m_pLibrary->GetSizeRect(m_DrawingID.m_VtxID);
 	m_CurrentRectData.m_Left	= m_Pos.x + m_RectSize.m_Left; 
-	m_CurrentRectData.m_Right	= m_Pos.x + m_RectSize.m_Right;
 	m_CurrentRectData.m_Top		= m_Pos.y + m_RectSize.m_Top;
+	m_CurrentRectData.m_Right	= m_Pos.x + m_RectSize.m_Right;
 	m_CurrentRectData.m_Bottom	= m_Pos.y + m_RectSize.m_Bottom;
 }
 

@@ -30,11 +30,11 @@ public:
 	*/
 	enum TYPE_ID
 	{
-		BLANK,				//!< 空白.何もなし
-		NORMAL_B,			//!< 通常ブロック
-		GROUND_B,			//!< 地面ブロック
-		STAGE_OBJ_ID_MAX,	
-		PLAYER,				//!< プレイヤー
+		BLANK,							//!< 空白.何もなし
+		NORMAL_B,						//!< 通常ブロック
+		GROUND_B,						//!< 地面ブロック
+		ELECTICAL_B,					//!< 通電ブロック
+		PLAYER,							//!< プレイヤー
 		ID_MAX
 	};
 
@@ -122,7 +122,7 @@ protected:
 
 	/** 
 	* 処理実行関数.純粋仮想関数 
-	* Constrol()内で使用
+	* Control()内で使用
 	*/
 	virtual void Run(void) = 0;
 

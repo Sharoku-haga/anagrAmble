@@ -30,7 +30,7 @@ public:
 private:
 	/** 
 	* 処理実行関数 
-	* ObjBase::Constrol()内で使用
+	* ObjBase::Control()内で使用
 	*/
 	virtual void Run(void)override;
 

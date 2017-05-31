@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
-//!< @file		GroundBlockBlock.h
-//!< @brief		ar::GroundBlockBlockBlockクラスヘッダ
+//!< @file		GroundBlock.h
+//!< @brief		ar::GroundBlockクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -32,7 +32,7 @@ public:
 	/** Destructor */
 	virtual ~GroundBlock(void);
 
-		/**
+	/**
 	* 衝突処理関数 
 	* @param[in] typeID		衝突したオブジェクトのID
 	* @param[in] isDeath	衝突したことで死んだかどうかのフラグ. true→死亡, flase→死んでいない. デフォルトはflase
@@ -42,7 +42,7 @@ public:
 private:
 	/** 
 	* 処理実行関数
-	* ObjBase::Constrol()内で使用
+	* ObjBase::Control()内で使用
 	*/
 	virtual void Run(void)override;
 
