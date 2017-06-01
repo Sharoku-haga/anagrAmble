@@ -61,12 +61,22 @@ public:
 	*/
 	inline const std::string&	GetBackGoundTexFileName(void) { return m_BackGoundTexFileName; }
 
+	/**
+	* Getter. 指定したｲﾝデックスからそこに存在するオブジェクトを取得する関数
+	* @param[in] indexY y方向のインデックス
+	* @param[in] indexX	x方向のインデックス
+	* @return 引数のインデックスに存在するオブジェクトID.
+	* インデックスがステージの範囲外を指定していたら0(空白)を返す
+	*/
+	int GetTypeID(int indexY, int indexX);
+
 private:
 	GameDataManager*					m_pGameDataManager;			//!< GameDataManagerクラスのインスタンスへのポインタ
 	float								m_StageWidth;				//!< ステージチップの横の長さ
 	float								m_StageHeight;				//!< ステージチップの縦の長さ
 	float								m_StageChipSize;			//!< ステージチップのサイズ
 	std::vector<std::vector<short>>		m_LoadStageData;			//!< ファイルからロードしたステージデータを格納する二次元配列(vector)
+	std::vector<std::vector<short>>		m_CuurentStageData;			//!< 現在のステージデータを格納する二次元配列(vector)
 	std::string							m_BackGoundTexFileName;		//!< ステージ背景のテクスチャーファイル名
 
 };	// class StageDataManager
