@@ -16,7 +16,7 @@ namespace ar
 class LightBlock;
 
 //======================================================================//
-//!< ゲーム画面の足場(光ブロック)排出ブロックのクラス
+//!< ステージオブジェクトである足場(光ブロック)排出ブロックのクラス
 //======================================================================//
 class LightRoadBlock : public StageObj
 {
@@ -43,7 +43,7 @@ public:
 	virtual void ProcessCollision(int typeID, bool isDeath = false)override;
 
 private:
-	std::vector<LightBlock*>			m_pLightBlock;			//!< LightBlockクラスのインスタンスへのポインタを格納するvector
+	std::vector<LightBlock*>			m_pLightBlocks;			//!< LightBlockクラスのインスタンスへのポインタを格納するvector
 
 	/** 
 	* 処理実行関数

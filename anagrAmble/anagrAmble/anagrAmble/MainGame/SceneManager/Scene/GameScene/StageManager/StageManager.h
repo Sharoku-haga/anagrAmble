@@ -21,7 +21,6 @@ class StageManager
 {
 
 public:
-
 	/** 
 	* Constructor
 	* @param[in] pGameDataManager GameDataManagerクラスのインスタンスへのポインタ 

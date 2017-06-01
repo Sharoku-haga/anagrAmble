@@ -76,11 +76,11 @@ bool StageDataManager::LoadDataFile(void)
 
 int StageDataManager::GetTypeID(int indexY, int indexX)
 {
-	// インデックスが0未満、もしくはサイズ以上なら0をかえす
+	// インデックスが0未満、もしくはサイズ以上なら-1をかえす
 	if(indexY < 0 || indexY > static_cast<int>(m_CuurentStageData.size())
 		|| indexX < 0 ||  indexX > static_cast<int>(m_CuurentStageData[0].size()))
 	{
-		return 0;
+		return -1;
 	}
 
 	return static_cast<int>(m_CuurentStageData[indexY][indexX]);
