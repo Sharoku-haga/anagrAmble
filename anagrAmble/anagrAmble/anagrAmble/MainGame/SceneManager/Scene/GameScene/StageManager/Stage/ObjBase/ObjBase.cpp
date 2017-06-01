@@ -19,7 +19,7 @@ namespace ar
 namespace
 {
 
-const float AreaCorrectionVal	= 96.f;		//!< 表示画面エリアの補正値. この値を使用して少し画面外まで描画するようにする。
+const float AreaCorrectionVal	= 576.f;		//!< 表示画面エリアの補正値. この値を使用して少し画面外まで描画するようにする。
 
 }
 
@@ -52,6 +52,7 @@ void ObjBase::Control(void)
 void ObjBase::Draw(void)
 {
 	// プレイヤーじゃない画面外にあるオブジェクトは描画しない
+	/** @todo ここの条件は随時調整 */
 	if(m_TypeID != PLAYER
 		&& m_Pos.x < (m_BasePointPos.x - AreaCorrectionVal)
 		|| m_Pos.x > (m_BasePointPos.x + AreaCorrectionVal + m_DisplayArea.m_Right))
