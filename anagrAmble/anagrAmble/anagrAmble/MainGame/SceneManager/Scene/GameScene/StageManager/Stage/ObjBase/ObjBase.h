@@ -30,18 +30,31 @@ public:
 	*/
 	enum TYPE_ID
 	{
-		BLANK,							//!< 空白.何もなし
-		NORMAL_B,						//!< 通常ブロック
-		GROUND_B,						//!< 地面ブロック
-		ELECTICAL_B,					//!< 通電ブロック
-		PRESSURE_SENSITIVE_B,			//!< 感圧ブロック
-		LIGHT_ROAD_B,					//!< 足場排出ブロック
-		LEVER,							//!< レバー
-		GOAL,							//!< ゴール
-		GOAL_KEY,						//!< ゴールキー
-		LIGHT_B,						//!< 光ブロック
-		PLAYER,							//!< プレイヤー
-		ID_MAX
+		BLANK,								//!< 空白.何もなし
+		NORMAL_B,							//!< 通常ブロック
+		GROUND_B,							//!< 地面ブロック
+		ELECTICAL_B,						//!< 通電ブロック
+		PRESSURE_SENSITIVE_B,				//!< 感圧ブロック
+		LIGHT_ROAD_B,						//!< 足場排出ブロック
+		LEVER,								//!< レバー
+		GOAL,								//!< ゴール
+		LOCLED_GOAL,						//!< 鍵付きゴール
+		GOAL_KEY,							//!< ゴールキー
+		EMBLME_B_S_R,						//!< 2つで1つの紋章ブロックの右側
+		EMBLME_B_S_L,						//!< 2つで1つの紋章ブロックの左側		
+		EMBLME_B_T_R,						//!< 3つで1つの紋章ブロックの左側
+		EMBLME_B_T_F,						//!< 3つで1つの紋章ブロックの中央側
+		EMBLME_B_T_L,						//!< 3つで1つの紋章ブロックの左側
+		REVOLVING_LIGHT_DOOR_HORIZONTAL,	//!< 横向きの光の回転扉	
+		REVOLVING_LIGHT_DOOR_VERTICAL,		//!< 縦向きの光の回転扉
+		LIGHT_DOOR_UP,						//!< 上に向かって伸びている光の扉
+		LIGHT_DOOR_DOWN,					//!< 下に向かって伸びている光の扉
+		LIGHT_DOOR_RIGHT,					//!< 右に向かって伸びている光の扉
+		LIGHT_DOOR_LEFT,					//!< 左に向かって伸びている光の扉
+		LIGHT_B,							//!< 光ブロック
+		PLAYER,								//!< プレイヤー
+		ID_MAX,
+		TYPE_ERROR = -1,					//!< エラー番号
 	};
 
 	/**  
@@ -146,7 +159,6 @@ protected:
 	* 位置座標は中心座標で計算する. 純粋仮想関数
 	*/
 	virtual void CalculatePos(void) = 0;
-
 
 };	// class ObjBase
 

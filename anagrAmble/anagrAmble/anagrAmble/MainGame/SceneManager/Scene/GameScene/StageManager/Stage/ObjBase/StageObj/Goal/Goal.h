@@ -13,7 +13,7 @@ namespace ar
 {
 
 //======================================================================//
-//!< ゲーム画面のゴールクラス
+//!< ステージオブジェクトであるゴールクラス
 //======================================================================//
 class Goal : public StageObj
 {
@@ -33,6 +33,11 @@ public:
 	/** Destructor */
 	virtual ~Goal(void);
 
+	/**
+	* 衝突処理関数 
+	* @param[in] typeID		衝突したオブジェクトのID
+	* @param[in] isDeath	衝突したことで死んだかどうかのフラグ. true→死亡, flase→死んでいない. デフォルトはflase
+	*/ 
 	virtual void ProcessCollision(int typeID, bool isDeath = false)override;
 
 private:
@@ -56,7 +61,6 @@ private:
 	* 位置座標は中心座標で計算する. 
 	*/
 	virtual void CalculatePos(void)override;
-
 
 };	// class Goal
 

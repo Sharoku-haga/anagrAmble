@@ -55,7 +55,7 @@ LightRoadBlock::LightRoadBlock(StageDataManager* pStageDataManager, CollisionMan
 
 LightRoadBlock::~LightRoadBlock(void)
 {
-	for(auto pblock : m_pLightBlock)
+	for(auto pblock : m_pLightBlocks)
 	{
 		sl::DeleteSafely(pblock);
 	}
@@ -73,7 +73,7 @@ void LightRoadBlock::Run(void)
 void LightRoadBlock::Render(void)
 {
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
-	for(auto pblock : m_pLightBlock)
+	for(auto pblock : m_pLightBlocks)
 	{
 		pblock->Draw();
 	}
@@ -112,11 +112,12 @@ void LightRoadBlock::CreateLightBlock(void)
 				stageIndexData.m_YNum = m_StageIndexData.m_YNum;
 				stageIndexData.m_XNum = m_StageIndexData.m_XNum - count;
 
-				m_pLightBlock.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
+				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
 										, stageIndexData, m_DrawingID.m_TexID));
 			}
 			break;
 		}
+
 	}
 }
 

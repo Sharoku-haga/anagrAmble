@@ -18,6 +18,8 @@
 #include "../ObjBase/StageObj/Goal/Goal.h"
 #include "../ObjBase/StageObj/Goal/GoalKey.h"
 
+#include "../ObjBase/StageObj/Gimmik/RevolvingLightDoor.h"
+#include "../ObjBase/StageObj/Gimmik/LightDoor.h"
 #include "../ObjBase/StageObj/Block/LightBlock.h"
 
 namespace ar
@@ -92,11 +94,52 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 		pStageObj = new Goal(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::GOAL);
 		break;
 
+	case ObjBase::LOCLED_GOAL:
+		pStageObj = new Goal(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::LOCLED_GOAL);
+		break;
+
 	case ObjBase::GOAL_KEY:
 		pStageObj = new GoalKey(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
 		break;
 
+	case ObjBase::EMBLME_B_S_R:
+		break;
 
+	case ObjBase::EMBLME_B_S_L:
+		break;
+
+	case ObjBase::EMBLME_B_T_R:
+		break;
+
+	case ObjBase::EMBLME_B_T_F:
+		break;
+
+	case ObjBase::EMBLME_B_T_L:
+		break;
+
+	case ObjBase::REVOLVING_LIGHT_DOOR_HORIZONTAL:
+		pStageObj = new RevolvingLightDoor(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::REVOLVING_LIGHT_DOOR_HORIZONTAL);
+		break;
+
+	case ObjBase::REVOLVING_LIGHT_DOOR_VERTICAL:
+		pStageObj = new RevolvingLightDoor(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::REVOLVING_LIGHT_DOOR_VERTICAL);
+		break;
+
+	case ObjBase::LIGHT_DOOR_UP:
+		pStageObj = new LightDoor(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::LIGHT_DOOR_UP);
+		break;
+
+	case ObjBase::LIGHT_DOOR_DOWN:
+		pStageObj = new LightDoor(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::LIGHT_DOOR_DOWN);
+		break;
+
+	case ObjBase::LIGHT_DOOR_RIGHT:
+		pStageObj = new LightDoor(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::LIGHT_DOOR_RIGHT);
+		break;
+
+	case ObjBase::LIGHT_DOOR_LEFT:
+		pStageObj = new LightDoor(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::LIGHT_DOOR_LEFT);
+		break;
 
 	case ObjBase::LIGHT_B:
 			pStageObj = new LightBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
