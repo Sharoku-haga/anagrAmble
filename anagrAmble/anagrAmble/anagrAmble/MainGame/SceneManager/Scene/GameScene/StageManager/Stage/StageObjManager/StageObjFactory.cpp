@@ -14,7 +14,7 @@
 #include "../ObjBase/StageObj/Block/ElectricalBlock.h"
 #include "../ObjBase/StageObj/Block/PressureSensitiveBlock.h"
 #include "../ObjBase/StageObj/Block/LightRoadBlock.h"
-
+#include "../ObjBase/StageObj/Gimmik/Lever.h"
 #include "../ObjBase/StageObj/Goal/Goal.h"
 #include "../ObjBase/StageObj/Goal/GoalKey.h"
 
@@ -85,6 +85,7 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 		break;
 
 	case ObjBase::LEVER:
+		pStageObj = new Lever(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
 		break;
 
 	case ObjBase::GOAL:
@@ -94,6 +95,8 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 	case ObjBase::GOAL_KEY:
 		pStageObj = new GoalKey(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
 		break;
+
+
 
 	case ObjBase::LIGHT_B:
 			pStageObj = new LightBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
