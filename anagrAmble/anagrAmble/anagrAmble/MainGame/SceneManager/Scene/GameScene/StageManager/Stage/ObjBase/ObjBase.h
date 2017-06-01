@@ -34,7 +34,11 @@ public:
 		NORMAL_B,						//!< 通常ブロック
 		GROUND_B,						//!< 地面ブロック
 		ELECTICAL_B,					//!< 通電ブロック
-		PRESSURE_SENSITIVE_B,			//!< 感圧ブロック					
+		PRESSURE_SENSITIVE_B,			//!< 感圧ブロック
+		LIGHTROAD_B,					//!< 足場排出ブロック
+		LEVER,							//!< レバー
+		GOAL,							//!< ゴール
+		GOAL_KEY,						//!< ゴールキー
 		PLAYER,							//!< プレイヤー
 		ID_MAX
 	};
