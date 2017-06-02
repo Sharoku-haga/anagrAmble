@@ -17,7 +17,7 @@ namespace ar
 namespace
 {
 
-const float		MoveSpeed = 3.f;		//!< 槍の突き出るスピード
+const float		MoveSpeed = 3.f;		//!< 槍の動くスピード
 
 }
 

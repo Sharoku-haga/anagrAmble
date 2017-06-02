@@ -28,24 +28,15 @@ public:
 	Player(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
 
 	/** Destructor */
-	~Player();
+	~Player(void);
 
 	virtual void ProcessCollision(int typeID, bool isDeath = false)override;
 
 private:
 	/** 
-	* 処理実行関数
-	* ObjBase::Control()内で使用
+	* イベント処理関数
+	* この関数内でEventLisnerから受け取ったイベントの処理を行う
 	*/
-	virtual void Run(void)override;
-
-	/** 
-	* 描画関数 
-	* ObjBase::Draw()内で使用する
-	*/
-	virtual void Render(void)override;
-
-	/** イベント処理関数 */
 	virtual void HandleEvent(void)override;
 
 	/** 

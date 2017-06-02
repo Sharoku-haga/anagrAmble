@@ -73,12 +73,6 @@ public:
 	/** Destructor */
 	virtual ~ObjBase(void);
 
-	/** コントロール関数 */
-	void Control(void);
-
-	/** 描画関数 */
-	void Draw(void);
-
 	/**
 	* 衝突処理関数.純粋仮想関数 
 	* @param[in] typeID		衝突したオブジェクトのID
@@ -144,18 +138,9 @@ protected:
 	CollisionManager*		m_pCollisionManager;			//!< CollisionManagerクラスのインスタンスへのポインタ
 
 	/** 
-	* 処理実行関数.純粋仮想関数 
-	* Control()内で使用
+	* イベント処理関数.純粋仮想関数 
+	* この関数内でEventLisnerから受け取ったイベントの処理を行う
 	*/
-	virtual void Run(void) = 0;
-
-	/** 
-	* 描画関数.純粋仮想関数 
-	* Draw()内で使用する
-	*/
-	virtual void Render(void) = 0;
-
-	/** イベント処理関数.純粋仮想関数  */
 	virtual void HandleEvent(void) = 0;
 
 	/** 

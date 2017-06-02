@@ -25,12 +25,6 @@ void Player::ProcessCollision(int typeID, bool isDeath)
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
-void Player::Run(void)
-{}
-
-void Player::Render(void)
-{}
-
 void Player::HandleEvent(void)
 {}
 
