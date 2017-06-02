@@ -41,10 +41,7 @@ GraphicsDevice::GraphicsDevice(void)
 	, m_pDepthStencilView(NULL)
 	, m_pDepthStencilBuffer(NULL)
 	, m_pRasterizerState(NULL)
-{
-
-
-}
+{}
 
 GraphicsDevice::~GraphicsDevice(void)
 {
