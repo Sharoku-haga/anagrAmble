@@ -30,7 +30,7 @@ public:
 			, const Stage::INDEX_DATA& rStageIndexData,  int texID,  ObjBase::TYPE_ID typeID);
 
 	/** Constructor */
-	~BeltConverBlock(void);
+	virtual ~BeltConverBlock(void);
 
 	/**
 	* 衝突処理関数 

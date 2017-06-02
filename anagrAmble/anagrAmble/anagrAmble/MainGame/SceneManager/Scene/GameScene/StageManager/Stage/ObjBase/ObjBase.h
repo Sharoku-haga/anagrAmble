@@ -53,6 +53,8 @@ public:
 		LIGHT_DOOR_LEFT,					//!< 左に向かって伸びている光の扉
 		BELT_CONVER_B_L,					//!< 左向きに進むベルトコンベアブロック
 		BELT_CONVER_B_R,					//!< 右向きに進むベルトコンベアブロック
+		SPEAR_B,							//!< 槍ブロック
+		SPEAR,								//!< 槍
 		LIGHT_B,							//!< 光ブロック
 		PLAYER = 99,						//!< プレイヤー
 		ID_MAX,
