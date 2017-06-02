@@ -21,6 +21,7 @@
 #include "../ObjBase/StageObj/Gimmik/RevolvingLightDoor.h"
 #include "../ObjBase/StageObj/Gimmik/LightDoor.h"
 #include "../ObjBase//StageObj/Block/BeltConverBlock.h"
+#include "../ObjBase/StageObj/Block/SpearBlock/SpearBlock.h"
 #include "../ObjBase/StageObj/Block/LightBlock.h"
 
 namespace ar
@@ -152,6 +153,10 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 
 	case ObjBase::BELT_CONVER_B_R:
 		pStageObj = new BeltConverBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::BELT_CONVER_B_R);
+		break;
+
+	case ObjBase::SPEAR_B:
+		pStageObj = new SpearBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
 		break;
 
 	default:
