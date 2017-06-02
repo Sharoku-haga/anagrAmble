@@ -63,7 +63,7 @@ SetOfThreeEmblemBlock::~SetOfThreeEmblemBlock(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void SetOfThreeEmblemBlock::ProcessCollision(int typeID, bool isDeath)
+void SetOfThreeEmblemBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
@@ -89,9 +89,9 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 {
 	switch(m_TypeID)
 	{
-	case ObjBase::EMBLME_B_T_R:
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::EMBLME_B_T_F
-			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 2)) == ObjBase::EMBLME_B_T_L)
+	case ObjBase::SET_OF_THREE_EMBLME_B_R:
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::SET_OF_THREE_EMBLME_B_F
+			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 2)) == ObjBase::SET_OF_THREE_EMBLME_B_L)
 		{
 			m_TexUV = EmblemROnUV;
 			return;
@@ -100,9 +100,9 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 		m_TexUV = EmblemROffUV;
 		break;
 
-	case ObjBase::EMBLME_B_T_F:
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 1)) == ObjBase::EMBLME_B_T_R
-			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::EMBLME_B_T_L)
+	case ObjBase::SET_OF_THREE_EMBLME_B_F:
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 1)) == ObjBase::SET_OF_THREE_EMBLME_B_R
+			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::SET_OF_THREE_EMBLME_B_L)
 		{
 			m_TexUV = EmblemFOnUV;
 			return;
@@ -111,9 +111,9 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 		m_TexUV = EmblemFOffUV;
 		break;
 
-	case ObjBase::EMBLME_B_T_L:
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 1)) == ObjBase::EMBLME_B_T_F
-			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 2)) == ObjBase::EMBLME_B_T_R)
+	case ObjBase::SET_OF_THREE_EMBLME_B_L:
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 1)) == ObjBase::SET_OF_THREE_EMBLME_B_F
+			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 2)) == ObjBase::SET_OF_THREE_EMBLME_B_R)
 		{
 			m_TexUV = EmblemLOnUV;
 			return;

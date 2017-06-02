@@ -28,7 +28,7 @@ public:
 	StageObj(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
 
 	/** Destructor */
-	virtual ~StageObj(void);
+	virtual ~StageObj(void) = default;
 
 	/** コントロール関数 */
 	void Control(void);
@@ -37,11 +37,10 @@ public:
 	void Draw(void);
 
 	/**
-	* 衝突処理関数.純粋仮想関数 
-	* @param[in] typeID		衝突したオブジェクトのID
-	* @param[in] isDeath	衝突したことで死んだかどうかのフラグ. true→死亡, flase→死んでいない. デフォルトはflase
-	*/ 
-	virtual void ProcessCollision(int typeID, bool isDeath = false) = 0;
+	* 衝突処理関数. 純粋仮想関数
+	* @param[in] rData 衝突判定に関連するデータ
+	*/
+	virtual void ProcessCollision(const CollisionManager::CollisionData& rData) = 0;
 
 protected:
 	/** 

@@ -105,24 +105,24 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 		pStageObj = new GoalKey(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
 		break;
 
-	case ObjBase::EMBLME_B_S_R:
-		pStageObj = new PairOfEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_S_R);
+	case ObjBase::PAIR_OF_EMBLME_B_R:
+		pStageObj = new PairOfEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::PAIR_OF_EMBLME_B_R);
 		break;
 
-	case ObjBase::EMBLME_B_S_L:
-		pStageObj = new PairOfEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_S_L);
+	case ObjBase::PAIR_OF_EMBLME_B_L:
+		pStageObj = new PairOfEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::PAIR_OF_EMBLME_B_L);
 		break;
 
-	case ObjBase::EMBLME_B_T_R:
-		pStageObj = new SetOfThreeEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_T_R);
+	case ObjBase::SET_OF_THREE_EMBLME_B_R:
+		pStageObj = new SetOfThreeEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::SET_OF_THREE_EMBLME_B_R);
 		break;
 
-	case ObjBase::EMBLME_B_T_F:
-		pStageObj = new SetOfThreeEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_T_F);
+	case ObjBase::SET_OF_THREE_EMBLME_B_F:
+		pStageObj = new SetOfThreeEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::SET_OF_THREE_EMBLME_B_F);
 		break;
 
-	case ObjBase::EMBLME_B_T_L:
-		pStageObj = new SetOfThreeEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_T_L);
+	case ObjBase::SET_OF_THREE_EMBLME_B_L:
+		pStageObj = new SetOfThreeEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::SET_OF_THREE_EMBLME_B_L);
 		break;
 
 	case ObjBase::REVOLVING_LIGHT_DOOR_HORIZONTAL:

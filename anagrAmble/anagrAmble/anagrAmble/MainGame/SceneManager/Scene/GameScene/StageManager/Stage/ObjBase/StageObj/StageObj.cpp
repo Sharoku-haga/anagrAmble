@@ -7,6 +7,7 @@
 /* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "StageObj.h"
+#include "../../CollisionManager.h"
 
 namespace ar
 {
@@ -27,9 +28,6 @@ StageObj::StageObj(StageDataManager* pStageDataManager, CollisionManager* pColli
 	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
 {}
 
-StageObj::~StageObj(void)
-{}
-
 void StageObj::Control(void)
 {
 	HandleEvent();
@@ -44,6 +42,7 @@ void StageObj::Control(void)
 	}
 
 	// 衝突処理に登録する
+	m_pCollisionManager->SetObjBasePointer(this);
 }
 
 void StageObj::Draw(void)

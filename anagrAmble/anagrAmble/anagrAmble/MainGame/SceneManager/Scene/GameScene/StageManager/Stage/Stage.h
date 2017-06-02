@@ -17,6 +17,7 @@ class EventLisner;
 class StageDataManager;
 class CollisionManager;
 class BasePoint;
+class Player;
 class StageObjManager;
 class StageBackground;
 
@@ -70,10 +71,13 @@ private:
 	StageDataManager*					m_pStageDataManager;	//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*					m_pCollisionManager;	//!< CollisionManagerクラスのインスタンスへのポインタ
 	BasePoint*							m_pBasePoint;			//!< BasePointクラスのインスタンスへのポインタ
+	Player*								m_pPlayer;				//!< Playerクラスのインスタンスへのポインタ
 	StageObjManager*					m_pStageObjManager;		//!< StageObjManagerクラスのインスタンスへのポインタ
 	StageBackground*					m_pBackground;			//!< StageBackgroundクラスのインスタンスへのポインタ
 	std::vector<std::vector<short>>		m_CurrentStageData;		//!< 現在のステージデータを格納する二次元配列(vector)
 	STATE								m_CurrentState;			//!< 現在のステージの状態
+	int									m_PlayerTexID;			//!< プレイヤーのテクスチャーID
+	int									m_StageObjTexID;		//!< ステージオブジェクトのテクチャーID
 
 	/** 
 	* オブジェクトを作成し、初期位置に配置させる関数

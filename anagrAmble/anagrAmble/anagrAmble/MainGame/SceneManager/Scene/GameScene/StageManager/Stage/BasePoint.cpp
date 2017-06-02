@@ -10,7 +10,7 @@
 #include "../../GameEventManager/GameEventManager.h"
 #include "../../GameEventManager/EventLisner.h"
 #include "ObjBase/ObjBase.h"
-
+#include "ObjBase/Player/Player.h"
 #include "../../../../../ControllerEnum.h"
 
 namespace ar
@@ -21,7 +21,8 @@ namespace ar
 namespace
 {
 
-const float PlayerInterVal = 810.f;		//!< プレイヤーとの間隔
+const float PlayerInterVal	= 960.f;		//!< プレイヤーとの間隔
+const float CorrectionVal	= 96.f;			//!< 補正値。ステージが少しはみだしてしまう為
 
 }
 
@@ -36,6 +37,7 @@ BasePoint::BasePoint(void)
 {
 	m_pEventLisner = new EventLisner();
 	GameEventManager::Instance().RegisterEventType("player_move", m_pEventLisner);
+	m_pEventLisner->RegisterSynEventFunc("player_move", std::bind(&ar::BasePoint::Move, this));
 }
 
 BasePoint::~BasePoint(void)
@@ -43,11 +45,11 @@ BasePoint::~BasePoint(void)
 	sl::DeleteSafely(m_pEventLisner);
 }
 
-void BasePoint::Initialize(float stageWidth, const sl::SLVECTOR2& rPlayerPos)
+void BasePoint::Initialize(float stageWidth, Player* pPlayer)
 {
 	m_StageWidth		= stageWidth;
-	m_CuurentPlayerPos	= rPlayerPos;
-	m_OldPlayerPos		= rPlayerPos;
+	m_pPlayer			= pPlayer;
+	m_CuurentPlayerPos = m_OldPlayerPos = m_pPlayer->GetPos();;
 
 	// プレイヤーがステージの左端付近にいない場合はベースポイントの位置を動かす
 	if(m_CuurentPlayerPos.x > PlayerInterVal)
@@ -63,63 +65,30 @@ void BasePoint::Initialize(float stageWidth, const sl::SLVECTOR2& rPlayerPos)
 			m_Pos.x = m_CuurentPlayerPos.x - PlayerInterVal;
 		}
 	}
-}
 
-void BasePoint::Update(void)
-{
-	HandleEvent();
-	if(sl::ISharokuLibrary::Instance()->CheckCustomizeState(RIGHT,sl::ON))
-	{
-		m_Pos.x += 20.f;
-		ObjBase::SetBasePointPos(m_Pos);
-	}
-
-	if(sl::ISharokuLibrary::Instance()->CheckCustomizeState(LEFT,sl::ON))
-	{
-		m_Pos.x -= 20.f;
-		ObjBase::SetBasePointPos(m_Pos);
-	}
+	// ObJbaseのBasePointPosを更新する
+	ObjBase::SetBasePointPos(m_Pos);	
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
-void BasePoint::HandleEvent(void)
-{
-	if(m_pEventLisner->EmptyCurrentEvent())
-	{
-		return;
-	}
-	else
-	{
-		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
-
-		std::string eventType;			
-		for(auto& gameEvent : currentEvents)
-		{
-			if(gameEvent == "player_move")
-			{
-				Move();
-			}
-		}
-
-		m_pEventLisner->DelEvent();
-	}
-}
-
 void BasePoint::Move(void)
 {
+	m_CuurentPlayerPos = m_pPlayer->GetPos();	// 現在のプレイヤー座標を更新する
+
 	if(m_CuurentPlayerPos.x < PlayerInterVal || 
-		m_CuurentPlayerPos.x > (m_StageWidth - PlayerInterVal))
+		m_CuurentPlayerPos.x > (m_StageWidth - PlayerInterVal - CorrectionVal))
 	{	// ステージ左端付近と右端付近にプレイヤーがいるときは動かない
+		m_OldPlayerPos = m_CuurentPlayerPos;
 		return;
 	}
 	else
-	{
+	{	// プレイヤーが動いた分だけ動かし、ObJbaseのBasePointPosを更新する
 		m_Pos.x += (m_CuurentPlayerPos.x - m_OldPlayerPos.x);
-		GameEventManager::Instance().ReceiveEvent("base_point_move");
+		ObjBase::SetBasePointPos(m_Pos);
+		m_OldPlayerPos = m_CuurentPlayerPos;
 	}
 }
-
 
 }	// namespace ar
 

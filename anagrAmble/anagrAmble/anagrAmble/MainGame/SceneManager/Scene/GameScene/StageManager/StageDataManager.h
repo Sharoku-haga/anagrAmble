@@ -14,6 +14,7 @@ namespace ar
 {
 
 class GameDataManager;
+class ObjBase;
 
 //======================================================================//
 //!< ステージ関連のデータを管理するクラス
@@ -56,6 +57,18 @@ public:
 	inline float GetStageWidth(void) { return m_StageWidth; }
 
 	/**
+	* Getter. ステージの横のチップ数を取得する関数
+	* @return ステージの横のチップ数
+	*/
+	inline short GetStageWidthChipNum(void) { return m_StageWidthChipNum; }
+
+	/**
+	* Getter. ステージの高さのチップ数を取得する関数
+	* @return ステージの高さのチップ数
+	*/
+	inline short GetStageHeightChipNum(void) { return m_StageHeightChipNum; }
+
+	/**
 	* Getter.ステージの背景のテクスチャーファイル名を取得する関数
 	* @return ステージ背景のテクスチャーファイル名
 	*/
@@ -71,10 +84,20 @@ public:
 	int GetTypeID(int indexY, int indexX);
 
 private:
+	/** ステージチップ1つのデータ構造体 */
+	struct StageChipData
+	{
+		short			m_YNum;		//!< Y軸のインデックス
+		short			m_XNum;		//!< X軸のインデックス
+		ObjBase*		m_pObj;		//!< チップに存在するOBJBaseクラスのインスタンスへのポインタ
+	};
+
 	GameDataManager*					m_pGameDataManager;			//!< GameDataManagerクラスのインスタンスへのポインタ
 	float								m_StageWidth;				//!< ステージチップの横の長さ
 	float								m_StageHeight;				//!< ステージチップの縦の長さ
 	float								m_StageChipSize;			//!< ステージチップのサイズ
+	short								m_StageWidthChipNum;		//!< ステージチップの横の数
+	short								m_StageHeightChipNum;		//!< ステージチップの縦の数
 	std::vector<std::vector<short>>		m_LoadStageData;			//!< ファイルからロードしたステージデータを格納する二次元配列(vector)
 	std::vector<std::vector<short>>		m_CuurentStageData;			//!< 現在のステージデータを格納する二次元配列(vector)
 	std::string							m_BackGoundTexFileName;		//!< ステージ背景のテクスチャーファイル名

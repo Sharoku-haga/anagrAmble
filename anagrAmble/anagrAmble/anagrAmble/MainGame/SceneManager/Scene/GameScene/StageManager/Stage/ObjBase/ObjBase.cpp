@@ -18,11 +18,12 @@ namespace ar
 
 sl::SLVECTOR2	ObjBase::m_BasePointPos		= {0.0f, 0.0f};
 sl::fRect		ObjBase::m_DisplayArea		= {0.0f, 0.0f, 1920.0f, 0.0f};
-const float		ObjBase::m_StageChipSize	= 96.f;
+float			ObjBase::m_StageChipSize	= 0.0f;
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-ObjBase::ObjBase(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData)
+ObjBase::ObjBase(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
+				, const Stage::INDEX_DATA& rStageIndexData)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
 	, m_StageIndexData(rStageIndexData)
 	, m_pEventLisner(new EventLisner())
@@ -33,6 +34,15 @@ ObjBase::ObjBase(StageDataManager* pStageDataManager, CollisionManager* pCollisi
 ObjBase::~ObjBase(void)
 {
 	sl::DeleteSafely(m_pEventLisner);
+}
+
+const sl::fRect& ObjBase::GetCurrentRectData(void) 
+{ 
+	m_CurrentRectData.m_Left	= m_Pos.x + m_RectSize.m_Left; 
+	m_CurrentRectData.m_Top		= m_Pos.y + m_RectSize.m_Top;
+	m_CurrentRectData.m_Right	= m_Pos.x + m_RectSize.m_Right;
+	m_CurrentRectData.m_Bottom	= m_Pos.y + m_RectSize.m_Bottom;
+	return m_CurrentRectData; 
 }
 
 }	// namespace ar

@@ -54,7 +54,7 @@ PressureSensitiveBlock::~PressureSensitiveBlock(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void PressureSensitiveBlock::ProcessCollision(int typeID, bool isDeath)
+void PressureSensitiveBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

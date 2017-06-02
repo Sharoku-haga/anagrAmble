@@ -60,7 +60,7 @@ BeltConverBlock::~BeltConverBlock(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void BeltConverBlock::ProcessCollision(int typeID, bool isDeath)
+void BeltConverBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
