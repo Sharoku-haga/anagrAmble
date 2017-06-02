@@ -17,7 +17,8 @@
 #include "../ObjBase/StageObj/Gimmik/Lever.h"
 #include "../ObjBase/StageObj/Goal/Goal.h"
 #include "../ObjBase/StageObj/Goal/GoalKey.h"
-
+#include "../ObjBase/StageObj/Block/PairOfEmblemBlock.h"
+#include "../ObjBase/StageObj/Block/SetOfThreeEmblemBlock.h"
 #include "../ObjBase/StageObj/Gimmik/RevolvingLightDoor.h"
 #include "../ObjBase/StageObj/Gimmik/LightDoor.h"
 #include "../ObjBase//StageObj/Block/BeltConverBlock.h"
@@ -105,18 +106,23 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 		break;
 
 	case ObjBase::EMBLME_B_S_R:
+		pStageObj = new PairOfEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_S_R);
 		break;
 
 	case ObjBase::EMBLME_B_S_L:
+		pStageObj = new PairOfEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_S_L);
 		break;
 
 	case ObjBase::EMBLME_B_T_R:
+		pStageObj = new SetOfThreeEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_T_R);
 		break;
 
 	case ObjBase::EMBLME_B_T_F:
+		pStageObj = new SetOfThreeEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_T_F);
 		break;
 
 	case ObjBase::EMBLME_B_T_L:
+		pStageObj = new SetOfThreeEmblemBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::EMBLME_B_T_L);
 		break;
 
 	case ObjBase::REVOLVING_LIGHT_DOOR_HORIZONTAL:
@@ -144,8 +150,8 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 		break;
 
 	case ObjBase::LIGHT_B:
-			pStageObj = new LightBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
-			break;
+		pStageObj = new LightBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
+		break;
 
 	case ObjBase::BELT_CONVER_B_L:
 		pStageObj = new BeltConverBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::BELT_CONVER_B_L);
