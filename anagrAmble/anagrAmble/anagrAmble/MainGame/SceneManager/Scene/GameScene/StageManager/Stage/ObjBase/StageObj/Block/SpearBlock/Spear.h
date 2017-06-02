@@ -44,13 +44,22 @@ private:
 	float						m_MovePosYMINLimit;			//!< y方向への動作のMin値
 	float						m_MoveSpeed;				//!< 動作スピード
 
-	/** 処理実行関数 */
+	/** 
+	* 処理実行関数
+	* StageObj::Control()内で使用
+	*/
 	virtual void Run(void)override;
 
-	/** 描画関数 */
+	/** 
+	* 描画関数
+	* StageObj::Draw()内で使用する
+	*/
 	virtual void Render(void)override;
 
-	/** イベント処理関数 */
+	/** 
+	* イベント処理関数
+	* この関数内でEventLisnerから受け取ったイベントの処理を行う
+	*/
 	virtual void HandleEvent(void)override;
 
 	/** 

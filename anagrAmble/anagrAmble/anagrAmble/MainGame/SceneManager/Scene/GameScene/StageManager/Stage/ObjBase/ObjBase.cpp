@@ -14,15 +14,6 @@
 namespace ar
 {
 
-/* Unnamed Namespace ------------------------------------------------------------------------------------------ */
-
-namespace
-{
-
-const float AreaCorrectionVal	= 576.f;		//!< 表示画面エリアの補正値. この値を使用して少し画面外まで描画するようにする。
-
-}
-
 /* Static Variable -------------------------------------------------------------------------------------------- */
 
 sl::SLVECTOR2	ObjBase::m_BasePointPos		= {0.0f, 0.0f};
@@ -43,28 +34,6 @@ ObjBase::~ObjBase(void)
 {
 	sl::DeleteSafely(m_pEventLisner);
 }
-
-void ObjBase::Control(void)
-{
-	Run();
-}
-
-void ObjBase::Draw(void)
-{
-	// プレイヤーじゃない画面外にあるオブジェクトは描画しない
-	/** @todo ここの条件は随時調整 */
-	if(m_TypeID != PLAYER
-		&& m_Pos.x < (m_BasePointPos.x - AreaCorrectionVal)
-		|| m_Pos.x > (m_BasePointPos.x + AreaCorrectionVal + m_DisplayArea.m_Right))
-	{
-		return;
-	}
-	else
-	{
-		Render();
-	}
-}
-
 
 }	// namespace ar
 

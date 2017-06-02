@@ -25,12 +25,6 @@ void Enemy::ProcessCollision(int typeID, bool isDeath)
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
-void Enemy::Run(void)
-{}
-
-void Enemy::Render(void)
-{}
-
 void Enemy::HandleEvent(void)
 {}
 
