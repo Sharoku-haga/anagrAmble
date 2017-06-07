@@ -54,7 +54,7 @@ ElectricalBlock::~ElectricalBlock(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void ElectricalBlock::ProcessCollision(int typeID, bool isDeath)
+void ElectricalBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

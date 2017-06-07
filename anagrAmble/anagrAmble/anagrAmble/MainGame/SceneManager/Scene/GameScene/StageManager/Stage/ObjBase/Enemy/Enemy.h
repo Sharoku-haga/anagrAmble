@@ -30,7 +30,11 @@ public:
 	/** Destructor */
 	~Enemy(void);
 
-	virtual void ProcessCollision(int typeID, bool isDeath = false)override;
+	/**
+	* 衝突処理関数
+	* @param[in] rData 衝突判定に関連するデータ
+	*/
+	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 
 private:
 	/** 

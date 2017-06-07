@@ -11,6 +11,7 @@
 #include "../StageDataManager.h"
 #include "CollisionManager.h"
 #include "BasePoint.h"
+#include "ObjBase/Player/Player.h"
 #include "StageObjManager/StageObjManager.h"
 #include "StageBackground.h"
 
@@ -23,8 +24,9 @@ Stage::Stage(StageDataManager*	pStageDataManager)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
 	, m_pEventLisiner(new EventLisner())
 	, m_pStageDataManager(pStageDataManager)
-	, m_pCollisionManager(new CollisionManager())
+	, m_pCollisionManager(new CollisionManager(pStageDataManager))
 	, m_pBasePoint(new BasePoint())
+	, m_pPlayer(nullptr)
 	, m_pStageObjManager(nullptr)
 	, m_pBackground(nullptr)
 	, m_CurrentState(ENTER)
@@ -37,6 +39,7 @@ Stage::~Stage(void)
 {
 	sl::DeleteSafely(m_pBackground);
 	sl::DeleteSafely(m_pStageObjManager);
+	sl::DeleteSafely(m_pPlayer);
 	sl::DeleteSafely(m_pBasePoint);
 	sl::DeleteSafely(m_pCollisionManager);
 	sl::DeleteSafely(m_pEventLisiner);
@@ -44,8 +47,12 @@ Stage::~Stage(void)
 
 void Stage::Initialize(void)
 {
-	int stageObjTexID = m_pLibrary->LoadTexture("../Resource/GameScene/Object_File.png");
-	m_pStageObjManager = new StageObjManager(m_pStageDataManager, m_pCollisionManager, stageObjTexID);
+	ObjBase::SetStageChipSize(m_pStageDataManager->GetStageChipSize());
+	
+	m_PlayerTexID = m_pLibrary->LoadTexture("../Resource/GameScene/Player.png");
+
+	m_StageObjTexID = m_pLibrary->LoadTexture("../Resource/GameScene/Object_File.png");
+	m_pStageObjManager = new StageObjManager(m_pStageDataManager, m_pCollisionManager, m_StageObjTexID);
 
 	// オブジェクトを生成し、初期位置へ
 	m_CurrentStageData = m_pStageDataManager->GetLoadStageData();
@@ -58,9 +65,7 @@ void Stage::Initialize(void)
 	}
 
 	// ベースポイントの設定を行う 
-	/** @todo 現在仮実装 */
-	sl::SLVECTOR2 testPos = {0.0f, 0.0f};/*==========================================================================================================修正予定*/
-	m_pBasePoint->Initialize(m_pStageDataManager->GetStageWidth(), testPos);
+	m_pBasePoint->Initialize(m_pStageDataManager->GetStageWidth(), m_pPlayer);
 
 	// 背景の設定を行う
 	int stageBGTexID = m_pLibrary->LoadTexture(m_pStageDataManager->GetBackGoundTexFileName().c_str());
@@ -78,12 +83,9 @@ void Stage::Control(void)
 		break;
 
 	case EXECUTE:
-		// プレイヤー処理
-
-		// 下記はデバック用のベースポイント
-		m_pBasePoint->Update();
-
+		m_pPlayer->Control();
 		m_pStageObjManager->Control();
+		m_pCollisionManager->UpDate();
 		m_pBackground->Control();
 		break;
 
@@ -103,6 +105,7 @@ void Stage::Draw(void)
 {
 	m_pBackground->Draw();
 	m_pStageObjManager->Draw();
+	m_pPlayer->Draw();
 
 	// プレイヤーの描画
 }
@@ -111,6 +114,7 @@ void Stage::Draw(void)
 
 void Stage::CreateObj(int typeID, int yNum, int xNum)
 {
+	INDEX_DATA data;
 	switch(typeID)
 	{
 	case ObjBase::BLANK:
@@ -118,12 +122,17 @@ void Stage::CreateObj(int typeID, int yNum, int xNum)
 		break;
 
 	case ObjBase::PLAYER:
-		// 後で実装
+		if(m_pPlayer == nullptr)
+		{
+			data.m_YNum = yNum;
+			data.m_XNum = xNum;
+			m_pPlayer = new Player(m_pStageDataManager, m_pCollisionManager, data, m_PlayerTexID);
+		}
+
 		break;
 
 	default:
 	{
-		INDEX_DATA data;
 		data.m_YNum = yNum;
 		data.m_XNum = xNum;
 		m_pStageObjManager->CreateStageObj(typeID, data);

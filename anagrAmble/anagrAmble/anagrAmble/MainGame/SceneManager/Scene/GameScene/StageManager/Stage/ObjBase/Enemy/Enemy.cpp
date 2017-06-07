@@ -20,7 +20,7 @@ Enemy::Enemy(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 Enemy::~Enemy()
 {}
 
-void Enemy::ProcessCollision(int typeID, bool isDeath)
+void Enemy::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

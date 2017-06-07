@@ -45,7 +45,7 @@ LightBlock::~LightBlock(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void LightBlock::ProcessCollision(int typeID, bool isDeath)
+void LightBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

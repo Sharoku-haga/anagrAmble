@@ -62,13 +62,18 @@ LightRoadBlock::~LightRoadBlock(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void LightRoadBlock::ProcessCollision(int typeID, bool isDeath)
+void LightRoadBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void LightRoadBlock::Run(void)
-{}
+{
+	for(auto pblock : m_pLightBlocks)
+	{
+		pblock->Control();
+	}
+}
 
 void LightRoadBlock::Render(void)
 {

@@ -30,7 +30,7 @@ NormalBlock::NormalBlock(StageDataManager* pStageDataManager, CollisionManager* 
 NormalBlock::~NormalBlock(void)
 {}
 
-void NormalBlock::ProcessCollision(int typeID, bool isDeath)
+void NormalBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {
 	// 処理なし
 }

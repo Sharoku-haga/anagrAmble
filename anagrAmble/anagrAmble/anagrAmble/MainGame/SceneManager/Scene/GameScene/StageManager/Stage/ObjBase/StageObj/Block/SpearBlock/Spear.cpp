@@ -61,7 +61,7 @@ Spear::~Spear(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void Spear::ProcessCollision(int typeID, bool isDeath)
+void Spear::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

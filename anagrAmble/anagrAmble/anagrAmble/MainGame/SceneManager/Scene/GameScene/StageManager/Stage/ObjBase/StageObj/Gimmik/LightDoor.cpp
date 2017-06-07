@@ -62,13 +62,18 @@ LightDoor::~LightDoor(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void LightDoor::ProcessCollision(int typeID, bool isDeath)
+void LightDoor::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void LightDoor::Run(void)
-{}
+{
+	for(auto pblock : m_pLightBlocks)
+	{
+		pblock->Control();
+	}
+}
 
 void LightDoor::Render(void)
 {

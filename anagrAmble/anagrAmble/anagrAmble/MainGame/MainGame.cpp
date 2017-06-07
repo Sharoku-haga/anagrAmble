@@ -68,32 +68,37 @@ void MainGame::CustomizeInput(void)
 {
 	// 上ボタン: UP
 	{
-
+		//m_pLibrary->RegisterCustomizeType(UP, sl::GAMEPAD, sl::XIGAMEPAD_DPAD_UP );
 	}
 
 	// 下のボタン : DOWN
 	{
+		m_pLibrary->RegisterCustomizeType(DOWN, sl::GAMEPAD, sl::XIGAMEPAD_LSTICK_DOWN);
+		m_pLibrary->RegisterCustomizeType(DOWN, sl::GAMEPAD, sl::XIGAMEPAD_DPAD_DOWN );
 
 	}
 
 	// 右ボタン	: RIGHT
 	{
-
+		m_pLibrary->RegisterCustomizeType(RIGHT, sl::GAMEPAD, sl::XIGAMEPAD_LSTICK_RIGHT);
+		m_pLibrary->RegisterCustomizeType(RIGHT, sl::GAMEPAD, sl::XIGAMEPAD_DPAD_RIGHT );
 	}
 
 	// 左ボタン : LEFT
 	{
+		m_pLibrary->RegisterCustomizeType(LEFT, sl::GAMEPAD, sl::XIGAMEPAD_LSTICK_LEFT);
+		m_pLibrary->RegisterCustomizeType(LEFT, sl::GAMEPAD, sl::XIGAMEPAD_DPAD_LEFT );
 
 	}
 
 	// 決定 : ENTER
 	{
-
+		m_pLibrary->RegisterCustomizeType(ENTER, sl::GAMEPAD, sl::XIGAMEPAD_A  );
 	}
 
 	// プレイヤーのモード切替 : MODE_CHANGE
 	{
-
+		m_pLibrary->RegisterCustomizeType(MODE_CHANGE, sl::GAMEPAD, sl::XIGAMEPAD_B  );
 	}
 
 	// プレイヤーのモード解除 : MODE_RELEASE
@@ -116,9 +121,15 @@ void MainGame::CustomizeInput(void)
 
 	}
 
+	// ダッシュ : DASH
+	{
+		m_pLibrary->RegisterCustomizeType(DASH, sl::GAMEPAD, sl::XIGAMEPAD_B  );
+	}
+
 	// ジャンプ : JUMP
 	{
-
+		m_pLibrary->RegisterCustomizeType(JUMP, sl::GAMEPAD, sl::XIGAMEPAD_DPAD_UP);
+		m_pLibrary->RegisterCustomizeType(JUMP, sl::GAMEPAD, sl::XIGAMEPAD_LSTICK_UP);
 	}
 
 	// しゃがむ : SQUAT
@@ -143,7 +154,7 @@ void MainGame::CustomizeInput(void)
 
 	// ポーズボタン : PAUSE
 	{
-
+		m_pLibrary->RegisterCustomizeType(PAUSE, sl::GAMEPAD, sl::XIGAMEPAD_START);
 	}
 }
 
@@ -179,12 +190,12 @@ void MainGame::CutomizeInputDebug(void)
 
 	// プレイヤーのモード切替 : MODE_CHANGE
 	{
-
+		m_pLibrary->RegisterCustomizeType(MODE_CHANGE, sl::KEYBOARD, sl::K_X);
 	}
 
 	// プレイヤーのモード解除 : MODE_RELEASE
 	{
-
+		m_pLibrary->RegisterCustomizeType(MODE_RELEASE, sl::KEYBOARD, sl::K_C);
 	}
 
 	// 空間入れ替え : SPACE_CHANGE
@@ -197,14 +208,19 @@ void MainGame::CutomizeInputDebug(void)
 
 	}
 
-	// アンカ-セット : ANCHOR_SET
+	// アンカ-アクション : ANCHOR_ACTION
 	{
+		m_pLibrary->RegisterCustomizeType(ANCHOR_ACTION, sl::KEYBOARD, sl::K_Z);
+	}
 
+	// ダッシュ : DASH
+	{
+		m_pLibrary->RegisterCustomizeType(DASH, sl::KEYBOARD, sl::K_D);
 	}
 
 	// ジャンプ : JUMP
 	{
-
+		m_pLibrary->RegisterCustomizeType(JUMP, sl::KEYBOARD, sl::K_A);
 	}
 
 	// しゃがむ : SQUAT
@@ -230,6 +246,7 @@ void MainGame::CutomizeInputDebug(void)
 	// ポーズボタン : PAUSE
 	{
 		m_pLibrary->RegisterCustomizeType(PAUSE, sl::KEYBOARD, sl::K_P);
+		m_pLibrary->RegisterCustomizeType(PAUSE, sl::KEYBOARD, sl::K_T);
 	}
 }
 

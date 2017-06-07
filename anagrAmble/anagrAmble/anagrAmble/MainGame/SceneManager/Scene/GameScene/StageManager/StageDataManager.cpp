@@ -46,22 +46,19 @@ bool StageDataManager::LoadDataFile(void)
 		return false;
 	}
 
-	short	stageWidthChipNum;		//!< ステージチップの横の数
-	short	stageHeightChipNum;		//!< ステージチップの縦の数
-
 	// 横と縦のインデックスを読み込む
-	std::fread(&stageWidthChipNum, sizeof(short), 1, fp);  
-	std::fread(&stageHeightChipNum, sizeof(short), 1, fp);  
+	std::fread(&m_StageWidthChipNum, sizeof(short), 1, fp);  
+	std::fread(&m_StageHeightChipNum, sizeof(short), 1, fp);  
 
 	// 横と縦の長さをもとめる
-	m_StageWidth = (StageChipSize * stageWidthChipNum) + StageChipSize;
-	m_StageHeight = (StageChipSize * stageHeightChipNum) + StageChipSize;
+	m_StageWidth = (StageChipSize * m_StageWidthChipNum) + StageChipSize;
+	m_StageHeight = (StageChipSize * m_StageHeightChipNum) + StageChipSize;
 
-	m_LoadStageData.resize(stageHeightChipNum);
+	m_LoadStageData.resize(m_StageHeightChipNum);
 
 	for (auto& stageY : m_LoadStageData)
 	{
-		stageY.resize(stageWidthChipNum);
+		stageY.resize(m_StageWidthChipNum);
 		std::fseek(fp, 0, SEEK_CUR);
 		std::fread(&stageY[0], sizeof(short), stageY.size(), fp);
 	}
@@ -77,8 +74,8 @@ bool StageDataManager::LoadDataFile(void)
 int StageDataManager::GetTypeID(int indexY, int indexX)
 {
 	// インデックスが0未満、もしくはサイズ以上なら-1をかえす
-	if(indexY < 0 || indexY > static_cast<int>(m_CuurentStageData.size())
-		|| indexX < 0 ||  indexX > static_cast<int>(m_CuurentStageData[0].size()))
+	if(indexY < 0 || indexY > static_cast<int>(m_CuurentStageData.size() - 1)
+		|| indexX < 0 ||  indexX > static_cast<int>(m_CuurentStageData[0].size() - 1))
 	{
 		return -1;
 	}

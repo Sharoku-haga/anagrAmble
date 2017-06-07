@@ -30,7 +30,7 @@ GroundBlock::GroundBlock(StageDataManager* pStageDataManager, CollisionManager* 
 GroundBlock::~GroundBlock(void)
 {}
 
-void GroundBlock::ProcessCollision(int typeID, bool isDeath)
+void GroundBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {
 	// 処理なし
 }

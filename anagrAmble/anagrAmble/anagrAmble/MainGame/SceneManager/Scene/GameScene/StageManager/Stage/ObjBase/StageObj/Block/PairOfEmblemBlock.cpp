@@ -59,7 +59,7 @@ PairOfEmblemBlock::~PairOfEmblemBlock(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void PairOfEmblemBlock::ProcessCollision(int typeID, bool isDeath)
+void PairOfEmblemBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
@@ -84,9 +84,9 @@ void PairOfEmblemBlock::CalculatePos(void)
 void PairOfEmblemBlock::CheckPairBlock(void)
 {
 	// タイプにあわせて左右のどちらかの確認を行い、ペアブロックがあればONになり、なければOFFとなる
-	if(m_TypeID == ObjBase::EMBLME_B_S_L)
+	if(m_TypeID == ObjBase::PAIR_OF_EMBLME_B_L)
 	{
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 1)) == ObjBase::EMBLME_B_S_R)
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 1)) == ObjBase::PAIR_OF_EMBLME_B_R)
 		{
 			m_TexUV = EmblemLOnUV;
 		}
@@ -97,7 +97,7 @@ void PairOfEmblemBlock::CheckPairBlock(void)
 	}
 	else
 	{
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::EMBLME_B_S_L)
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::PAIR_OF_EMBLME_B_L)
 		{
 			m_TexUV = EmblemROnUV;
 		}

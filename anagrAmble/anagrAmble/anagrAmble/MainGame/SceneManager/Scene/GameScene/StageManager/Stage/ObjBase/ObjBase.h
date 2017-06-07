@@ -8,14 +8,15 @@
 #define AR_OBJBASE_H
 
 #include "../SharokuLibrary/sl/sl.h"
+#include "../CollisionManager.h"
 #include "../Stage.h"
+
 
 namespace ar
 {
 
 class EventLisner;
 class StageDataManager;
-class CollisionManager;
 
 //======================================================================//
 //!< ゲーム画面のオブジェクトの基底クラス
@@ -40,11 +41,11 @@ public:
 		GOAL,								//!< ゴール
 		LOCLED_GOAL,						//!< 鍵付きゴール
 		GOAL_KEY,							//!< ゴールキー
-		EMBLME_B_S_R,						//!< 2つで1つの紋章ブロックの右側
-		EMBLME_B_S_L,						//!< 2つで1つの紋章ブロックの左側		
-		EMBLME_B_T_R,						//!< 3つで1つの紋章ブロックの左側
-		EMBLME_B_T_F,						//!< 3つで1つの紋章ブロックの中央側
-		EMBLME_B_T_L,						//!< 3つで1つの紋章ブロックの左側
+		PAIR_OF_EMBLME_B_R,					//!< 2つで1つの紋章ブロックの右側
+		PAIR_OF_EMBLME_B_L,					//!< 2つで1つの紋章ブロックの左側		
+		SET_OF_THREE_EMBLME_B_R,			//!< 3つで1つの紋章ブロックの左側
+		SET_OF_THREE_EMBLME_B_F,			//!< 3つで1つの紋章ブロックの中央側
+		SET_OF_THREE_EMBLME_B_L,			//!< 3つで1つの紋章ブロックの左側
 		REVOLVING_LIGHT_DOOR_HORIZONTAL,	//!< 横向きの光の回転扉	
 		REVOLVING_LIGHT_DOOR_VERTICAL,		//!< 縦向きの光の回転扉
 		LIGHT_DOOR_UP,						//!< 上に向かって伸びている光の扉
@@ -56,6 +57,7 @@ public:
 		SPEAR_B,							//!< 槍ブロック
 		SPEAR,								//!< 槍
 		LIGHT_B,							//!< 光ブロック
+		ANCHOR,								//!< アンカー
 		PLAYER = 99,						//!< プレイヤー
 		ID_MAX,
 		TYPE_ERROR = -1,					//!< エラー番号
@@ -68,17 +70,17 @@ public:
 	* @param[in] pCollisionManager	CollisionManagerクラスのインスタンスへのポインタ
 	* @param[in] rStageIndexData	ステージインデックスデータ
 	*/
-	ObjBase(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData);
+	ObjBase(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
+			, const Stage::INDEX_DATA& rStageIndexData);
 
 	/** Destructor */
 	virtual ~ObjBase(void);
 
 	/**
 	* 衝突処理関数.純粋仮想関数 
-	* @param[in] typeID		衝突したオブジェクトのID
-	* @param[in] isDeath	衝突したことで死んだかどうかのフラグ. true→死亡, flase→死んでいない. デフォルトはflase
+	* @param[in] rData 衝突判定に関連するデータ
 	*/ 
-	virtual void ProcessCollision(int typeID, bool isDeath = false) = 0;
+	virtual void ProcessCollision(const CollisionManager::CollisionData& rData) = 0;
 
 	/** 
 	* Getter 位置座標を取得する関数
@@ -87,10 +89,17 @@ public:
 	const sl::SLVECTOR2& GetPos(void) const { return m_Pos; }
 
 	/** 
+	* Getter 矩形サイズを取得する関数
+	* @return 矩形サイズ
+	*/
+	const sl::fRect& GetRectSize(void) { return m_RectSize; }
+
+	/** 
 	* Getter 現在の矩形データ(位置座標 + 基本矩形サイズ)を取得する関数
+	* 中で現在の矩形データを計算して返す処理
 	* @return 現在の矩形データ
 	*/
-	const sl::fRect& GetCurrentRectData(void) const { return m_CurrentRectData; }
+	const sl::fRect& GetCurrentRectData(void);
 
 	/** 
 	* Getter 現在のステージのインデックスデータを取得する関数
@@ -99,10 +108,22 @@ public:
 	const Stage::INDEX_DATA& GetStageIndex(void) const { return m_StageIndexData; }
 
 	/** 
+	* Getter オブジェクトのタイプを取得する関数
+	* @return オブジェクトのタイプ
+	*/
+	TYPE_ID GetTypeID(void) const { return m_TypeID; }
+
+	/** 
 	* Setter ステージのインデックスデータを取得する関数
 	* @param[in] rStageIndexData
 	*/
 	void SetStageIndex(const Stage::INDEX_DATA& rStageIndexData){ m_StageIndexData = rStageIndexData; }
+
+	/** 
+	* Setter ステージのチップサイズをセットする関数.static
+	* @param[in]  stageChipSize ステージチップのサイズ
+	*/
+	static void SetStageChipSize(float stageChipSize) { m_StageChipSize = stageChipSize; }
 
 	/** 
 	* Setter ベースポイントの位置座標をセットする関数.static
@@ -124,13 +145,13 @@ public:
 protected:
 	static	sl::SLVECTOR2	m_BasePointPos;					//!< ベースポイントの位置座標.static
 	static  sl::fRect		m_DisplayArea;					//!< 画面範囲.static
-	static	const float		m_StageChipSize;				//!< ステージチップ1つのサイズ
+	static	float			m_StageChipSize;				//!< ステージチップ1つのサイズ
 
 	sl::ISharokuLibrary*	m_pLibrary;						//!< sl::ISharokuLibrary*クラスのインスタンスへのポインタ
 	sl::SLVECTOR2			m_Pos;							//!< 位置座標
+	Stage::INDEX_DATA		m_StageIndexData;				//!< 現在登録しているステージのインデックスデータ
 	sl::fRect				m_RectSize;						//!< 基本矩形サイズ
 	sl::fRect				m_CurrentRectData;				//!< 位置座標 + 基本矩形サイズ
-	Stage::INDEX_DATA		m_StageIndexData;				//!< 現在登録しているステージのインデックスデータ
 	sl::DrawingID			m_DrawingID;					//!< 描画関連のIDをまとめた群
 	TYPE_ID					m_TypeID;						//!< オブジェクトのタイプID
 	EventLisner*			m_pEventLisner;					//!< EventLisnerクラスのインスタンスへのポインタ

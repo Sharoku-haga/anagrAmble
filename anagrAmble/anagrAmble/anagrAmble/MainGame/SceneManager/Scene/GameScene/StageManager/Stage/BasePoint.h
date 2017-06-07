@@ -13,6 +13,7 @@ namespace ar
 {
 
 class EventLisner;
+class Player;
 
 //======================================================================//
 //!< ベースポイントクラス
@@ -31,15 +32,9 @@ public:
 	/** 
 	* 初期化関数. ステージ生成時に呼ぶ関数
 	* @param[in] stageWidth ステージの横の長さ
-	* @param[in] rPlayerPos	プレイヤーの位置座標(ステージ生成時の初期座標)
+	* @param[in] pPlayer	プレイヤーのクラスのインスタンスへのポインタ
 	*/
-	void Initialize(float stageWidth, const sl::SLVECTOR2& rPlayerPos);
-
-	/** 
-	* 更新関数
-	* 毎フレームよばれる関数. 
-	*/
-	void Update(void);
+	void Initialize(float stageWidth, Player* pPlayer);
 
 	/** 
 	* Getter. BasePointの位置座標を取得する関数 
@@ -47,27 +42,20 @@ public:
 	*/
 	inline const sl::SLVECTOR2& GetPos(void) const{ return m_Pos; }
 
-	/**
-	* Setter プレイヤーの現在の位置座標をセットする関数
-	* @param[in] rCurrentPlayerPos プレイヤーの位置座標
-	*/
-	inline void SetCuurentPlayerPos(const sl::SLVECTOR2& rCuurentPlayerPos) { m_CuurentPlayerPos = rCuurentPlayerPos; }
-
 private:
 	sl::SLVECTOR2				m_Pos;						//!< 位置座標
 	sl::SLVECTOR2				m_CuurentPlayerPos;			//!< 現在のプレイヤー座標
 	sl::SLVECTOR2				m_OldPlayerPos;				//!< 以前のプレイヤー座標
 	float						m_StageWidth;				//!< ステージ全体の横の長さ
 	EventLisner*				m_pEventLisner;				//!< EventLisnerクラスのインスタンスへのポインタ
+	Player*						m_pPlayer;					//!< Playerクラスのインスタンスへのポインタ
 
 	SL_DISALLOW_COPY_AND_ASSIGN(BasePoint);					//!< コピー禁止マクロ
 
-	/** イベント処理を行う関数 */
-	void HandleEvent(void);
-
 	/** 
 	* BasePointの移動を制御する関数
-	* プレイヤーが動いたというイベントが発生したときに呼ばれる
+	* プレイヤーが動いたというイベント(playe_move)が発生したときに呼ばれる
+	* コールバック関数
 	*/
 	void Move(void);
 	

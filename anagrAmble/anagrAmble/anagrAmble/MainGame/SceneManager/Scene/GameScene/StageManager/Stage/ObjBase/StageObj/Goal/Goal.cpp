@@ -32,12 +32,6 @@ Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionMana
 	const sl::fRect		uv = { 0.0f, 0.2666f, 0.15f, 0.6222f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
-
-	m_CurrentRectData.m_Left	= m_Pos.x + m_RectSize.m_Left; 
-	m_CurrentRectData.m_Top		= m_Pos.y + m_RectSize.m_Top;
-	m_CurrentRectData.m_Right	= m_Pos.x + m_RectSize.m_Right;
-	m_CurrentRectData.m_Bottom	= m_Pos.y + m_RectSize.m_Bottom;
-
 }
 
 Goal::~Goal(void)
@@ -45,7 +39,7 @@ Goal::~Goal(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void Goal::ProcessCollision(int typeID, bool isDeath)
+void Goal::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

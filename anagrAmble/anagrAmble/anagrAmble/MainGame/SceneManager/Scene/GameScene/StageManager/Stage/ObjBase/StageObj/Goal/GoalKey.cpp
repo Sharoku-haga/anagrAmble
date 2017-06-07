@@ -45,7 +45,7 @@ GoalKey::~GoalKey(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-void GoalKey::ProcessCollision(int typeID, bool isDeath)
+void GoalKey::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
