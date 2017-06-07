@@ -24,6 +24,7 @@ namespace
 const short  PairAreaIntervalChipCount = 6;			//!< ペアAnchorとのエリア間隔チップ数
 
 }
+
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 Anchor::Anchor(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager

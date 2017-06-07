@@ -9,6 +9,7 @@
 #include "TitleMenu.h"
 #include "Button/Button.h"
 #include "Button/BasicButton.h"
+#include "Button\ButtonFactory.h"
 #include "../../../ControllerEnum.h"
 
 namespace ar
@@ -23,12 +24,12 @@ TitleMenu::TitleMenu(int btnTexID)
 	
 	// ボタンの生成
 	{
-		sl::fRect		size		= { 0.0f, 0.0f, 340.f, 180.f };		// サイズ
+		sl::fRect		size		= { -170.0f, -90.0f, 170.f, 90.f };		// サイズ
 
 		sl::fRect		startUv		= { 0.0f, 0.0f, 1.0f, 0.5f };		// 初期UV値
 		float			scrollTu	= 0.5f;								// Tu値のスクロール値
 
-		sl::SLVECTOR2	startPos		= { 790.f, 590.f };				// 開始座標
+		sl::SLVECTOR2	startPos		= { 960.f, 680.f };				// 開始座標
 		float			scrollPosYVal	= 200.f;						// Y座標のスクロール値
 
 		for(int createBtnCount = 0; createBtnCount < BTN_MAX; ++createBtnCount)
@@ -38,7 +39,7 @@ TitleMenu::TitleMenu(int btnTexID)
 								, startUv.m_Right, (startUv.m_Bottom + (scrollTu *  createBtnCount)) };
 
 			Button* pBtn = nullptr;
-			pBtn = new BasicButton(btnTexID, size, uv, pos);
+			pBtn = ButtonFactory::AddScaleFunction(ButtonFactory::AddBrightnessFunction(new BasicButton(btnTexID, size, uv, pos)));
 			m_pButtons.push_back(pBtn);
 		}
 	}

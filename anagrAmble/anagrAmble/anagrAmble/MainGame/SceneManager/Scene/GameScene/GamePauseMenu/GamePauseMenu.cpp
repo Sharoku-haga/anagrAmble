@@ -9,6 +9,7 @@
 #include "GamePauseMenu.h"
 #include "../../TitleScene/Button/Button.h"
 #include "../../TitleScene/Button/BasicButton.h"
+#include "../../TitleScene/Button/ButtonFactory.h"
 #include "../../../../ControllerEnum.h"
 #include "../GameEventManager/GameEventManager.h"
 #include "GamePauseMenuBackground.h"
@@ -17,22 +18,33 @@
 namespace ar
 {
 
+/* Unnamed Namespace ------------------------------------------------------------------------------------------ */
+
+namespace
+{
+
+const	int		ButtonMoveTimeInterval = 30;	// ボタンが動く間隔
+
+}
+
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 GamePauseMenu::GamePauseMenu(int bgTexID, int btnTexID)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
 	, m_pBackground(nullptr)
 	, m_pButton(nullptr)
+	, m_ButtonMoveTimeCount(0)
+	, m_MovesButton(false)
 {
 	// 背景作成
 	m_pBackground = new GamePauseMenuBackground(bgTexID);
 
 	// ボタン生成
 	{
-		sl::fRect		size		= { 0.0f, 0.0f, 340.f, 180.f };		// サイズ
+		sl::fRect		size		= { -170.f, -90.f, 170.f, 90.f };		// サイズ
 		sl::fRect		uv			= { 0.0f, 0.0f, 1.0f, 1.0f };		// UV値
-		sl::SLVECTOR2	pos			= { 790.f, 590.f };					// 開始座標
-		m_pButton = new BasicButton(btnTexID, size, uv, pos);
+		sl::SLVECTOR2	pos			= { 960.f, 680.f };					// 開始座標
+		m_pButton = ButtonFactory::AddScaleFunction(new BasicButton(btnTexID, size, uv, pos));
 	}
 }
 
@@ -44,12 +56,23 @@ GamePauseMenu::~GamePauseMenu(void)
 
 void GamePauseMenu::Control(void)
 {
-	m_pButton->Control();
+	if(m_ButtonMoveTimeCount == ButtonMoveTimeInterval)
+	{
+		m_MovesButton = m_MovesButton ? false : true;		// trueならfalseへ falseならtrueへと逆転させる
+		m_ButtonMoveTimeCount = 0;
+	}
+	
+	if(m_MovesButton)
+	{
+		m_pButton->Control();
+	}
 	
 	if(m_pLibrary->CheckCustomizeState(ENTER, sl::PUSH))
 	{
 		GameEventManager::Instance().ReceiveEvent("title_return");
 	}
+
+	++m_ButtonMoveTimeCount;
 }
 
 void GamePauseMenu::Draw(void)

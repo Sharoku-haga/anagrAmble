@@ -76,6 +76,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\SpearBlock">
       <UniqueIdentifier>{2dfab4de-52a1-4261-aec8-50bcd6a5a70a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction">
+      <UniqueIdentifier>{705f820f-331f-408e-9310-752e8232c59a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -240,6 +243,18 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\PlayerMotion.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFactory.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\ButtonFunction.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\ScaleFunction.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\BrightnessFunction.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -403,6 +418,18 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\PlayerMotion.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFactory.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\ButtonFunction.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\ScaleFunction.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\BrightnessFunction.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

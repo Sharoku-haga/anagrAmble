@@ -44,9 +44,11 @@ public:
 	void Draw(void);
 
 private:
-	sl::ISharokuLibrary*		m_pLibrary;			//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ 
-	GamePauseMenuBackground*	m_pBackground;		//!< ポーズメニューの背景
-	Button*						m_pButton;			//!< タイトルへ移行ボタン(Buttonクラスのインスタンスへのポインタ)
+	sl::ISharokuLibrary*		m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ 
+	GamePauseMenuBackground*	m_pBackground;			//!< ポーズメニューの背景
+	Button*						m_pButton;				//!< タイトルへ移行ボタン(Buttonクラスのインスタンスへのポインタ)
+	int							m_ButtonMoveTimeCount;	//!< ボタンの動作時間カウント変数
+	bool						m_MovesButton;			//!< ボタンが動いているかどうか
 
 
 };	// class GamePauseMenu
