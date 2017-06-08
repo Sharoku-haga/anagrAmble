@@ -48,8 +48,7 @@ private:
 	GamePauseMenuBackground*	m_pBackground;			//!< ポーズメニューの背景
 	Button*						m_pButton;				//!< タイトルへ移行ボタン(Buttonクラスのインスタンスへのポインタ)
 	int							m_ButtonMoveTimeCount;	//!< ボタンの動作時間カウント変数
-	bool						m_MovesButton;			//!< ボタンが動いているかどうか
-
+	bool						m_MovesButton;			//!< ボタンが動いているかどうか. true→ボタンが動作している. false→ボタンは動いていない
 
 };	// class GamePauseMenu
 

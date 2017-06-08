@@ -12,6 +12,8 @@
 namespace ar
 {
 
+class GameClearBackground;
+
 //======================================================================//
 //!< anagrAmbleにおけるゲームクリアシーンのクラス
 //======================================================================//
@@ -26,6 +28,8 @@ public:
 	~GameClearScene(void);
 
 private:
+	GameClearBackground*		m_pBackground;		//!< 背景. GameClearBackgroundクラスのインスタンスへのポインタ 
+
 	/** 
 	* コントロール関数 
 	* @return 次のSceneID

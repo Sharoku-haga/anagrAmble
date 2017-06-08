@@ -255,6 +255,12 @@
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\BrightnessFunction.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameClearScene\GameClearBackground.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameClearScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameOverScene\GameOverBackground.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameOverScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -430,6 +436,12 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\BrightnessFunction.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearBackground.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameClearScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameOverScene\GameOverBackground.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameOverScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
