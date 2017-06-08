@@ -167,6 +167,10 @@
     <ClCompile Include="MainGame\SceneManager\Scene\Scene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\BasicButton.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\Button.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFactory.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\BrightnessFunction.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\ButtonFunction.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\ScaleFunction.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleBackground.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.cpp" />
@@ -223,6 +227,10 @@
     <ClInclude Include="MainGame\SceneManager\Scene\Scene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\BasicButton.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\Button.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFactory.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\BrightnessFunction.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\ButtonFunction.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction\ScaleFunction.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.h" />
