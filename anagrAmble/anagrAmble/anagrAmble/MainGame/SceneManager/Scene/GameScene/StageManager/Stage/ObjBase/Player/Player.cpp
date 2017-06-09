@@ -14,6 +14,7 @@
 #include "../../CollisionManager.h"
 #include "../../../../../../../ControllerEnum.h"
 #include "../../../../GameEventManager/GameEventManager.h"
+#include "../../../../GameEventManager/EventLisner.h"
 
 namespace ar
 {
@@ -23,10 +24,11 @@ namespace ar
 namespace
 {
 
-const		int			WidthChipCount	= 1;				//!< プレイヤーの矩形の横のチップ数
-const		int			HeightChipCount = 2;				//!< プレイヤーの矩形の縦のチップ数
-const		float		CollisionCorrectionVal = 12.f;		//!< 衝突における判定の補正値
-const		float		UpCollisionCorrectionVal = 1.0f;	//!< 下の衝突判定補正値
+const		int			WidthChipCount	= 1;				// プレイヤーの矩形の横のチップ数
+const		int			HeightChipCount = 2;				// プレイヤーの矩形の縦のチップ数
+const		float		CollisionCorrectionVal = 12.f;		// 衝突における判定の補正値
+const		float		UpCollisionCorrectionVal = 1.0f;	// 下の衝突判定補正値
+const		float		FallLimitVal = 1368.f;				// 落下限界値. 
 	
 }
 
@@ -35,9 +37,12 @@ const		float		UpCollisionCorrectionVal = 1.0f;	//!< 下の衝突判定補正値
 Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
 				, const Stage::INDEX_DATA& rStageIndexData, int playerTexID)
 	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
+	, m_pEventLisner(new EventLisner())
 	, m_pPlayerMotion(nullptr)
 	, m_pPlayerMode(nullptr)
 {
+	RegisterEvent();
+	m_TypeID = PLAYER;
 	CalculatePos();
 	m_DrawingID.m_TexID = playerTexID;	// テクスチャーIDを格納
 
@@ -59,6 +64,7 @@ Player::~Player(void)
 {
 	sl::DeleteSafely(m_pPlayerMode);
 	sl::DeleteSafely(m_pPlayerMotion);
+	sl::DeleteSafely(m_pEventLisner);
 
 	for(auto& vtxID : m_VtxID)
 	{
@@ -74,22 +80,34 @@ void Player::StartStage(void)
 void Player::CompleteStage(void)
 {
 	// ステージクリア時の処理を書く
+	GameEventManager::Instance().ReceiveEvent("game_clear");
 }
 
 void Player::Control(void)
 {
-	// デバック用
-	if(m_Pos.y > (1080.f + 96.f * 3))
-	{
-		GameEventManager::Instance().ReceiveEvent( "title_return");
-	}
-
 	// イベント処理
 	HandleEvent();
+
+	if(m_Pos.y > FallLimitVal)
+	{	// 落下限界値以上落ちていたら死亡状態にする
+		m_pPlayerMotion->ChangeDeathMotion();
+	}
 
 	// 状態による処理をおこなう
 	sl::SLVECTOR2 currentMoveVector = m_pPlayerMotion->Control(m_MovableDirection);
 	m_Pos +=  currentMoveVector;
+
+	if(m_Pos.y > FallLimitVal)
+	{	// 落下限界値以上落ちていたら死亡状態にする
+		m_pPlayerMotion->ChangeDeathMotion();
+	}
+
+	if(m_pPlayerMotion->IsCurrrentMotionDeath())
+	{	// 死亡動作ならここから下の処理はいらないので、
+		// 衝突チェックにnullptrを渡して即return;
+		m_pCollisionManager->SetPlayerPointa(nullptr);
+		return;
+	}
 
 	if(currentMoveVector.x != 0.0f || currentMoveVector.y != 0.0f)
 	{	// 動いていたらイベントをとばす
@@ -117,6 +135,11 @@ void Player::Control(void)
 	// モードによる処理
 	m_pPlayerMode->Control();
 
+	if(m_pLibrary->CheckCustomizeState(SPECIAL_ACTION, sl::ON))
+	{	// 特殊アクションボタンが押されたら、イベントを通知する
+		GameEventManager::Instance().ReceiveEvent("special_action");
+	}
+
 	m_pCollisionManager->SetPlayerPointa(this);
 }
 
@@ -141,7 +164,6 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		break;
 
 	case GOAL:
-		// ゴール処理をしたら即リターン
 		return;
 		break;
 
@@ -203,12 +225,39 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void Player::HandleEvent(void)
-{}
+{
+	if(m_pEventLisner->EmptyCurrentEvent())
+	{
+		return;
+	}
+	else
+	{
+		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+
+		std::string eventType;			
+		for(auto& gameEvent : currentEvents)
+		{
+			if(gameEvent == "player_death_anime_end")
+			{	// 死亡アニメーションが終了したらゲームオーバーイベントをとばして,return
+				GameEventManager::Instance().ReceiveEvent("game_over");
+				return;								
+			}
+		}
+
+		m_pEventLisner->DelEvent();
+	}
+}
 
 void Player::CalculatePos(void)
 {
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
+}
+
+void Player::RegisterEvent(void)
+{
+	// 死亡動作アニメーション終了イベント
+	GameEventManager::Instance().RegisterEventType("player_death_anime_end", m_pEventLisner);
 }
 
 }	// namespace ar

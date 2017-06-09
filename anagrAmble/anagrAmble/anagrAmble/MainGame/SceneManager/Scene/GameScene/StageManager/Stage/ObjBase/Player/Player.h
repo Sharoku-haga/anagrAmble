@@ -14,6 +14,7 @@
 namespace ar
 {
 
+class EventLisner;
 class PlayerMode;
 class PlayerMotion;
 
@@ -102,6 +103,7 @@ public:
 
 private:
 	std::vector<int>	m_VtxID;					//!< VertexIDを格納したvector
+	EventLisner*		m_pEventLisner;				//!< イベントを受け取るクラス. EventLisnerクラスのインスタンスへのポインタ
 	PlayerMotion*		m_pPlayerMotion;			//!< プレイヤーの動作.  PlayerMotionクラスのインスタンスへのポインタ
 	PlayerMode*			m_pPlayerMode;				//!< プレイヤーのモード. PlayerModeクラスのインスタンスへのポインタ
 	MovableDirection	m_MovableDirection;			//!< 移動可能方向の構造体
@@ -117,6 +119,12 @@ private:
 	* 位置座標は中心座標で計算する. 
 	*/
 	virtual void CalculatePos(void)override;
+
+	/** 
+	* イベント登録関数 
+	* Constructor内で使用する
+	*/
+	void RegisterEvent(void);
 
 };	// class Player
 

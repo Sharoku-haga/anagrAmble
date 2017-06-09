@@ -47,6 +47,7 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 	if(m_CurrentMotion == DEATH)
 	{
 		// 死亡処理を行い 即リターン
+		ControlDeathMotion();
 		return m_CurrentMoveVector;
 	}
 
@@ -117,6 +118,15 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 	return m_CurrentMoveVector;
 }
 
+bool PlayerMotion::IsCurrrentMotionDeath(void)
+{
+	if(m_CurrentMotion == DEATH)
+	{
+		return true;
+	}
+
+	return false;
+}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
@@ -159,6 +169,13 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 		const sl::fRect		uv = { 0.0f, 0.0f, 1.0f, 1.0f };
 		m_VtxID[DEATH] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 	}
+}
+
+void PlayerMotion::ControlDeathMotion(void)
+{
+	// ここで死亡動作の処理(主にアニメーションを書く)
+
+	GameEventManager::Instance().ReceiveEvent("player_death_anime_end");		// アニメが終了したらイベント通知をする
 }
 
 }	// namespace ar

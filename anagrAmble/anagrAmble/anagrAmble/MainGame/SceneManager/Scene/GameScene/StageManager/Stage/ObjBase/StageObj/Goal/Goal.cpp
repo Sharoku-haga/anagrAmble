@@ -8,6 +8,8 @@
 
 #include "Goal.h"
 #include "../../../../StageDataManager.h"
+#include "../../../../../GameEventManager/GameEventManager.h"
+#include "../../../../../GameEventManager/EventLisner.h"
 
 namespace ar
 {
@@ -17,6 +19,7 @@ namespace ar
 Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
 			, const Stage::INDEX_DATA& rStageIndexData,  int texID,  ObjBase::TYPE_ID typeID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
+	, m_HasCollidedWithPlayer(false)
 {
 	CalculatePos();
 	m_TypeID = typeID;
@@ -32,6 +35,10 @@ Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionMana
 	const sl::fRect		uv = { 0.0f, 0.2666f, 0.15f, 0.6222f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+
+	// イベント登録
+	// 特殊アクションボタンが押されるイベント
+	GameEventManager::Instance().RegisterEventType("special_action", m_pEventLisner);
 }
 
 Goal::~Goal(void)
@@ -40,12 +47,28 @@ Goal::~Goal(void)
 }
 
 void Goal::ProcessCollision(const CollisionManager::CollisionData& rData)
-{}
+{
+	switch(rData.m_ObjType)
+	{
+
+	case ObjBase::PLAYER:
+		m_HasCollidedWithPlayer = true;
+		break;
+
+	default:
+		// do nothing
+		break;
+
+	}
+
+}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void Goal::Run(void)
-{}
+{
+	m_HasCollidedWithPlayer = false;
+}
 
 void Goal::Render(void)
 {
@@ -53,7 +76,29 @@ void Goal::Render(void)
 }
 
 void Goal::HandleEvent(void)
-{}
+{
+	if(m_pEventLisner->EmptyCurrentEvent())
+	{
+		return;
+	}
+	else
+	{
+		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+
+		std::string eventType;			
+		for(auto& gameEvent : currentEvents)
+		{
+			if(gameEvent == "special_action" && m_HasCollidedWithPlayer)
+			{
+				// ゴールに到達したイベントを通知する
+				GameEventManager::Instance().ReceiveEvent("goal_touch");
+				return;
+			}
+		}
+
+		m_pEventLisner->DelEvent();
+	}
+}
 
 void Goal::CalculatePos(void)
 {

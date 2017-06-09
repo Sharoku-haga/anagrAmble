@@ -32,7 +32,7 @@ Anchor::Anchor(StageDataManager* pStageDataManager, CollisionManager* pCollision
 	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
 	, m_pPlayer(pPlayer)
 	, m_HasPlacePosStage(false)
-	, m_IsCollisionPlayer(false)
+	, m_HasCollidedWithPlayer(false)
 
 {
 	m_TypeID = ANCHOR;
@@ -71,7 +71,7 @@ void Anchor::Control(void)
 {
 	HandleEvent();
 
-	m_IsCollisionPlayer = false;	// 毎フレームfalseへ trueの処理はHandleEvent内に処理
+	m_HasCollidedWithPlayer = false;	// 毎フレームfalseへ trueの処理はHandleEvent内に処理
 
 	if(m_HasPlacePosStage)
 	{
@@ -154,13 +154,13 @@ void Anchor::PlacePosStage(void)
 void Anchor::PlacePosPlayerFront(void)
 {
 	m_HasPlacePosStage = false;
-	m_IsCollisionPlayer = false;
+	m_HasCollidedWithPlayer = false;
 
 	CalculatePos();
 
 	// ステージに設置されていないので少し半透明にしておく
 	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.5f);
-	m_IsCollisionPlayer = false;
+	m_HasCollidedWithPlayer = false;
 }
 
 void Anchor::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -168,7 +168,7 @@ void Anchor::ProcessCollision(const CollisionManager::CollisionData& rData)
 	switch(rData.m_ObjType)
 	{
 	case PLAYER:
-		m_IsCollisionPlayer = true;
+		m_HasCollidedWithPlayer = true;
 		break;
 
 	default:
@@ -194,7 +194,7 @@ void Anchor::HandleEvent(void)
 		{
 			if(gameEvent == "anchor_retrieve")
 			{
-				if(m_IsCollisionPlayer )
+				if(m_HasCollidedWithPlayer )
 				{
 					PlacePosPlayerFront();
 				}

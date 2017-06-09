@@ -186,6 +186,7 @@ void MainGame::CutomizeInputDebug(void)
 	// 決定 : ENTER
 	{
 		m_pLibrary->RegisterCustomizeType(ENTER, sl::KEYBOARD, sl::K_A);
+		m_pLibrary->RegisterCustomizeType(ENTER, sl::KEYBOARD, sl::K_RETURN);
 	}
 
 	// プレイヤーのモード切替 : MODE_CHANGE
@@ -230,7 +231,7 @@ void MainGame::CutomizeInputDebug(void)
 
 	// 特殊アクション : SPECIAL_ACTION
 	{
-
+		m_pLibrary->RegisterCustomizeType(SPECIAL_ACTION, sl::KEYBOARD, sl::K_K);
 	}
 
 	//  時もどしの左ボタン : TIME_RETURN_L

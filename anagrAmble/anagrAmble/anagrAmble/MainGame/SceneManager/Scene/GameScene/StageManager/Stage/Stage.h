@@ -67,7 +67,7 @@ private:
 	};
 
 	sl::ISharokuLibrary*				m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
-	EventLisner*						m_pEventLisiner;		//!< EventLisnerクラスのインスタンスへのポインタ
+	EventLisner*						m_pEventLisner;			//!< EventLisnerクラスのインスタンスへのポインタ
 	StageDataManager*					m_pStageDataManager;	//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*					m_pCollisionManager;	//!< CollisionManagerクラスのインスタンスへのポインタ
 	BasePoint*							m_pBasePoint;			//!< BasePointクラスのインスタンスへのポインタ
