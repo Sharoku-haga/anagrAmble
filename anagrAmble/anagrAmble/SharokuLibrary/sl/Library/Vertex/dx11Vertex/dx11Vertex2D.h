@@ -79,9 +79,15 @@ public:
 
 	/** 
 	* VertexのサイズのデータをRect構造体で取得する関数
-	* @return サイズデーやを格納したRect構造体
+	* @return サイズデータを格納したRect構造体
 	*/
 	fRect GetSizeRect(void);
+
+	/** 
+	* VertexのUVのデータをRect構造体で取得する関数
+	* @return UVデータを格納したRect構造体
+	*/
+	fRect GetUVRect(void);
 
 private:
 	static const int							m_VertexCount = 4;			//!< 頂点数

@@ -12,6 +12,8 @@
 #include "ObjBase/ObjBase.h"
 #include "ObjBase/Player/Player.h"
 #include "../../../../../ControllerEnum.h"
+#include "ObjBase/Player/SandwichedStageSpace/SandwichedStageSpaceObj.h"
+#include "ObjBase/Player/SandwichedStageSpace/SandwichedSpaceBackground.h"
 
 namespace ar
 {
@@ -67,7 +69,10 @@ void BasePoint::Initialize(float stageWidth, Player* pPlayer)
 	}
 
 	// ObJbaseのBasePointPosを更新する
-	ObjBase::SetBasePointPos(m_Pos);	
+	ObjBase::SetBasePointPos(m_Pos);
+	SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
+	SandwichedSpaceBackground::SetBasePointPos(m_Pos);
+
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
@@ -86,6 +91,8 @@ void BasePoint::Move(void)
 	{	// プレイヤーが動いた分だけ動かし、ObJbaseのBasePointPosを更新する
 		m_Pos.x += (m_CuurentPlayerPos.x - m_OldPlayerPos.x);
 		ObjBase::SetBasePointPos(m_Pos);
+		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
+		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
 		m_OldPlayerPos = m_CuurentPlayerPos;
 	}
 }

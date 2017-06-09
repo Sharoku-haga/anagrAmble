@@ -130,6 +130,11 @@ fRect DX11Library::GetSizeRect(int vtxID)
 	return m_pVertex2DManager->GetSizeRect(vtxID);
 }
 
+fRect DX11Library::GetUVRect(int vtxID)
+{
+	return m_pVertex2DManager->GetUVRect(vtxID);
+}
+
 void DX11Library::ReleaseVertex2D(int vtxID)
 {
 	m_pVertex2DManager->ReleaseVertex2D(vtxID);

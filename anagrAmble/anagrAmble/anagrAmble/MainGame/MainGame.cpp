@@ -121,6 +121,12 @@ void MainGame::CustomizeInput(void)
 
 	}
 
+	// アンカー回収 : ANCHOR_RETRIEVE
+	{
+
+	}
+
+
 	// ダッシュ : DASH
 	{
 		m_pLibrary->RegisterCustomizeType(DASH, sl::GAMEPAD, sl::XIGAMEPAD_B  );
@@ -209,9 +215,14 @@ void MainGame::CutomizeInputDebug(void)
 
 	}
 
-	// アンカ-アクション : ANCHOR_ACTION
+	// アンカ-セット : ANCHOR_SET
 	{
-		m_pLibrary->RegisterCustomizeType(ANCHOR_ACTION, sl::KEYBOARD, sl::K_Z);
+		m_pLibrary->RegisterCustomizeType(ANCHOR_SET, sl::KEYBOARD, sl::K_Z);
+	}
+
+	// アンカー回収 : ANCHOR_RETRIEVE
+	{
+		m_pLibrary->RegisterCustomizeType(ANCHOR_RETRIEVE, sl::KEYBOARD, sl::K_M);
 	}
 
 	// ダッシュ : DASH

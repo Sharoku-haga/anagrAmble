@@ -76,6 +76,13 @@ public:
 	fRect GetSizeRect(int id) { return m_pVertex2Ds[id]->GetSizeRect(); }
 
 	/** 
+	* VertexのUVのデータをRect構造体で取得する関数
+	* @param[in] id		UVデータを取得したいVertexのID
+	* @return UVデータを格納したRect構造体
+	*/
+	fRect GetUVRect(int id) { return m_pVertex2Ds[id]->GetUVRect(); }
+
+	/** 
 	* 指定した頂点を解放する関数
 	* @param[in] id 解放したい頂点のid
  	*/

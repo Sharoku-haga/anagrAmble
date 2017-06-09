@@ -83,15 +83,23 @@ public:
 	*/
 	int GetTypeID(int indexY, int indexX);
 
-private:
-	/** ステージチップ1つのデータ構造体 */
-	struct StageChipData
-	{
-		short			m_YNum;		//!< Y軸のインデックス
-		short			m_XNum;		//!< X軸のインデックス
-		ObjBase*		m_pObj;		//!< チップに存在するOBJBaseクラスのインスタンスへのポインタ
-	};
+	/**
+	* Getter. 指定したｲﾝデックスからそこに存在するオブジェクトのポインタを取得する関数
+	* その地点が空白、もしくはエラーの場合はnullptrがかえってくる
+	* @param[in] indexY y方向のインデックス
+	* @param[in] indexX	x方向のインデックス
+	*/
+	const ObjBase* GetObjBasePointer(int indexY, int indexX);
 
+	/**
+	* 現在のステージデータをインデックスごとにセットする関数
+	* @param[in] indexY y方向のインデックス
+	* @param[in] indexX	x方向のインデックス
+	* @param[in] pObj	上記のインデックスにあるObjBaseクラスのインスタンスへのポインタ
+	*/
+	void SetCurrentStageChipData(int indexY, int indexX, ObjBase* pObj = nullptr);
+
+private:
 	GameDataManager*					m_pGameDataManager;			//!< GameDataManagerクラスのインスタンスへのポインタ
 	float								m_StageWidth;				//!< ステージチップの横の長さ
 	float								m_StageHeight;				//!< ステージチップの縦の長さ
@@ -99,7 +107,7 @@ private:
 	short								m_StageWidthChipNum;		//!< ステージチップの横の数
 	short								m_StageHeightChipNum;		//!< ステージチップの縦の数
 	std::vector<std::vector<short>>		m_LoadStageData;			//!< ファイルからロードしたステージデータを格納する二次元配列(vector)
-	std::vector<std::vector<short>>		m_CuurentStageData;			//!< 現在のステージデータを格納する二次元配列(vector)
+	std::vector<std::vector<ObjBase*>>	m_CurrentStageData;			//!< 現在のステージデータを格納する二次元配列(vector)
 	std::string							m_BackGoundTexFileName;		//!< ステージ背景のテクスチャーファイル名
 
 };	// class StageDataManager

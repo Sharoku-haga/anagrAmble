@@ -105,13 +105,24 @@ void Vertex2D::SetColor(const D3DXCOLOR& rColor)
 
 fRect Vertex2D::GetSizeRect(void)
 {
-	fRect	rectSize;
-	rectSize.m_Left		= m_Vertexs[0].m_Pos.x;
-	rectSize.m_Top		= m_Vertexs[0].m_Pos.y;
-	rectSize.m_Right	= m_Vertexs[1].m_Pos.x;
-	rectSize.m_Bottom	= m_Vertexs[2].m_Pos.y;
+	fRect	sizeRect;
+	sizeRect.m_Left		= m_Vertexs[0].m_Pos.x;
+	sizeRect.m_Top		= m_Vertexs[0].m_Pos.y;
+	sizeRect.m_Right	= m_Vertexs[1].m_Pos.x;
+	sizeRect.m_Bottom	= m_Vertexs[2].m_Pos.y;
 
-	return rectSize;
+	return sizeRect;
+}
+
+fRect Vertex2D::GetUVRect(void)
+{
+	fRect	uvRect;
+	uvRect.m_Left		= m_Vertexs[0].m_UV.x;
+	uvRect.m_Top		= m_Vertexs[0].m_UV.y;
+	uvRect.m_Right		= m_Vertexs[1].m_UV.x;
+	uvRect.m_Bottom		= m_Vertexs[2].m_UV.y;
+
+	return uvRect;
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

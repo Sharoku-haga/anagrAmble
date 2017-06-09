@@ -114,6 +114,12 @@ public:
 	TYPE_ID GetTypeID(void) const { return m_TypeID; }
 
 	/** 
+	* Getter オブジェクトの描画IDを取得する関数
+	* @return 描画ID
+	*/
+	sl::DrawingID	GetDrawingID(void)const { return m_DrawingID; }
+
+	/** 
 	* Setter ステージのインデックスデータを取得する関数
 	* @param[in] rStageIndexData
 	*/

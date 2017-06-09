@@ -9,6 +9,7 @@
 #include "PlayerMode.h"
 #include "Player.h"
 #include "Anchor.h"
+#include "SandwichedStageSpace/SandwichedStageSpace.h"
 #include "../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../../../ControllerEnum.h"
 
@@ -34,10 +35,13 @@ PlayerMode::PlayerMode(StageDataManager* pStageDataManager, CollisionManager* pC
 	m_pAnchors[0]->SetPairAnchorPointer(m_pAnchors[1]);
 	m_pAnchors[1]->SetPairAnchorPointer(m_pAnchors[0]);
 
+	m_pSandwichedStageSpace = new SandwichedStageSpace(pStageDataManager, pCollisionManager, pPlayer);
 }
 
 PlayerMode::~PlayerMode(void)
 {
+	sl::DeleteSafely(m_pSandwichedStageSpace);
+
 	for(auto& pAnchor : m_pAnchors)
 	{
 		sl::DeleteSafely(pAnchor);
@@ -46,6 +50,20 @@ PlayerMode::~PlayerMode(void)
 
 void PlayerMode::Control(void)
 {
+
+	if(m_pLibrary->CheckCustomizeState(ANCHOR_RETRIEVE, sl::PUSH))
+	{
+		// アンカー回収
+		for(auto& pAnchor : m_pAnchors)
+		{
+			if(pAnchor->GetHasPlacePosStage())
+			{
+				GameEventManager::Instance().ReceiveEvent("anchor_retrieve");
+				break;
+			}
+		}
+	}
+
 	switch(m_CurrentModeType)
 	{
 	case NORMAL:
@@ -57,25 +75,15 @@ void PlayerMode::Control(void)
 			}
 			else
 			{
-				m_CurrentModeType = ANCHOR_SET;
+				m_CurrentModeType = ANCHOR_ACTION;
 			}
 		}
 		break;
 
-	case ANCHOR_SET:
+	case ANCHOR_ACTION:
 		
-		if(m_pLibrary->CheckCustomizeState(ANCHOR_ACTION, sl::PUSH))
+		if(m_pLibrary->CheckCustomizeState(ANCHOR_SET, sl::PUSH))
 		{
-			//// アンカー回収
-			//for(auto& pAnchor : m_pAnchors)
-			//{
-			//	if(pAnchor->GetHasPlacePosStage())
-			//	{
-			//		GameEventManager::Instance().ReceiveEvent("anchor_retrieve");
-			//		break;
-			//	}
-			//}
-
 			// アンカー設置
 			for(auto& pAnchor : m_pAnchors)
 			{
@@ -89,6 +97,7 @@ void PlayerMode::Control(void)
 
 		if(m_pAnchors[0]->GetHasPlacePosStage() && m_pAnchors[1]->GetHasPlacePosStage())
 		{	// どちらのアンカ-もステージにおかれたら モードを通常モードへ
+			m_pSandwichedStageSpace->InitializeData(m_pAnchors[0], m_pAnchors[1]);
 			m_CurrentModeType = NORMAL;
 		}
 
@@ -115,6 +124,8 @@ void PlayerMode::Control(void)
 	{
 		pAnchor->Control();
 	}
+
+	m_pSandwichedStageSpace->Control();
 }
 
 void PlayerMode::Draw(void)
@@ -124,7 +135,7 @@ void PlayerMode::Draw(void)
 	case NORMAL:
 		break;
 
-	case ANCHOR_SET:
+	case ANCHOR_ACTION:
 		for(auto& pAnchor : m_pAnchors)
 		{
 			if(RESULT_FAILED(pAnchor->GetHasPlacePosStage()))
@@ -136,6 +147,7 @@ void PlayerMode::Draw(void)
 		break;
 
 	case AREA_CHENGE:
+		m_pSandwichedStageSpace->Draw();
 		break;
 
 	default:

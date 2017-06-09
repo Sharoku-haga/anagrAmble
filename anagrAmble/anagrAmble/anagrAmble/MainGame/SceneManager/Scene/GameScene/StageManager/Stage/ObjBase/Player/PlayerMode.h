@@ -17,6 +17,7 @@ class StageDataManager;
 class CollisionManager;
 class Player;
 class Anchor;
+class SandwichedStageSpace;
 
 //======================================================================//
 //!< プレイヤーのモードクラス
@@ -56,18 +57,19 @@ private:
 	enum MODE_TYPE
 	{
 		NORMAL,			//!< 通常モード
-		ANCHOR_SET,		//!< アンカーセットを行うモード
+		ANCHOR_ACTION,	//!< アンカーセットなどを行うモード
 		AREA_CHENGE,	//!< エリアの入れ替えを行うモード
 	};
 
-	static const int						m_AnchorCount = 2;		//!< アンカーの数
+	static const int						m_AnchorCount = 2;			//!< アンカーの数
 
-	sl::ISharokuLibrary*					m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
-	StageDataManager*						m_pStageDataManager;	//!< StageDataManagerクラスのインスタンスへのポインタ
-	CollisionManager*						m_pCollisionManager;	//!< CollisionManagerクラスのインスタンスへのポインタ
-	Player*									m_pPlayer;				//!< このクラスのオーナーであるPlayerクラスのインスタンスへのポインタ
-	std::array<Anchor*, m_AnchorCount>		m_pAnchors;				//!< Anchorクラスのインスタンスへのポインタの固定長配列。数がかわることがないので、固定長配列でいく
-	MODE_TYPE								m_CurrentModeType;		//!< 現在のモードタイプ
+	sl::ISharokuLibrary*					m_pLibrary;					//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
+	StageDataManager*						m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
+	CollisionManager*						m_pCollisionManager;		//!< CollisionManagerクラスのインスタンスへのポインタ
+	Player*									m_pPlayer;					//!< このクラスのオーナーであるPlayerクラスのインスタンスへのポインタ
+	std::array<Anchor*, m_AnchorCount>		m_pAnchors;					//!< Anchorクラスのインスタンスへのポインタの固定長配列。数がかわることがないので、固定長配列でいく
+	SandwichedStageSpace*					m_pSandwichedStageSpace;	//!< SandwichedStageSpaceクラスのインスタンスへのポインタ
+	MODE_TYPE								m_CurrentModeType;			//!< 現在のモードタイプ
 
 };	// class PlayerMode	
 

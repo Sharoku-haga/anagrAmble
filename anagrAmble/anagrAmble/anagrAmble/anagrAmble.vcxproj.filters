@@ -79,6 +79,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\TitleScene\Button\ButtonFunction">
       <UniqueIdentifier>{705f820f-331f-408e-9310-752e8232c59a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace">
+      <UniqueIdentifier>{a09f205d-9d74-4e10-aa7f-56b3a6ff0843}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -261,6 +264,15 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameOverScene\GameOverBackground.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameOverScene</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace\SandwichedStageSpace.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace\SandwichedStageSpaceObj.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace\SandwichedSpaceBackground.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -442,6 +454,15 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameOverScene\GameOverBackground.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameOverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace\SandwichedStageSpace.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace\SandwichedStageSpaceObj.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace\SandwichedSpaceBackground.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
