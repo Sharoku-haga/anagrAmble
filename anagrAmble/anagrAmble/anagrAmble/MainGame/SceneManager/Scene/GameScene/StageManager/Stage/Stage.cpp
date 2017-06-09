@@ -8,6 +8,7 @@
 
 #include "Stage.h"
 #include "../../GameEventManager/EventLisner.h"
+#include "../../GameEventManager/GameEventManager.h"
 #include "../StageDataManager.h"
 #include "CollisionManager.h"
 #include "BasePoint.h"
@@ -22,7 +23,7 @@ namespace ar
 
 Stage::Stage(StageDataManager*	pStageDataManager)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
-	, m_pEventLisiner(new EventLisner())
+	, m_pEventLisner(new EventLisner())
 	, m_pStageDataManager(pStageDataManager)
 	, m_pCollisionManager(new CollisionManager(pStageDataManager))
 	, m_pBasePoint(new BasePoint())
@@ -42,7 +43,7 @@ Stage::~Stage(void)
 	sl::DeleteSafely(m_pPlayer);
 	sl::DeleteSafely(m_pBasePoint);
 	sl::DeleteSafely(m_pCollisionManager);
-	sl::DeleteSafely(m_pEventLisiner);
+	sl::DeleteSafely(m_pEventLisner);
 }
 
 void Stage::Initialize(void)
@@ -71,6 +72,9 @@ void Stage::Initialize(void)
 	int stageBGTexID = m_pLibrary->LoadTexture(m_pStageDataManager->GetBackGoundTexFileName().c_str());
 	m_pBackground = new StageBackground(m_pBasePoint, stageBGTexID);
 
+	// イベント登録
+	GameEventManager::Instance().RegisterEventType("goal_touch", m_pEventLisner);
+
 }
 
 void Stage::Control(void)
@@ -80,6 +84,7 @@ void Stage::Control(void)
 	switch(m_CurrentState)
 	{
 	case ENTER:
+		m_pPlayer->StartStage();
 		break;
 
 	case EXECUTE:
@@ -93,6 +98,7 @@ void Stage::Control(void)
 		break;
 
 	case EXIT:
+		m_pPlayer->CompleteStage();
 		break;
 
 	default:
@@ -142,7 +148,29 @@ void Stage::CreateObj(int typeID, int yNum, int xNum)
 }
 
 void Stage::HandleEvent(void)
-{}
+{
+	if(m_pEventLisner->EmptyCurrentEvent())
+	{
+		return;
+	}
+	else
+	{
+		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+
+		std::string eventType;
+		for(auto& gameEvent : currentEvents)
+		{
+			if(gameEvent == "goal_touch")
+			{
+				m_CurrentState = EXIT;
+				return;
+			}
+		}
+
+		m_pEventLisner->DelEvent();
+	}
+
+}
 
 }	// namespace ar
 

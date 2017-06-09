@@ -26,17 +26,15 @@ CollisionManager::~CollisionManager(void)
 
 void CollisionManager::UpDate(void)
 {
-	unsigned int checkObjCount = m_pStageObj.size();
-
-	if(checkObjCount == 0)
+	if(m_pStageObj.empty() || m_pPlayer == nullptr)
 	{
 		return;
 	}
 
 	// プレイヤーの衝突判定処理
-	for(unsigned int i = 0; i < checkObjCount; ++i)
+	for(auto& pStageObj : m_pStageObj)
 	{
-		CheckCollisionPlayer(m_pStageObj[i]);
+		CheckCollisionPlayer(pStageObj);
 	}
 
 	// データをクリアする

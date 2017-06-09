@@ -37,8 +37,20 @@ public:
 	*/
 	const sl::SLVECTOR2& Control(const Player::MovableDirection& rMovableDirection);
 
+	/** 
+	* 動作を死亡動作に変更する関数
+	* 死亡条件を満たした場合によぶ関数
+	*/
+	inline void ChangeDeathMotion(void) { m_CurrentMotion = DEATH; }
+
 	/**
-	* プレイヤーが右を向いているかどうかを取得する関数
+	* 現材の動作が死亡かどうか確認する関数
+	* @return 結果
+	*/
+	bool IsCurrrentMotionDeath(void);
+
+	/**
+	* プレイヤーが右を向いているかどうかを確認する関数
 	* @return 結果 右向きかどうか true→右向き false→右を向いていない(左向き)
 	*/
 	bool IsFacingRight(void) { return m_IsFacingRight; }
@@ -74,6 +86,12 @@ private:
 	* @param[in] rPlayerRect プレイヤーのRect構造体
 	*/
 	void InitializeVertex(const sl::fRect& rPlayerRect);
+
+	/** 
+	* 死亡動作の制御関数
+	* m_CurrentMotionがDeathになったら使用する関数
+	*/
+	void ControlDeathMotion(void);
 
 };	// class PlayerMotion
 

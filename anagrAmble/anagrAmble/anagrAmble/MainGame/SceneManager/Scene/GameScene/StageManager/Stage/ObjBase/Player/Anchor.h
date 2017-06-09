@@ -86,10 +86,10 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 	 
 private:
-	Player*		m_pPlayer;				//!< オーナーとなるPlayerクラスのインスタンスへのポインタ
-	Anchor*		m_pPairAnchor;			//!< ペアとなるAnchorクラスのインスタンスへのポインタ
-	bool		m_HasPlacePosStage;		//!< 位置座標がステージに置かれたかどうか. true→置かれている false→置かれていない
-	bool		m_IsCollisionPlayer;	//!< プレイヤーと衝突したかどうか. true→衝突している false→衝突していない
+	Player*		m_pPlayer;					//!< オーナーとなるPlayerクラスのインスタンスへのポインタ
+	Anchor*		m_pPairAnchor;				//!< ペアとなるAnchorクラスのインスタンスへのポインタ
+	bool		m_HasPlacePosStage;			//!< 位置座標がステージに置かれたかどうか. true→置かれている false→置かれていない
+	bool		m_HasCollidedWithPlayer;	//!< プレイヤー衝突したかどうか. true→衝突している false→衝突していない
 
 	/** 
 	* イベント処理関数
