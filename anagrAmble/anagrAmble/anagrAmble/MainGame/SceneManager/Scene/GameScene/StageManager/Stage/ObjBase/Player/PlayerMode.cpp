@@ -109,6 +109,12 @@ void PlayerMode::Control(void)
 		break;
 
 	case AREA_CHENGE:
+		if(m_pLibrary->CheckCustomizeState(SPACE_CHANGE, sl::PUSH))
+		{
+			GameEventManager::Instance().TriggerSynEvent("space_change_start");
+			break;
+		}
+
 		if(m_pLibrary->CheckCustomizeState(MODE_CHANGE, sl::PUSH))
 		{
 			m_CurrentModeType = NORMAL;

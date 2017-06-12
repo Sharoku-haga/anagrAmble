@@ -36,6 +36,8 @@ public:
 	/** 描画関数 */
 	void Draw(void);
 
+
+
 	/**
 	* 衝突処理関数. 純粋仮想関数
 	* @param[in] rData 衝突判定に関連するデータ

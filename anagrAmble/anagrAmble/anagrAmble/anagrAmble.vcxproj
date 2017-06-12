@@ -132,6 +132,7 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenu.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenuBackground.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameScene.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataChangeManager.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataManager.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageManager.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\BasePoint.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenu.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenuBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameScene.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataChangeManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\BasePoint.h" />

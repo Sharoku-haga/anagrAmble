@@ -10,6 +10,7 @@
 #include "../../GameEventManager/EventLisner.h"
 #include "../../GameEventManager/GameEventManager.h"
 #include "../StageDataManager.h"
+#include "../StageDataChangeManager.h"
 #include "CollisionManager.h"
 #include "BasePoint.h"
 #include "ObjBase/Player/Player.h"
@@ -73,7 +74,15 @@ void Stage::Initialize(void)
 	m_pBackground = new StageBackground(m_pBasePoint, stageBGTexID);
 
 	// イベント登録
+	// ゴール到達イベント
 	GameEventManager::Instance().RegisterEventType("goal_touch", m_pEventLisner);
+
+	// ステージ入れ替え開始イベント
+	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventLisner);
+	m_pEventLisner->RegisterSynEventFunc("space_change_start", std::bind(&ar::Stage::PrepareSpaceChange, this));
+
+	// 時戻し(ステージを入れ替える前の状態に戻す)イベント
+	GameEventManager::Instance().RegisterEventType("space_change_return_start", m_pEventLisner);
 
 }
 
@@ -94,7 +103,20 @@ void Stage::Control(void)
 		m_pBackground->Control();
 		break;
 
-	case AREA_CHANGE:
+	case STAGE_SPACE_CHANGE:
+		if(StageDataChangeManager::Instance().ChangeStageData())
+		{
+			GameEventManager::Instance().TriggerSynEvent("space_change_end");
+		}
+		m_CurrentState = EXECUTE;
+		break;
+
+	case STAGE_SPACE_RETURN:
+		if(m_pStageDataManager->ReturnBeforeCurrentStageData())
+		{	// 入れ替え戻しが完了したら終了イベントをとばす
+			GameEventManager::Instance().ReceiveEvent("space_change_return_end");
+		}
+		m_CurrentState = EXECUTE;
 		break;
 
 	case EXIT:
@@ -168,12 +190,23 @@ void Stage::HandleEvent(void)
 				m_CurrentState = EXIT;
 				return;
 			}
+			else if(gameEvent == "space_change_return_start")
+			{
+				m_CurrentState = STAGE_SPACE_RETURN;
+			}
+
 		}
 
 		m_pEventLisner->DelEvent();
 	}
 
 }
+
+void Stage::PrepareSpaceChange(void)
+{
+	m_CurrentState = STAGE_SPACE_CHANGE;
+}
+
 
 }	// namespace ar
 

@@ -60,6 +60,10 @@ Anchor::Anchor(StageDataManager* pStageDataManager, CollisionManager* pCollision
 	GameEventManager::Instance().RegisterEventType("player_move", m_pEventLisner);
 	m_pEventLisner->RegisterSynEventFunc("player_move", std::bind(&ar::Anchor::AdjustPos, this));
 
+	// ステージ変更終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventLisner);
+	m_pEventLisner->RegisterSynEventFunc("space_change_end", std::bind(&ar::Anchor::PlacePosPlayerFront, this));
+
 }
 
 Anchor::~Anchor(void)
@@ -170,6 +174,9 @@ void Anchor::PlacePosPlayerFront(void)
 	m_HasCollidedWithPlayer = false;
 
 	CalculatePos();
+
+	m_StageIndexData.m_XNum = 0;
+	m_StageIndexData.m_YNum = 0;
 
 	// ステージに設置されていないので少し半透明にしておく
 	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.5f);

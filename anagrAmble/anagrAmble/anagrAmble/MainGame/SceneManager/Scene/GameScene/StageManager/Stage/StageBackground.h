@@ -7,7 +7,6 @@
 #ifndef AR_STAGE_BACKGROUND_H
 #define AR_STAGE_BACKGROUND_H
 
-#include <vector>
 #include "../SharokuLibrary/sl/sl.h"
 
 namespace ar
@@ -39,7 +38,8 @@ public:
 	void Draw(void);
 
 private:
-	std::vector< sl::SLVECTOR2>			m_Pos;					//!< 位置座標を格納したvector
+	sl::SLVECTOR2						m_FirstPos;				//!< 1つ目の背景の座標
+	sl::SLVECTOR2						m_SecondPos;			//!< 2つ目の背景の座標
 	sl::DrawingID						m_ID;					//!< グラフィック関連のIDをまとめた構造体
 	sl::fRect							m_RectSize;				//!< 矩形サイズ
 	sl::ISharokuLibrary*				m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ

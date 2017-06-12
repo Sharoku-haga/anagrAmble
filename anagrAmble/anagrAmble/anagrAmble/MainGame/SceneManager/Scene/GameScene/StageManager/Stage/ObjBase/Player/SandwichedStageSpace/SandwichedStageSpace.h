@@ -10,6 +10,13 @@
 #include <vector>
 #include "../../../Stage.h"
 
+namespace sl
+{
+
+class ISharokuLibrary;
+
+}
+
 namespace ar
 {
 
@@ -67,6 +74,7 @@ public:
 	void Draw(void);
 
 private:
+	sl::ISharokuLibrary*										m_pLibrary;					//!< ライブラリ.sl::ISharokuLibraryクラスのインスタンスへのポインタ
 	EventLisner*												m_pEventLisner;				//!< EventLisnerクラスのインスタンスへのポインタ
 	StageDataManager*											m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*											m_pCollisionManager;		//!< CollisionManagerクラスのインスタンスへのポインタ
@@ -83,11 +91,20 @@ private:
 	*/
 	void HandleEvent(void);
 
+	/** 挟んだ空間内のオブジェクトを生成する関数 */
+	void CreateSandwichedObj(void);
+
 	/**
 	* 空間全体を動かす関数.コールバック関数
 	* "player_move"のイベントがおこった際に呼ばれる
 	*/
 	void Move(void);
+
+	/**
+	* 空間入れ替えの為の準備を行う関数.コールバック関数
+	* "space_change_start"のイベントがおこった際によばれる
+	*/
+	void PrepareSpaceChange(void);
 
 };	// class SandwichedStageSpace
 

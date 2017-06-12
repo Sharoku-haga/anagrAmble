@@ -202,12 +202,12 @@ void MainGame::CutomizeInputDebug(void)
 
 	// プレイヤーのモード解除 : MODE_RELEASE
 	{
-		m_pLibrary->RegisterCustomizeType(MODE_RELEASE, sl::KEYBOARD, sl::K_C);
+		
 	}
 
 	// 空間入れ替え : SPACE_CHANGE
 	{
-
+		m_pLibrary->RegisterCustomizeType(SPACE_CHANGE, sl::KEYBOARD, sl::K_H);
 	}
 
 	// 空間反転 : SPACE_INVERTED
@@ -247,12 +247,12 @@ void MainGame::CutomizeInputDebug(void)
 
 	//  時もどしの左ボタン : TIME_RETURN_L
 	{
-
+		m_pLibrary->RegisterCustomizeType(TIME_RETURN_L, sl::KEYBOARD, sl::K_B);
 	}
 
 	//  時もどしの右ボタン : TIME_RETURN_R
 	{
-
+		m_pLibrary->RegisterCustomizeType(TIME_RETURN_R, sl::KEYBOARD, sl::K_N);
 	}
 
 	// ポーズボタン : PAUSE

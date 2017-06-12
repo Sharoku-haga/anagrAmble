@@ -15,6 +15,7 @@
 #include "../../../../../../../ControllerEnum.h"
 #include "../../../../GameEventManager/GameEventManager.h"
 #include "../../../../GameEventManager/EventLisner.h"
+#include "../../../StageDataChangeManager.h"
 
 namespace ar
 {
@@ -24,11 +25,12 @@ namespace ar
 namespace
 {
 
-const		int			WidthChipCount	= 1;				// プレイヤーの矩形の横のチップ数
-const		int			HeightChipCount = 2;				// プレイヤーの矩形の縦のチップ数
-const		float		CollisionCorrectionVal = 12.f;		// 衝突における判定の補正値
-const		float		UpCollisionCorrectionVal = 1.0f;	// 下の衝突判定補正値
-const		float		FallLimitVal = 1368.f;				// 落下限界値. 
+const		int			WidthChipCount				= 1;				// プレイヤーの矩形の横のチップ数
+const		int			HeightChipCount				= 2;				// プレイヤーの矩形の縦のチップ数
+const		int			GoddessPointMaxVal			= 3;				// 女神の加護の最大数
+const		float		CollisionCorrectionVal		= 12.f;				// 衝突における判定の補正値
+const		float		UpCollisionCorrectionVal	= 1.0f;				// 下の衝突判定補正値
+const		float		FallLimitVal				= 1368.f;			// 落下限界値. 
 	
 }
 
@@ -40,10 +42,11 @@ Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollision
 	, m_pEventLisner(new EventLisner())
 	, m_pPlayerMotion(nullptr)
 	, m_pPlayerMode(nullptr)
+	, m_GoddessPointCount(GoddessPointMaxVal)
 {
 	RegisterEvent();
 	m_TypeID = PLAYER;
-	CalculatePos();
+
 	m_DrawingID.m_TexID = playerTexID;	// テクスチャーIDを格納
 
 	// 矩形サイズを生成
@@ -58,6 +61,8 @@ Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollision
 	m_MovableDirection.m_Down = false;
 	m_MovableDirection.m_Right = false;
 	m_MovableDirection.m_Left = false;
+	CalculatePos();
+
 }
 
 Player::~Player(void)
@@ -98,8 +103,9 @@ void Player::Control(void)
 	m_Pos +=  currentMoveVector;
 
 	if(m_Pos.y > FallLimitVal)
-	{	// 落下限界値以上落ちていたら死亡状態にする
+	{	// 落下限界値以上落ちていたら死亡状態にし、女神の加護の回数も減らす
 		m_pPlayerMotion->ChangeDeathMotion();
+		--m_GoddessPointCount;
 	}
 
 	if(m_pPlayerMotion->IsCurrrentMotionDeath())
@@ -138,6 +144,14 @@ void Player::Control(void)
 	if(m_pLibrary->CheckCustomizeState(SPECIAL_ACTION, sl::ON))
 	{	// 特殊アクションボタンが押されたら、イベントを通知する
 		GameEventManager::Instance().ReceiveEvent("special_action");
+	}
+
+	if(m_pLibrary->CheckCustomizeState(TIME_RETURN_L, sl::ON) 
+		&& m_pLibrary->CheckCustomizeState(TIME_RETURN_R, sl::PUSH)
+		&& m_GoddessPointCount != 0)
+	{	// 時戻しボタンが押されたら イベントを通知する
+		GameEventManager::Instance().ReceiveEvent("space_change_return_start");
+		// --m_GoddessPointCount;
 	}
 
 	m_pCollisionManager->SetPlayerPointa(this);
@@ -253,8 +267,14 @@ void Player::HandleEvent(void)
 			if(gameEvent == "player_death_anime_end")
 			{	// 死亡アニメーションが終了したらゲームオーバーイベントをとばして,return
 				GameEventManager::Instance().ReceiveEvent("game_over");
+				m_pEventLisner->DelEvent();
 				return;								
 			}
+			else if(gameEvent == "space_change_return_end")
+			{	// 入れ替え戻しが完了したら、女神の加護の数値を減らす
+				--m_GoddessPointCount;
+			}
+
 		}
 
 		m_pEventLisner->DelEvent();
@@ -265,12 +285,38 @@ void Player::CalculatePos(void)
 {
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
+	GameEventManager::Instance().TriggerSynEvent("player_move");
 }
 
 void Player::RegisterEvent(void)
 {
 	// 死亡動作アニメーション終了イベント
 	GameEventManager::Instance().RegisterEventType("player_death_anime_end", m_pEventLisner);
+
+	// 入れ替え処理開始イベント
+	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventLisner);
+	m_pEventLisner->RegisterSynEventFunc("space_change_start", std::bind(&ar::Player::PrepareSpaceChange, this));
+
+	// 入れ替え処理終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventLisner);
+	m_pEventLisner->RegisterSynEventFunc("space_change_end", std::bind(&ar::Player::RunSpaceChangeEndProcessing, this));
+
+	// 入れ替え戻し終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventLisner);
+}
+
+void Player::PrepareSpaceChange(void)
+{
+	StageDataChangeManager::Instance().SetPlayerPointer(this);
+}
+
+void  Player::RunSpaceChangeEndProcessing(void)
+{
+	// ストックのラストデータにプレイヤー座標を設定する
+	m_pStageDataManager->SetNewStockStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum, this);
+
+	// 入れ替え終了したら、モードを通常モードに変更する
+	m_pPlayerMode->ChangeNormalMode();
 }
 
 }	// namespace ar

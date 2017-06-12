@@ -16,7 +16,6 @@ namespace ar
 namespace
 {
 
-const char		BackgroundCount		= 2;			// 背景の数
 const float		PosCorrectionVal	= 96.f;		// 座標の補正値
 
 }
@@ -37,10 +36,14 @@ StageBackground::StageBackground(BasePoint* pBasePoint, int texID)
 	m_ID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
 	m_OldBasePointPos = m_pBasePoint->GetPos();
-	for(char i = 0; i < BackgroundCount ; ++i)
-	{
-		m_Pos.emplace_back((m_OldBasePointPos.x + m_RectSize.m_Right * i), m_OldBasePointPos.y);
-	}
+
+	// 1つ目の背景座標の初期化
+	m_FirstPos.x = m_OldBasePointPos.x;
+	m_FirstPos.y = m_OldBasePointPos.y;
+
+	// 2つ目の背景座標の初期化
+	m_SecondPos.x = m_OldBasePointPos.x + m_RectSize.m_Right;
+	m_SecondPos.y = m_OldBasePointPos.y;
 }
 
 StageBackground::~StageBackground(void)
@@ -56,16 +59,28 @@ void StageBackground::Control(void)
 		return;
 	}
 
-	for(auto& backgroundPos : m_Pos)
-	{
-		if((cuurentBasePointPos.x - backgroundPos.x) >= 0.0f && (m_RectSize.m_Right + PosCorrectionVal / 2) < (cuurentBasePointPos.x - backgroundPos.x))
-		{	// 背景が左の画面外にでたらまた右の画面外に配置しなおす
-			backgroundPos.x = cuurentBasePointPos.x + m_RectSize.m_Right;
-		}
-		else if((cuurentBasePointPos.x - backgroundPos.x) < 0.0f && (m_RectSize.m_Right + PosCorrectionVal / 2) < (backgroundPos.x - cuurentBasePointPos.x))
-		{	// 背景が右の画面外にでたらまた左の画面外に配置しなおす
-			backgroundPos.x = cuurentBasePointPos.x - m_RectSize.m_Right;
-		}
+	// 1つ目の背景座標処理
+	if((cuurentBasePointPos.x - m_FirstPos.x) >= 0.0f
+		&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (cuurentBasePointPos.x - m_FirstPos.x))
+	{	// 背景が左の画面外にでたらまた右の画面外に配置しなおす
+		m_FirstPos.x = m_SecondPos.x + m_RectSize.m_Right;
+	}
+	else if((cuurentBasePointPos.x - m_FirstPos.x) < 0.0f 
+			&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (m_FirstPos.x - cuurentBasePointPos.x))
+	{	// 背景が右の画面外にでたらまた左の画面外に配置しなおす
+		m_FirstPos.x = m_SecondPos.x - m_RectSize.m_Right;
+	}
+
+	// 2つ目の背景座標処理
+	if((cuurentBasePointPos.x - m_SecondPos.x ) >= 0.0f
+		&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (cuurentBasePointPos.x - m_SecondPos.x ))
+	{	// 背景が左の画面外にでたらまた右の画面外に配置しなおす
+		m_SecondPos.x = m_FirstPos.x + m_RectSize.m_Right;
+	}
+	else if((cuurentBasePointPos.x - m_SecondPos.x ) < 0.0f 
+			&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (m_SecondPos.x  - cuurentBasePointPos.x))
+	{	// 背景が右の画面外にでたらまた左の画面外に配置しなおす
+		m_SecondPos.x  = m_FirstPos.x - m_RectSize.m_Right;
 	}
 
 	m_OldBasePointPos = cuurentBasePointPos;
@@ -73,10 +88,8 @@ void StageBackground::Control(void)
 
 void StageBackground::Draw(void)
 {
-	for(auto& backgroundPos : m_Pos)
-	{
-		m_pLibrary->Draw2D(m_ID, backgroundPos - m_OldBasePointPos);
-	}
+	m_pLibrary->Draw2D(m_ID, m_FirstPos - m_OldBasePointPos);
+	m_pLibrary->Draw2D(m_ID, m_SecondPos - m_OldBasePointPos);
 }
 
 }	// namespace ar

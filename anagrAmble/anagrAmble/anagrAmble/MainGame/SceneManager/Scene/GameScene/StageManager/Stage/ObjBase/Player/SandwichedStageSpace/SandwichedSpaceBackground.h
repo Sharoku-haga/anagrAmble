@@ -94,7 +94,7 @@ private:
 	Stage::INDEX_DATA						m_PlayerIndexData;				//!< プレイヤーのインデックスデータ
 	bool									m_IsPlayerFacingRight;			//!< プレイヤーが右を向いているかどうかのフラグ true→右を向いている false→左を向いている
 
-};
+};	// class SandwichedSpaceBackground
 
 }	// namespace ar
 

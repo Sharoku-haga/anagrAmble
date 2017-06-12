@@ -41,7 +41,7 @@ public:
 	* 動作を死亡動作に変更する関数
 	* 死亡条件を満たした場合によぶ関数
 	*/
-	inline void ChangeDeathMotion(void) { m_CurrentMotion = DEATH; }
+	inline void ChangeDeathMotion(void) { m_CurrentMotion = PlayerMotion::MOTION_ID::DEATH; }
 
 	/**
 	* 現材の動作が死亡かどうか確認する関数
