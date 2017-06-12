@@ -219,6 +219,19 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		m_Pos.x -= m_CurrentRectData.m_Right - rData.m_ObjRect.m_Left;
 	}
 	
+
+	// 座標が動いたのでステージインデックスを計算しなおす
+	if(m_pPlayerMotion->IsFacingRight())
+	{ 
+		m_StageIndexData.m_XNum = static_cast<short>((m_Pos.x - (m_StageChipSize / 2)) / m_StageChipSize);
+ 	    m_StageIndexData.m_YNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
+	}
+	else
+	{
+		m_StageIndexData.m_XNum = static_cast<short>((m_Pos.x + (m_StageChipSize / 2)) / m_StageChipSize);
+ 	    m_StageIndexData.m_YNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
+	}
+
 	GameEventManager::Instance().TriggerSynEvent("player_move");
 }
 

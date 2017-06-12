@@ -37,7 +37,9 @@ StageObjManager::~StageObjManager(void)
 
 void StageObjManager::CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex)
 {
-	m_pStageObj.push_back(m_pStageObjFactory->CreateStageObj(typeID, rIndex));
+	StageObj* pObj = m_pStageObjFactory->CreateStageObj(typeID, rIndex);
+	m_pStageObj.push_back(pObj);
+	m_pStageDataManager->SetCurrentStageChipData(rIndex.m_YNum, rIndex.m_XNum, pObj);
 }
 
 void StageObjManager::Control(void)

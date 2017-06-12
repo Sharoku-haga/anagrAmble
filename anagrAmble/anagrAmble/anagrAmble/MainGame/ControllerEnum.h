@@ -25,7 +25,8 @@ enum CONTROLLER_ACTION_EVENT
 	MODE_RELEASE,		//!< モード解除
 	SPACE_CHANGE,		//!< スぺース入れ替え
 	SPACE_INVERTED,		//!< スペース反転
-	ANCHOR_ACTION,		//!< アンカーアクション
+	ANCHOR_SET,			//!< アンカー設置アクション
+	ANCHOR_RETRIEVE,	//!< アンカー回収アクション	
 	DASH,				//!< ダッシュ
 	JUMP,				//!< ジャンプ
 	SQUAT,				//!< しゃがむ

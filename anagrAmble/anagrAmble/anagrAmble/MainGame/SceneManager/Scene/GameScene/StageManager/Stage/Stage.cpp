@@ -124,7 +124,10 @@ void Stage::CreateObj(int typeID, int yNum, int xNum)
 	switch(typeID)
 	{
 	case ObjBase::BLANK:
-		// do noting
+	{
+		m_pStageDataManager->SetCurrentStageChipData(yNum, xNum);
+
+	}
 		break;
 
 	case ObjBase::PLAYER:

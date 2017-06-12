@@ -8,6 +8,7 @@
 
 #include "StageDataManager.h"
 #include "../../../GameDataManager/GameDataManager.h"
+#include "Stage/ObjBase/ObjBase.h"
 
 namespace ar
 {
@@ -65,8 +66,13 @@ bool StageDataManager::LoadDataFile(void)
 
 	std::fclose(fp);
 
-	// 現在のステージデータに格納する
-	m_CuurentStageData = m_LoadStageData;
+	// 現在データのvectorのresizeを行う
+	m_CurrentStageData.resize(m_StageHeightChipNum);
+
+	for (auto& stageY : m_CurrentStageData)
+	{
+		stageY.resize(m_StageWidthChipNum);
+	}
 
 	return true;
 }
@@ -74,13 +80,43 @@ bool StageDataManager::LoadDataFile(void)
 int StageDataManager::GetTypeID(int indexY, int indexX)
 {
 	// インデックスが0未満、もしくはサイズ以上なら-1をかえす
-	if(indexY < 0 || indexY > static_cast<int>(m_CuurentStageData.size() - 1)
-		|| indexX < 0 ||  indexX > static_cast<int>(m_CuurentStageData[0].size() - 1))
+	if(indexY < 0 || indexY > static_cast<int>(m_StageHeightChipNum - 1)
+		|| indexX < 0 ||  indexX > static_cast<int>(m_StageWidthChipNum - 1))
 	{
 		return -1;
 	}
 
-	return static_cast<int>(m_CuurentStageData[indexY][indexX]);
+	// データがnullptrなら空白のIDをかえす
+	if(m_CurrentStageData[indexY][indexX] == nullptr)
+	{
+		return ObjBase::BLANK;
+	}
+
+	return static_cast<int>(m_CurrentStageData[indexY][indexX]->GetTypeID());
+}
+
+const ObjBase* StageDataManager::GetObjBasePointer(int indexY, int indexX)
+{
+	// インデックスが0未満、もしくはサイズ以上ならnullptrをかえす
+	if(indexY < 0 || indexY > static_cast<int>(m_StageHeightChipNum - 1)
+		|| indexX < 0 ||  indexX > static_cast<int>(m_StageWidthChipNum - 1))
+	{
+		return nullptr;
+	}
+
+	return m_CurrentStageData[indexY][indexX];
+}
+
+void StageDataManager::SetCurrentStageChipData(int indexY, int indexX, ObjBase* pObj)
+{
+	// インデックスが0未満、もしくはサイズ以上なら即return
+	if(indexY < 0 || indexY > static_cast<int>(m_StageHeightChipNum - 1)
+		|| indexX < 0 ||  indexX > static_cast<int>(m_StageWidthChipNum - 1))
+	{
+		return;
+	}
+
+	m_CurrentStageData[indexY][indexX] = pObj;
 }
 
 }	// namespace ar

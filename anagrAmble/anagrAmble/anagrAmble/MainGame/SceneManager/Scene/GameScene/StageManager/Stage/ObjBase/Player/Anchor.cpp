@@ -124,7 +124,6 @@ void Anchor::PlacePosStage(void)
 	m_StageIndexData.m_XNum = playerIndex.m_XNum;
 	m_StageIndexData.m_YNum = playerIndex.m_YNum;
 
-	
 	if(playerIndex.m_XNum <= 1 
 		|| playerIndex.m_XNum >= (m_pStageDataManager->GetStageWidthChipNum() - 1))
 	{	// 端にはアンカーがおけないので即return
@@ -136,12 +135,26 @@ void Anchor::PlacePosStage(void)
 	{
 		// プレイヤーの位置座標からインデックスをずらして位置調整をする
 		short xNumCorrectionVal =  m_pPlayer->IsFacingRight() ?  2 : -2 ;
+
+		if(std::abs((playerIndex.m_XNum + xNumCorrectionVal) - m_pPairAnchor->GetStageIndex().m_XNum) > PairAreaIntervalChipCount)
+		{	// アンカーの間がペアとのエリア間隔チップ数よりはなれていたら即return
+			return;
+		}
+
 		m_Pos.x = ((playerIndex.m_XNum + xNumCorrectionVal) * m_StageChipSize);
+		m_StageIndexData.m_XNum += xNumCorrectionVal;
 	}
 	else 
 	{
 		short xNumCorrectionVal =  m_pPlayer->IsFacingRight() ?  1 : -1 ;
+
+		if(std::abs((playerIndex.m_XNum + xNumCorrectionVal) - m_pPairAnchor->GetStageIndex().m_XNum) > PairAreaIntervalChipCount)
+		{	// アンカーの間がペアとのエリア間隔チップ数よりはなれていたら即return
+			return;
+		}
+
 		m_Pos.x = ((playerIndex.m_XNum + xNumCorrectionVal) * m_StageChipSize);
+		m_StageIndexData.m_XNum += xNumCorrectionVal;
 	}
 	
 	m_HasPlacePosStage = true;
@@ -197,6 +210,11 @@ void Anchor::HandleEvent(void)
 				if(m_HasCollidedWithPlayer )
 				{
 					PlacePosPlayerFront();
+				}
+
+				if(m_pPairAnchor->GetHasPlacePosStage())
+				{	// もう片方が置かれている状況なら挟んでいる空間を開放するイベントをとばす
+					GameEventManager::Instance().ReceiveEvent("sandwiched_space_release");
 				}
 			}
 		}

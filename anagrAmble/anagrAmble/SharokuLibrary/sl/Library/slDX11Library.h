@@ -151,9 +151,16 @@ public:
 	/** 
 	* VertexのサイズのデータをRect構造体で取得する関数
 	* @param[in] vtxID		サイズデータを取得したいVertexのID
-	* @return サイズデーやを格納したRect構造体
+	* @return サイズデータを格納したRect構造体
 	*/
 	virtual fRect GetSizeRect(int vtxID)override;
+
+	/** 
+	* VertexのUVのデータをRect構造体で取得する関数
+	* @param[in] vtxID		UVデータを取得したいVertexのID
+	* @return UVデータを格納したRect構造体
+	*/
+	virtual fRect GetUVRect(int vtxID)override;
 
 	/** 
 	* 指定した2D頂点バッファを解放する関数
