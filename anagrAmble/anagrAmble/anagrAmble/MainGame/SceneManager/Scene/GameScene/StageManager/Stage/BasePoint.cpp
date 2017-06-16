@@ -24,7 +24,7 @@ namespace
 {
 
 const float PlayerInterVal	= 960.f;		//!< プレイヤーとの間隔
-const float CorrectionVal	= 96.f;			//!< 補正値。ステージが少しはみだしてしまう為
+const float CorrectionVal	= 100.f;			//!< 補正値。ステージが少しはみだしてしまう為
 
 }
 
@@ -79,11 +79,23 @@ void BasePoint::Initialize(float stageWidth, Player* pPlayer)
 
 void BasePoint::Move(void)
 {
+	if(m_pPlayer == nullptr)
+	{
+		return;
+	}
+
 	m_CuurentPlayerPos = m_pPlayer->GetPos();	// 現在のプレイヤー座標を更新する
 
-	if(m_CuurentPlayerPos.x < PlayerInterVal || 
-		m_CuurentPlayerPos.x > (m_StageWidth - PlayerInterVal - CorrectionVal))
-	{	// ステージ左端付近と右端付近にプレイヤーがいるときは動かない
+	if((m_CuurentPlayerPos.x - 0.0f) < PlayerInterVal)
+	{	// 左端付近にプレイヤーがいるときは0.0ｆになる
+		ObjBase::SetBasePointPos(m_Pos);
+		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
+		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
+		m_OldPlayerPos = m_CuurentPlayerPos;
+		return;
+	}
+	else if	(m_CuurentPlayerPos.x > (m_StageWidth - PlayerInterVal - CorrectionVal))
+	{	// 右端付近にプレイヤーがいるときは動かない
 		m_OldPlayerPos = m_CuurentPlayerPos;
 		return;
 	}

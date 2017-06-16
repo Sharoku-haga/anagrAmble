@@ -38,6 +38,12 @@ public:
 	* 描画処理を行う関数
 	*/
 	void Draw(void);
+
+	/**
+	* 描画関連のIDを取得する関数
+	* @return 描画ID
+	*/
+	const sl::DrawingID& GetDrawingID(void) { return m_DrawingID; }
 	
 	/**
 	* BasePointの座標をセットする関数

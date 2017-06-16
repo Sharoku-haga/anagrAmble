@@ -76,6 +76,13 @@ public:
 	/** Destructor */
 	virtual ~ObjBase(void);
 
+	/** 
+	* オブジェクトの位置を再配置する関数
+	* @param[in] yIndexNum	y軸方向のインデックス
+	* @param[in] xIndexNum  x軸方向のインデックス
+	*/
+	void RelocatePos(short yIndexNum, short xIndexNum);
+
 	/**
 	* 衝突処理関数.純粋仮想関数 
 	* @param[in] rData 衝突判定に関連するデータ

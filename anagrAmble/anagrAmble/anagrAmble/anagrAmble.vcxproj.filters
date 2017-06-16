@@ -273,6 +273,9 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace\SandwichedSpaceBackground.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataChangeManager.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -463,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace\SandwichedSpaceBackground.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataChangeManager.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

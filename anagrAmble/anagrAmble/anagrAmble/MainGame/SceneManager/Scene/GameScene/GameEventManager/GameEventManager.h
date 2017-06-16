@@ -27,7 +27,6 @@ class GameEventManager
 {
 
 public:
-	
 	/**
 	* 実体取得関数
 	* @return GameEventManagerのインスタンス

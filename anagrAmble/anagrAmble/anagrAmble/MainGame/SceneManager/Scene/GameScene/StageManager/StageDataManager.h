@@ -8,6 +8,7 @@
 #define AR_STAGE_DATA_MANAGER_H
 
 #include <vector>
+#include <deque>
 #include <string>
 
 namespace ar
@@ -39,10 +40,29 @@ public:
 	bool LoadDataFile(void);
 
 	/**
-	* ファイルからロードしたステージデータを取得する関数
+	* ステージのオリジナルデータを保存する関数
+	* StageManagerの初期化がすべて終わったらよぶ
+	*/
+	void SaveStageOriginData(void);
+
+	/**
+	* StockStageDataに現在のステージデータを加える関数
+	* ステージを入れ替える際によぶ
+	*/
+	void AddStockStageData(void);
+
+	/**
+	* 現在のステージデータを1つ入れ替える前のデータに戻す関数
+	* ステージを1つ前に戻す際によぶ
+	* @return 結果 true→成功  false→失敗
+	*/
+	bool ReturnBeforeCurrentStageData(void);
+
+	/**
+	* Getter. ファイルからロードしたステージデータへの参照を取得する関数
 	* @return ファイルからロードしたステージデータ
 	*/
-	const std::vector<std::vector<short>>& GetLoadStageData() { return m_LoadStageData; }
+	const std::vector<std:: vector<short>>& GetLoadStageData() { return m_LoadStageIndexData; }
 
 	/**
 	* Getter. ステージチップのサイズを取得する関数
@@ -89,26 +109,42 @@ public:
 	* @param[in] indexY y方向のインデックス
 	* @param[in] indexX	x方向のインデックス
 	*/
-	const ObjBase* GetObjBasePointer(int indexY, int indexX);
+	 ObjBase* const GetObjBasePointer(int indexY, int indexX);
 
 	/**
-	* 現在のステージデータをインデックスごとにセットする関数
+	* Setter. 現在のステージデータにインデックスのデータをセットする関数
 	* @param[in] indexY y方向のインデックス
 	* @param[in] indexX	x方向のインデックス
 	* @param[in] pObj	上記のインデックスにあるObjBaseクラスのインスタンスへのポインタ
 	*/
 	void SetCurrentStageChipData(int indexY, int indexX, ObjBase* pObj = nullptr);
 
+	/**
+	* Setter. ステージデータのストックの最新データにインデックスのデータをセットする関数
+	* 入れ替え処理を行った後にインデックスデータを変更したい場合に使用する
+	* @param[in] indexY y方向のインデックス
+	* @param[in] indexX	x方向のインデックス
+	* @param[in] pObj	上記のインデックスにあるObjBaseクラスのインスタンスへのポインタ
+	*/
+	void SetNewStockStageChipData(int indexY, int indexX, ObjBase* pObj);
+
 private:
-	GameDataManager*					m_pGameDataManager;			//!< GameDataManagerクラスのインスタンスへのポインタ
-	float								m_StageWidth;				//!< ステージチップの横の長さ
-	float								m_StageHeight;				//!< ステージチップの縦の長さ
-	float								m_StageChipSize;			//!< ステージチップのサイズ
-	short								m_StageWidthChipNum;		//!< ステージチップの横の数
-	short								m_StageHeightChipNum;		//!< ステージチップの縦の数
-	std::vector<std::vector<short>>		m_LoadStageData;			//!< ファイルからロードしたステージデータを格納する二次元配列(vector)
-	std::vector<std::vector<ObjBase*>>	m_CurrentStageData;			//!< 現在のステージデータを格納する二次元配列(vector)
-	std::string							m_BackGoundTexFileName;		//!< ステージ背景のテクスチャーファイル名
+	static const int									m_StockStageDataOrderCount;	//!< m_StockStageDataのデータ数
+
+	GameDataManager*									m_pGameDataManager;			//!< GameDataManagerクラスのインスタンスへのポインタ
+	float												m_StageWidth;				//!< ステージチップの横の長さ
+	float												m_StageHeight;				//!< ステージチップの縦の長さ
+	float												m_StageChipSize;			//!< ステージチップのサイズ
+	short												m_StageWidthChipNum;		//!< ステージチップの横の数
+	short												m_StageHeightChipNum;		//!< ステージチップの縦の数
+	std::vector<std::vector<short>>						m_LoadStageIndexData;		//!< ファイルからロードしたステージのインデックスデータを格納する二次元配列(vector)
+	std::vector<std::vector<ObjBase*>>					m_StageOriginData;			//!< 今回のステージの元データを格納する二次元配列(vector)
+	std::vector<std::vector<ObjBase*>>					m_CurrentStageData;			//!< 現在のステージデータを格納する二次元配列(vector)
+	std::vector<int>									m_StockStageDataOrder;		//!< ストックしているステージデータの順番
+	std::vector<std::vector<std::vector<ObjBase*>>>		m_StockStageData;			//!< ストックしているステージデータを格納する三次元配列(vector)
+	std::string											m_BackGoundTexFileName;		//!< ステージ背景のテクスチャーファイル名
+
+	
 
 };	// class StageDataManager
 

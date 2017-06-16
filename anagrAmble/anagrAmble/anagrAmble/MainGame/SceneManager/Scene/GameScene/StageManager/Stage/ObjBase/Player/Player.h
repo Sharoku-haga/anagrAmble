@@ -107,6 +107,7 @@ private:
 	PlayerMotion*		m_pPlayerMotion;			//!< プレイヤーの動作.  PlayerMotionクラスのインスタンスへのポインタ
 	PlayerMode*			m_pPlayerMode;				//!< プレイヤーのモード. PlayerModeクラスのインスタンスへのポインタ
 	MovableDirection	m_MovableDirection;			//!< 移動可能方向の構造体
+	int					m_GoddessPointCount;		//!< ゲーム中女神の加護の回数。死んだり、時戻しを使用すると数値が減る
 
 	/** 
 	* イベント処理関数
@@ -125,6 +126,18 @@ private:
 	* Constructor内で使用する
 	*/
 	void RegisterEvent(void);
+
+	/**
+	* 空間入れ替えの為の準備を行う関数.コールバック関数
+	* "space_change_start"のイベントがおこった際によばれる
+	*/
+	void PrepareSpaceChange(void);
+
+	/**
+	* 空間入れ替えの終了した後の処理を行う関数.コールバック関数
+	* "space_change_end"のイベントがおこった際によばれる
+	*/
+	void RunSpaceChangeEndProcessing(void);
 
 };	// class Player
 

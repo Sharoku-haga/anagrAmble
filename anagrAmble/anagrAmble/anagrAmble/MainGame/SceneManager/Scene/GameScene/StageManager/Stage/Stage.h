@@ -60,10 +60,11 @@ private:
 	/** ステージの状態 */
 	enum STATE 
 	{
-		ENTER,			//!< 開始処理
-		EXECUTE,		//!< 通常処理
-		AREA_CHANGE,	//!< ステージ入れ替え処理
-		EXIT,			//!< 終了処理
+		ENTER,				//!< 開始処理
+		EXECUTE,			//!< 通常処理
+		STAGE_SPACE_CHANGE,	//!< ステージ入れ替え処理
+		STAGE_SPACE_RETURN,	//!< ステージを元に戻す処理
+		EXIT,				//!< 終了処理
 	};
 
 	sl::ISharokuLibrary*				m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
@@ -89,6 +90,12 @@ private:
 
 	/** イベントを処理する関数 */
 	void HandleEvent(void);
+
+	/**
+	* 空間入れ替えの為の準備を行う関数.コールバック関数
+	* "space_change_start"のイベントがおこった際によばれる
+	*/
+	void PrepareSpaceChange(void);
 
 };	// class Stage
 

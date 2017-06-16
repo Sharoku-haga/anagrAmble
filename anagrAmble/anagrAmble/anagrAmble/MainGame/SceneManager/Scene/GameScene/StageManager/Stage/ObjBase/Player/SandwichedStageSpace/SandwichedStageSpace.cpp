@@ -15,6 +15,8 @@
 #include "../Anchor.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventLisner.h"
+#include "../../../../StageDataChangeManager.h"
+#include "../SharokuLibrary/sl/sl.h"
 
 namespace ar
 {
@@ -32,16 +34,32 @@ const	short  SpaceYIndexMin= 1;			//!< 挟まれた空間内のY軸方向の最�
 
 SandwichedStageSpace::SandwichedStageSpace(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, 
 											Player*	pPlayer)
-	: m_pEventLisner(new EventLisner())
+	: m_pLibrary(sl::ISharokuLibrary::Instance())
+	, m_pEventLisner(new EventLisner())
 	, m_pStageDataManager(pStageDataManager)
 	, m_pCollisionManager(pCollisionManager)
 	, m_pPlayer(pPlayer)
 	, m_pBackground(new SandwichedSpaceBackground())
 {
 	m_StageChipSize = m_pStageDataManager->GetStageChipSize();
+
+	// 挟まれた空間解除イベント
 	GameEventManager::Instance().RegisterEventType("sandwiched_space_release", m_pEventLisner);
+
+	// プレイヤーが移動したというイベント
 	GameEventManager::Instance().RegisterEventType("player_move", m_pEventLisner);
 	m_pEventLisner->RegisterSynEventFunc("player_move", std::bind(&ar::SandwichedStageSpace::Move, this));
+
+	// ステージ変更開始イベント
+	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventLisner);
+	m_pEventLisner->RegisterSynEventFunc("space_change_start", std::bind(&ar::SandwichedStageSpace::PrepareSpaceChange, this));
+
+	// ステージ変更終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventLisner);
+	m_pEventLisner->RegisterSynEventFunc("space_change_end", std::bind(&ar::SandwichedStageSpace::DiscardData, this));
+
+	// 入れ替え戻し終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventLisner);
 }
 
 SandwichedStageSpace::~SandwichedStageSpace(void)
@@ -92,33 +110,8 @@ void SandwichedStageSpace::InitializeData(Anchor* pAnchorOne, Anchor*	pAnchorTwo
 		SandwichedSpaceBackground::SetStageMapChipSize(m_pStageDataManager->GetStageChipSize());
 	}
 
-	// 挟んだ空間の初期化を行う
-	{
-		sl::SLVECTOR2 pos = {0.0f, static_cast<float>(m_StartIndex.m_YNum * m_StageChipSize)};
-		float spaceWidth = (m_EndIndex.m_XNum - m_StartIndex.m_XNum) * m_StageChipSize;
-		float spaceHeight = (m_EndIndex.m_YNum - m_StartIndex.m_YNum) * m_StageChipSize + m_StageChipSize;
-		m_pBackground->InitializeData(pos, spaceWidth, spaceHeight);
-	}
-	
-	// 描画オブジェクトを生成する
-	for(short yNum = m_StartIndex.m_YNum; yNum <= m_EndIndex.m_YNum; ++yNum)
-	{
-		for(short xNum = m_StartIndex.m_XNum ; xNum < m_EndIndex.m_XNum; ++xNum)
-		{
-			// 挟んだ空間のオブジェクトの設定する
-			const ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
-			if(pObj == nullptr)
-			{
-				continue;
-			}
-
-			sl::SLVECTOR2 pos;
-			pos.x = pObj->GetPos().x - (m_StartIndex.m_XNum * m_StageChipSize);
-			pos.y = pObj->GetPos().y;
-			sl::DrawingID id = pObj->GetDrawingID();
-			m_pObjs.push_back(new SandwichedStageSpaceObj(pos, id));
-		}
-	}
+	// 挟んだ空間内のオブジェクトを生成する
+	CreateSandwichedObj();
 }
 
 void SandwichedStageSpace::DiscardData(void)
@@ -131,9 +124,11 @@ void SandwichedStageSpace::DiscardData(void)
 
 	for(auto& pObj : m_pObjs)
 	{
+		m_pLibrary->ReleaseVertex2D(pObj->GetDrawingID().m_VtxID);
 		sl::DeleteSafely(pObj);
 	}
 
+	m_pObjs.clear();
 	std::vector<SandwichedStageSpaceObj*>().swap(m_pObjs);
 
 	m_pBackground->DiscardData();
@@ -170,14 +165,63 @@ void SandwichedStageSpace::HandleEvent(void)
 		for(auto& gameEvent : currentEvents)
 		{
 			if(gameEvent == "sandwiched_space_release")
-			{
+			{	// データを破棄する
 				DiscardData();
+			}
+			else if(gameEvent == "space_change_return_end")
+			{	// もし挟んだ空間にオブジェクトがあるなら
+				// データが入れ替わっている場合は一旦オブジェクトを破棄してから再度構成し直す
+				if(RESULT_FAILED(m_pObjs.empty()))
+				{
+					for(auto& pObj : m_pObjs)
+					{
+						sl::DeleteSafely(pObj);
+					}
+					m_pObjs.clear();
+					std::vector<SandwichedStageSpaceObj*>().swap(m_pObjs);
+
+					m_pBackground->DiscardData();
+
+					CreateSandwichedObj();
+				}
 			}
 		}
 
 		m_pEventLisner->DelEvent();
 	}
 }
+
+void SandwichedStageSpace::CreateSandwichedObj(void)
+{
+	// 挟んだ空間の初期化を行う
+	{
+		sl::SLVECTOR2 pos = {0.0f, static_cast<float>(m_StartIndex.m_YNum * m_StageChipSize)};
+		float spaceWidth = (m_EndIndex.m_XNum - m_StartIndex.m_XNum) * m_StageChipSize;
+		float spaceHeight = (m_EndIndex.m_YNum - m_StartIndex.m_YNum) * m_StageChipSize + m_StageChipSize;
+		m_pBackground->InitializeData(pos, spaceWidth, spaceHeight);
+	}
+	
+	// 描画オブジェクトを生成する
+	for(short yNum = m_StartIndex.m_YNum; yNum <= m_EndIndex.m_YNum; ++yNum)
+	{
+		for(short xNum = m_StartIndex.m_XNum ; xNum < m_EndIndex.m_XNum; ++xNum)
+		{
+			// 挟んだ空間のオブジェクトの設定する
+			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
+			if(pObj == nullptr)
+			{
+				continue;
+			}
+
+			sl::SLVECTOR2 pos;
+			pos.x = pObj->GetPos().x - (m_StartIndex.m_XNum * m_StageChipSize);
+			pos.y = pObj->GetPos().y;
+			sl::DrawingID id = pObj->GetDrawingID();
+			m_pObjs.push_back(new SandwichedStageSpaceObj(pos, id));
+		}
+	}
+}
+
 
 void SandwichedStageSpace::Move(void)
 {
@@ -189,6 +233,12 @@ void SandwichedStageSpace::Move(void)
 
 	SandwichedStageSpaceObj::SetPlayerIndexData(m_pPlayer->GetStageIndex());
 	m_pBackground->SetPlayerIndexData(m_pPlayer->GetStageIndex());
+}
+
+void SandwichedStageSpace::PrepareSpaceChange(void)
+{
+	StageDataChangeManager::Instance().SetSandwichedSpaceStartIndex(m_StartIndex);
+	StageDataChangeManager::Instance().SetSandwichedSpaceEndIndex(m_EndIndex);
 }
 
 }	// namespace ar
