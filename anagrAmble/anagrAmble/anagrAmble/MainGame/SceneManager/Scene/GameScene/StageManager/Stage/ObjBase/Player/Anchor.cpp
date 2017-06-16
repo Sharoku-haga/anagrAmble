@@ -38,14 +38,12 @@ Anchor::Anchor(StageDataManager* pStageDataManager, CollisionManager* pCollision
 	m_TypeID = ANCHOR;
 	m_DrawingID.m_TexID = texID;
 
-	// ブロックサイズのRect構造体を作成
-	float chipSize = m_pStageDataManager->GetStageChipSize();
-	m_RectSize.m_Left	=  -(chipSize / 2);
-	m_RectSize.m_Top	=  -(chipSize / 2);
-	m_RectSize.m_Right	= (chipSize / 2);
-	m_RectSize.m_Bottom = (chipSize / 2);
+	m_RectSize.m_Left	=  -(m_StageChipSize / 2);
+	m_RectSize.m_Top	=  -(m_StageChipSize / 2);
+	m_RectSize.m_Right	= (m_StageChipSize / 2);
+	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 	
-	const sl::fRect		uv = {0.0f, 0.0f, 1.0f, 1.0f};
+	const sl::fRect		uv = {0.891f, 0.955f, 0.916f, 1.0f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
@@ -173,7 +171,16 @@ void Anchor::PlacePosPlayerFront(void)
 	m_HasPlacePosStage = false;
 	m_HasCollidedWithPlayer = false;
 
-	CalculatePos();
+	// ステージインデックスをプレイヤーにあわせる
+	Stage::INDEX_DATA playerIndex = m_pPlayer->GetStageIndex();
+	m_StageIndexData.m_XNum = playerIndex.m_XNum;
+	m_StageIndexData.m_YNum = playerIndex.m_YNum;
+
+	// プレイヤーの前に位置するよう座標を調整
+	// 向きのによって位置調整
+	float posXCorrectionVal =  m_pPlayer->IsFacingRight() ?  m_StageChipSize / 2 : -(m_StageChipSize / 2) ;
+	m_Pos.x = m_pPlayer->GetPos().x + posXCorrectionVal;
+	m_Pos.y = m_pPlayer->GetPos().y + m_StageChipSize / 2;
 
 	m_StageIndexData.m_XNum = 0;
 	m_StageIndexData.m_YNum = 0;
@@ -181,6 +188,11 @@ void Anchor::PlacePosPlayerFront(void)
 	// ステージに設置されていないので少し半透明にしておく
 	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.5f);
 	m_HasCollidedWithPlayer = false;
+}
+
+void Anchor::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+	// 空処理.よばれることはない
 }
 
 void Anchor::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -230,8 +242,13 @@ void Anchor::HandleEvent(void)
 	}
 }
 
-void Anchor::CalculatePos(void)
+void Anchor::AdjustPos(void)
 {
+	if(m_HasPlacePosStage)
+	{	// ステージにおかれていたら即return
+		return;
+	}
+
 	// ステージインデックスをプレイヤーにあわせる
 	Stage::INDEX_DATA playerIndex = m_pPlayer->GetStageIndex();
 	m_StageIndexData.m_XNum = playerIndex.m_XNum;
@@ -242,16 +259,6 @@ void Anchor::CalculatePos(void)
 	float posXCorrectionVal =  m_pPlayer->IsFacingRight() ?  m_StageChipSize / 2 : -(m_StageChipSize / 2) ;
 	m_Pos.x = m_pPlayer->GetPos().x + posXCorrectionVal;
 	m_Pos.y = m_pPlayer->GetPos().y + m_StageChipSize / 2;
-}
-
-void Anchor::AdjustPos(void)
-{
-	if(m_HasPlacePosStage)
-	{	// ステージにおかれていたら即return
-		return;
-	}
-
-	CalculatePos();
 }
 
 }	// namespace ar

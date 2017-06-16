@@ -44,8 +44,13 @@ Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollision
 	, m_pPlayerMode(nullptr)
 	, m_GoddessPointCount(GoddessPointMaxVal)
 {
-	RegisterEvent();
-	m_TypeID = PLAYER;
+	// 位置座標計算
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
+	GameEventManager::Instance().TriggerSynEvent("player_move");
+
+	RegisterEvent();		// イベント登録
+	m_TypeID = PLAYER;		// タイプID
 
 	m_DrawingID.m_TexID = playerTexID;	// テクスチャーIDを格納
 
@@ -54,15 +59,15 @@ Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollision
 	m_RectSize.m_Top	= -(m_StageChipSize / 2) * HeightChipCount;
 	m_RectSize.m_Right	=  (m_StageChipSize / 2) * WidthChipCount;
 	m_RectSize.m_Bottom =  (m_StageChipSize / 2) * HeightChipCount;
-
+ 
 	m_pPlayerMotion = new PlayerMotion(m_RectSize);
 	m_pPlayerMode = new PlayerMode(m_pStageDataManager, m_pCollisionManager, this, playerTexID);
-	m_MovableDirection.m_Up = false;
-	m_MovableDirection.m_Down = false;
-	m_MovableDirection.m_Right = false;
-	m_MovableDirection.m_Left = false;
-	CalculatePos();
 
+	// 移動可能方向フラグの初期化
+	m_MovableDirection.m_Up		= false;
+	m_MovableDirection.m_Down	= false;
+	m_MovableDirection.m_Right	= false;
+	m_MovableDirection.m_Left	= false;
 }
 
 Player::~Player(void)
@@ -120,11 +125,11 @@ void Player::Control(void)
 		GameEventManager::Instance().TriggerSynEvent("player_move");
 	}
 
-	// 移動方向を初期化する
-	m_MovableDirection.m_Up = true;
-	m_MovableDirection.m_Down = true;
-	m_MovableDirection.m_Right = true;
-	m_MovableDirection.m_Left = true;
+	// 移動方向をすべてtrueにする
+	m_MovableDirection.m_Up		= true;
+	m_MovableDirection.m_Down	= true;
+	m_MovableDirection.m_Right	= true;
+	m_MovableDirection.m_Left	= true;
 	
 	// 向きによってステージインデックスの計算方法をかえる
 	if(m_pPlayerMotion->IsFacingRight())
@@ -151,7 +156,6 @@ void Player::Control(void)
 		&& m_GoddessPointCount != 0)
 	{	// 時戻しボタンが押されたら イベントを通知する
 		GameEventManager::Instance().ReceiveEvent("space_change_return_start");
-		// --m_GoddessPointCount;
 	}
 
 	m_pCollisionManager->SetPlayerPointa(this);
@@ -168,6 +172,16 @@ void Player::Draw(void)
 bool Player::IsFacingRight(void)
 {
 	return m_pPlayerMotion->IsFacingRight(); 
+}
+
+void Player::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+	m_StageIndexData.m_YNum = yIndexNum;
+	m_StageIndexData.m_XNum = xIndexNum;
+
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
+	GameEventManager::Instance().TriggerSynEvent("player_move");
 }
 
 void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -279,13 +293,6 @@ void Player::HandleEvent(void)
 
 		m_pEventLisner->DelEvent();
 	}
-}
-
-void Player::CalculatePos(void)
-{
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
-	GameEventManager::Instance().TriggerSynEvent("player_move");
 }
 
 void Player::RegisterEvent(void)

@@ -35,6 +35,13 @@ public:
 	/** Destrucrtor */
 	virtual ~LightRoadBlock(void);
 
+	/** 
+	* ステージの位置を変更する関数. 
+	* @param[in] yIndexNum	y軸方向のインデックス
+	* @param[in] xIndexNum  x軸方向のインデックス
+	*/
+	virtual void ChangeStagePos(short yIndexNum, short xIndexNum)override;
+
 	/**
 	* 衝突処理関数
 	* @param[in] rData 衝突判定に関連するデータ
@@ -61,12 +68,6 @@ private:
 	* この関数内でEventLisnerから受け取ったイベントの処理を行う
 	*/
 	virtual void HandleEvent(void)override;
-
-	/** 
-	* Constructorの引数で得たインデックスを元に位置座標を計算する関数. 
-	* 位置座標は中心座標で計算する. 
-	*/
-	virtual void CalculatePos(void)override;
 
 	/** 光ブロックを作成する関数 */
 	void CreateLightBlock(void);

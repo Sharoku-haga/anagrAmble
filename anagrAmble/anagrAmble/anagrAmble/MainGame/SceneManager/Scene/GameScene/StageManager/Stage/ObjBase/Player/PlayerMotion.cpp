@@ -137,36 +137,37 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 
 	// 待機
 	{
-		const sl::fRect		uv = { 0.0f, 0.0f, 1.0f, 1.0f };
+		const sl::fRect		uv = { 0.0f, 0.0f, 0.05f, 0.177f };
 		m_VtxID[WAITING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 	}
 
 	// 歩き
 	{
-		const sl::fRect		uv = { 0.0f, 0.0f, 1.0f, 1.0f };
+		const sl::fRect		uv = { 0.5f, 0.177f, 0.55f, 0.355f };
 		m_VtxID[WALKING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 	}
 
 	// 走っている
 	{
-		const sl::fRect		uv = { 0.0f, 0.0f, 1.0f, 1.0f };
+		const sl::fRect		uv = { 0.0f, 0.355f, 0.05f, 0.533f };
 		m_VtxID[RUNNING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 	}
 
 	// ジャンプ
 	{
-		const sl::fRect		uv = { 0.0f, 0.0f, 1.0f, 1.0f };
+		const sl::fRect		uv = { 0.5f, 0.355f, 0.55f, 0.533f };
 		m_VtxID[JUMPING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 	}
 
 	// 落下(今のところは待機と一緒)
 	{
-		m_VtxID[FALLING] = m_VtxID[WAITING];
+		const sl::fRect		uv = { 0.75f, 0.355f, 0.8f, 0.533f };
+		m_VtxID[FALLING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 	}
 
 	// 死亡
 	{
-		const sl::fRect		uv = { 0.0f, 0.0f, 1.0f, 1.0f };
+		const sl::fRect		uv = { 0.339f, 0.533f, 0.4f, 0.711f };
 		m_VtxID[DEATH] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 	}
 }

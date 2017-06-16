@@ -28,7 +28,9 @@ LightDoor::LightDoor(StageDataManager* pStageDataManager, CollisionManager* pCol
 			, const Stage::INDEX_DATA& rStageIndexData,  int texID,  ObjBase::TYPE_ID typeID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
-	CalculatePos();
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
 	m_TypeID = typeID;
 
 	m_DrawingID.m_TexID = texID;
@@ -40,7 +42,7 @@ LightDoor::LightDoor(StageDataManager* pStageDataManager, CollisionManager* pCol
 	m_RectSize.m_Right		= (chipSize / 2);
 	m_RectSize.m_Bottom		= (chipSize / 2);
 
-	const sl::fRect		uv = {0.3f, 0.088f, 0.35f, 0.1777f};
+	const sl::fRect		uv = {0.55f, 0.0f, 0.6f, 0.088f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
@@ -60,6 +62,15 @@ LightDoor::~LightDoor(void)
 		sl::DeleteSafely(pblock);
 	}
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void  LightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+	m_StageIndexData.m_YNum = yIndexNum;
+	m_StageIndexData.m_XNum = xIndexNum;
+
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 }
 
 void LightDoor::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -86,12 +97,6 @@ void LightDoor::Render(void)
 
 void LightDoor::HandleEvent(void)
 {}
-
-void LightDoor::CalculatePos(void)
-{
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-}
 
 void LightDoor::CreateLightBlock(void)
 {

@@ -45,16 +45,6 @@ const sl::fRect& ObjBase::GetCurrentRectData(void)
 	return m_CurrentRectData; 
 }
 
-void ObjBase::RelocatePos(short yIndexNum, short xIndexNum)
-{
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
-
-	CalculatePos();
-
-	// この関数をよぶと自動に現在の矩形データを作成してくれるため、変だがよんでおく
-	GetCurrentRectData();
-}
 
 }	// namespace ar
 

@@ -17,18 +17,25 @@ NormalBlock::NormalBlock(StageDataManager* pStageDataManager, CollisionManager* 
 						, const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
-	CalculatePos();
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
 	m_DrawingID = rID;
 	m_TypeID = NORMAL_B;
 	m_RectSize = m_pLibrary->GetSizeRect(m_DrawingID.m_VtxID);
-	m_CurrentRectData.m_Left	= m_Pos.x + m_RectSize.m_Left; 
-	m_CurrentRectData.m_Top		= m_Pos.y + m_RectSize.m_Top;
-	m_CurrentRectData.m_Right	= m_Pos.x + m_RectSize.m_Right;
-	m_CurrentRectData.m_Bottom	= m_Pos.y + m_RectSize.m_Bottom;
 }
 
 NormalBlock::~NormalBlock(void)
 {}
+
+void NormalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+	m_StageIndexData.m_YNum = yIndexNum;
+	m_StageIndexData.m_XNum = xIndexNum;
+
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+}
 
 void NormalBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {
@@ -49,12 +56,6 @@ void NormalBlock::Render(void)
 
 void NormalBlock::HandleEvent(void)
 {}
-
-void NormalBlock::CalculatePos(void)
-{
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-}
 
 }	// namespace ar
 

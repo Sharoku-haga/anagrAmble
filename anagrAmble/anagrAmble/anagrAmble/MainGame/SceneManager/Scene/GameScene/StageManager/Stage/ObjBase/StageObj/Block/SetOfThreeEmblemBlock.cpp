@@ -17,14 +17,14 @@ namespace ar
 namespace
 {
 
-const sl::fRect		EmblemLOnUV = { 0.45f, 0.0f, 0.5f, 0.088f};				// 左側の紋章ONのときのUV値
-const sl::fRect		EmblemLOffUV = {0.35f, 0.0f, 0.4f,  0.088f};			// 左側の紋章OFFのときのUV値
+const sl::fRect		EmblemLOnUV = { 0.75f, 0.0f, 0.8f, 0.088f};				// 左側の紋章ONのときのUV値
+const sl::fRect		EmblemLOffUV = {0.65f, 0.0f, 0.7f,  0.088f};			// 左側の紋章OFFのときのUV値
 
-const sl::fRect		EmblemFOnUV = { 0.5f, 0.0f, 0.55f, 0.088f};				// 真ん中の紋章ONのときのUV値
-const sl::fRect		EmblemFOffUV = {0.4f, 0.0f, 0.45f,  0.088f};			// 真ん中の紋章OFFのときのUV値
+const sl::fRect		EmblemFOnUV = { 0.8f, 0.0f, 0.85f, 0.088f};				// 真ん中の紋章ONのときのUV値
+const sl::fRect		EmblemFOffUV = {0.7f, 0.0f, 0.75f,  0.088f};			// 真ん中の紋章OFFのときのUV値
 
-const sl::fRect		EmblemROnUV = { 0.5f, 0.0f, 0.45f, 0.088f};				// 右側の紋章ONのときのUV値
-const sl::fRect		EmblemROffUV = {0.4f, 0.0f, 0.35f,  0.088f};			// 右側の紋章OFFのときのUV値
+const sl::fRect		EmblemROnUV = { 0.8f, 0.0f, 0.75f, 0.088f};				// 右側の紋章ONのときのUV値
+const sl::fRect		EmblemROffUV = {0.7f, 0.0f, 0.65f,  0.088f};			// 右側の紋章OFFのときのUV値
 
 
 }
@@ -35,26 +35,22 @@ SetOfThreeEmblemBlock::SetOfThreeEmblemBlock(StageDataManager* pStageDataManager
 			, const Stage::INDEX_DATA& rStageIndexData,  int texID,  ObjBase::TYPE_ID typeID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
-	CalculatePos();
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
 	m_TypeID = typeID;
 
 	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
-	float chipSize = m_pStageDataManager->GetStageChipSize();
-	m_RectSize.m_Left	= -(chipSize / 2);
-	m_RectSize.m_Top	= -(chipSize / 2);
-	m_RectSize.m_Right	= (chipSize / 2);
-	m_RectSize.m_Bottom = (chipSize / 2);
+	m_RectSize.m_Left	= -(m_StageChipSize / 2);
+	m_RectSize.m_Top	= -(m_StageChipSize / 2);
+	m_RectSize.m_Right	= (m_StageChipSize / 2);
+	m_RectSize.m_Bottom	= (m_StageChipSize / 2);
 
 	CheckSetofThreeBlock();
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, m_TexUV);
-	
-	m_CurrentRectData.m_Left = m_Pos.x + m_RectSize.m_Left;
-	m_CurrentRectData.m_Top = m_Pos.y + m_RectSize.m_Top;
-	m_CurrentRectData.m_Right = m_Pos.x + m_RectSize.m_Right;
-	m_CurrentRectData.m_Bottom = m_Pos.y + m_RectSize.m_Bottom;
 
 }
 
@@ -63,13 +59,24 @@ SetOfThreeEmblemBlock::~SetOfThreeEmblemBlock(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
+void SetOfThreeEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+	m_StageIndexData.m_YNum = yIndexNum;
+	m_StageIndexData.m_XNum = xIndexNum;
+
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+}
+
 void SetOfThreeEmblemBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void SetOfThreeEmblemBlock::Run(void)
-{}
+{
+	CheckSetofThreeBlock();
+}
 
 void SetOfThreeEmblemBlock::Render(void)
 {
@@ -78,12 +85,6 @@ void SetOfThreeEmblemBlock::Render(void)
 
 void SetOfThreeEmblemBlock::HandleEvent(void)
 {}
-
-void SetOfThreeEmblemBlock::CalculatePos(void)
-{
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-}
 
 void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 {
