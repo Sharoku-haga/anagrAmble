@@ -53,37 +53,37 @@ StageBackground::~StageBackground(void)
 
 void StageBackground::Control(void)
 {
-	sl::SLVECTOR2 cuurentBasePointPos = m_pBasePoint->GetPos();
-	if(m_OldBasePointPos.x == cuurentBasePointPos.x)
+	sl::SLVECTOR2 currentBasePointPos = m_pBasePoint->GetPos();
+	if(m_OldBasePointPos.x == currentBasePointPos.x)
 	{	// BasePointが動いていないなら処理をとばす
 		return;
 	}
 
 	// 1つ目の背景座標処理
-	if((cuurentBasePointPos.x - m_FirstPos.x) >= 0.0f
-		&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (cuurentBasePointPos.x - m_FirstPos.x))
+	if((currentBasePointPos.x - m_FirstPos.x) >= 0.0f
+		&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (currentBasePointPos.x - m_FirstPos.x))
 	{	// 背景が左の画面外にでたらまた右の画面外に配置しなおす
 		m_FirstPos.x = m_SecondPos.x + m_RectSize.m_Right;
 	}
-	else if((cuurentBasePointPos.x - m_FirstPos.x) < 0.0f 
-			&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (m_FirstPos.x - cuurentBasePointPos.x))
+	else if((currentBasePointPos.x - m_FirstPos.x) < 0.0f 
+			&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (m_FirstPos.x - currentBasePointPos.x))
 	{	// 背景が右の画面外にでたらまた左の画面外に配置しなおす
 		m_FirstPos.x = m_SecondPos.x - m_RectSize.m_Right;
 	}
 
 	// 2つ目の背景座標処理
-	if((cuurentBasePointPos.x - m_SecondPos.x ) >= 0.0f
-		&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (cuurentBasePointPos.x - m_SecondPos.x ))
+	if((currentBasePointPos.x - m_SecondPos.x ) >= 0.0f
+		&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (currentBasePointPos.x - m_SecondPos.x ))
 	{	// 背景が左の画面外にでたらまた右の画面外に配置しなおす
 		m_SecondPos.x = m_FirstPos.x + m_RectSize.m_Right;
 	}
-	else if((cuurentBasePointPos.x - m_SecondPos.x ) < 0.0f 
-			&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (m_SecondPos.x  - cuurentBasePointPos.x))
+	else if((currentBasePointPos.x - m_SecondPos.x ) < 0.0f 
+			&& (m_RectSize.m_Right + PosCorrectionVal / 2) < (m_SecondPos.x  - currentBasePointPos.x))
 	{	// 背景が右の画面外にでたらまた左の画面外に配置しなおす
 		m_SecondPos.x  = m_FirstPos.x - m_RectSize.m_Right;
 	}
 
-	m_OldBasePointPos = cuurentBasePointPos;
+	m_OldBasePointPos = currentBasePointPos;
 }
 
 void StageBackground::Draw(void)

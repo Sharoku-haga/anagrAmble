@@ -115,8 +115,10 @@ void Stage::Control(void)
 		if(m_pStageDataManager->ReturnBeforeCurrentStageData())
 		{	// 入れ替え戻しが完了したら終了イベントをとばす
 			GameEventManager::Instance().ReceiveEvent("space_change_return_end");
+			GameEventManager::Instance().TriggerSynEvent("player_move");
 		}
 		m_CurrentState = EXECUTE;
+		m_pBackground->Control();
 		break;
 
 	case EXIT:

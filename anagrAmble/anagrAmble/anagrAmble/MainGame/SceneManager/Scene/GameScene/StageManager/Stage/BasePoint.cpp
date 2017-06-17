@@ -32,7 +32,7 @@ const float CorrectionVal	= 100.f;			//!< 補正値。ステージが少しは�
 
 BasePoint::BasePoint(void)
 	: m_Pos({0.0f, 0.0f})
-	, m_CuurentPlayerPos({0.0f, 0.0f})
+	, m_CurrentPlayerPos({0.0f, 0.0f})
 	, m_OldPlayerPos({0.0f, 0.0f})
 	, m_pEventLisner(nullptr)
 	, m_StageWidth(0.0f)
@@ -51,20 +51,20 @@ void BasePoint::Initialize(float stageWidth, Player* pPlayer)
 {
 	m_StageWidth		= stageWidth;
 	m_pPlayer			= pPlayer;
-	m_CuurentPlayerPos = m_OldPlayerPos = m_pPlayer->GetPos();;
+	m_CurrentPlayerPos = m_OldPlayerPos = m_pPlayer->GetPos();;
 
 	// プレイヤーがステージの左端付近にいない場合はベースポイントの位置を動かす
-	if(m_CuurentPlayerPos.x > PlayerInterVal)
+	if(m_CurrentPlayerPos.x > PlayerInterVal)
 	{
 		// 右端付近にいた場合はステージの１番右端にへ
 		// それ以外はプレイヤー座標に補正をかけて移動
-		if(m_CuurentPlayerPos.x  >  (m_StageWidth - PlayerInterVal))
+		if(m_CurrentPlayerPos.x  >  (m_StageWidth - PlayerInterVal))
 		{	
 			m_Pos.x = m_StageWidth;
 		}
 		else
 		{	
-			m_Pos.x = m_CuurentPlayerPos.x - PlayerInterVal;
+			m_Pos.x = m_CurrentPlayerPos.x - PlayerInterVal;
 		}
 	}
 
@@ -84,28 +84,38 @@ void BasePoint::Move(void)
 		return;
 	}
 
-	m_CuurentPlayerPos = m_pPlayer->GetPos();	// 現在のプレイヤー座標を更新する
+	m_CurrentPlayerPos = m_pPlayer->GetPos();	// 現在のプレイヤー座標を更新する
 
-	if((m_CuurentPlayerPos.x - 0.0f) < PlayerInterVal)
-	{	// 左端付近にプレイヤーがいるときは0.0ｆになる
+	if((m_CurrentPlayerPos.x - 0.0f) < PlayerInterVal)
+	{	// 左端付近にプレイヤーがいるときは動かない
 		ObjBase::SetBasePointPos(m_Pos);
 		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
 		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
-		m_OldPlayerPos = m_CuurentPlayerPos;
+		m_OldPlayerPos = m_CurrentPlayerPos;
 		return;
 	}
-	else if	(m_CuurentPlayerPos.x > (m_StageWidth - PlayerInterVal - CorrectionVal))
+	else if	(m_CurrentPlayerPos.x > (m_StageWidth - PlayerInterVal - CorrectionVal))
 	{	// 右端付近にプレイヤーがいるときは動かない
-		m_OldPlayerPos = m_CuurentPlayerPos;
+		ObjBase::SetBasePointPos(m_Pos);
+		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
+		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
+		m_OldPlayerPos = m_CurrentPlayerPos;
 		return;
 	}
 	else
 	{	// プレイヤーが動いた分だけ動かし、ObJbaseのBasePointPosを更新する
-		m_Pos.x += (m_CuurentPlayerPos.x - m_OldPlayerPos.x);
+		m_Pos.x += (m_CurrentPlayerPos.x - m_OldPlayerPos.x);
+
+		// プレイヤーとの間が離れすぎていたら調整する
+		if((m_CurrentPlayerPos.x - m_Pos.x) >  PlayerInterVal)
+		{
+			m_Pos.x += ((m_CurrentPlayerPos.x - m_Pos.x) - PlayerInterVal);
+		}
+
 		ObjBase::SetBasePointPos(m_Pos);
 		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
 		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
-		m_OldPlayerPos = m_CuurentPlayerPos;
+		m_OldPlayerPos = m_CurrentPlayerPos;
 	}
 }
 

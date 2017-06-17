@@ -104,6 +104,7 @@ public:
 	* @param[in] angle		角度
 	*/
 	void SetupConstantBuffer(const D3DXVECTOR2& rPos, const D3DXVECTOR3& rScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f), float angle = 0.0f);
+
 	/**
 	* 指定した頂点バッファの取得する関数	
 	* @param[in] index 
