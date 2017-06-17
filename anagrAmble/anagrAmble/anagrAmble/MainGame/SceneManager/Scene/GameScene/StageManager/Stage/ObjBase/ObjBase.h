@@ -77,11 +77,11 @@ public:
 	virtual ~ObjBase(void);
 
 	/** 
-	* オブジェクトの位置を再配置する関数
+	* ステージの位置を変更する関数. 純粋仮想関数
 	* @param[in] yIndexNum	y軸方向のインデックス
 	* @param[in] xIndexNum  x軸方向のインデックス
 	*/
-	void RelocatePos(short yIndexNum, short xIndexNum);
+	virtual void ChangeStagePos(short yIndexNum, short xIndexNum) = 0;
 
 	/**
 	* 衝突処理関数.純粋仮想関数 
@@ -176,12 +176,6 @@ protected:
 	* この関数内でEventLisnerから受け取ったイベントの処理を行う
 	*/
 	virtual void HandleEvent(void) = 0;
-
-	/** 
-	* Constructorの引数で得たインデックスを元に位置座標を計算する関数. 
-	* 位置座標は中心座標で計算する. 純粋仮想関数
-	*/
-	virtual void CalculatePos(void) = 0;
 
 };	// class ObjBase
 

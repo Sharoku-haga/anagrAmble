@@ -20,8 +20,11 @@ class SandwichedSpaceBackground
 {
 
 public:
-	/** Constructor */
-	SandwichedSpaceBackground(void);
+	/** 
+	* Constructor
+	* @param[in] texID	テクスチャーのID
+	*/
+	explicit SandwichedSpaceBackground(int texID);
 
 	/** Destructor */
 	~SandwichedSpaceBackground(void);

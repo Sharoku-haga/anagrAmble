@@ -79,7 +79,7 @@ bool StageDataChangeManager::ChangeStageData(void)
 					continue;
 				}
 				m_pStageDataManager->SetCurrentStageChipData(yNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum));
-				pObj->RelocatePos(yNum, (changeStartIndexData.m_XNum + xNum));
+				pObj->ChangeStagePos(yNum, (changeStartIndexData.m_XNum + xNum));
 				m_pStageDataManager->SetCurrentStageChipData(yNum, (changeStartIndexData.m_XNum + xNum), pObj);
 			}
 		}
@@ -94,7 +94,7 @@ bool StageDataChangeManager::ChangeStageData(void)
 				{
 					continue;
 				}
-				pObj->RelocatePos(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum));
+				pObj->ChangeStagePos(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum));
 				m_pStageDataManager->SetCurrentStageChipData(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum), pObj);
 			}
 		}
@@ -130,7 +130,7 @@ bool StageDataChangeManager::ChangeStageData(void)
 					continue;
 				}
 				m_pStageDataManager->SetCurrentStageChipData(yNum, (m_SandwichedSpaceEndIndex.m_XNum - xNum));
-				pObj->RelocatePos(yNum, (changeStartIndexData.m_XNum - xNum));
+				pObj->ChangeStagePos(yNum, (changeStartIndexData.m_XNum - xNum));
 				m_pStageDataManager->SetCurrentStageChipData(yNum, (changeStartIndexData.m_XNum - xNum), pObj);
 			}
 		}
@@ -145,7 +145,7 @@ bool StageDataChangeManager::ChangeStageData(void)
 				{
 					continue;
 				}
-				pObj->RelocatePos(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum));
+				pObj->ChangeStagePos(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum));
 				m_pStageDataManager->SetCurrentStageChipData(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum), pObj);
 			}
 		}

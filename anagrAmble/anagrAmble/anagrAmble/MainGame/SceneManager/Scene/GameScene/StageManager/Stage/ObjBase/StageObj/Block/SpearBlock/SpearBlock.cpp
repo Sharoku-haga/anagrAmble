@@ -19,34 +19,38 @@ SpearBlock::SpearBlock(StageDataManager* pStageDataManager, CollisionManager* pC
 				, const Stage::INDEX_DATA& rStageIndexData, int texID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
-	CalculatePos();
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
 	m_TypeID = SPEAR_B;
 	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
-	float chipSize = m_pStageDataManager->GetStageChipSize();
-	m_RectSize.m_Left		= -(chipSize / 2);
-	m_RectSize.m_Top		= -(chipSize / 2);
-	m_RectSize.m_Right		= (chipSize / 2);
-	m_RectSize.m_Bottom		= (chipSize / 2);
+	m_RectSize.m_Left		= -(m_StageChipSize / 2);
+	m_RectSize.m_Top		= -(m_StageChipSize / 2);
+	m_RectSize.m_Right		= (m_StageChipSize / 2);
+	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
 
-	const sl::fRect		uv = {0.35f, 0.1777f, 0.4f, 0.264f};
+	const sl::fRect		uv = {0.8f, 0.088f, 0.85f, 0.1777f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 	
 	m_pSpear = new Spear(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, m_DrawingID.m_TexID);
-
-	m_CurrentRectData.m_Left	= m_Pos.x + m_RectSize.m_Left;
-	m_CurrentRectData.m_Top		= m_Pos.y + m_RectSize.m_Top;
-	m_CurrentRectData.m_Right	= m_Pos.x + m_RectSize.m_Right;
-	m_CurrentRectData.m_Bottom	= m_Pos.y + m_RectSize.m_Bottom;
-
 }
 
 SpearBlock::~SpearBlock(void)
 {
 	sl::DeleteSafely(m_pSpear);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void SpearBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+	m_StageIndexData.m_YNum = yIndexNum;
+	m_StageIndexData.m_XNum = xIndexNum;
+
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 }
 
 void SpearBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -67,12 +71,6 @@ void SpearBlock::Render(void)
 
 void SpearBlock::HandleEvent(void)
 {}
-
-void SpearBlock::CalculatePos(void)
-{
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-}
 
 }	// namespace ar
 

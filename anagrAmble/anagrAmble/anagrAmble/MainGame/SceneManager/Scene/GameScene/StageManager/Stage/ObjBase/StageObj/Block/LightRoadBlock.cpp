@@ -28,26 +28,22 @@ LightRoadBlock::LightRoadBlock(StageDataManager* pStageDataManager, CollisionMan
 								, const Stage::INDEX_DATA& rStageIndexData, int texID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
-	CalculatePos();
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	
 	m_TypeID = LIGHT_ROAD_B;
 
 	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
-	float chipSize = m_pStageDataManager->GetStageChipSize();
-	m_RectSize.m_Left		= -(chipSize / 2);
-	m_RectSize.m_Top		= -(chipSize / 2);
-	m_RectSize.m_Right		= (chipSize / 2);
-	m_RectSize.m_Bottom		= (chipSize / 2);
+	m_RectSize.m_Left		= -(m_StageChipSize / 2);
+	m_RectSize.m_Top		= -(m_StageChipSize / 2);
+	m_RectSize.m_Right		= (m_StageChipSize / 2);
+	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
 
-	const sl::fRect		uv = {0.15f, 0.1777f, 0.2f, 0.264f};
+	const sl::fRect		uv = {0.45f, 0.0f, 0.5f, 0.088f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
-
-	m_CurrentRectData.m_Left	= m_Pos.x + m_RectSize.m_Left;
-	m_CurrentRectData.m_Top		= m_Pos.y + m_RectSize.m_Top;
-	m_CurrentRectData.m_Right	= m_Pos.x + m_RectSize.m_Right;
-	m_CurrentRectData.m_Bottom	= m_Pos.y + m_RectSize.m_Bottom;
 
 	// 光ブロック生成
 	CreateLightBlock();
@@ -60,6 +56,15 @@ LightRoadBlock::~LightRoadBlock(void)
 		sl::DeleteSafely(pblock);
 	}
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void LightRoadBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+	m_StageIndexData.m_YNum = yIndexNum;
+	m_StageIndexData.m_XNum = xIndexNum;
+
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 }
 
 void LightRoadBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -86,12 +91,6 @@ void LightRoadBlock::Render(void)
 
 void LightRoadBlock::HandleEvent(void)
 {}
-
-void LightRoadBlock::CalculatePos(void)
-{
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-}
 
 void LightRoadBlock::CreateLightBlock(void)
 {

@@ -21,18 +21,19 @@ Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionMana
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 	, m_HasCollidedWithPlayer(false)
 {
-	CalculatePos();
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize - (m_StageChipSize / 2);
+
 	m_TypeID = typeID;
 	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
-	float chipSize = m_pStageDataManager->GetStageChipSize();
-	m_RectSize.m_Left	=  -((chipSize * 3) / 2);
-	m_RectSize.m_Top	=  -((chipSize * 3) / 2);
-	m_RectSize.m_Right	= ((chipSize * 3) / 2);
-	m_RectSize.m_Bottom = ((chipSize * 3) / 2);
+	m_RectSize.m_Left	=  -((m_StageChipSize * 3) / 2);
+	m_RectSize.m_Top	=  -((m_StageChipSize * 3) / 2);
+	m_RectSize.m_Right	= ((m_StageChipSize * 3) / 2);
+	m_RectSize.m_Bottom = ((m_StageChipSize * 3) / 2);
 
-	const sl::fRect		uv = { 0.0f, 0.2666f, 0.15f, 0.6222f};
+	const sl::fRect		uv = { 0.6f, 0.444f, 0.75f, 0.8f};			/** @todo 2017/06/17 とりあえず開いている画像にしておく*/
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
@@ -44,6 +45,16 @@ Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionMana
 Goal::~Goal(void)
 {
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void Goal::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+	m_StageIndexData.m_YNum = yIndexNum;
+	m_StageIndexData.m_XNum = xIndexNum;
+
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize - (m_StageChipSize / 2);
+
 }
 
 void Goal::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -98,12 +109,6 @@ void Goal::HandleEvent(void)
 
 		m_pEventLisner->DelEvent();
 	}
-}
-
-void Goal::CalculatePos(void)
-{
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize - (m_StageChipSize / 2);
 }
 
 }	// namespace ar

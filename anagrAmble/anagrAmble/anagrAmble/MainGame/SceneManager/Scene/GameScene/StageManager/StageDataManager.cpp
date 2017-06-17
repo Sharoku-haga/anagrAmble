@@ -167,7 +167,7 @@ bool StageDataManager::ReturnBeforeCurrentStageData(void)
 			{
 				continue;
 			}
-			m_CurrentStageData[i][j]->RelocatePos(i, j);
+			m_CurrentStageData[i][j]->ChangeStagePos(i, j);
 		}
 	}
 

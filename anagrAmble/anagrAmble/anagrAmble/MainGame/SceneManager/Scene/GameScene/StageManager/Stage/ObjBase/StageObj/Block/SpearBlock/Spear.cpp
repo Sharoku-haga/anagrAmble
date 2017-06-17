@@ -30,18 +30,19 @@ Spear::Spear(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 	, m_MovePosYMINLimit(0.0f)
 	, m_MoveSpeed()
 {
-	CalculatePos();
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
 	m_TypeID = SPEAR;
 	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
-	float chipSize = m_pStageDataManager->GetStageChipSize();
-	m_RectSize.m_Left		= -(chipSize / 2);
-	m_RectSize.m_Top		= -(chipSize / 2);
-	m_RectSize.m_Right		= (chipSize / 2);
-	m_RectSize.m_Bottom		= (chipSize / 2);
+	m_RectSize.m_Left		= -(m_StageChipSize / 2);
+	m_RectSize.m_Top		= -(m_StageChipSize / 2);
+	m_RectSize.m_Right		= (m_StageChipSize / 2);
+	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
 
-	const sl::fRect		uv = {0.3f, 0.1777f, 0.35f, 0.264f};
+	const sl::fRect		uv = {0.75f, 0.088f, 0.8f, 0.1777f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
@@ -59,6 +60,15 @@ Spear::Spear(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 Spear::~Spear(void)
 {
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void Spear::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+	m_StageIndexData.m_YNum = yIndexNum;
+	m_StageIndexData.m_XNum = xIndexNum;
+
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 }
 
 void Spear::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -92,12 +102,6 @@ void Spear::Render(void)
 
 void Spear::HandleEvent(void)
 {}
-
-void Spear::CalculatePos(void)
-{
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-}
 
 }	// namespace ar
 

@@ -20,15 +20,17 @@ Enemy::Enemy(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 Enemy::~Enemy()
 {}
 
+void Enemy::ChangeStagePos(short yIndexNum, short xIndexNum)
+{
+
+}
+
 void Enemy::ProcessCollision(const CollisionManager::CollisionData& rData)
 {}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void Enemy::HandleEvent(void)
-{}
-
-void Enemy::CalculatePos(void)
 {}
 
 }	// namespace ar

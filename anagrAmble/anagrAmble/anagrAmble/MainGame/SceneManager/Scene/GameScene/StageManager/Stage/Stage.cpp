@@ -51,9 +51,9 @@ void Stage::Initialize(void)
 {
 	ObjBase::SetStageChipSize(m_pStageDataManager->GetStageChipSize());
 	
-	m_PlayerTexID = m_pLibrary->LoadTexture("../Resource/GameScene/Player.png");
+	m_PlayerTexID = m_pLibrary->LoadTexture("../Resource/GameScene/PlayerFile.png");
 
-	m_StageObjTexID = m_pLibrary->LoadTexture("../Resource/GameScene/Object_File.png");
+	m_StageObjTexID = m_pLibrary->LoadTexture("../Resource/GameScene/ObjectFile.png");
 	m_pStageObjManager = new StageObjManager(m_pStageDataManager, m_pCollisionManager, m_StageObjTexID);
 
 	// オブジェクトを生成し、初期位置へ

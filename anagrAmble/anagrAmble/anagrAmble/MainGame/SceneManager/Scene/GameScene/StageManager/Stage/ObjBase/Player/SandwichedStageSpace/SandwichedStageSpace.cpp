@@ -39,7 +39,7 @@ SandwichedStageSpace::SandwichedStageSpace(StageDataManager* pStageDataManager, 
 	, m_pStageDataManager(pStageDataManager)
 	, m_pCollisionManager(pCollisionManager)
 	, m_pPlayer(pPlayer)
-	, m_pBackground(new SandwichedSpaceBackground())
+	, m_pBackground(new SandwichedSpaceBackground(pPlayer->GetDrawingID().m_TexID))
 {
 	m_StageChipSize = m_pStageDataManager->GetStageChipSize();
 

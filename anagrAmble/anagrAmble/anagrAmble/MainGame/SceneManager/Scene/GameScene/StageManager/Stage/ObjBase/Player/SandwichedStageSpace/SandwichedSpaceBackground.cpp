@@ -17,8 +17,8 @@ namespace
 {
 
 const sl::fRect				SizeInitVal		= {0.0f, 0.0f, 0.0f, 0.0f};		// Vertexのサイズの初期化値
-const sl::fRect				UVInitVal		= {0.0f, 0.0f, 0.0f, 0.0f};		// VertexのUVの初期化値.textureを使わない
-const float					ColorVal[4]		= {1.0f, 0.0f, 0.0f, 0.5f};		// 背景の色.青色		
+const sl::fRect				UVInitVal		= {0.0f, 0.911f, 0.051f, 1.0f};		// VertexのUVの初期化値.textureを使わない
+const float					ColorVal[4]		= {1.0f, 1.0f, 1.0f, 0.7f};		// 背景の色.青色		
 
 }
 
@@ -29,7 +29,7 @@ float						SandwichedSpaceBackground::m_StageMapChipSize	= 0.0f;
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-SandwichedSpaceBackground::SandwichedSpaceBackground(void)
+SandwichedSpaceBackground::SandwichedSpaceBackground(int texID)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
 	, m_Pos({0.0f, 0.0f})
 	, m_SandwichedSpaceWidth(0.0f)
@@ -38,7 +38,7 @@ SandwichedSpaceBackground::SandwichedSpaceBackground(void)
 	, m_IsPlayerFacingRight(true)
 {
 	// 描画ID関連の初期化
-	m_DrawingID.m_TexID = 0;	// 本来Texttureはいらないが、Libraryの構造上必要なため適当な値で初期化.
+	m_DrawingID.m_TexID = texID;	
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(SizeInitVal, UVInitVal);
 
 	// 色変更
