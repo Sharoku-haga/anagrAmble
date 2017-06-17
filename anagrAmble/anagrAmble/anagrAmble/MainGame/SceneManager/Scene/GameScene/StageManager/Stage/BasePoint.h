@@ -44,7 +44,7 @@ public:
 
 private:
 	sl::SLVECTOR2				m_Pos;						//!< 位置座標
-	sl::SLVECTOR2				m_CuurentPlayerPos;			//!< 現在のプレイヤー座標
+	sl::SLVECTOR2				m_CurrentPlayerPos;			//!< 現在のプレイヤー座標
 	sl::SLVECTOR2				m_OldPlayerPos;				//!< 以前のプレイヤー座標
 	float						m_StageWidth;				//!< ステージ全体の横の長さ
 	EventLisner*				m_pEventLisner;				//!< EventLisnerクラスのインスタンスへのポインタ
