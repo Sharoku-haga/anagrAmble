@@ -32,6 +32,16 @@ public:
 	/** Destructor */
 	virtual ~Spear(void);
 
+	/**
+	* 槍を動かす関数
+	*/
+	void Move(void);
+
+	/**
+	* 槍の動きを止める関数
+	*/
+	void Stop(void);
+
 	/** 
 	* ステージの位置を変更する関数. 
 	* @param[in] yIndexNum	y軸方向のインデックス
@@ -49,6 +59,7 @@ private:
 	float						m_MovePosYMAXLimit;			//!< y方向への動作のMax値
 	float						m_MovePosYMINLimit;			//!< y方向への動作のMin値
 	float						m_MoveSpeed;				//!< 動作スピード
+	bool						m_HasMoved;					//!< 動いているかどうかのフラグ true→動いている false→動いていない
 
 	/** 
 	* 処理実行関数
