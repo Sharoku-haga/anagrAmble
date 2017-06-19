@@ -55,29 +55,34 @@ public:
 	void SetObjBasePointer(ObjBase* pObj);
 
 	/** 
+	 * 衝突判定を行うスイッチの作動範囲オブジェクトを登録する関数 
+	 * @param[in] pObj 衝突判定を行いたいObjBaseクラスのインスタンス(スイッチの作動範囲)へのポインタ
+	 */
+	void SetSwitchOperatingAreaPointer(ObjBase* pArea);
+
+	/** 
 	 * 衝突判定を行うプレイヤーオブジェクトを登録する関数 
 	 * @param[in] pObj 衝突判定を行いたいObjBaseクラスのインスタンス(プレイヤー)へのポインタ
 	 */
-	void SetPlayerPointa(ObjBase* pPlayer) { m_pPlayer = pPlayer; }
+	void SetPlayerPointer(ObjBase* pPlayer) { m_pPlayer = pPlayer; }
 
 private:
 	StageDataManager*			m_pStageDataManager;	//!< StageDataManagerクラスのインスタンスへのポインタ
 	std::vector<ObjBase*>		m_pStageObj;			//!< 衝突判定を行うObjBase群
+	std::vector<ObjBase*>		m_pSwitchOperatingArea;	//!< スイッチの作動範囲(SwitchOperatingAreaクラス)オブジェクト
 	ObjBase*					m_pPlayer;				//!< 衝突判定を行うプレイヤー
 
 	/**
 	* プレイヤーとの衝突判定を行う関数
-	* @param[in] ObjBase* pObj チェックしたいObjBaseクラスのインスタンスへのポインタ
+	* @param[in]  pObj チェックしたいObjBaseクラスのインスタンスへのポインタ
 	*/
 	void CheckCollisionPlayer(ObjBase* pObj);
-	
+
 	/**
-	* 円で衝突判定を行う関数.
-	* @param[in] pObjA 衝突判定を行いたいObjBaseのインスタンスへのポインタ
-	* @param[in] pObjB 衝突判定を行いたいObjBaseのインスタンスへのポインタ
-	* @return 衝突しているかどうか true→衝突している false→衝突していない
+	* スイッチの作動範囲の衝突判定を行う関数
+	* @param[in] pArea チェックを行いたいスイッチの作動範囲(ObjBaseクラス)のインスタンスへのポインタ
 	*/
-	bool CheckCollisionCircle(ObjBase* pObjA, ObjBase* pObjB);
+	void CheckCollisionSwitchOperatingArea(ObjBase* pArea);
 
 	/**
 	* 矩形で衝突判定を行う関数.

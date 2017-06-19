@@ -30,6 +30,8 @@ const		int			HeightChipCount				= 2;				// プレイヤーの矩形の縦のチ�
 const		int			GoddessPointMaxVal			= 3;				// 女神の加護の最大数
 const		float		CollisionCorrectionVal		= 12.f;				// 衝突における判定の補正値
 const		float		UpCollisionCorrectionVal	= 1.0f;				// 下の衝突判定補正値
+const		float		RightCollisionCorrectionVal	= -1.0f;			// 右の衝突判定補正値
+const		float		LeftCollisionCorrectionVal	= 1.0f;				// 左の衝突判定補正値
 const		float		FallLimitVal				= 1368.f;			// 落下限界値. 
 	
 }
@@ -39,7 +41,6 @@ const		float		FallLimitVal				= 1368.f;			// 落下限界値.
 Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
 				, const Stage::INDEX_DATA& rStageIndexData, int playerTexID)
 	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
-	, m_pEventLisner(new EventLisner())
 	, m_pPlayerMotion(nullptr)
 	, m_pPlayerMode(nullptr)
 	, m_GoddessPointCount(GoddessPointMaxVal)
@@ -74,7 +75,6 @@ Player::~Player(void)
 {
 	sl::DeleteSafely(m_pPlayerMode);
 	sl::DeleteSafely(m_pPlayerMotion);
-	sl::DeleteSafely(m_pEventLisner);
 
 	for(auto& vtxID : m_VtxID)
 	{
@@ -116,7 +116,7 @@ void Player::Control(void)
 	if(m_pPlayerMotion->IsCurrrentMotionDeath())
 	{	// 死亡動作ならここから下の処理はいらないので、
 		// 衝突チェックにnullptrを渡して即return;
-		m_pCollisionManager->SetPlayerPointa(nullptr);
+		m_pCollisionManager->SetPlayerPointer(nullptr);
 		return;
 	}
 
@@ -146,7 +146,7 @@ void Player::Control(void)
 	// モードによる処理
 	m_pPlayerMode->Control();
 
-	if(m_pLibrary->CheckCustomizeState(SPECIAL_ACTION, sl::ON))
+	if(m_pLibrary->CheckCustomizeState(SPECIAL_ACTION, sl::PUSH))
 	{	// 特殊アクションボタンが押されたら、イベントを通知する
 		GameEventManager::Instance().ReceiveEvent("special_action");
 	}
@@ -158,7 +158,7 @@ void Player::Control(void)
 		GameEventManager::Instance().ReceiveEvent("space_change_return_start");
 	}
 
-	m_pCollisionManager->SetPlayerPointa(this);
+	m_pCollisionManager->SetPlayerPointer(this);
 }
 
 void Player::Draw(void)
@@ -191,11 +191,23 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 	case GROUND_B:
 		break;
 
+	case ELECTICAL_B:
+		m_pPlayerMotion->ChangeDeathMotion();
+		break;
+
 	case GOAL:
 		return;
 		break;
 
 	case ANCHOR:
+		return;
+		break;
+
+	case SWITCH_OPERATING_AREA_ON:
+		return;
+		break;
+
+	case SWITCH_OPERATING_AREA_OFF:
 		return;
 		break;
 
@@ -235,7 +247,7 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		&& std::abs(m_Pos.y - rData.m_ObjPos.y) < m_StageChipSize + m_StageChipSize / 2  - CollisionCorrectionVal)
 	{
 		m_MovableDirection.m_Left = false;
-		m_Pos.x += rData.m_ObjRect.m_Right - m_CurrentRectData.m_Left;
+		m_Pos.x += rData.m_ObjRect.m_Right - m_CurrentRectData.m_Left + LeftCollisionCorrectionVal;
 	}
 
 	// 右方向
@@ -244,7 +256,7 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		&&  std::abs(m_Pos.y - rData.m_ObjPos.y) < m_StageChipSize + m_StageChipSize / 2 - CollisionCorrectionVal)
 	{
 		m_MovableDirection.m_Right = false;
-		m_Pos.x -= m_CurrentRectData.m_Right - rData.m_ObjRect.m_Left;
+		m_Pos.x -= m_CurrentRectData.m_Right - rData.m_ObjRect.m_Left + RightCollisionCorrectionVal;
 	}
 	
 
@@ -288,7 +300,6 @@ void Player::HandleEvent(void)
 			{	// 入れ替え戻しが完了したら、女神の加護の数値を減らす
 				--m_GoddessPointCount;
 			}
-
 		}
 
 		m_pEventLisner->DelEvent();

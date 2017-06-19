@@ -46,6 +46,8 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 
 private:
+	bool			m_IsEnergizedState;					//!< 通電状態かどうかフラグ true→通電している  false→通電していない
+
 	/** 
 	* 処理実行関数
 	* StageObj::Control()内で使用

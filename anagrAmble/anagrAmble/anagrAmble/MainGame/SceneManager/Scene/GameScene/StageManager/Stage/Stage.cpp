@@ -118,6 +118,9 @@ void Stage::Control(void)
 			GameEventManager::Instance().TriggerSynEvent("player_move");
 		}
 		m_CurrentState = EXECUTE;
+
+		// 2回Controlをよぶことで背景を調整する
+		m_pBackground->Control();
 		m_pBackground->Control();
 		break;
 
