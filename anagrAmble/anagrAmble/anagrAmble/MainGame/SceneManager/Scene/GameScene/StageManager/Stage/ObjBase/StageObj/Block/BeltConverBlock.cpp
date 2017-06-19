@@ -66,7 +66,44 @@ void BeltConverBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 }
 
 void BeltConverBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
-{}
+{
+	// スイッチのONとOFFで向きを逆転する
+	switch(rData.m_ObjType)
+	{
+
+	case SWITCH_OPERATING_AREA_ON:
+
+		if(m_TypeID == BELT_CONVER_B_R)
+		{
+			m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, LeftDirectionUV);
+			m_TypeID = BELT_CONVER_B_L;
+		}
+		else
+		{
+			m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, RightDirectionUV);
+			m_TypeID = BELT_CONVER_B_R;
+		}
+		break;
+
+	case SWITCH_OPERATING_AREA_OFF:
+		if(m_TypeID == BELT_CONVER_B_R)
+		{
+			m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, LeftDirectionUV);
+			m_TypeID = BELT_CONVER_B_L;
+		}
+		else
+		{
+			m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, RightDirectionUV);
+			m_TypeID = BELT_CONVER_B_R;
+		}
+
+		break;
+
+	default:
+		// do nothing
+		break;
+	}
+}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 

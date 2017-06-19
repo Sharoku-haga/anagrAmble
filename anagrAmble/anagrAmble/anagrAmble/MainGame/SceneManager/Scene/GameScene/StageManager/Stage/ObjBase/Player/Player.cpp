@@ -25,14 +25,15 @@ namespace ar
 namespace
 {
 
-const		int			WidthChipCount				= 1;				// プレイヤーの矩形の横のチップ数
-const		int			HeightChipCount				= 2;				// プレイヤーの矩形の縦のチップ数
-const		int			GoddessPointMaxVal			= 3;				// 女神の加護の最大数
-const		float		CollisionCorrectionVal		= 12.f;				// 衝突における判定の補正値
-const		float		UpCollisionCorrectionVal	= 1.0f;				// 下の衝突判定補正値
-const		float		RightCollisionCorrectionVal	= -1.0f;			// 右の衝突判定補正値
-const		float		LeftCollisionCorrectionVal	= 1.0f;				// 左の衝突判定補正値
-const		float		FallLimitVal				= 1368.f;			// 落下限界値. 
+const		int			WidthChipCount					= 1;				// プレイヤーの矩形の横のチップ数
+const		int			HeightChipCount					= 2;				// プレイヤーの矩形の縦のチップ数
+const		int			GoddessPointMaxVal				= 3;				// 女神の加護の最大数
+const		float		CollisionCorrectionVal			= 12.f;				// 衝突における判定の補正値
+const		float		UpCollisionCorrectionVal		= 1.0f;				// 下の衝突判定補正値
+const		float		RightCollisionCorrectionVal		= -1.0f;			// 右の衝突判定補正値
+const		float		LeftCollisionCorrectionVal		= 1.0f;				// 左の衝突判定補正値
+const		float		FallLimitVal					= 1368.f;			// 落下限界値. 
+const		float		BeltConverSpeed					= 15.f;				// ベルトコンベアーのスピード
 	
 }
 
@@ -199,6 +200,14 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		return;
 		break;
 
+	case BELT_CONVER_B_R:
+		m_Pos.x += BeltConverSpeed;
+		break;
+
+	case BELT_CONVER_B_L:
+		m_Pos.x -= BeltConverSpeed;
+		break;
+
 	case ANCHOR:
 		return;
 		break;
@@ -258,7 +267,6 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		m_MovableDirection.m_Right = false;
 		m_Pos.x -= m_CurrentRectData.m_Right - rData.m_ObjRect.m_Left + RightCollisionCorrectionVal;
 	}
-	
 
 	// 座標が動いたのでステージインデックスを計算しなおす
 	if(m_pPlayerMotion->IsFacingRight())
