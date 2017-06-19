@@ -18,10 +18,10 @@ namespace ar
 namespace
 {
 
-const		float		MoveSpeed = 6.f;				//!< プレイヤーの移動スピード
-const		float		JumpSpeed = 8.f;				//!< ジャンプスピード
-const		float		JumpPower = 36.f;				//!< ジャンプの初動
-const		float		GravityPower = 0.16f;			//!< 重力
+const		float		MoveSpeed = 6.f;				// プレイヤーの移動スピード
+const		float		JumpSpeed = 8.f;				// ジャンプスピード
+const		float		JumpPower = 36.f;				// ジャンプの初動
+const		float		GravityPower = 0.16f;			// 重力
 
 }
 /* Public Functions ------------------------------------------------------------------------------------------- */
