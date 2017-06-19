@@ -59,7 +59,8 @@ void PressureSensitiveBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 }
 
 void PressureSensitiveBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
-{}
+{
+}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 

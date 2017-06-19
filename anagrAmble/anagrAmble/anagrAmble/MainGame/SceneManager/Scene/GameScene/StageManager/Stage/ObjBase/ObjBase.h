@@ -39,7 +39,7 @@ public:
 		LIGHT_ROAD_B,						//!< 足場排出ブロック
 		LEVER,								//!< レバー
 		GOAL,								//!< ゴール
-		LOCLED_GOAL,						//!< 鍵付きゴール
+		LOCKED_GOAL,						//!< 鍵付きゴール
 		GOAL_KEY,							//!< ゴールキー
 		PAIR_OF_EMBLME_B_R,					//!< 2つで1つの紋章ブロックの右側
 		PAIR_OF_EMBLME_B_L,					//!< 2つで1つの紋章ブロックの左側		
@@ -58,6 +58,8 @@ public:
 		SPEAR,								//!< 槍
 		LIGHT_B,							//!< 光ブロック
 		ANCHOR,								//!< アンカー
+		SWITCH_OPERATING_AREA_ON,			//!< スイッチ作動範囲ON状態
+		SWITCH_OPERATING_AREA_OFF,			//!< スイッチ作動範囲OFF状態
 		PLAYER = 99,						//!< プレイヤー
 		ID_MAX,
 		TYPE_ERROR = -1,					//!< エラー番号

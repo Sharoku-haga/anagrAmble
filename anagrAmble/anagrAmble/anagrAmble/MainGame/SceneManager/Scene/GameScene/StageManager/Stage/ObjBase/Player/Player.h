@@ -94,7 +94,6 @@ public:
 	* @return 結果 右向きかどうか true→右向き false→右を向いていない(左向き)
 	*/
 	bool IsFacingRight(void);
-
 	
 	/** 
 	* ステージの位置を変更する関数. 
@@ -111,7 +110,6 @@ public:
 
 private:
 	std::vector<int>	m_VtxID;					//!< VertexIDを格納したvector
-	EventLisner*		m_pEventLisner;				//!< イベントを受け取るクラス. EventLisnerクラスのインスタンスへのポインタ
 	PlayerMotion*		m_pPlayerMotion;			//!< プレイヤーの動作.  PlayerMotionクラスのインスタンスへのポインタ
 	PlayerMode*			m_pPlayerMode;				//!< プレイヤーのモード. PlayerModeクラスのインスタンスへのポインタ
 	MovableDirection	m_MovableDirection;			//!< 移動可能方向の構造体

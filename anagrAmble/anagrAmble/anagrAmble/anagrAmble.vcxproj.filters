@@ -82,6 +82,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\SandwichedStageSpace">
       <UniqueIdentifier>{a09f205d-9d74-4e10-aa7f-56b3a6ff0843}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea">
+      <UniqueIdentifier>{c7ddd97e-3d4b-4ef9-9a62-d3cc0be00ee9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -276,6 +279,9 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataChangeManager.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea\SwitchOperatingArea.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -469,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataChangeManager.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea\SwitchOperatingArea.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

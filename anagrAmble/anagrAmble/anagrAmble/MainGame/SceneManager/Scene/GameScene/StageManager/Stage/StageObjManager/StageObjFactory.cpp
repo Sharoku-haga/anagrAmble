@@ -97,8 +97,8 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 		pStageObj = new Goal(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::GOAL);
 		break;
 
-	case ObjBase::LOCLED_GOAL:
-		pStageObj = new Goal(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::LOCLED_GOAL);
+	case ObjBase::LOCKED_GOAL:
+		pStageObj = new Goal(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID, ObjBase::LOCKED_GOAL);
 		break;
 
 	case ObjBase::GOAL_KEY:

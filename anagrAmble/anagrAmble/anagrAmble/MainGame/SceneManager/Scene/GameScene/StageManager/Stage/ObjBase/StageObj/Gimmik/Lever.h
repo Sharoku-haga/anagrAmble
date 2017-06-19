@@ -12,6 +12,8 @@
 namespace ar
 {
 
+class SwitchOperatingArea;
+
 //======================================================================//
 //!< ステージオブジェクトであるレバー(スイッチ)のクラス
 //======================================================================//
@@ -29,7 +31,7 @@ public:
 	Lever(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
 								, const Stage::INDEX_DATA& rStageIndexData, int texID);
 
-	/** Constructor */
+	/** Destructor */
 	virtual ~Lever(void);
 
 	/** 
@@ -46,6 +48,10 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 
 private:
+	SwitchOperatingArea*		m_pSwitchOperatingArea;			//!< SwitchOperatingAreaクラスのインスタンスへのポインタ
+	bool						m_HasCollidedWithPlayer;		//!< プレイヤー衝突したかどうか. true→衝突している false→衝突していない
+	bool						m_IsOnState;					//!< ON状態かどうかフラグ true→ON false→OFF
+
 	/** 
 	* 処理実行関数
 	* StageObj::Control()内で使用

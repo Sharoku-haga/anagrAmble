@@ -87,7 +87,11 @@ void BasePoint::Move(void)
 	m_CurrentPlayerPos = m_pPlayer->GetPos();	// 現在のプレイヤー座標を更新する
 
 	if((m_CurrentPlayerPos.x - 0.0f) < PlayerInterVal)
-	{	// 左端付近にプレイヤーがいるときは動かない
+	{	// 左端付近処理
+		if(m_Pos.x > 0.0f)
+		{
+			m_Pos.x = 0.0f;
+		}
 		ObjBase::SetBasePointPos(m_Pos);
 		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
 		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
@@ -95,7 +99,12 @@ void BasePoint::Move(void)
 		return;
 	}
 	else if	(m_CurrentPlayerPos.x > (m_StageWidth - PlayerInterVal - CorrectionVal))
-	{	// 右端付近にプレイヤーがいるときは動かない
+	{	// 右端付近処理
+		if(m_Pos.x <  (m_StageWidth - PlayerInterVal * 2  - CorrectionVal))
+		{
+			m_Pos.x = (m_StageWidth - PlayerInterVal * 2 - CorrectionVal);
+		}
+
 		ObjBase::SetBasePointPos(m_Pos);
 		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
 		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
