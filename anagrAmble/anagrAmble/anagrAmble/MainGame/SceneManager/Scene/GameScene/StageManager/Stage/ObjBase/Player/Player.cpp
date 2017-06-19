@@ -208,6 +208,10 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		m_Pos.x -= BeltConverSpeed;
 		break;
 
+	case SPEAR:
+		m_pPlayerMotion->ChangeDeathMotion();
+		break;
+
 	case ANCHOR:
 		return;
 		break;

@@ -51,10 +51,29 @@ void SpearBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	m_pSpear->ChangeStagePos(yIndexNum, xIndexNum);
 }
 
 void SpearBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
-{}
+{
+		// スイッチONなら動きを止め、OFFなら動く
+	switch(rData.m_ObjType)
+	{
+
+	case SWITCH_OPERATING_AREA_ON:
+		m_pSpear->Stop();
+		break;
+
+	case SWITCH_OPERATING_AREA_OFF:
+		m_pSpear->Move();
+		break;
+
+	default:
+		// do nothing
+		break;
+	}
+}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
