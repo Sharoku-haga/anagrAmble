@@ -204,6 +204,14 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		return;
 		break;
 
+	case GOAL_KEY:
+		return;
+		break;
+
+	case  LOCKED_GOAL:
+		return;
+		break;
+
 	case BELT_CONVER_B_R:
 		m_Pos.x += BeltConverSpeed;
 		break;

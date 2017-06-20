@@ -42,11 +42,11 @@ void GameEventManager::Update(void)
 		// イベントがある場合はそれそれ対応するリスナーに通知する
 		for(auto& currentEvent : m_CuurentEvent)
 		{
-			std::vector<EventListener*>& pLisners = m_EventType[currentEvent];
+			std::vector<EventListener*>& pListeners = m_EventType[currentEvent];
 
-			for(auto& plisner : pLisners)
+			for(auto& plistener : pListeners)
 			{
-				plisner->ReceiveEvent(currentEvent);
+				plistener->ReceiveEvent(currentEvent);
 			}
 		}
 
@@ -55,38 +55,38 @@ void GameEventManager::Update(void)
 	}
 }
 
-void GameEventManager::RegisterEventType(std::string eventType, EventListener* pLisner)
+void GameEventManager::RegisterEventType(const std::string& rEventType, EventListener* pLisner)
 {
-	m_EventType[eventType].push_back(pLisner);
+	m_EventType[rEventType].push_back(pLisner);
 }
 
-void GameEventManager::DelEventType(std::string eventType)
+void GameEventManager::DelEventType(const std::string& rEventType)
 {
-	m_EventType[eventType].clear();
-	std::vector<EventListener*>().swap(m_EventType[eventType]);
-	m_EventType.erase(eventType);
+	m_EventType[rEventType].clear();
+	std::vector<EventListener*>().swap(m_EventType[rEventType]);
+	m_EventType.erase(rEventType);
 }
 
-void GameEventManager::TriggerSynEvent(std::string eventType)
+void GameEventManager::TriggerSynEvent(const std::string& rEventType)
 {
-	std::vector<EventListener*>& pLisners = m_EventType[eventType];
+	std::vector<EventListener*>& pListeners = m_EventType[rEventType];
 
-	for(auto& plisner : pLisners)
+	for(auto& plistener : pListeners)
 	{
-		plisner->HandleSynEvent(eventType);
+		plistener->HandleSynEvent(rEventType);
 	}
 }
 
-void GameEventManager::ReceiveEvent(std::string eventType)
+void GameEventManager::ReceiveEvent(const std::string& rEventType)
 {
 	for(auto& currentEvent : m_CuurentEvent )
 	{
-		if(currentEvent == eventType)
+		if(currentEvent == rEventType)
 		{ // すでにイベントが登録されていたらreturn
 			return;
 		}
 	}
-	m_CuurentEvent.push_back(eventType);
+	m_CuurentEvent.push_back(rEventType);
 }
 
 

@@ -46,6 +46,10 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 
 private:
+	bool						m_HasCollidedWithPlayer;		//!< プレイヤーと衝突したかどうか. true→衝突している false→衝突していない
+	bool						m_HasBeenGotPlayer;				//!< プレイヤーに取得されたかどうか true→取得されている false →されていない
+;
+
 	/** 
 	* 処理実行関数
 	* StageObj::Control()内で使用

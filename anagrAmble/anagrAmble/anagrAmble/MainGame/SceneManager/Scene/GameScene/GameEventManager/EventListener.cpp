@@ -20,14 +20,14 @@ EventListener::EventListener(void)
 EventListener::~EventListener(void)
 {}
 
-void EventListener::RegisterSynEventFunc(std::string eventType, std::function<void(void)> callBackFunc)
+void EventListener::RegisterSynEventFunc(const std::string& rEventType, const std::function<void(void)>& rCallBackFunc)
 {
-	m_SynEventFunc[eventType] = callBackFunc;
+	m_SynEventFunc[rEventType] = rCallBackFunc;
 }
 
-void EventListener::ReceiveEvent(std::string eventType)
+void EventListener::ReceiveEvent(const std::string& rEventType)
 {
-	m_CuurentEvent.push_back(eventType);
+	m_CuurentEvent.push_back(rEventType);
 }
 
 void EventListener::DelEvent(void)
@@ -35,9 +35,9 @@ void EventListener::DelEvent(void)
 	m_CuurentEvent.clear();
 }
 
-void EventListener::HandleSynEvent(std::string eventType)
+void EventListener::HandleSynEvent(const std::string& rEventType)
 {
-	m_SynEventFunc[eventType]();
+	m_SynEventFunc[rEventType]();
 }
 
 }	// namespace ar
