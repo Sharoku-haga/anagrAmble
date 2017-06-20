@@ -33,25 +33,25 @@ public:
 
 	/**
 	* 同期イベントの処理を登録する関数
-	* @param[in] eventType					同期イベントのタイプ
-	* @param[in] callBackFunc				同期イベントの際によびだすコールバック関数
+	* @param[in] rEventType					同期イベントのタイプ
+	* @param[in] rCallBackFunc				同期イベントの際によびだすコールバック関数
 	*/
-	void RegisterSynEventFunc(std::string eventType, std::function<void(void)> callBackFunc);
+	void RegisterSynEventFunc(const std::string& rEventType, const std::function<void(void)>& rCallBackFunc);
 
 	/** 
 	* イベントマネージャーからイベントを受け取る関数
-	* @param[in] eventType		イベントマネージャーから受け取ったイベントのタイプ
+	* @param[in] rEventType		イベントマネージャーから受け取ったイベントのタイプ
 	*/
-	void ReceiveEvent(std::string eventType); 
+	void ReceiveEvent(const std::string& rEventType); 
 
 	/** 受けとっていたイベントを全て削除する関数 */
 	void DelEvent(void); 
 	
 	/** 
 	* 同期イベントの処理を行う関数
-	* @param[in] eventType		処理を行うイベントのタイプ
+	* @param[in] rEventType		処理を行うイベントのタイプ
 	*/
-	void HandleSynEvent(std::string eventType);  
+	void HandleSynEvent(const std::string& rEventType);  
 
 	/**
 	* イベントが現在空なのか、もしくはあるのか確認する関数

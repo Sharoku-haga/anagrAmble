@@ -40,6 +40,9 @@ Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionMana
 	// イベント登録
 	// 特殊アクションボタンが押されるイベント
 	GameEventManager::Instance().RegisterEventType("special_action", m_pEventListener);
+
+	// ゴールキーを取得するイベント
+	GameEventManager::Instance().RegisterEventType("goal_key_get", m_pEventListener);
 }
 
 Goal::~Goal(void)
@@ -71,7 +74,6 @@ void Goal::ProcessCollision(const CollisionManager::CollisionData& rData)
 		break;
 
 	}
-
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
@@ -99,11 +101,16 @@ void Goal::HandleEvent(void)
 		std::string eventType;			
 		for(auto& gameEvent : currentEvents)
 		{
-			if(gameEvent == "special_action" && m_HasCollidedWithPlayer)
+			if(gameEvent == "special_action" && m_HasCollidedWithPlayer && m_TypeID == GOAL)
 			{
 				// ゴールに到達したイベントを通知する
 				GameEventManager::Instance().ReceiveEvent("goal_touch");
-				return;
+				break;
+			}
+			else if(gameEvent == "goal_key_get"  && m_TypeID == LOCKED_GOAL)
+			{
+				m_TypeID = GOAL;
+				break;
 			}
 		}
 

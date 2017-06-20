@@ -52,28 +52,28 @@ public:
 	/*
 	* イベントタイプとそれに対応するリスナーを登録する関数
 	* なおイベントタイプが登録されていない場合は自動的に追加する
-	* @param[in] eventType	登録したいイベントタイプ or Lisnerが登録したいイベントタイプ
+	* @param[in] rEventType	登録したいイベントタイプ or Lisnerが登録したいイベントタイプ
 	* @param[in] pLisner	上記のイベントタイプに登録したいEventListenerクラスのインスタンスへのポインタ
 	*/
-	void RegisterEventType(std::string eventType, EventListener* pLisner); 
+	void RegisterEventType(const std::string& rEventType, EventListener* pLisner); 
 
 	/*
 	* 現在登録しているイベントタイプを削除する関数
-	* @param[in] eventtype 削除したいイベントタイプ
+	* @param[in] rEventType 削除したいイベントタイプ
 	*/
-	void DelEventType(std::string eventType);
+	void DelEventType(const std::string& rEventType);
 
 	/**
 	* 同期的なイベントをLisnerに発信する関数
-	* @param[in] eventtype 発信したいイベントタイプ
+	* @param[in] rEventType 発信したいイベントタイプ
 	*/
-	void TriggerSynEvent(std::string eventType);  
+	void TriggerSynEvent(const std::string& rEventType);  
 
 	/**
 	* ゲーム中で発生したイベントを受け取る関数
-	* @param[in] eventtype 発生したイベントタイプ
+	* @param[in] rEventType 発生したイベントタイプ
 	*/
-	void ReceiveEvent(std::string eventType);  
+	void ReceiveEvent(const std::string& rEventType);  
    
 	/** Destructor */
 	~GameEventManager(void);
