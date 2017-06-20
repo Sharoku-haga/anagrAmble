@@ -12,6 +12,8 @@
 namespace ar
 {
 
+class SwitchOperatingArea;
+
 //======================================================================//
 //!< ステージオブジェクトである感圧ブロッククラス
 //======================================================================//
@@ -46,6 +48,10 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 
 private:
+	SwitchOperatingArea*		m_pSwitchOperatingArea;			//!< SwitchOperatingAreaクラスのインスタンスへのポインタ
+	bool						m_HasCollidedWithPlayer;		//!< プレイヤー衝突したかどうか. true→衝突している false→衝突していない
+
+
 	/** 
 	* 処理実行関数
 	* StageObj::Control()内で使用
