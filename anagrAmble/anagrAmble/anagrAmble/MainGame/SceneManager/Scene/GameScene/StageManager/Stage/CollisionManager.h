@@ -55,10 +55,10 @@ public:
 	void SetObjBasePointer(ObjBase* pObj);
 
 	/** 
-	 * 衝突判定を行うスイッチの作動範囲オブジェクトを登録する関数 
-	 * @param[in] pObj 衝突判定を行いたいObjBaseクラスのインスタンス(スイッチの作動範囲)へのポインタ
+	 * 衝突判定を行うスイッチの作動範囲のデータを登録する関数 
+	 * @param[in] pObj データを登録したいObjBaseクラスのインスタンス(スイッチの作動範囲)へのポインタ
 	 */
-	void SetSwitchOperatingAreaPointer(ObjBase* pArea);
+	void SetSwitchOperatingAreaData(ObjBase* pArea);
 
 	/** 
 	 * 衝突判定を行うプレイヤーオブジェクトを登録する関数 
@@ -67,10 +67,25 @@ public:
 	void SetPlayerPointer(ObjBase* pPlayer) { m_pPlayer = pPlayer; }
 
 private:
-	StageDataManager*			m_pStageDataManager;	//!< StageDataManagerクラスのインスタンスへのポインタ
-	std::vector<ObjBase*>		m_pStageObj;			//!< 衝突判定を行うObjBase群
-	std::vector<ObjBase*>		m_pSwitchOperatingArea;	//!< スイッチの作動範囲(SwitchOperatingAreaクラス)オブジェクト
-	ObjBase*					m_pPlayer;				//!< 衝突判定を行うプレイヤー
+
+	// スイッチの作動範囲の衝突判定を行うときに使用するデータ構造体
+	struct SwitchOperatingAreaData
+	{
+		short	m_YNum;		//!< Y軸の番号
+		short	m_XNum;		//!< X軸の番号
+		int		m_TypeID;	//!< スイッチ作動範囲のID ONかOFFか
+
+		SwitchOperatingAreaData(short	yNum, short xNum, int typeID)
+			: m_YNum(yNum)
+			, m_XNum(xNum)
+			, m_TypeID(typeID)
+		{}
+	};
+
+	StageDataManager*								m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
+	std::vector<ObjBase*>							m_pStageObj;				//!< 衝突判定を行うObjBase群
+	std::vector<SwitchOperatingAreaData>			m_SwitchOperatingAreaData;	//!< スイッチの作動範囲をチェックするときに使用するデータ
+	ObjBase*										m_pPlayer;					//!< 衝突判定を行うプレイヤー
 
 	/**
 	* プレイヤーとの衝突判定を行う関数
@@ -80,9 +95,9 @@ private:
 
 	/**
 	* スイッチの作動範囲の衝突判定を行う関数
-	* @param[in] pArea チェックを行いたいスイッチの作動範囲(ObjBaseクラス)のインスタンスへのポインタ
+	* @param[in] rArea チェックを行いたいスイッチの作動範囲のデータ
 	*/
-	void CheckCollisionSwitchOperatingArea(ObjBase* pArea);
+	void CheckCollisionSwitchOperatingArea(const SwitchOperatingAreaData& rArea);
 
 	/**
 	* 矩形で衝突判定を行う関数.

@@ -33,15 +33,15 @@ void SwitchOperatingArea::Draw(void)
 void SwitchOperatingArea::SwitchOnState(void)
 {
 	m_TypeID = ObjBase::SWITCH_OPERATING_AREA_ON;
-	// 衝突判定へ追加
-	m_pCollisionManager->SetSwitchOperatingAreaPointer(this);
+	// 衝突判定用データへ追加
+	m_pCollisionManager->SetSwitchOperatingAreaData(this);
 }
 
 void SwitchOperatingArea::SwitchOffState(void)
 {
 	m_TypeID = ObjBase::SWITCH_OPERATING_AREA_OFF;
-	// 衝突判定へ追加
-	m_pCollisionManager->SetSwitchOperatingAreaPointer(this);
+	// 衝突判定用データへ追加
+	m_pCollisionManager->SetSwitchOperatingAreaData(this);
 }
 
 void SwitchOperatingArea::ChangeStagePos(short yIndexNum, short xIndexNum)

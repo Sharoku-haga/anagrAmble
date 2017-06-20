@@ -35,16 +35,16 @@ CollisionManager::~CollisionManager(void)
 void CollisionManager::UpDate(void)
 {
 	// スイッチ作動範囲が登録されているなら専用の衝突判定を行う
-	if(RESULT_FAILED(m_pSwitchOperatingArea.empty()))
+	if(RESULT_FAILED(m_SwitchOperatingAreaData.empty()))
 	{
-		for(auto& pArea : m_pSwitchOperatingArea)
+		for(auto& AreaData : m_SwitchOperatingAreaData)
 		{
-			CheckCollisionSwitchOperatingArea(pArea);
+			CheckCollisionSwitchOperatingArea(AreaData);
 		}
 	
 		// データをクリアする
-		m_pSwitchOperatingArea.clear();
-		std::vector<ObjBase*>().swap(m_pSwitchOperatingArea);
+		m_SwitchOperatingAreaData.clear();
+		std::vector<SwitchOperatingAreaData>().swap(m_SwitchOperatingAreaData);
 	}
 
 	if(m_pStageObj.empty() || m_pPlayer == nullptr)
@@ -68,9 +68,11 @@ void CollisionManager::SetObjBasePointer(ObjBase* pObj)
 	m_pStageObj.push_back(pObj);
 }
 
-void CollisionManager::SetSwitchOperatingAreaPointer(ObjBase* pArea)
+void CollisionManager::SetSwitchOperatingAreaData(ObjBase* pArea)
 {
-	m_pSwitchOperatingArea.push_back(pArea);
+	m_SwitchOperatingAreaData.emplace_back(pArea->GetStageIndex().m_YNum, 
+											pArea->GetStageIndex().m_XNum, 
+											pArea->GetTypeID());
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
@@ -93,21 +95,20 @@ void CollisionManager::CheckCollisionPlayer(ObjBase* pObj)
 	}
 }
 
-void CollisionManager::CheckCollisionSwitchOperatingArea(ObjBase* pArea)
+void CollisionManager::CheckCollisionSwitchOperatingArea(const SwitchOperatingAreaData& rArea)
 {
-	Stage::INDEX_DATA areaIndex = pArea->GetStageIndex();
 	short stageHeightChipNum = m_pStageDataManager->GetStageHeightChipNum();
 	short stageWidthChipNum = m_pStageDataManager->GetStageWidthChipNum();
 
 	// エリアの衝突判定を行う範囲(インデックスを求める)
 	// それぞれ1で補正しているのは、配列内側だけチェックしたい為
 	Stage::INDEX_DATA chechStartIndex;			// チェック開始インデックス
-	chechStartIndex.m_YNum = ((areaIndex.m_YNum - SwitchOperatingAreaCount) > 0) ? (areaIndex.m_YNum - SwitchOperatingAreaCount) : 1;
-	chechStartIndex.m_XNum = ((areaIndex.m_XNum - SwitchOperatingAreaCount) > 0) ? (areaIndex.m_XNum - SwitchOperatingAreaCount) : 1;
+	chechStartIndex.m_YNum = ((rArea.m_YNum - SwitchOperatingAreaCount) > 0) ? (rArea.m_YNum - SwitchOperatingAreaCount) : 1;
+	chechStartIndex.m_XNum = ((rArea.m_XNum - SwitchOperatingAreaCount) > 0) ? (rArea.m_XNum - SwitchOperatingAreaCount) : 1;
 
 	Stage::INDEX_DATA chechEndIndex;			// チェック終了インデックス
-	chechEndIndex.m_YNum = ((areaIndex.m_YNum + SwitchOperatingAreaCount) < stageHeightChipNum) ? (areaIndex.m_YNum + SwitchOperatingAreaCount) : (stageHeightChipNum - 1);
-	chechEndIndex.m_XNum = ((areaIndex.m_XNum + SwitchOperatingAreaCount) < stageWidthChipNum) ? (areaIndex.m_XNum + SwitchOperatingAreaCount) : (stageWidthChipNum - 1);
+	chechEndIndex.m_YNum = ((rArea.m_YNum + SwitchOperatingAreaCount) < stageHeightChipNum) ? (rArea.m_YNum + SwitchOperatingAreaCount) : (stageHeightChipNum - 1);
+	chechEndIndex.m_XNum = ((rArea.m_XNum + SwitchOperatingAreaCount) < stageWidthChipNum) ? (rArea.m_XNum + SwitchOperatingAreaCount) : (stageWidthChipNum - 1);
 
 	// エリア内のObjBaseとの衝突をチェックする
 	for(int yNum = chechStartIndex.m_YNum ; yNum <= chechEndIndex.m_YNum; ++yNum)
@@ -122,7 +123,7 @@ void CollisionManager::CheckCollisionSwitchOperatingArea(ObjBase* pArea)
 
 			// 衝突データを渡す。ただしタイプIDだけ渡せばOK
 			CollisionData objCollisionData;
-			objCollisionData.m_ObjType	= pArea->GetTypeID();
+			objCollisionData.m_ObjType	= rArea.m_TypeID;
 			pObj->ProcessCollision(objCollisionData);
 		}
 	}

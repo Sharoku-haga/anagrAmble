@@ -58,8 +58,6 @@ Lever::Lever(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 
 	m_pSwitchOperatingArea = new SwitchOperatingArea(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, this);
 
-
-
 	// イベント登録
 	// 特殊アクションボタンが押されるイベント
 	GameEventManager::Instance().RegisterEventType("special_action", m_pEventListener);
@@ -78,6 +76,8 @@ void Lever::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	m_pSwitchOperatingArea->SwitchOffState();
 
 	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
 
