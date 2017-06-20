@@ -17,7 +17,7 @@
 namespace ar
 {
 
-class EventLisner;
+class EventListener;
 
 //======================================================================//
 //!< ゲームシーンのイベントを管理するクラス
@@ -53,9 +53,9 @@ public:
 	* イベントタイプとそれに対応するリスナーを登録する関数
 	* なおイベントタイプが登録されていない場合は自動的に追加する
 	* @param[in] eventType	登録したいイベントタイプ or Lisnerが登録したいイベントタイプ
-	* @param[in] pLisner	上記のイベントタイプに登録したいEventLisnerクラスのインスタンスへのポインタ
+	* @param[in] pLisner	上記のイベントタイプに登録したいEventListenerクラスのインスタンスへのポインタ
 	*/
-	void RegisterEventType(std::string eventType, EventLisner* pLisner); 
+	void RegisterEventType(std::string eventType, EventListener* pLisner); 
 
 	/*
 	* 現在登録しているイベントタイプを削除する関数
@@ -79,7 +79,7 @@ public:
 	~GameEventManager(void);
 
 private:
-	std::map<std::string, std::vector<EventLisner*> >  m_EventType;			//!< 登録しているイベントタイプとそれに対応するリスナーのポインタ群
+	std::map<std::string, std::vector<EventListener*> >  m_EventType;			//!< 登録しているイベントタイプとそれに対応するリスナーのポインタ群
 	std::deque<std::string>							   m_CuurentEvent;		//!< 現在ゲーム中で発生したイベントを格納しておくdeque
 	
 	/** Constructor */

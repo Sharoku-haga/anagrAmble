@@ -10,7 +10,7 @@
 #include "../../../../StageDataManager.h"
 #include "../../SwitchOperatingArea/SwitchOperatingArea.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
-#include "../../../../../GameEventManager/EventLisner.h"
+#include "../../../../../GameEventManager/EventListener.h"
 
 /* Unnamed Namespace ------------------------------------------------------------------------------------------ */
 
@@ -62,7 +62,7 @@ Lever::Lever(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 
 	// イベント登録
 	// 特殊アクションボタンが押されるイベント
-	GameEventManager::Instance().RegisterEventType("special_action", m_pEventLisner);
+	GameEventManager::Instance().RegisterEventType("special_action", m_pEventListener);
 }
 
 Lever::~Lever(void)
@@ -78,6 +78,8 @@ void Lever::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
 
 	if(m_IsOnState)
 	{
@@ -117,13 +119,13 @@ void Lever::Render(void)
 
 void Lever::HandleEvent(void)
 {
-	if(m_pEventLisner->EmptyCurrentEvent())
+	if(m_pEventListener->EmptyCurrentEvent())
 	{
 		return;
 	}
 	else
 	{
-		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+		const std::deque<std::string>& currentEvents = m_pEventListener->GetEvent();
 
 		std::string eventType;			
 		for(auto& gameEvent : currentEvents)
@@ -145,7 +147,7 @@ void Lever::HandleEvent(void)
 			}
 		}
 
-		m_pEventLisner->DelEvent();
+		m_pEventListener->DelEvent();
 	}
 }
 

@@ -11,7 +11,7 @@
 #include "../../../ControllerEnum.h"
 #include "GamePauseMenu/GamePauseMenu.h"
 #include "GameEventManager/GameEventManager.h"
-#include "GameEventManager/EventLisner.h"
+#include "GameEventManager/EventListener.h"
 #include "StageManager/StageManager.h"
 #include "../SharokuLibrary/sl/sl.h"
 #include <iostream>
@@ -24,7 +24,7 @@ namespace ar
 GameScene::GameScene(GameDataManager* pGameDataManager)
 	: m_pGameDataManager(pGameDataManager)
 	, m_rGameEventManager(GameEventManager::Instance())
-	, m_pEventLisner(new EventLisner())
+	, m_pEventListener(new EventListener())
 	, m_pPauseMenu(nullptr)
 	, m_pStageManager(nullptr)
 	, m_CurrentState(GAME_PLAY)
@@ -47,7 +47,7 @@ GameScene::~GameScene(void)
 {
 	sl::DeleteSafely(m_pStageManager);
 	sl::DeleteSafely(m_pPauseMenu);
-	sl::DeleteSafely(m_pEventLisner);
+	sl::DeleteSafely(m_pEventListener);
 	m_pLibrary->ReleaseVertexALL();
 	m_pLibrary->ReleaseTexALL();
 }
@@ -116,13 +116,13 @@ void GameScene::Draw(void)
 
 void GameScene::HandleEvent(void)
 {
-	if(m_pEventLisner->EmptyCurrentEvent())
+	if(m_pEventListener->EmptyCurrentEvent())
 	{
 		return;
 	}
 	else
 	{
-		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+		const std::deque<std::string>& currentEvents = m_pEventListener->GetEvent();
 
 		m_CurrentState = CHANGE_SCENE;			// ゲームシーンの状態をシーン遷移状態にかえる
 
@@ -144,20 +144,20 @@ void GameScene::HandleEvent(void)
 			}
 		}
 
-		m_pEventLisner->DelEvent();
+		m_pEventListener->DelEvent();
 	}
 }
 
 void GameScene::RegisterEvent(void)
 {
 	// ゲームオーバー
-	m_rGameEventManager.RegisterEventType("game_over", m_pEventLisner);
+	m_rGameEventManager.RegisterEventType("game_over", m_pEventListener);
 
 	// ゲームクリア
-	m_rGameEventManager.RegisterEventType("game_clear", m_pEventLisner);
+	m_rGameEventManager.RegisterEventType("game_clear", m_pEventListener);
 
 	// タイトルへ戻る
-	m_rGameEventManager.RegisterEventType("title_return", m_pEventLisner);
+	m_rGameEventManager.RegisterEventType("title_return", m_pEventListener);
 }
 
 }	// namespace ar

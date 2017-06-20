@@ -64,7 +64,7 @@ protected:
 
 	/** 
 	* イベント処理関数.純粋仮想関数 
-	* この関数内でEventLisnerから受け取ったイベントの処理を行う
+	* この関数内でEventListenerから受け取ったイベントの処理を行う
 	*/
 	virtual void HandleEvent(void) = 0;
 

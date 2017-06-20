@@ -50,6 +50,7 @@ public:
 
 private:
 	std::vector<LightBlock*>			m_pLightBlocks;			//!< LightBlockクラスのインスタンスへのポインタを格納するvector
+	bool								m_HasOpened;			//!< 扉が開いているかどうか true→開いている false→開いていない
 
 	/** 
 	* 処理実行関数 
@@ -65,12 +66,21 @@ private:
 
 	/** 
 	* イベント処理関数
-	* この関数内でEventLisnerから受け取ったイベントの処理を行う
+	* この関数内でEventListenerから受け取ったイベントの処理を行う
 	*/
 	virtual void HandleEvent(void)override;
 
-	/** 扉の代わりになる光ブロックを作成する関数 */
-	void CreateLightBlock(void);
+	/**
+	* 扉を開ける関数
+	* 光ブロックを収納する関数
+	*/
+	void Open(void);
+
+	/**
+	* 扉を閉じる関数
+	* 光ブロックを展開する関数
+	*/
+	void Close(void);
 
 };	// class LightDoor
 

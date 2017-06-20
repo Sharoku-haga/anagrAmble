@@ -20,7 +20,7 @@ class ISharokuLibrary;
 namespace ar
 {
 
-class EventLisner;
+class EventListener;
 class StageDataManager;
 class CollisionManager;
 class Player;
@@ -75,7 +75,7 @@ public:
 
 private:
 	sl::ISharokuLibrary*										m_pLibrary;					//!< ライブラリ.sl::ISharokuLibraryクラスのインスタンスへのポインタ
-	EventLisner*												m_pEventLisner;				//!< EventLisnerクラスのインスタンスへのポインタ
+	EventListener*												m_pEventListener;				//!< EventListenerクラスのインスタンスへのポインタ
 	StageDataManager*											m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*											m_pCollisionManager;		//!< CollisionManagerクラスのインスタンスへのポインタ
 	Player*														m_pPlayer;					//!< Playerクラスのインスタンスへのポインタ
@@ -87,7 +87,7 @@ private:
 
 	/** 
 	* イベント処理関数.
-	* この関数内でEventLisnerから受け取ったイベントの処理を行う
+	* この関数内でEventListenerから受け取ったイベントの処理を行う
 	*/
 	void HandleEvent(void);
 

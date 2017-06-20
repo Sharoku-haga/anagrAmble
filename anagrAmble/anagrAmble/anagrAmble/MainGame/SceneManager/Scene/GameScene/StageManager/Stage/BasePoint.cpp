@@ -8,7 +8,7 @@
 
 #include "BasePoint.h"
 #include "../../GameEventManager/GameEventManager.h"
-#include "../../GameEventManager/EventLisner.h"
+#include "../../GameEventManager/EventListener.h"
 #include "ObjBase/ObjBase.h"
 #include "ObjBase/Player/Player.h"
 #include "../../../../../ControllerEnum.h"
@@ -34,17 +34,17 @@ BasePoint::BasePoint(void)
 	: m_Pos({0.0f, 0.0f})
 	, m_CurrentPlayerPos({0.0f, 0.0f})
 	, m_OldPlayerPos({0.0f, 0.0f})
-	, m_pEventLisner(nullptr)
+	, m_pEventListener(nullptr)
 	, m_StageWidth(0.0f)
 {
-	m_pEventLisner = new EventLisner();
-	GameEventManager::Instance().RegisterEventType("player_move", m_pEventLisner);
-	m_pEventLisner->RegisterSynEventFunc("player_move", std::bind(&ar::BasePoint::Move, this));
+	m_pEventListener = new EventListener();
+	GameEventManager::Instance().RegisterEventType("player_move", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("player_move", std::bind(&ar::BasePoint::Move, this));
 }
 
 BasePoint::~BasePoint(void)
 {
-	sl::DeleteSafely(m_pEventLisner);
+	sl::DeleteSafely(m_pEventListener);
 }
 
 void BasePoint::Initialize(float stageWidth, Player* pPlayer)

@@ -14,7 +14,7 @@
 #include "SandwichedSpaceBackground.h"
 #include "../Anchor.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
-#include "../../../../../GameEventManager/EventLisner.h"
+#include "../../../../../GameEventManager/EventListener.h"
 #include "../../../../StageDataChangeManager.h"
 #include "../SharokuLibrary/sl/sl.h"
 
@@ -35,7 +35,7 @@ const	short  SpaceYIndexMin= 1;			//!< 挟まれた空間内のY軸方向の最�
 SandwichedStageSpace::SandwichedStageSpace(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, 
 											Player*	pPlayer)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
-	, m_pEventLisner(new EventLisner())
+	, m_pEventListener(new EventListener())
 	, m_pStageDataManager(pStageDataManager)
 	, m_pCollisionManager(pCollisionManager)
 	, m_pPlayer(pPlayer)
@@ -44,22 +44,22 @@ SandwichedStageSpace::SandwichedStageSpace(StageDataManager* pStageDataManager, 
 	m_StageChipSize = m_pStageDataManager->GetStageChipSize();
 
 	// 挟まれた空間解除イベント
-	GameEventManager::Instance().RegisterEventType("sandwiched_space_release", m_pEventLisner);
+	GameEventManager::Instance().RegisterEventType("sandwiched_space_release", m_pEventListener);
 
 	// プレイヤーが移動したというイベント
-	GameEventManager::Instance().RegisterEventType("player_move", m_pEventLisner);
-	m_pEventLisner->RegisterSynEventFunc("player_move", std::bind(&ar::SandwichedStageSpace::Move, this));
+	GameEventManager::Instance().RegisterEventType("player_move", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("player_move", std::bind(&ar::SandwichedStageSpace::Move, this));
 
 	// ステージ変更開始イベント
-	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventLisner);
-	m_pEventLisner->RegisterSynEventFunc("space_change_start", std::bind(&ar::SandwichedStageSpace::PrepareSpaceChange, this));
+	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_start", std::bind(&ar::SandwichedStageSpace::PrepareSpaceChange, this));
 
 	// ステージ変更終了イベント
-	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventLisner);
-	m_pEventLisner->RegisterSynEventFunc("space_change_end", std::bind(&ar::SandwichedStageSpace::DiscardData, this));
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::SandwichedStageSpace::DiscardData, this));
 
 	// 入れ替え戻し終了イベント
-	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventLisner);
+	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
 }
 
 SandwichedStageSpace::~SandwichedStageSpace(void)
@@ -70,7 +70,7 @@ SandwichedStageSpace::~SandwichedStageSpace(void)
 	}
 
 	sl::DeleteSafely(m_pBackground);
-	sl::DeleteSafely(m_pEventLisner);
+	sl::DeleteSafely(m_pEventListener);
 }
 
 void SandwichedStageSpace::InitializeData(Anchor* pAnchorOne, Anchor*	pAnchorTwo)
@@ -153,13 +153,13 @@ void SandwichedStageSpace::Draw(void)
 
 void SandwichedStageSpace::HandleEvent(void)
 {
-	if(m_pEventLisner->EmptyCurrentEvent())
+	if(m_pEventListener->EmptyCurrentEvent())
 	{
 		return;
 	}
 	else
 	{
-		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+		const std::deque<std::string>& currentEvents = m_pEventListener->GetEvent();
 
 		std::string eventType;
 		for(auto& gameEvent : currentEvents)
@@ -187,7 +187,7 @@ void SandwichedStageSpace::HandleEvent(void)
 			}
 		}
 
-		m_pEventLisner->DelEvent();
+		m_pEventListener->DelEvent();
 	}
 }
 

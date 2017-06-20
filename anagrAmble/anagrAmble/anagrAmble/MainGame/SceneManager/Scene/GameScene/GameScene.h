@@ -15,7 +15,7 @@ namespace ar
 class GameDataManager;
 class GamePauseMenu;
 class GameEventManager;
-class EventLisner;
+class EventListener;
 class StageManager;
 
 //======================================================================//
@@ -45,7 +45,7 @@ private:
 
 	GameDataManager*		m_pGameDataManager;		//!< GameDataManagerクラスのインスタンスへのポインタ
 	GameEventManager&		m_rGameEventManager;	//!< GameEventManagerクラスのインスタンスへの参照
-	EventLisner*			m_pEventLisner;			//!< EventLisnerクラスのインスタンスへのポインタ
+	EventListener*			m_pEventListener;			//!< EventListenerクラスのインスタンスへのポインタ
 	GamePauseMenu*			m_pPauseMenu;			//!< GamePauseMenuクラスのインスタンスへのポインタ
 	StageManager*			m_pStageManager;		//!< m_pStageManagerクラスのインスタンスへのポインタ
 	STATE					m_CurrentState;			//!< GameSecneの現在の状態

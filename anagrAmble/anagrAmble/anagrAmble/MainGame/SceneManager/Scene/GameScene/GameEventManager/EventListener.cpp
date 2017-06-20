@@ -1,12 +1,12 @@
 ﻿//==================================================================================================================================//
-//!< @file		EventLisner.cpp
-//!< @brief		ar::EventLisnerクラス実装
+//!< @file		EventListener.cpp
+//!< @brief		ar::EventListenerクラス実装
 //!< @author	T.Haga
 //==================================================================================================================================//
 
 /* Includes --------------------------------------------------------------------------------------------------- */
 
-#include "EventLisner.h"
+#include "EventListener.h"
 #include "GameEventManager.h"
 
 namespace ar
@@ -14,28 +14,28 @@ namespace ar
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-EventLisner::EventLisner(void)
+EventListener::EventListener(void)
 {}
 
-EventLisner::~EventLisner(void)
+EventListener::~EventListener(void)
 {}
 
-void EventLisner::RegisterSynEventFunc(std::string eventType, std::function<void(void)> callBackFunc)
+void EventListener::RegisterSynEventFunc(std::string eventType, std::function<void(void)> callBackFunc)
 {
 	m_SynEventFunc[eventType] = callBackFunc;
 }
 
-void EventLisner::ReceiveEvent(std::string eventType)
+void EventListener::ReceiveEvent(std::string eventType)
 {
 	m_CuurentEvent.push_back(eventType);
 }
 
-void EventLisner::DelEvent(void)
+void EventListener::DelEvent(void)
 {
 	m_CuurentEvent.clear();
 }
 
-void EventLisner::HandleSynEvent(std::string eventType)
+void EventListener::HandleSynEvent(std::string eventType)
 {
 	m_SynEventFunc[eventType]();
 }

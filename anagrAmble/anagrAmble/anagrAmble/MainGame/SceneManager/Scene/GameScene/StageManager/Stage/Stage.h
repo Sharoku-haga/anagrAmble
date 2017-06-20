@@ -13,7 +13,7 @@
 namespace ar
 {
 
-class EventLisner;
+class EventListener;
 class StageDataManager;
 class CollisionManager;
 class BasePoint;
@@ -68,7 +68,7 @@ private:
 	};
 
 	sl::ISharokuLibrary*				m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
-	EventLisner*						m_pEventLisner;			//!< EventLisnerクラスのインスタンスへのポインタ
+	EventListener*						m_pEventListener;			//!< EventListenerクラスのインスタンスへのポインタ
 	StageDataManager*					m_pStageDataManager;	//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*					m_pCollisionManager;	//!< CollisionManagerクラスのインスタンスへのポインタ
 	BasePoint*							m_pBasePoint;			//!< BasePointクラスのインスタンスへのポインタ

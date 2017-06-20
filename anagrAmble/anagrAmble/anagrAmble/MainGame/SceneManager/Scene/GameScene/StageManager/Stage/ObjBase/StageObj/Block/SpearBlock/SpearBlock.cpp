@@ -57,7 +57,7 @@ void SpearBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 void SpearBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 {
-		// スイッチONなら動きを止め、OFFなら動く
+	// スイッチONなら動きを止め、OFFなら動く
 	switch(rData.m_ObjType)
 	{
 

@@ -7,7 +7,7 @@
 /* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "GameEventManager.h"
-#include "EventLisner.h"
+#include "EventListener.h"
 
 namespace ar
 {
@@ -25,7 +25,7 @@ void GameEventManager::InitEventType(void)
 	for(auto& eventType : m_EventType)
 	{
 		eventType.second.clear();
-		std::vector<EventLisner*>().swap(eventType.second);
+		std::vector<EventListener*>().swap(eventType.second);
 	}
 
 	m_EventType.clear();
@@ -42,7 +42,7 @@ void GameEventManager::Update(void)
 		// イベントがある場合はそれそれ対応するリスナーに通知する
 		for(auto& currentEvent : m_CuurentEvent)
 		{
-			std::vector<EventLisner*>& pLisners = m_EventType[currentEvent];
+			std::vector<EventListener*>& pLisners = m_EventType[currentEvent];
 
 			for(auto& plisner : pLisners)
 			{
@@ -55,7 +55,7 @@ void GameEventManager::Update(void)
 	}
 }
 
-void GameEventManager::RegisterEventType(std::string eventType, EventLisner* pLisner)
+void GameEventManager::RegisterEventType(std::string eventType, EventListener* pLisner)
 {
 	m_EventType[eventType].push_back(pLisner);
 }
@@ -63,13 +63,13 @@ void GameEventManager::RegisterEventType(std::string eventType, EventLisner* pLi
 void GameEventManager::DelEventType(std::string eventType)
 {
 	m_EventType[eventType].clear();
-	std::vector<EventLisner*>().swap(m_EventType[eventType]);
+	std::vector<EventListener*>().swap(m_EventType[eventType]);
 	m_EventType.erase(eventType);
 }
 
 void GameEventManager::TriggerSynEvent(std::string eventType)
 {
-	std::vector<EventLisner*>& pLisners = m_EventType[eventType];
+	std::vector<EventListener*>& pLisners = m_EventType[eventType];
 
 	for(auto& plisner : pLisners)
 	{
