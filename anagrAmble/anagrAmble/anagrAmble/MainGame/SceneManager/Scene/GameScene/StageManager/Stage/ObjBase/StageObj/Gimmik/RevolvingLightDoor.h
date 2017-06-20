@@ -64,12 +64,15 @@ private:
 
 	/** 
 	* イベント処理関数
-	* この関数内でEventLisnerから受け取ったイベントの処理を行う
+	* この関数内でEventListenerから受け取ったイベントの処理を行う
 	*/
 	virtual void HandleEvent(void)override;
 
-	/** 扉の代わりになる光ブロックを作成する関数 */
-	void CreateLightBlock(void);
+	/** 
+	* 光の扉が回転する関数
+	* 光ブロックを位置を変える
+	*/
+	void Revolve(void);
 
 };	// class RevolvingLightDoor
 

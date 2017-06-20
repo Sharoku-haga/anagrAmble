@@ -18,15 +18,16 @@ namespace ar
 namespace
 {
 
-const int SearchArea = 4;			//!< 探査範囲
+const int LightBlockCount = 3;			//!< 光ブロックの数(ドアの長さ分)
 
 }
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 LightDoor::LightDoor(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
-			, const Stage::INDEX_DATA& rStageIndexData,  int texID,  ObjBase::TYPE_ID typeID)
+	, const Stage::INDEX_DATA& rStageIndexData, int texID, ObjBase::TYPE_ID typeID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
+	, m_HasOpened(false)
 {
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
@@ -36,28 +37,29 @@ LightDoor::LightDoor(StageDataManager* pStageDataManager, CollisionManager* pCol
 	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
-	float chipSize = m_pStageDataManager->GetStageChipSize();
-	m_RectSize.m_Left		= -(chipSize / 2);
-	m_RectSize.m_Top		= -(chipSize / 2);
-	m_RectSize.m_Right		= (chipSize / 2);
-	m_RectSize.m_Bottom		= (chipSize / 2);
+	m_RectSize.m_Left = -(m_StageChipSize / 2);
+	m_RectSize.m_Top = -(m_StageChipSize / 2);
+	m_RectSize.m_Right = (m_StageChipSize / 2);
+	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 
-	const sl::fRect		uv = {0.55f, 0.0f, 0.6f, 0.088f};
+	const sl::fRect		uv = { 0.55f, 0.0f, 0.6f, 0.088f };
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
-	m_CurrentRectData.m_Left	= m_Pos.x + m_RectSize.m_Left;
-	m_CurrentRectData.m_Top		= m_Pos.y + m_RectSize.m_Top;
-	m_CurrentRectData.m_Right	= m_Pos.x + m_RectSize.m_Right;
-	m_CurrentRectData.m_Bottom	= m_Pos.y + m_RectSize.m_Bottom;
+	// 光ブロックを生成する
+	for(int count = 0; count < LightBlockCount; ++count)
+	{
+		m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
+			, m_StageIndexData, m_DrawingID.m_TexID));
+	}
 
-	CreateLightBlock();
-
+	// 扉を閉じる
+	Close();
 }
 
 LightDoor::~LightDoor(void)
 {
-	for(auto pblock : m_pLightBlocks)
+	for(auto& pblock : m_pLightBlocks)
 	{
 		sl::DeleteSafely(pblock);
 	}
@@ -71,16 +73,41 @@ void  LightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	Close();
 }
 
 void LightDoor::ProcessCollision(const CollisionManager::CollisionData& rData)
-{}
+{
+	// スイッチONなら扉を開け、OFFなら閉める
+	switch(rData.m_ObjType)
+	{
+
+	case SWITCH_OPERATING_AREA_ON:
+		Open();
+		break;
+
+	case SWITCH_OPERATING_AREA_OFF:
+		Close();
+		break;
+
+	default:
+		// do nothing
+		break;
+	}
+}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void LightDoor::Run(void)
 {
-	for(auto pblock : m_pLightBlocks)
+	// 開いているなら光ブロックの処理を飛ばす
+	if(m_HasOpened)
+	{
+		return;
+	}
+
+	for(auto& pblock : m_pLightBlocks)
 	{
 		pblock->Control();
 	}
@@ -88,88 +115,100 @@ void LightDoor::Run(void)
 
 void LightDoor::Render(void)
 {
-	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
-	for(auto pblock : m_pLightBlocks)
+	// 開いているなら光ブロックの処理を飛ばす
+	if(RESULT_FAILED(m_HasOpened))
 	{
-		pblock->Draw();
+		for(auto& pblock : m_pLightBlocks)
+		{
+			pblock->Draw();
+		}
 	}
+
+	m_pLibrary->Draw2D(m_DrawingID, (m_Pos - m_BasePointPos));
 }
 
 void LightDoor::HandleEvent(void)
 {}
 
-void LightDoor::CreateLightBlock(void)
+void LightDoor::Open(void)
 {
+	m_HasOpened = true;
+	for(auto& pblock : m_pLightBlocks)
+	{
+		pblock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+	}
+}
+
+void LightDoor::Close(void)
+{
+	m_HasOpened = false;
 	Stage::INDEX_DATA checkIndexData;
+
+	// 扉の種類にあわせて光ブロックを展開していく
 	switch(m_TypeID)
 	{
 	case LIGHT_DOOR_UP:
-		for(int count = 1; count < SearchArea ; ++count)
+		for(int count = 1; count <= LightBlockCount; ++count)
 		{
 			checkIndexData.m_YNum = m_StageIndexData.m_YNum - count;
 			checkIndexData.m_XNum = m_StageIndexData.m_XNum;
 
 			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
-			{	// 何もないならそのスペースに光ブロックを生成する
-				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-										, checkIndexData, m_DrawingID.m_TexID));
+			{
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
 			}
 			else
-			{	// 空白じゃないなら生成をやめる
+			{	// 空白じゃないなら再配置をやめる
 				return;
 			}
 		}
 		break;
 
 	case LIGHT_DOOR_DOWN:
-		for(int count = 1; count < SearchArea ; ++count)
+		for(int count = 1; count <= LightBlockCount; ++count)
 		{
 			checkIndexData.m_YNum = m_StageIndexData.m_YNum + count;
 			checkIndexData.m_XNum = m_StageIndexData.m_XNum;
 
 			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
-			{	// 空白ならそのスペースに光ブロックを生成する
-				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-										, checkIndexData, m_DrawingID.m_TexID));
+			{
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
 			}
 			else
-			{	// 空白じゃないなら生成をやめる
+			{	// 空白じゃないなら再配置をやめる
 				return;
 			}
 		}
 		break;
 
 	case LIGHT_DOOR_RIGHT:
-		for(int count = 1; count < SearchArea ; ++count)
+		for(int count = 1; count <= LightBlockCount; ++count)
 		{
 			checkIndexData.m_YNum = m_StageIndexData.m_YNum;
 			checkIndexData.m_XNum = m_StageIndexData.m_XNum + count;
 
 			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
-			{	// 空白ならそのスペースに光ブロックを生成する
-				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-										, checkIndexData, m_DrawingID.m_TexID));
+			{
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
 			}
 			else
-			{	// 空白じゃないなら生成をやめる
+			{	// 空白じゃないなら再配置をやめる
 				return;
 			}
 		}
 		break;
 
 	case LIGHT_DOOR_LEFT:
-		for(int count = 1; count < SearchArea ; ++count)
+		for(int count = 1; count <= LightBlockCount; ++count)
 		{
 			checkIndexData.m_YNum = m_StageIndexData.m_YNum;
 			checkIndexData.m_XNum = m_StageIndexData.m_XNum - count;
-
 			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
-			{	// 空白ならそのスペースに光ブロックを生成する
-				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-										, checkIndexData, m_DrawingID.m_TexID));
+			{
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
 			}
 			else
-			{	// 空白じゃないなら生成をやめる
+			{	// 空白じゃないなら再配置をやめる
 				return;
 			}
 		}

@@ -18,7 +18,7 @@ namespace ar
 namespace
 {
 
-const int SearchArea = 4;			//!< 探査範囲
+const int LightBlockCount	= 6;			//!< 光ブロックの数
 
 }
 
@@ -46,7 +46,14 @@ RevolvingLightDoor::RevolvingLightDoor(StageDataManager* pStageDataManager, Coll
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
-	CreateLightBlock();
+		// 光ブロックを生成する
+	for(int count = 0; count < LightBlockCount; ++count)
+	{
+		m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
+			, m_StageIndexData, m_DrawingID.m_TexID));
+	}
+
+	Revolve();
 }
 
 
@@ -66,10 +73,47 @@ void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	Revolve();
 }
 
 void RevolvingLightDoor::ProcessCollision(const CollisionManager::CollisionData& rData)
-{}
+{
+	// スイッチONOFFで交互に切り替える
+	switch(rData.m_ObjType)
+	{
+
+	case SWITCH_OPERATING_AREA_ON:
+		if(m_TypeID == REVOLVING_LIGHT_DOOR_HORIZONTAL)
+		{
+			m_TypeID = REVOLVING_LIGHT_DOOR_VERTICAL;
+		}
+		else
+		{
+			m_TypeID = REVOLVING_LIGHT_DOOR_HORIZONTAL;
+		}
+
+		Revolve();
+		break;
+
+	case SWITCH_OPERATING_AREA_OFF:
+		if(m_TypeID == REVOLVING_LIGHT_DOOR_HORIZONTAL)
+		{
+			m_TypeID = REVOLVING_LIGHT_DOOR_VERTICAL;
+		}
+		else
+		{
+			m_TypeID = REVOLVING_LIGHT_DOOR_HORIZONTAL;
+		}
+
+		Revolve();
+		break;
+
+	default:
+		// do nothing
+		break;
+	}
+}
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
@@ -93,43 +137,41 @@ void RevolvingLightDoor::Render(void)
 void RevolvingLightDoor::HandleEvent(void)
 {}
 
-void RevolvingLightDoor::CreateLightBlock(void)
+void RevolvingLightDoor::Revolve(void)
 {
 	Stage::INDEX_DATA checkIndexData;
 	switch(m_TypeID)
 	{
 	case REVOLVING_LIGHT_DOOR_HORIZONTAL:
-		
-		// 右方向へ光ブロック生成
-		for(int count = 1; count < SearchArea ; ++count)
+
+		// 右方向へまず光ブロックの半分を展開
+		for(int count = 1; count <= (LightBlockCount / 2); ++count)
 		{
 			checkIndexData.m_YNum = m_StageIndexData.m_YNum;
 			checkIndexData.m_XNum = m_StageIndexData.m_XNum + count;
 
 			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
-			{	// 空白ならそのスペースに光ブロックを生成する
-				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-										, checkIndexData, m_DrawingID.m_TexID));
+			{	// 空白ならそのスペースに光ブロックを展開する
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
 			}
 			else
-			{	// 空白じゃないなら生成をやめる
+			{	// 空白じゃないなら展開をやめる
 				break;;
 			}
 		}
 
-		// 左方向へ光ブロック生成
-		for(int count = 1; count < SearchArea ; ++count)
+		// 左方向へ残り半分の光ブロックを展開
+		for(int count = 1; count <= (LightBlockCount / 2); ++count)
 		{
 			checkIndexData.m_YNum = m_StageIndexData.m_YNum;
 			checkIndexData.m_XNum = m_StageIndexData.m_XNum - count;
 
 			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
-			{	// 空白ならそのスペースに光ブロックを生成する
-				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-										, checkIndexData, m_DrawingID.m_TexID));
+			{	// 空白ならそのスペースに光ブロックを展開する
+				m_pLightBlocks[(count - 1 + (LightBlockCount / 2))]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
 			}
 			else
-			{	// 空白じゃないなら生成をやめる
+			{	// 空白じゃないなら展開をやめる
 				return;
 			}
 		}
@@ -137,36 +179,34 @@ void RevolvingLightDoor::CreateLightBlock(void)
 
 	case REVOLVING_LIGHT_DOOR_VERTICAL:
 
-		// 上方向へ光ブロック生成
-		for(int count = 1; count < SearchArea ; ++count)
+		// 上方向へまず光ブロックの半分を展開
+		for(int count = 1; count <= (LightBlockCount / 2); ++count)
 		{
 			checkIndexData.m_YNum = m_StageIndexData.m_YNum - count;
 			checkIndexData.m_XNum = m_StageIndexData.m_XNum;
 
 			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
-			{	// 何もないならそのスペースに光ブロックを生成する
-				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-										, checkIndexData, m_DrawingID.m_TexID));
+			{	// 何もないならそのスペースに光ブロックを展開する
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
 			}
 			else
-			{	// 空白じゃないなら生成をやめる
+			{	// 空白じゃないなら展開をやめる
 				break;;
 			}
 		}
 
-		// 下方向へ光ブロック生成
-		for(int count = 1; count < SearchArea ; ++count)
+		// 下方向へ光ブロック展開
+		for(int count = 1; count <= (LightBlockCount / 2); ++count)
 		{
 			checkIndexData.m_YNum = m_StageIndexData.m_YNum + count;
 			checkIndexData.m_XNum = m_StageIndexData.m_XNum;
 
 			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
-			{	// 空白ならそのスペースに光ブロックを生成する
-				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-										, checkIndexData, m_DrawingID.m_TexID));
+			{	// 空白ならそのスペースに光ブロックを展開する
+				m_pLightBlocks[(count - 1 + (LightBlockCount / 2))]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
 			}
 			else
-			{	// 空白じゃないなら生成をやめる
+			{	// 空白じゃないなら展開をやめる
 				return;
 			}
 		}

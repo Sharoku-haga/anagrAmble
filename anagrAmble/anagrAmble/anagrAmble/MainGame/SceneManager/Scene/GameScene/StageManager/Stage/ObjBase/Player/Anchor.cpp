@@ -11,7 +11,7 @@
 #include "Player.h"
 #include "../../../StageDataManager.h"
 #include "../../../../GameEventManager/GameEventManager.h"
-#include "../../../../GameEventManager/EventLisner.h"
+#include "../../../../GameEventManager/EventListener.h"
 
 namespace ar
 {
@@ -52,15 +52,15 @@ Anchor::Anchor(StageDataManager* pStageDataManager, CollisionManager* pCollision
 
 	// イベント登録
 	//  アンカー回収イベント
-	GameEventManager::Instance().RegisterEventType("anchor_retrieve", m_pEventLisner);	
+	GameEventManager::Instance().RegisterEventType("anchor_retrieve", m_pEventListener);	
 	
 	// プレイヤーが動いたときのイベント
-	GameEventManager::Instance().RegisterEventType("player_move", m_pEventLisner);
-	m_pEventLisner->RegisterSynEventFunc("player_move", std::bind(&ar::Anchor::AdjustPos, this));
+	GameEventManager::Instance().RegisterEventType("player_move", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("player_move", std::bind(&ar::Anchor::AdjustPos, this));
 
 	// ステージ変更終了イベント
-	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventLisner);
-	m_pEventLisner->RegisterSynEventFunc("space_change_end", std::bind(&ar::Anchor::PlacePosPlayerFront, this));
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::Anchor::PlacePosPlayerFront, this));
 
 }
 
@@ -213,13 +213,13 @@ void Anchor::ProcessCollision(const CollisionManager::CollisionData& rData)
 
 void Anchor::HandleEvent(void)
 {
-	if(m_pEventLisner->EmptyCurrentEvent())
+	if(m_pEventListener->EmptyCurrentEvent())
 	{
 		return;
 	}
 	else
 	{
-		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+		const std::deque<std::string>& currentEvents = m_pEventListener->GetEvent();
 
 		std::string eventType;			
 		for(auto& gameEvent : currentEvents)
@@ -238,7 +238,7 @@ void Anchor::HandleEvent(void)
 			}
 		}
 
-		m_pEventLisner->DelEvent();
+		m_pEventListener->DelEvent();
 	}
 }
 

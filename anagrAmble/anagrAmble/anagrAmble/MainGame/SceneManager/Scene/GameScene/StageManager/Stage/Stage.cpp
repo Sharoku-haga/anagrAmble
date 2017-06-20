@@ -7,7 +7,7 @@
 /* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "Stage.h"
-#include "../../GameEventManager/EventLisner.h"
+#include "../../GameEventManager/EventListener.h"
 #include "../../GameEventManager/GameEventManager.h"
 #include "../StageDataManager.h"
 #include "../StageDataChangeManager.h"
@@ -24,7 +24,7 @@ namespace ar
 
 Stage::Stage(StageDataManager*	pStageDataManager)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
-	, m_pEventLisner(new EventLisner())
+	, m_pEventListener(new EventListener())
 	, m_pStageDataManager(pStageDataManager)
 	, m_pCollisionManager(new CollisionManager(pStageDataManager))
 	, m_pBasePoint(new BasePoint())
@@ -44,7 +44,7 @@ Stage::~Stage(void)
 	sl::DeleteSafely(m_pPlayer);
 	sl::DeleteSafely(m_pBasePoint);
 	sl::DeleteSafely(m_pCollisionManager);
-	sl::DeleteSafely(m_pEventLisner);
+	sl::DeleteSafely(m_pEventListener);
 }
 
 void Stage::Initialize(void)
@@ -75,14 +75,14 @@ void Stage::Initialize(void)
 
 	// イベント登録
 	// ゴール到達イベント
-	GameEventManager::Instance().RegisterEventType("goal_touch", m_pEventLisner);
+	GameEventManager::Instance().RegisterEventType("goal_touch", m_pEventListener);
 
 	// ステージ入れ替え開始イベント
-	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventLisner);
-	m_pEventLisner->RegisterSynEventFunc("space_change_start", std::bind(&ar::Stage::PrepareSpaceChange, this));
+	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_start", std::bind(&ar::Stage::PrepareSpaceChange, this));
 
 	// 時戻し(ステージを入れ替える前の状態に戻す)イベント
-	GameEventManager::Instance().RegisterEventType("space_change_return_start", m_pEventLisner);
+	GameEventManager::Instance().RegisterEventType("space_change_return_start", m_pEventListener);
 
 }
 
@@ -179,13 +179,13 @@ void Stage::CreateObj(int typeID, int yNum, int xNum)
 
 void Stage::HandleEvent(void)
 {
-	if(m_pEventLisner->EmptyCurrentEvent())
+	if(m_pEventListener->EmptyCurrentEvent())
 	{
 		return;
 	}
 	else
 	{
-		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+		const std::deque<std::string>& currentEvents = m_pEventListener->GetEvent();
 
 		std::string eventType;
 		for(auto& gameEvent : currentEvents)
@@ -202,7 +202,7 @@ void Stage::HandleEvent(void)
 
 		}
 
-		m_pEventLisner->DelEvent();
+		m_pEventListener->DelEvent();
 	}
 
 }

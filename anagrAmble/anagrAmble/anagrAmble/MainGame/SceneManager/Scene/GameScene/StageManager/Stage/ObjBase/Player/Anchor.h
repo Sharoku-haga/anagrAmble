@@ -100,7 +100,7 @@ private:
 
 	/** 
 	* イベント処理関数
-	* この関数内でEventLisnerから受け取ったイベントの処理を行う
+	* この関数内でEventListenerから受け取ったイベントの処理を行う
 	*/
 	virtual void HandleEvent(void)override;
 

@@ -14,7 +14,7 @@
 #include "../../CollisionManager.h"
 #include "../../../../../../../ControllerEnum.h"
 #include "../../../../GameEventManager/GameEventManager.h"
-#include "../../../../GameEventManager/EventLisner.h"
+#include "../../../../GameEventManager/EventListener.h"
 #include "../../../StageDataChangeManager.h"
 
 namespace ar
@@ -196,6 +196,10 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		m_pPlayerMotion->ChangeDeathMotion();
 		break;
 
+	case LEVER:
+		return;
+		break;
+
 	case GOAL:
 		return;
 		break;
@@ -291,13 +295,13 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 
 void Player::HandleEvent(void)
 {
-	if(m_pEventLisner->EmptyCurrentEvent())
+	if(m_pEventListener->EmptyCurrentEvent())
 	{
 		return;
 	}
 	else
 	{
-		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+		const std::deque<std::string>& currentEvents = m_pEventListener->GetEvent();
 
 		std::string eventType;			
 		for(auto& gameEvent : currentEvents)
@@ -305,7 +309,7 @@ void Player::HandleEvent(void)
 			if(gameEvent == "player_death_anime_end")
 			{	// 死亡アニメーションが終了したらゲームオーバーイベントをとばして,return
 				GameEventManager::Instance().ReceiveEvent("game_over");
-				m_pEventLisner->DelEvent();
+				m_pEventListener->DelEvent();
 				return;								
 			}
 			else if(gameEvent == "space_change_return_end")
@@ -314,25 +318,25 @@ void Player::HandleEvent(void)
 			}
 		}
 
-		m_pEventLisner->DelEvent();
+		m_pEventListener->DelEvent();
 	}
 }
 
 void Player::RegisterEvent(void)
 {
 	// 死亡動作アニメーション終了イベント
-	GameEventManager::Instance().RegisterEventType("player_death_anime_end", m_pEventLisner);
+	GameEventManager::Instance().RegisterEventType("player_death_anime_end", m_pEventListener);
 
 	// 入れ替え処理開始イベント
-	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventLisner);
-	m_pEventLisner->RegisterSynEventFunc("space_change_start", std::bind(&ar::Player::PrepareSpaceChange, this));
+	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_start", std::bind(&ar::Player::PrepareSpaceChange, this));
 
 	// 入れ替え処理終了イベント
-	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventLisner);
-	m_pEventLisner->RegisterSynEventFunc("space_change_end", std::bind(&ar::Player::RunSpaceChangeEndProcessing, this));
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::Player::RunSpaceChangeEndProcessing, this));
 
 	// 入れ替え戻し終了イベント
-	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventLisner);
+	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
 }
 
 void Player::PrepareSpaceChange(void)

@@ -1,6 +1,6 @@
 ﻿//==================================================================================================================================//
-//!< @file		EventLisner.h
-//!< @brief		ar::EventLisnerクラスヘッダ
+//!< @file		EventListener.h
+//!< @brief		ar::EventListenerクラスヘッダ
 //!< @author	T.Haga
 //==================================================================================================================================//
 
@@ -21,15 +21,15 @@ namespace ar
 //!< また同期イベントが通知された際は
 //!< 登録されたイベント関数で処理を行う
 //======================================================================//
-class EventLisner
+class EventListener
 {
 
 public:
 	/** Constructor */
-	EventLisner(void);
+	EventListener(void);
 
 	/** Destructor */
-	~EventLisner(void);
+	~EventListener(void);
 
 	/**
 	* 同期イベントの処理を登録する関数
@@ -69,7 +69,7 @@ private:
 	std::deque<std::string>									m_CuurentEvent;					//!< 現在ゲーム中で発生したイベントを格納しておくdeque
 	std::map<std::string, std::function<void(void)>>		m_SynEventFunc;					//!< 同期イベント処理を格納しておくmap
 
-};	// class EventLisner
+};	// class EventListener
 
 }	// namespace ar
 

@@ -138,9 +138,6 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\GameEventManager.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventLisner.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenu.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GamePauseMenu</Filter>
     </ClCompile>
@@ -282,6 +279,9 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea\SwitchOperatingArea.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventListener.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -333,9 +333,6 @@
       <Filter>anagrAmble\MainGame</Filter>
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\GameEventManager.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventLisner.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenu.h">
@@ -478,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea\SwitchOperatingArea.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventListener.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

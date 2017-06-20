@@ -7,7 +7,7 @@
 /* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "ObjBase.h"
-#include "../../../GameEventManager/EventLisner.h"
+#include "../../../GameEventManager/EventListener.h"
 #include "../../StageDataManager.h"
 #include "../CollisionManager.h"
 
@@ -26,16 +26,16 @@ ObjBase::ObjBase(StageDataManager* pStageDataManager, CollisionManager* pCollisi
 				, const Stage::INDEX_DATA& rStageIndexData)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
 	, m_StageIndexData(rStageIndexData)
-	, m_pEventLisner(new EventLisner())
+	, m_pEventListener(new EventListener())
 	, m_pStageDataManager(pStageDataManager)
 	, m_pCollisionManager(pCollisionManager)
 {}
 
 ObjBase::~ObjBase(void)
 {
-	sl::DeleteSafely(m_pEventLisner);
+	sl::DeleteSafely(m_pEventListener);
 	
-	if(m_pEventLisner != nullptr)
+	if(m_pEventListener != nullptr)
 	{
 
 	}

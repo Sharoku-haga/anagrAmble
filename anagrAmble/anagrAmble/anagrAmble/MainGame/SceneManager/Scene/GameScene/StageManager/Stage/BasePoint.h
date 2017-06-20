@@ -12,7 +12,7 @@
 namespace ar
 {
 
-class EventLisner;
+class EventListener;
 class Player;
 
 //======================================================================//
@@ -47,7 +47,7 @@ private:
 	sl::SLVECTOR2				m_CurrentPlayerPos;			//!< 現在のプレイヤー座標
 	sl::SLVECTOR2				m_OldPlayerPos;				//!< 以前のプレイヤー座標
 	float						m_StageWidth;				//!< ステージ全体の横の長さ
-	EventLisner*				m_pEventLisner;				//!< EventLisnerクラスのインスタンスへのポインタ
+	EventListener*				m_pEventListener;				//!< EventListenerクラスのインスタンスへのポインタ
 	Player*						m_pPlayer;					//!< Playerクラスのインスタンスへのポインタ
 
 	SL_DISALLOW_COPY_AND_ASSIGN(BasePoint);					//!< コピー禁止マクロ

@@ -15,7 +15,7 @@
 namespace ar
 {
 
-class EventLisner;
+class EventListener;
 class StageDataManager;
 
 //======================================================================//
@@ -169,13 +169,13 @@ protected:
 	sl::fRect				m_CurrentRectData;				//!< 位置座標 + 基本矩形サイズ
 	sl::DrawingID			m_DrawingID;					//!< 描画関連のIDをまとめた群
 	TYPE_ID					m_TypeID;						//!< オブジェクトのタイプID
-	EventLisner*			m_pEventLisner;					//!< EventLisnerクラスのインスタンスへのポインタ
+	EventListener*			m_pEventListener;					//!< EventListenerクラスのインスタンスへのポインタ
 	StageDataManager*		m_pStageDataManager;			//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*		m_pCollisionManager;			//!< CollisionManagerクラスのインスタンスへのポインタ
 
 	/** 
 	* イベント処理関数.純粋仮想関数 
-	* この関数内でEventLisnerから受け取ったイベントの処理を行う
+	* この関数内でEventListenerから受け取ったイベントの処理を行う
 	*/
 	virtual void HandleEvent(void) = 0;
 

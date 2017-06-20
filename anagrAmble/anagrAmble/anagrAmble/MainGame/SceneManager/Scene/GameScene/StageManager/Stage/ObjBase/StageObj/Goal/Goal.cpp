@@ -9,7 +9,7 @@
 #include "Goal.h"
 #include "../../../../StageDataManager.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
-#include "../../../../../GameEventManager/EventLisner.h"
+#include "../../../../../GameEventManager/EventListener.h"
 
 namespace ar
 {
@@ -39,7 +39,7 @@ Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionMana
 
 	// イベント登録
 	// 特殊アクションボタンが押されるイベント
-	GameEventManager::Instance().RegisterEventType("special_action", m_pEventLisner);
+	GameEventManager::Instance().RegisterEventType("special_action", m_pEventListener);
 }
 
 Goal::~Goal(void)
@@ -88,13 +88,13 @@ void Goal::Render(void)
 
 void Goal::HandleEvent(void)
 {
-	if(m_pEventLisner->EmptyCurrentEvent())
+	if(m_pEventListener->EmptyCurrentEvent())
 	{
 		return;
 	}
 	else
 	{
-		const std::deque<std::string>& currentEvents = m_pEventLisner->GetEvent();
+		const std::deque<std::string>& currentEvents = m_pEventListener->GetEvent();
 
 		std::string eventType;			
 		for(auto& gameEvent : currentEvents)
@@ -107,7 +107,7 @@ void Goal::HandleEvent(void)
 			}
 		}
 
-		m_pEventLisner->DelEvent();
+		m_pEventListener->DelEvent();
 	}
 }
 
