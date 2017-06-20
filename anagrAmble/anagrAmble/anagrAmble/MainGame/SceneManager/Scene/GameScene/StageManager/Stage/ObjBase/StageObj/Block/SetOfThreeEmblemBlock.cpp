@@ -8,6 +8,9 @@
 
 #include "SetOfThreeEmblemBlock.h"
 #include "../../../../StageDataManager.h"
+#include "../../SwitchOperatingArea/SwitchOperatingArea.h"
+#include "../../../../../GameEventManager/GameEventManager.h"
+#include "../../../../../GameEventManager/EventListener.h"
 
 namespace ar
 {
@@ -48,14 +51,20 @@ SetOfThreeEmblemBlock::SetOfThreeEmblemBlock(StageDataManager* pStageDataManager
 	m_RectSize.m_Right	= (m_StageChipSize / 2);
 	m_RectSize.m_Bottom	= (m_StageChipSize / 2);
 
-	CheckSetofThreeBlock();
-
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, m_TexUV);
 
+	m_pSwitchOperatingArea = new SwitchOperatingArea(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, this);
+
+	CheckSetofThreeBlock();
+
+	// 入れ替え処理終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::SetOfThreeEmblemBlock::CheckSetofThreeBlock, this));
 }
 
 SetOfThreeEmblemBlock::~SetOfThreeEmblemBlock(void)
 {
+	sl::DeleteSafely(m_pSwitchOperatingArea);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -66,6 +75,11 @@ void SetOfThreeEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	m_pSwitchOperatingArea->SwitchOffState();
+	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
+
+	CheckSetofThreeBlock();
 }
 
 void SetOfThreeEmblemBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -74,9 +88,7 @@ void SetOfThreeEmblemBlock::ProcessCollision(const CollisionManager::CollisionDa
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void SetOfThreeEmblemBlock::Run(void)
-{
-	CheckSetofThreeBlock();
-}
+{}
 
 void SetOfThreeEmblemBlock::Render(void)
 {
@@ -95,10 +107,14 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 2)) == ObjBase::SET_OF_THREE_EMBLME_B_L)
 		{
 			m_TexUV = EmblemROnUV;
-			return;
+			m_pSwitchOperatingArea->SwitchOnState();
+		}
+		else
+		{
+			m_TexUV = EmblemROffUV;
+			m_pSwitchOperatingArea->SwitchOffState();
 		}
 
-		m_TexUV = EmblemROffUV;
 		break;
 
 	case ObjBase::SET_OF_THREE_EMBLME_B_F:
@@ -106,10 +122,14 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::SET_OF_THREE_EMBLME_B_L)
 		{
 			m_TexUV = EmblemFOnUV;
-			return;
+			m_pSwitchOperatingArea->SwitchOnState();
+		}
+		else
+		{
+			m_TexUV = EmblemFOffUV;
+			m_pSwitchOperatingArea->SwitchOffState();
 		}
 
-		m_TexUV = EmblemFOffUV;
 		break;
 
 	case ObjBase::SET_OF_THREE_EMBLME_B_L:
@@ -117,16 +137,22 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 2)) == ObjBase::SET_OF_THREE_EMBLME_B_R)
 		{
 			m_TexUV = EmblemLOnUV;
-			return;
+			m_pSwitchOperatingArea->SwitchOnState();
+		}
+		else
+		{
+			m_TexUV = EmblemLOffUV;
+			m_pSwitchOperatingArea->SwitchOffState();
 		}
 
-		m_TexUV = EmblemLOffUV;
 		break;
 
 	default:
 		// do nothing
 		break;
 	}
+
+	m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, m_TexUV);
 }
 
 }	// namespace ar

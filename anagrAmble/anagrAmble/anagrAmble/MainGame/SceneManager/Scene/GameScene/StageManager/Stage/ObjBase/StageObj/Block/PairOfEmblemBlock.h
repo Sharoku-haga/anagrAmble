@@ -12,6 +12,8 @@
 namespace ar
 {
 
+class SwitchOperatingArea;
+
 //======================================================================//
 //!< 2つのブロックで紋章を形成するブロッククラス
 //======================================================================//
@@ -47,7 +49,8 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 
 private:
-	sl::fRect		m_TexUV;			//!< Vertexを生成する際に使用するUV値. SearchPairBlock()の結果次第で値変動
+	SwitchOperatingArea*		m_pSwitchOperatingArea;			//!< SwitchOperatingAreaクラスのインスタンスへのポインタ
+	sl::fRect					m_TexUV;						//!< Vertexを生成する際に使用するUV値. SearchPairBlock()の結果次第で値変動
 
 	/** 
 	* 処理実行関数 
