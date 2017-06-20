@@ -66,6 +66,9 @@ void Stage::Initialize(void)
 		}
 	}
 
+	m_pPlayer->Initialize();
+	m_pStageObjManager->InitializeStageObj();
+
 	// ベースポイントの設定を行う 
 	m_pBasePoint->Initialize(m_pStageDataManager->GetStageWidth(), m_pPlayer);
 

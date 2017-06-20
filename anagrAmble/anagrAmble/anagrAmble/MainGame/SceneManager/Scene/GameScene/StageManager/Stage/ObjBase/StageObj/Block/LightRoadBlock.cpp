@@ -27,13 +27,24 @@ const int SearchArea = 7;			//!< 足場排出ブロック探査範囲
 LightRoadBlock::LightRoadBlock(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
 								, const Stage::INDEX_DATA& rStageIndexData, int texID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
+{	
+	m_TypeID = LIGHT_ROAD_B;
+	m_DrawingID.m_TexID = texID;
+}
+
+LightRoadBlock::~LightRoadBlock(void)
+{
+	for(auto pblock : m_pLightBlocks)
+	{
+		sl::DeleteSafely(pblock);
+	}
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void LightRoadBlock::Initialize(void)
 {
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-	
-	m_TypeID = LIGHT_ROAD_B;
-
-	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
@@ -47,15 +58,11 @@ LightRoadBlock::LightRoadBlock(StageDataManager* pStageDataManager, CollisionMan
 
 	// 光ブロック生成
 	CreateLightBlock();
-}
 
-LightRoadBlock::~LightRoadBlock(void)
-{
-	for(auto pblock : m_pLightBlocks)
+	for(auto pBlock : m_pLightBlocks)
 	{
-		sl::DeleteSafely(pblock);
+		pBlock->Initialize();
 	}
-	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
 void LightRoadBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -82,11 +89,11 @@ void LightRoadBlock::Run(void)
 
 void LightRoadBlock::Render(void)
 {
-	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
 	for(auto pblock : m_pLightBlocks)
 	{
 		pblock->Draw();
 	}
+	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
 }
 
 void LightRoadBlock::HandleEvent(void)

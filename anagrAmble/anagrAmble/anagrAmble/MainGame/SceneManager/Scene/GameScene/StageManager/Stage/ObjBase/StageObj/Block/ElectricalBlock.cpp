@@ -29,13 +29,20 @@ ElectricalBlock::ElectricalBlock(StageDataManager* pStageDataManager, CollisionM
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 	, m_IsEnergizedState(true)
 {
+	m_TypeID = ELECTICAL_B;
+	m_DrawingID.m_TexID = texID;
+}
+
+ElectricalBlock::~ElectricalBlock(void)
+{
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void ElectricalBlock::Initialize(void)
+{
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 	
-	m_TypeID = ELECTICAL_B;
-
-	m_DrawingID.m_TexID = texID;
-
 	// ブロックサイズのRect構造体を作成
 	m_RectSize.m_Left	=  -(m_StageChipSize  / 2);
 	m_RectSize.m_Top	=  -(m_StageChipSize  / 2);
@@ -43,11 +50,6 @@ ElectricalBlock::ElectricalBlock(StageDataManager* pStageDataManager, CollisionM
 	m_RectSize.m_Bottom = (m_StageChipSize  / 2);
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, ElectricalOnUV);
-}
-
-ElectricalBlock::~ElectricalBlock(void)
-{
-	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
 void ElectricalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)

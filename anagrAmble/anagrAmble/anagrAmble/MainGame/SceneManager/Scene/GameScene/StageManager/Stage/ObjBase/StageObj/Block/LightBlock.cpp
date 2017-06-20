@@ -18,13 +18,20 @@ LightBlock::LightBlock(StageDataManager* pStageDataManager, CollisionManager* pC
 								, const Stage::INDEX_DATA& rStageIndexData, int texID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
+	m_TypeID = LIGHT_B;
+	m_DrawingID.m_TexID = texID;
+}
+
+LightBlock::~LightBlock(void)
+{
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void LightBlock::Initialize(void)
+{
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 	
-	m_TypeID = LIGHT_B;
-
-	m_DrawingID.m_TexID = texID;
-
 	// ブロックサイズのRect構造体を作成
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
 	m_RectSize.m_Top		= -(m_StageChipSize / 2);
@@ -34,11 +41,6 @@ LightBlock::LightBlock(StageDataManager* pStageDataManager, CollisionManager* pC
 	const sl::fRect		uv = {0.6f, 0.0f, 0.65f, 0.088f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
-}
-
-LightBlock::~LightBlock(void)
-{
-	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
 void LightBlock::ChangeStagePos(short yIndexNum, short xIndexNum)

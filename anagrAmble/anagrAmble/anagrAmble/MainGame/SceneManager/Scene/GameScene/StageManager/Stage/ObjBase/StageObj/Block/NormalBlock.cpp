@@ -17,16 +17,19 @@ NormalBlock::NormalBlock(StageDataManager* pStageDataManager, CollisionManager* 
 						, const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-
 	m_DrawingID = rID;
 	m_TypeID = NORMAL_B;
-	m_RectSize = m_pLibrary->GetSizeRect(m_DrawingID.m_VtxID);
 }
 
 NormalBlock::~NormalBlock(void)
 {}
+
+void NormalBlock::Initialize(void)
+{
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_RectSize = m_pLibrary->GetSizeRect(m_DrawingID.m_VtxID);
+}
 
 void NormalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 {

@@ -38,12 +38,20 @@ SetOfThreeEmblemBlock::SetOfThreeEmblemBlock(StageDataManager* pStageDataManager
 			, const Stage::INDEX_DATA& rStageIndexData,  int texID,  ObjBase::TYPE_ID typeID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
+	m_TypeID = typeID;
+	m_DrawingID.m_TexID = texID;
+}
+
+SetOfThreeEmblemBlock::~SetOfThreeEmblemBlock(void)
+{
+	sl::DeleteSafely(m_pSwitchOperatingArea);
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void SetOfThreeEmblemBlock::Initialize(void)
+{
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-
-	m_TypeID = typeID;
-
-	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
 	m_RectSize.m_Left	= -(m_StageChipSize / 2);
@@ -54,18 +62,13 @@ SetOfThreeEmblemBlock::SetOfThreeEmblemBlock(StageDataManager* pStageDataManager
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, m_TexUV);
 
 	m_pSwitchOperatingArea = new SwitchOperatingArea(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, this);
+	m_pSwitchOperatingArea->Initialize();
 
 	CheckSetofThreeBlock();
 
 	// 入れ替え処理終了イベント
 	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
 	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::SetOfThreeEmblemBlock::CheckSetofThreeBlock, this));
-}
-
-SetOfThreeEmblemBlock::~SetOfThreeEmblemBlock(void)
-{
-	sl::DeleteSafely(m_pSwitchOperatingArea);
-	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
 void SetOfThreeEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)

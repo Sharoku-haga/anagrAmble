@@ -94,6 +94,12 @@ public:
 	* @return 結果 右向きかどうか true→右向き false→右を向いていない(左向き)
 	*/
 	bool IsFacingRight(void);
+
+	/**
+	* 初期化関数. 
+	* オブジェクトの生成後(ステージ初期化の時)によぶ
+	*/
+	virtual void Initialize(void)override;
 	
 	/** 
 	* ステージの位置を変更する関数. 

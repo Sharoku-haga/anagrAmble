@@ -79,6 +79,13 @@ public:
 	*/
 	bool GetHasPlacePosStage(void) { return m_HasPlacePosStage; }
 
+	/**
+	* 初期化関数. 
+	* このクラスの場合、
+	* PlayerModeの初期化関数内でよぶ
+	*/
+	virtual void Initialize(void)override;
+
 	/** 
 	* ステージの位置を変更する関数. 
 	* @param[in] yIndexNum	y軸方向のインデックス

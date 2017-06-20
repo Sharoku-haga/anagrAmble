@@ -35,6 +35,12 @@ public:
 	/** Destructor */
 	virtual ~LightDoor(void);
 
+	/**
+	* 初期化関数. 
+	* オブジェクトの生成後(ステージ初期化の時)によぶ
+	*/
+	virtual void Initialize(void)override;
+
 	/** 
 	* ステージの位置を変更する関数. 
 	* @param[in] yIndexNum	y軸方向のインデックス

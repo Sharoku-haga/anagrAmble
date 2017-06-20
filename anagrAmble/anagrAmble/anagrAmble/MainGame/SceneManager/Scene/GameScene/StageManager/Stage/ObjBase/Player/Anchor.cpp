@@ -37,31 +37,6 @@ Anchor::Anchor(StageDataManager* pStageDataManager, CollisionManager* pCollision
 {
 	m_TypeID = ANCHOR;
 	m_DrawingID.m_TexID = texID;
-
-	m_RectSize.m_Left	=  -(m_StageChipSize / 2);
-	m_RectSize.m_Top	=  -(m_StageChipSize / 2);
-	m_RectSize.m_Right	= (m_StageChipSize / 2);
-	m_RectSize.m_Bottom = (m_StageChipSize / 2);
-	
-	const sl::fRect		uv = {0.891f, 0.955f, 0.916f, 1.0f};
-
-	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
-
-	/** プレイヤーの前に座標をおく */
-	PlacePosPlayerFront();
-
-	// イベント登録
-	//  アンカー回収イベント
-	GameEventManager::Instance().RegisterEventType("anchor_retrieve", m_pEventListener);	
-	
-	// プレイヤーが動いたときのイベント
-	GameEventManager::Instance().RegisterEventType("player_move", m_pEventListener);
-	m_pEventListener->RegisterSynEventFunc("player_move", std::bind(&ar::Anchor::AdjustPos, this));
-
-	// ステージ変更終了イベント
-	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
-	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::Anchor::PlacePosPlayerFront, this));
-
 }
 
 Anchor::~Anchor(void)
@@ -188,6 +163,33 @@ void Anchor::PlacePosPlayerFront(void)
 	// ステージに設置されていないので少し半透明にしておく
 	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.5f);
 	m_HasCollidedWithPlayer = false;
+}
+
+void Anchor::Initialize(void)
+{
+	m_RectSize.m_Left	=  -(m_StageChipSize / 2);
+	m_RectSize.m_Top	=  -(m_StageChipSize / 2);
+	m_RectSize.m_Right	= (m_StageChipSize / 2);
+	m_RectSize.m_Bottom = (m_StageChipSize / 2);
+	
+	const sl::fRect		uv = {0.891f, 0.955f, 0.916f, 1.0f};
+
+	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+
+	/** プレイヤーの前に座標をおく */
+	PlacePosPlayerFront();
+
+	// イベント登録
+	//  アンカー回収イベント
+	GameEventManager::Instance().RegisterEventType("anchor_retrieve", m_pEventListener);	
+	
+	// プレイヤーが動いたときのイベント
+	GameEventManager::Instance().RegisterEventType("player_move", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("player_move", std::bind(&ar::Anchor::AdjustPos, this));
+
+	// ステージ変更終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::Anchor::PlacePosPlayerFront, this));
 }
 
 void Anchor::ChangeStagePos(short yIndexNum, short xIndexNum)

@@ -19,11 +19,20 @@ SpearBlock::SpearBlock(StageDataManager* pStageDataManager, CollisionManager* pC
 				, const Stage::INDEX_DATA& rStageIndexData, int texID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-
 	m_TypeID = SPEAR_B;
 	m_DrawingID.m_TexID = texID;
+}
+
+SpearBlock::~SpearBlock(void)
+{
+	sl::DeleteSafely(m_pSpear);
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void SpearBlock::Initialize(void)
+{
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	// ブロックサイズのRect構造体を作成
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
@@ -36,12 +45,7 @@ SpearBlock::SpearBlock(StageDataManager* pStageDataManager, CollisionManager* pC
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 	
 	m_pSpear = new Spear(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, m_DrawingID.m_TexID);
-}
-
-SpearBlock::~SpearBlock(void)
-{
-	sl::DeleteSafely(m_pSpear);
-	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+	m_pSpear->Initialize();
 }
 
 void SpearBlock::ChangeStagePos(short yIndexNum, short xIndexNum)

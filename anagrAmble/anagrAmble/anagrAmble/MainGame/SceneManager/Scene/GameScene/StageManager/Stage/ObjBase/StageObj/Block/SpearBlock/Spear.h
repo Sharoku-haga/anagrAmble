@@ -42,6 +42,12 @@ public:
 	*/
 	void Stop(void);
 
+	/**
+	* 初期化関数. 
+	* SpearBlockの初期化関数内によぶ
+	*/
+	virtual void Initialize(void)override;
+
 	/** 
 	* ステージの位置を変更する関数. 
 	* @param[in] yIndexNum	y軸方向のインデックス
