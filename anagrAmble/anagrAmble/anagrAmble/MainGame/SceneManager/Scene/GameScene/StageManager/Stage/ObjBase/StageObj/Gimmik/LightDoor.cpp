@@ -29,18 +29,29 @@ LightDoor::LightDoor(StageDataManager* pStageDataManager, CollisionManager* pCol
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 	, m_HasOpened(false)
 {
+	m_TypeID = typeID;
+	m_DrawingID.m_TexID = texID;
+}
+
+LightDoor::~LightDoor(void)
+{
+	for(auto& pblock : m_pLightBlocks)
+	{
+		sl::DeleteSafely(pblock);
+	}
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void LightDoor::Initialize(void)
+{
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	m_TypeID = typeID;
-
-	m_DrawingID.m_TexID = texID;
-
 	// ブロックサイズのRect構造体を作成
-	m_RectSize.m_Left = -(m_StageChipSize / 2);
-	m_RectSize.m_Top = -(m_StageChipSize / 2);
-	m_RectSize.m_Right = (m_StageChipSize / 2);
-	m_RectSize.m_Bottom = (m_StageChipSize / 2);
+	m_RectSize.m_Left		= -(m_StageChipSize / 2);
+	m_RectSize.m_Top		= -(m_StageChipSize / 2);
+	m_RectSize.m_Right		= (m_StageChipSize / 2);
+	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
 
 	const sl::fRect		uv = { 0.55f, 0.0f, 0.6f, 0.088f };
 
@@ -53,17 +64,14 @@ LightDoor::LightDoor(StageDataManager* pStageDataManager, CollisionManager* pCol
 			, m_StageIndexData, m_DrawingID.m_TexID));
 	}
 
+	// 光ブロックを初期化する
+	for(auto& pLightBlock : m_pLightBlocks)
+	{
+		pLightBlock->Initialize();
+	}
+
 	// 扉を閉じる
 	Close();
-}
-
-LightDoor::~LightDoor(void)
-{
-	for(auto& pblock : m_pLightBlocks)
-	{
-		sl::DeleteSafely(pblock);
-	}
-	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
 void  LightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)

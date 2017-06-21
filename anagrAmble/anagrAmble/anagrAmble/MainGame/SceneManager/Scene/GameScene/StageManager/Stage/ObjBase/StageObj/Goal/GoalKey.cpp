@@ -22,13 +22,20 @@ GoalKey::GoalKey(StageDataManager* pStageDataManager, CollisionManager* pCollisi
 	, m_HasCollidedWithPlayer(false)
 	, m_HasBeenGotPlayer(false)
 {
+	m_TypeID = GOAL_KEY;
+	m_DrawingID.m_TexID = texID;
+}
+
+GoalKey::~GoalKey(void)
+{
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void GoalKey::Initialize(void)
+{
 	// 位置座標を求める
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-
-	m_TypeID = GOAL_KEY;
-
-	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
@@ -43,11 +50,6 @@ GoalKey::GoalKey(StageDataManager* pStageDataManager, CollisionManager* pCollisi
 	// イベント登録
 	// 特殊アクションボタンが押されるイベント
 	GameEventManager::Instance().RegisterEventType("special_action", m_pEventListener);
-}
-
-GoalKey::~GoalKey(void)
-{
-	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
 void GoalKey::ChangeStagePos(short yIndexNum, short xIndexNum)

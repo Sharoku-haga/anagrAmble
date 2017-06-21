@@ -52,6 +52,14 @@ public:
 	*/
 	void SwitchOffState(void);
 
+	/**
+	* 初期化関数. 
+	* このクラスの場合、
+	* このクラスのインスタンスへのポインタを持つクラスの初期化関数内でよぶ
+	*/
+	virtual void Initialize(void)override;
+
+
 	/** 
 	* ステージの位置を変更する関数. 純粋仮想関数
 	* @param[in] yIndexNum	y軸方向のインデックス

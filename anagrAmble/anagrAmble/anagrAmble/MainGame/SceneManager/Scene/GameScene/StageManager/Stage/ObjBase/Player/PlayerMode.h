@@ -40,6 +40,12 @@ public:
 	/** Destructor */
 	~PlayerMode(void);
 
+	/**
+	* アンカー初期化関数
+	* Playerクラスの初期関数内でよぶ
+	*/
+	void InitializeAnchor(void);
+
 	/** 
 	* コントロール関数
 	* アンカーの制御やエリア入れ替えの制御などを行う

@@ -35,34 +35,38 @@ PairOfEmblemBlock::PairOfEmblemBlock(StageDataManager* pStageDataManager, Collis
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 	, m_pSwitchOperatingArea(nullptr)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-	
 	m_TypeID = typeID;
-
 	m_DrawingID.m_TexID = texID;
-
-	// ブロックサイズのRect構造体を作成
-	m_RectSize.m_Left		= -(m_StageChipSize / 2);
-	m_RectSize.m_Top		= -(m_StageChipSize / 2);
-	m_RectSize.m_Right		= (m_StageChipSize / 2);
-	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
-
-	m_pSwitchOperatingArea = new SwitchOperatingArea(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, this);
-
-	CheckPairBlock();
-
-	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, m_TexUV);
-
-	// 入れ替え処理終了イベント
-	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
-	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::PairOfEmblemBlock::CheckPairBlock, this));
 }
 
 PairOfEmblemBlock::~PairOfEmblemBlock(void)
 {
 	sl::DeleteSafely(m_pSwitchOperatingArea);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void PairOfEmblemBlock::Initialize(void)
+{
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	// ブロックサイズのRect構造体を作成
+	m_RectSize.m_Left = -(m_StageChipSize / 2);
+	m_RectSize.m_Top = -(m_StageChipSize / 2);
+	m_RectSize.m_Right = (m_StageChipSize / 2);
+	m_RectSize.m_Bottom = (m_StageChipSize / 2);
+
+	m_pSwitchOperatingArea = new SwitchOperatingArea(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, this);
+	m_pSwitchOperatingArea->Initialize();
+
+	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, m_TexUV);
+
+	CheckPairBlock();
+
+	// 入れ替え処理終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::PairOfEmblemBlock::CheckPairBlock, this));
+
 }
 
 void PairOfEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)

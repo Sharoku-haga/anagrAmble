@@ -17,7 +17,10 @@ Enemy::Enemy(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
 {}
 
-Enemy::~Enemy()
+Enemy::~Enemy(void)
+{}
+
+void Enemy::Initialize(void)
 {}
 
 void Enemy::ChangeStagePos(short yIndexNum, short xIndexNum)

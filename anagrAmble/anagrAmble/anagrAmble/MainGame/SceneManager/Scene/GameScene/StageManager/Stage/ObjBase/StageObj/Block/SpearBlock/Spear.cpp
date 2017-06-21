@@ -33,30 +33,8 @@ Spear::Spear(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 	, m_HasMoved(true)
 	, m_MoveSpeed(MoveUpSpeed)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-
 	m_TypeID = SPEAR;
 	m_DrawingID.m_TexID = texID;
-
-	// ブロックサイズのRect構造体を作成
-	m_RectSize.m_Left		= -(m_StageChipSize / 2) + VertexCorrectionVal;
-	m_RectSize.m_Top		= -(m_StageChipSize /2) + VertexCorrectionVal;
-	m_RectSize.m_Right		= (m_StageChipSize / 2) - VertexCorrectionVal;
-	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
-
-	const sl::fRect		uv = {0.75f, 0.088f, 0.8f, 0.1777f};
-
-	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
-
-	// 動作スピードと動作限界
-	m_MovePosYMAXLimit = m_Pos.y - m_pStageDataManager->GetStageChipSize() +  VertexCorrectionVal;
-	m_MovePosYMINLimit = m_Pos.y;
-
-	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YNum - 1), m_StageIndexData.m_XNum) != BLANK)
-	{	// 上が空白じゃないなら、動かない
-		m_HasMoved = false;
-	}
 }
 
 Spear::~Spear(void)
@@ -74,6 +52,31 @@ void Spear::Stop(void)
 	m_HasMoved = false;
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+}
+
+void Spear::Initialize(void)
+{
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	// ブロックサイズのRect構造体を作成
+	m_RectSize.m_Left = -(m_StageChipSize / 2) + VertexCorrectionVal;
+	m_RectSize.m_Top = -(m_StageChipSize / 2) + VertexCorrectionVal;
+	m_RectSize.m_Right = (m_StageChipSize / 2) - VertexCorrectionVal;
+	m_RectSize.m_Bottom = (m_StageChipSize / 2);
+
+	const sl::fRect		uv = { 0.75f, 0.088f, 0.8f, 0.1777f };
+
+	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+
+	// 動作スピードと動作限界
+	m_MovePosYMAXLimit = m_Pos.y - m_pStageDataManager->GetStageChipSize() + VertexCorrectionVal;
+	m_MovePosYMINLimit = m_Pos.y;
+
+	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YNum - 1), m_StageIndexData.m_XNum) != BLANK)
+	{	// 上が空白じゃないなら、動かない
+		m_HasMoved = false;
+	}
 }
 
 void Spear::ChangeStagePos(short yIndexNum, short xIndexNum)

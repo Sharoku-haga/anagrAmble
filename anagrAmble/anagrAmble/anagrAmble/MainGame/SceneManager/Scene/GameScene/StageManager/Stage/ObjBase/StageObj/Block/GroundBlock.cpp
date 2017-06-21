@@ -17,16 +17,19 @@ GroundBlock::GroundBlock(StageDataManager* pStageDataManager, CollisionManager* 
 						, const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-
 	m_DrawingID = rID;
 	m_TypeID = GROUND_B;
-	m_RectSize = m_pLibrary->GetSizeRect(m_DrawingID.m_VtxID);
 }
 
 GroundBlock::~GroundBlock(void)
 {}
+
+void GroundBlock::Initialize(void)
+{
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_RectSize = m_pLibrary->GetSizeRect(m_DrawingID.m_VtxID);
+}
 
 void GroundBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 {

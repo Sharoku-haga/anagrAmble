@@ -32,12 +32,20 @@ PressureSensitiveBlock::PressureSensitiveBlock(StageDataManager* pStageDataManag
 	, m_pSwitchOperatingArea(nullptr)
 	, m_HasCollidedWithPlayer(true)
 {
+	m_TypeID = PRESSURE_SENSITIVE_B;
+	m_DrawingID.m_TexID = texID;	
+}
+
+PressureSensitiveBlock::~PressureSensitiveBlock(void)
+{
+	sl::DeleteSafely(m_pSwitchOperatingArea);
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void PressureSensitiveBlock::Initialize(void)
+{
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-	
-	m_TypeID = PRESSURE_SENSITIVE_B;
-
-	m_DrawingID.m_TexID = texID;
 
 	// ブロックサイズのRect構造体を作成
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
@@ -46,14 +54,9 @@ PressureSensitiveBlock::PressureSensitiveBlock(StageDataManager* pStageDataManag
 	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
 
 	m_pSwitchOperatingArea = new SwitchOperatingArea(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, this);
+	m_pSwitchOperatingArea->Initialize();
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, BlockOffUV);
-}
-
-PressureSensitiveBlock::~PressureSensitiveBlock(void)
-{
-	sl::DeleteSafely(m_pSwitchOperatingArea);
-	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
 void PressureSensitiveBlock::ChangeStagePos(short yIndexNum, short xIndexNum)

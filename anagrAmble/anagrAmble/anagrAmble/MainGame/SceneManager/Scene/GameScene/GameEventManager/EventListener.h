@@ -4,8 +4,8 @@
 //!< @author	T.Haga
 //==================================================================================================================================//
 
-#ifndef AR_EVENT_LISNER_H
-#define AR_EVENT_LISNER_H
+#ifndef AR_EVENT_LISTENER_H
+#define AR_EVENT_LISTENER_H
 
 #include <string>
 #include <deque>
@@ -73,7 +73,7 @@ private:
 
 }	// namespace ar
 
-#endif	// AR_EVENT_LISNER_H
+#endif	// AR_EVENT_LISTENER_H
 
 //==================================================================================================================================//
 // END OF FILE

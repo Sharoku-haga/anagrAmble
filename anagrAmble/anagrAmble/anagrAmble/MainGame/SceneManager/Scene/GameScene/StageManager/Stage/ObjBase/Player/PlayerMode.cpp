@@ -48,6 +48,14 @@ PlayerMode::~PlayerMode(void)
 	}
 }
 
+void PlayerMode::InitializeAnchor(void)
+{
+	for(auto& pAnchor : m_pAnchors)
+	{
+		pAnchor->Initialize();
+	}
+}
+
 void PlayerMode::Control(void)
 {
 

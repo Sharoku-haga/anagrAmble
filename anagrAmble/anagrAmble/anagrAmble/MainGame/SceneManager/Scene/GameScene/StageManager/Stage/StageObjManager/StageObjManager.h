@@ -43,6 +43,12 @@ public:
 	*/
 	void CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex);
 
+	/** 
+	* StageObjの初期化関数
+	* ステージ内のStageObjを生成し、StageDataManagerに登録し終わったらよぶ
+	*/
+	void InitializeStageObj(void);
+
 	/** コントロール関数 */
 	void Control(void);
 

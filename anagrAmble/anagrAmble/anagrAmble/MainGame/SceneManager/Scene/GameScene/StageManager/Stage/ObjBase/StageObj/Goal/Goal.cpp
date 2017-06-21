@@ -21,11 +21,19 @@ Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionMana
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 	, m_HasCollidedWithPlayer(false)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize - (m_StageChipSize / 2);
-
 	m_TypeID = typeID;
 	m_DrawingID.m_TexID = texID;
+}
+
+Goal::~Goal(void)
+{
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void  Goal::Initialize(void)
+{
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize - (m_StageChipSize / 2);
 
 	// ブロックサイズのRect構造体を作成
 	m_RectSize.m_Left	=  -((m_StageChipSize * 3) / 2);
@@ -43,11 +51,6 @@ Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionMana
 
 	// ゴールキーを取得するイベント
 	GameEventManager::Instance().RegisterEventType("goal_key_get", m_pEventListener);
-}
-
-Goal::~Goal(void)
-{
-	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
 void Goal::ChangeStagePos(short yIndexNum, short xIndexNum)

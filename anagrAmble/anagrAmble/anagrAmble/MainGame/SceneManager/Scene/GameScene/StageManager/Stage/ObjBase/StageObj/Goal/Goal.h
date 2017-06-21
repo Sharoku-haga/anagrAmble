@@ -32,6 +32,12 @@ public:
 
 	/** Destructor */
 	virtual ~Goal(void);
+	
+	/**
+	* 初期化関数. 
+	* オブジェクトの生成後(ステージ初期化の時)によぶ
+	*/
+	virtual void Initialize(void)override;
 
 	/** 
 	* ステージの位置を変更する関数. 

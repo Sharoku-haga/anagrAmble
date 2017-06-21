@@ -36,6 +36,12 @@ public:
 	/** 描画関数 */
 	void Draw(void);
 
+	/**
+	* 初期化関数. 純粋仮想関数
+	* オブジェクトの生成後(ステージ初期化の時)によぶ
+	*/
+	virtual void Initialize(void) = 0;
+
 	/** 
 	* ステージの位置を変更する関数. 純粋仮想関数
 	* @param[in] yIndexNum	y軸方向のインデックス

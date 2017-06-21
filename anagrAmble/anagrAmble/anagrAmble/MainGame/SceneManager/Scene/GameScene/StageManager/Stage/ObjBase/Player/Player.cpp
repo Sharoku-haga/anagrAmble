@@ -46,30 +46,8 @@ Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollision
 	, m_pPlayerMode(nullptr)
 	, m_GoddessPointCount(GoddessPointMaxVal)
 {
-	// 位置座標計算
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
-	GameEventManager::Instance().TriggerSynEvent("player_move");
-
-	RegisterEvent();		// イベント登録
 	m_TypeID = PLAYER;		// タイプID
-
 	m_DrawingID.m_TexID = playerTexID;	// テクスチャーIDを格納
-
-	// 矩形サイズを生成
-	m_RectSize.m_Left	= -(m_StageChipSize / 2) * WidthChipCount;
-	m_RectSize.m_Top	= -(m_StageChipSize / 2) * HeightChipCount;
-	m_RectSize.m_Right	=  (m_StageChipSize / 2) * WidthChipCount;
-	m_RectSize.m_Bottom =  (m_StageChipSize / 2) * HeightChipCount;
- 
-	m_pPlayerMotion = new PlayerMotion(m_RectSize);
-	m_pPlayerMode = new PlayerMode(m_pStageDataManager, m_pCollisionManager, this, playerTexID);
-
-	// 移動可能方向フラグの初期化
-	m_MovableDirection.m_Up		= false;
-	m_MovableDirection.m_Down	= false;
-	m_MovableDirection.m_Right	= false;
-	m_MovableDirection.m_Left	= false;
 }
 
 Player::~Player(void)
@@ -173,6 +151,32 @@ void Player::Draw(void)
 bool Player::IsFacingRight(void)
 {
 	return m_pPlayerMotion->IsFacingRight(); 
+}
+
+void Player::Initialize(void)
+{
+	// 位置座標計算
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
+	GameEventManager::Instance().TriggerSynEvent("player_move");
+
+	RegisterEvent();		// イベント登録
+
+	// 矩形サイズを生成
+	m_RectSize.m_Left	= -(m_StageChipSize / 2) * WidthChipCount;
+	m_RectSize.m_Top	= -(m_StageChipSize / 2) * HeightChipCount;
+	m_RectSize.m_Right	=  (m_StageChipSize / 2) * WidthChipCount;
+	m_RectSize.m_Bottom =  (m_StageChipSize / 2) * HeightChipCount;
+ 
+	m_pPlayerMotion = new PlayerMotion(m_RectSize);
+	m_pPlayerMode = new PlayerMode(m_pStageDataManager, m_pCollisionManager, this, m_DrawingID.m_TexID);
+	m_pPlayerMode->InitializeAnchor();
+
+	// 移動可能方向フラグの初期化
+	m_MovableDirection.m_Up		= false;
+	m_MovableDirection.m_Down	= false;
+	m_MovableDirection.m_Right	= false;
+	m_MovableDirection.m_Left	= false;
 }
 
 void Player::ChangeStagePos(short yIndexNum, short xIndexNum)

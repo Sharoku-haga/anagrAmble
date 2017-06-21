@@ -28,34 +28,9 @@ RevolvingLightDoor::RevolvingLightDoor(StageDataManager* pStageDataManager, Coll
 			, const Stage::INDEX_DATA& rStageIndexData,  int texID,  ObjBase::TYPE_ID typeID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
 {
-	
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-
 	m_TypeID = typeID;
-
 	m_DrawingID.m_TexID = texID;
-
-	// ブロックサイズのRect構造体を作成
-	m_RectSize.m_Left		= -(m_StageChipSize / 2);
-	m_RectSize.m_Top		= -(m_StageChipSize / 2);
-	m_RectSize.m_Right		= (m_StageChipSize / 2);
-	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
-
-	const sl::fRect		uv = {0.5f, 0.0f, 0.55f, 0.088f};
-
-	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
-
-		// 光ブロックを生成する
-	for(int count = 0; count < LightBlockCount; ++count)
-	{
-		m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-			, m_StageIndexData, m_DrawingID.m_TexID));
-	}
-
-	Revolve();
 }
-
 
 RevolvingLightDoor::~RevolvingLightDoor(void)
 {
@@ -64,6 +39,37 @@ RevolvingLightDoor::~RevolvingLightDoor(void)
 		sl::DeleteSafely(pblock);
 	}
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
+
+void RevolvingLightDoor::Initialize(void)
+{
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	// ブロックサイズのRect構造体を作成
+	m_RectSize.m_Left = -(m_StageChipSize / 2);
+	m_RectSize.m_Top = -(m_StageChipSize / 2);
+	m_RectSize.m_Right = (m_StageChipSize / 2);
+	m_RectSize.m_Bottom = (m_StageChipSize / 2);
+
+	const sl::fRect		uv = { 0.5f, 0.0f, 0.55f, 0.088f };
+
+	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+
+	// 光ブロックを生成する
+	for(int count = 0; count < LightBlockCount; ++count)
+	{
+		m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
+												, m_StageIndexData, m_DrawingID.m_TexID));
+	}
+
+	// 光ブロックを初期化する
+	for(auto& pLightBlock : m_pLightBlocks)
+	{
+		pLightBlock->Initialize();
+	}
+
+	Revolve();
 }
 
 void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)

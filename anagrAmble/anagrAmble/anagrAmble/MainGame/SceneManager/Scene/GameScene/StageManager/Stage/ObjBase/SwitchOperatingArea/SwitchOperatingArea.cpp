@@ -21,7 +21,6 @@ SwitchOperatingArea::SwitchOperatingArea(StageDataManager* pStageDataManager, Co
 {
 	m_Pos		= m_pOwner->GetPos();
 	m_TypeID	= ObjBase::SWITCH_OPERATING_AREA_OFF;
-
 }
 
 SwitchOperatingArea::~SwitchOperatingArea(void)
@@ -43,6 +42,9 @@ void SwitchOperatingArea::SwitchOffState(void)
 	// 衝突判定用データへ追加
 	m_pCollisionManager->SetSwitchOperatingAreaData(this);
 }
+
+void SwitchOperatingArea::Initialize(void)
+{}
 
 void SwitchOperatingArea::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
