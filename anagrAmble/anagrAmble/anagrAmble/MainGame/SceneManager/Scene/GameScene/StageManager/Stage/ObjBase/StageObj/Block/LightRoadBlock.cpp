@@ -56,13 +56,19 @@ void LightRoadBlock::Initialize(void)
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
-	// 光ブロック生成
-	CreateLightBlock();
+	// 光ブロック生成 探査範囲部分をカバーできる分だけ作成する
+	for(int count = 0; count < SearchArea; ++count)
+	{
+		m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
+												, m_StageIndexData, m_DrawingID.m_TexID));
+	}
 
 	for(auto pBlock : m_pLightBlocks)
 	{
 		pBlock->Initialize();
 	}
+
+	DischargeLightBlock();
 }
 
 void LightRoadBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -72,6 +78,13 @@ void LightRoadBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	for(auto pBlock : m_pLightBlocks)
+	{
+		pBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);;
+	}
+
+	DischargeLightBlock();
 }
 
 void LightRoadBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -99,7 +112,7 @@ void LightRoadBlock::Render(void)
 void LightRoadBlock::HandleEvent(void)
 {}
 
-void LightRoadBlock::CreateLightBlock(void)
+void LightRoadBlock::DischargeLightBlock(void)
 {
 	// チェックしたいY方向のインデックス. 
 	// 横のチェックだけなのでここで変数を作成
@@ -107,7 +120,7 @@ void LightRoadBlock::CreateLightBlock(void)
 
 	// 足場排出ブロックの後方チェック。後方のためインデックスを引きながらチェックしている
 	// 2からチェックを開始しているのは、1からだと光ブロックを作成する必要がないため
-	for(int indexX = 2 ; indexX < SearchArea ; ++indexX)
+	for(int indexX = 2 ; indexX <= SearchArea ; ++indexX)
 	{
 		int checkIndexX = m_StageIndexData.m_XNum - indexX;
 
@@ -122,13 +135,10 @@ void LightRoadBlock::CreateLightBlock(void)
 				Stage::INDEX_DATA stageIndexData;
 				stageIndexData.m_YNum = m_StageIndexData.m_YNum;
 				stageIndexData.m_XNum = m_StageIndexData.m_XNum - count;
-
-				m_pLightBlocks.push_back(new LightBlock(m_pStageDataManager, m_pCollisionManager
-										, stageIndexData, m_DrawingID.m_TexID));
+				m_pLightBlocks[count - 1]->ChangeStagePos(stageIndexData.m_YNum, stageIndexData.m_XNum);
 			}
 			break;
 		}
-
 	}
 }
 

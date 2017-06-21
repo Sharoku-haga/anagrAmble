@@ -75,8 +75,8 @@ private:
 	*/
 	virtual void HandleEvent(void)override;
 
-	/** 光ブロックを作成する関数 */
-	void CreateLightBlock(void);
+	/** 光ブロックを排出する関数 */
+	void DischargeLightBlock(void);
 
 };	// class LightRoadBlock
 
