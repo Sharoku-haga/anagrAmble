@@ -14,6 +14,7 @@ namespace sl
 {
 
 class CustomizeInputManager;
+class UVAnimationManager;
 
 namespace dx11
 {
@@ -172,6 +173,73 @@ public:
 	virtual void ReleaseVertexALL(void)override;
 
 	//-----------------------------------------------------------------//
+	// アニメーション関連関数
+	//-----------------------------------------------------------------//
+	/** 
+	* UVアニメーションを登録する関数
+	* @param[in] vtxID			アニメーションと紐づけしたいバーテックスのID
+	* @param[in] patternCount	アニメーションのパターン数
+	* @param[in] repeat			アニメーションを繰り返すかどうかのフラグ true→繰り返す false→繰り返さない デフォルトはfalse
+	* @return 登録したのアニメーションID
+	*/
+	virtual int RegisterUVAnimeID(int vtxID, int patternCount, bool repeat = false)override;
+
+	/** 
+	* UVアニメーションを生成する関数
+	* @param[in] vtxID				バーテックスのID
+	* @param[in] animeID			アニメーションのID
+	* @param[in] tuCount			tu方向のカウント数
+	* @param[in] tvCount			tv方向のカウント数
+	* @param[in] rBasicUV			基本となるUV値. この値を基本として増やして行く
+	* @param[in] dispFlameCount		アニメーションの表示フレーム数
+	*/
+	virtual void CreateUVAnimeData(int vtxID, int animeID, int tuCount, int tvCount
+							, const sl::fRect& rStartUVVal, int dispFlameCount)override;
+
+	/**
+	* アニメーション更新関数
+	* UVアニメーションを更新する関数.
+	* @param[in] vtxID		アニメーションを更新したいバーテックスのID
+	* @param[in] animeID	更新したいアニメーションのID
+	* @return アニメーションが更新したかどうか true→更新した false→更新していない.
+	*/
+	virtual void UpdateUVAnime(int vtxID, int animeID)override;
+
+	/**
+	* アニメーションを初期状態に戻す関数
+	* @param[in] vtxID			バーテックスのID
+	* @param[in] animeID		アニメーションのID
+	*/
+	virtual void ReturnUVAnimeInitialState(int vtxID, int animeID)override;
+
+	/**
+	* 現在のアニメーションが最後の番号かどうか確認する関数
+	* @param[in] vtxID			バーテックスのID
+	* @param[in] animeID		アニメーションのID
+	* @return アニメーションが最後の番号かどうか true→最後の番号である false →最後の番号でない 
+	*/
+	virtual bool CheckLastNumCurrnttUVAnime(int vtxID, int animeID)override;
+
+	/**
+	* Setter UVアニメーションデータを設定する関数
+	* @param[in] vtxID				バーテックスのID
+	* @param[in] animeID			アニメーションのID
+	* @param[in] index				設定したいm_AnimeDataのインデックス
+	* @param[in] rUV				設定したいUV値
+	* @param[in] dispFlameCount		設定したいアニメーションを表示するフレーム数
+	*/
+	virtual void SetUVAnimeData(int vtxID, int animeID, int index
+								, const sl::fRect& rUV, int dispFlameCount)override;
+
+	/**
+	* Setter UVアニメーションの順番を設定する関数
+	* @param[in] vtxID			バーテックスのID
+	* @param[in] animeID		アニメーションのID
+	* @param[in] rAnimeOrder	アニメーションの順番を格納している配列
+	*/
+	virtual void SeUVtAnimeOrder(int vtxID, int animeID, const std::vector<int>& rAnimeOrder)override;
+
+	//-----------------------------------------------------------------//
 	// 描画関連関数
 	//-----------------------------------------------------------------//
 	
@@ -249,6 +317,7 @@ private:
 	di::InputManager*			m_pInputManager;
 	xi::GamePad*				m_pGamePad;
 	CustomizeInputManager*		m_pCustomizeInputManager;
+	UVAnimationManager*			m_pUVAnimationManager;
 
 };	// class DX11Library 
 

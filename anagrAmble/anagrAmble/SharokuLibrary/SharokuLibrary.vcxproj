@@ -35,6 +35,8 @@
     <ClInclude Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.h" />
     <ClInclude Include="sl\Library\slDX11Library.h" />
     <ClInclude Include="sl\Library\Texture\dx11Texture\dx11TextureManager.h" />
+    <ClInclude Include="sl\Library\UVAnimation\slUVAnimation.h" />
+    <ClInclude Include="sl\Library\UVAnimation\slUVAnimationManager.h" />
     <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex.h" />
     <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2D.h" />
     <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2DManager.h" />
@@ -56,6 +58,8 @@
     <ClCompile Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.cpp" />
     <ClCompile Include="sl\Library\slDX11Library.cpp" />
     <ClCompile Include="sl\Library\Texture\dx11Texture\dx11TextureManager.cpp" />
+    <ClCompile Include="sl\Library\UVAnimation\slUVAnimation.cpp" />
+    <ClCompile Include="sl\Library\UVAnimation\slUVAnimationManager.cpp" />
     <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex.cpp" />
     <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2D.cpp" />
     <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2DManager.cpp" />

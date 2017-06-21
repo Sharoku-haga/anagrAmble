@@ -77,12 +77,7 @@ void Player::Control(void)
 	// イベント処理
 	HandleEvent();
 
-	if(m_pPlayerMotion->IsCurrrentMotionDeath())
-	{	// 死んでいるなら即return
-		return;
-	}
-
-	if(m_Pos.y > FallLimitVal)
+	if(m_Pos.y > FallLimitVal && RESULT_FAILED(m_pPlayerMotion->IsCurrrentMotionDeath()))
 	{	// 落下限界値以上落ちていたら死亡状態にし、女神の加護の回数も減らす
 		m_pPlayerMotion->ChangeDeathMotion();
 	}
@@ -90,7 +85,6 @@ void Player::Control(void)
 	// 状態による処理をおこなう
 	sl::SLVECTOR2 currentMoveVector = m_pPlayerMotion->Control(m_MovableDirection);
 	m_Pos +=  currentMoveVector;
-
 
 
 	if(m_pPlayerMotion->IsCurrrentMotionDeath())
@@ -133,7 +127,7 @@ void Player::Control(void)
 
 	if(m_pLibrary->CheckCustomizeState(TIME_RETURN_L, sl::ON) 
 		&& m_pLibrary->CheckCustomizeState(TIME_RETURN_R, sl::PUSH)
-		&& m_GoddessPointCount != 0
+		&& m_GoddessPointCount > 0
 		&& m_pStageDataManager->ExistStockStageData())
 	{	// 時戻しボタンが押されたら イベントを通知する
 		GameEventManager::Instance().ReceiveEvent("space_change_return_start");
@@ -199,7 +193,11 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		break;
 
 	case ELECTICAL_B:
-		m_pPlayerMotion->ChangeDeathMotion();
+		if(RESULT_FAILED(m_pPlayerMotion->IsCurrrentMotionDeath()))
+		{
+			m_pPlayerMotion->ChangeDeathMotion();
+		}
+	
 		break;
 
 	case LEVER:
@@ -320,28 +318,15 @@ void Player::HandleEvent(void)
 		std::string eventType;			
 		for(auto& gameEvent : currentEvents)
 		{
-			if(gameEvent == "player_death_anime_end")
-			{	
-				if(m_GoddessPointCount != 0)
-				{	// 加護があるならときをもどす
-					GameEventManager::Instance().ReceiveEvent("space_change_return_start");
-				}
-				else
-				{	// 加護がないならゲームオーバーイベントをとばす
-					GameEventManager::Instance().ReceiveEvent("game_over");
-				}
-				m_pEventListener->DelEvent();
-				return;								
-			}
-			else if(gameEvent == "space_change_return_end")
-			{	
+			if(gameEvent == "space_change_return_end")
+			{
 				if(m_pPlayerMotion->IsCurrrentMotionDeath())
 				{	// 死んでいるなら、待機状態にもどす
 					m_pPlayerMotion->ChangeWaitingMotion();
 				}
 				// 通常の入れ替え戻しが完了したら、女神の加護の数値を減らす
 				--m_GoddessPointCount;
-				
+
 				// 元データから消しておく
 				m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 			}
@@ -355,6 +340,7 @@ void Player::RegisterEvent(void)
 {
 	// 死亡動作アニメーション終了イベント
 	GameEventManager::Instance().RegisterEventType("player_death_anime_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("player_death_anime_end", std::bind(&ar::Player::RunDeathEndProcessing, this));
 
 	// 入れ替え処理開始イベント
 	GameEventManager::Instance().RegisterEventType("space_change_start", m_pEventListener);
@@ -380,6 +366,23 @@ void  Player::RunSpaceChangeEndProcessing(void)
 
 	// 入れ替え終了したら、モードを通常モードに変更する
 	m_pPlayerMode->ChangeNormalMode();
+}
+
+void Player::RunDeathEndProcessing(void)
+{
+	if(m_GoddessPointCount > 0)
+	{	// 加護があるならときをもどす
+		GameEventManager::Instance().ReceiveEvent("space_change_return_start");
+
+		if(m_pPlayerMotion->IsCurrrentMotionDeath())
+		{	// 死んでいるなら、待機状態にもどす
+			m_pPlayerMotion->ChangeWaitingMotion();
+		}
+	}
+	else
+	{	// 加護がないならゲームオーバーイベントをとばす
+		GameEventManager::Instance().ReceiveEvent("game_over");
+	}
 }
 
 }	// namespace ar

@@ -14,6 +14,7 @@
 #include "Input/DirectInput/diInputManager.h"
 #include "Input/XInput/xiGamePad.h"
 #include "Input\slCustomizeInputManager.h"
+#include "UVAnimation/slUVAnimationManager.h"
 #include "../Common/slTemplate.h"
 #include "../slBuild.h"
 
@@ -30,6 +31,7 @@ DX11Library::DX11Library(void)
 	, m_pInputManager(nullptr)
 	, m_pGamePad(nullptr)
 	, m_pCustomizeInputManager(nullptr)
+	, m_pUVAnimationManager(nullptr)
 {}
 
 DX11Library::~DX11Library(void)
@@ -58,12 +60,12 @@ void DX11Library::Initialize(t_char*  pWinTitle, int winWidth, int winHeight)
 #endif
 
 	m_pCustomizeInputManager = new CustomizeInputManager(m_pInputManager, m_pGamePad);
-
+	m_pUVAnimationManager = new UVAnimationManager();
 }
 
 void DX11Library::Finalize(void)
 {
-
+	DeleteSafely(&m_pUVAnimationManager);
 	DeleteSafely(&m_pCustomizeInputManager);
 #ifdef USING_XI_GAMEPAD
 	DeleteSafely(&m_pGamePad);
@@ -143,6 +145,47 @@ void DX11Library::ReleaseVertex2D(int vtxID)
 void DX11Library::ReleaseVertexALL(void)
 {
 	m_pVertex2DManager->ReleaseALL();
+}
+
+int DX11Library::RegisterUVAnimeID(int vtxID, int patternCount, bool repeat)
+{
+	return m_pUVAnimationManager->RegisterAnimationID(vtxID, patternCount, repeat);
+}
+
+void DX11Library::CreateUVAnimeData(int vtxID, int animeID, int tuCount, int tvCount
+						, const sl::fRect& rStartUVVal, int dispFlameCount)
+{
+	m_pUVAnimationManager->CreateUVAnimationData(vtxID, animeID, tuCount, tvCount
+												, rStartUVVal, dispFlameCount);
+}
+
+void DX11Library::UpdateUVAnime(int vtxID, int animeID)
+{
+	if(m_pUVAnimationManager->UpdateUVAnimation(vtxID, animeID))
+	{
+		m_pVertex2DManager->SetUV(vtxID, m_pUVAnimationManager->GetCurrentAnimeUV(vtxID, animeID));
+	}
+}
+
+void DX11Library::ReturnUVAnimeInitialState(int vtxID, int animeID)
+{
+	m_pUVAnimationManager->ReturnUVAnimeInitialState(vtxID, animeID);
+}
+
+bool DX11Library::CheckLastNumCurrnttUVAnime(int vtxID, int animeID)
+{
+	return m_pUVAnimationManager->CheckLastNumCurrnttAnime(vtxID, animeID);
+}
+
+void DX11Library::SetUVAnimeData(int vtxID, int animeID, int index
+					, const sl::fRect& rUV, int dispFlameCount)
+{
+	m_pUVAnimationManager->SetAnimeData(vtxID, animeID, index, rUV, dispFlameCount);
+}
+
+void  DX11Library::SeUVtAnimeOrder(int vtxID, int animeID, const std::vector<int>& rAnimeOrder)
+{
+	m_pUVAnimationManager->SetAnimeOrder(vtxID, animeID, rAnimeOrder);
 }
 
 void DX11Library::SetDepthStencilTest(bool isStencilTest)
