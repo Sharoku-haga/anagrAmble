@@ -29,10 +29,10 @@ StageObjManager::~StageObjManager(void)
 {
 	for(auto& pObj : m_pStageObj)
 	{
-		sl::DeleteSafely(pObj);
+		sl::DeleteSafely(&pObj);
 	}
 
-	sl::DeleteSafely(m_pStageObjFactory);
+	sl::DeleteSafely(&m_pStageObjFactory);
 }
 
 void StageObjManager::CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex)

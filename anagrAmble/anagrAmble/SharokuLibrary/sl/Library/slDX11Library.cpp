@@ -64,15 +64,15 @@ void DX11Library::Initialize(t_char*  pWinTitle, int winWidth, int winHeight)
 void DX11Library::Finalize(void)
 {
 
-	DeleteSafely(m_pCustomizeInputManager);
+	DeleteSafely(&m_pCustomizeInputManager);
 #ifdef USING_XI_GAMEPAD
-	DeleteSafely(m_pGamePad);
+	DeleteSafely(&m_pGamePad);
 #endif
-	DeleteSafely(m_pInputManager);
-	DeleteSafely(m_pVertex2DManager);
-	DeleteSafely(m_pTextureManager);
-	DeleteSafely(m_pGraphicsDevice);
-	DeleteSafely(m_pWindow);
+	DeleteSafely(&m_pInputManager);
+	DeleteSafely(&m_pVertex2DManager);
+	DeleteSafely(&m_pTextureManager);
+	DeleteSafely(&m_pGraphicsDevice);
+	DeleteSafely(&m_pWindow);
 }
 
 bool DX11Library::UpdateWindow(void)

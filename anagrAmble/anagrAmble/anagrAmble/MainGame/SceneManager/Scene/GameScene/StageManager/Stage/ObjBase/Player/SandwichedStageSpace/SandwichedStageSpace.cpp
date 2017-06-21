@@ -66,11 +66,11 @@ SandwichedStageSpace::~SandwichedStageSpace(void)
 {
 	for(auto& pObj : m_pObjs)
 	{
-		sl::DeleteSafely(pObj);
+		sl::DeleteSafely(&pObj);
 	}
 
-	sl::DeleteSafely(m_pBackground);
-	sl::DeleteSafely(m_pEventListener);
+	sl::DeleteSafely(&m_pBackground);
+	sl::DeleteSafely(&m_pEventListener);
 }
 
 void SandwichedStageSpace::InitializeData(Anchor* pAnchorOne, Anchor*	pAnchorTwo)
@@ -125,7 +125,7 @@ void SandwichedStageSpace::DiscardData(void)
 	for(auto& pObj : m_pObjs)
 	{
 		m_pLibrary->ReleaseVertex2D(pObj->GetDrawingID().m_VtxID);
-		sl::DeleteSafely(pObj);
+		sl::DeleteSafely(&pObj);
 	}
 
 	m_pObjs.clear();
@@ -175,7 +175,7 @@ void SandwichedStageSpace::HandleEvent(void)
 				{
 					for(auto& pObj : m_pObjs)
 					{
-						sl::DeleteSafely(pObj);
+						sl::DeleteSafely(&pObj);
 					}
 					m_pObjs.clear();
 					std::vector<SandwichedStageSpaceObj*>().swap(m_pObjs);

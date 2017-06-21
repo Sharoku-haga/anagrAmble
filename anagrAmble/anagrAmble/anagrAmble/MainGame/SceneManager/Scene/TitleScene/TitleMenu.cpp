@@ -24,13 +24,13 @@ TitleMenu::TitleMenu(int btnTexID)
 	
 	// ボタンの生成
 	{
-		sl::fRect		size		= { -170.0f, -90.0f, 170.f, 90.f };		// サイズ
+		sl::fRect		size		= { -128.0f, -64.0f, 128.f, 64.f };		// サイズ
 
 		sl::fRect		startUv		= { 0.0f, 0.0f, 1.0f, 0.5f };		// 初期UV値
 		float			scrollTu	= 0.5f;								// Tu値のスクロール値
 
-		sl::SLVECTOR2	startPos		= { 960.f, 680.f };				// 開始座標
-		float			scrollPosYVal	= 200.f;						// Y座標のスクロール値
+		sl::SLVECTOR2	startPos		= { 960.f, 760.f };				// 開始座標
+		float			scrollPosYVal	= 100.f;						// Y座標のスクロール値
 
 		for(int createBtnCount = 0; createBtnCount < BTN_MAX; ++createBtnCount)
 		{
@@ -50,7 +50,7 @@ TitleMenu::~TitleMenu(void)
 {
 	for(auto& pBtn : m_pButtons)
 	{
-		sl::DeleteSafely(pBtn);
+		sl::DeleteSafely(&pBtn);
 	}
 }
 

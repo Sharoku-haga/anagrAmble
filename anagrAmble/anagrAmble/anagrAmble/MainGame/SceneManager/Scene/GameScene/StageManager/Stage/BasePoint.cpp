@@ -44,7 +44,7 @@ BasePoint::BasePoint(void)
 
 BasePoint::~BasePoint(void)
 {
-	sl::DeleteSafely(m_pEventListener);
+	sl::DeleteSafely(&m_pEventListener);
 }
 
 void BasePoint::Initialize(float stageWidth, Player* pPlayer)
@@ -115,10 +115,13 @@ void BasePoint::Move(void)
 	{	// プレイヤーが動いた分だけ動かし、ObJbaseのBasePointPosを更新する
 		m_Pos.x += (m_CurrentPlayerPos.x - m_OldPlayerPos.x);
 
-		// プレイヤーとの間が離れすぎていたら調整する
 		if((m_CurrentPlayerPos.x - m_Pos.x) >  PlayerInterVal)
-		{
+		{	// プレイヤーとの間が離れすぎていたら調整する
 			m_Pos.x += ((m_CurrentPlayerPos.x - m_Pos.x) - PlayerInterVal);
+		}
+		else if((m_CurrentPlayerPos.x - m_Pos.x) <  PlayerInterVal)
+		{	// プレイヤーとの間が近すぎたら調整する
+			m_Pos.x -= (PlayerInterVal - (m_CurrentPlayerPos.x - m_Pos.x));
 		}
 
 		ObjBase::SetBasePointPos(m_Pos);

@@ -38,6 +38,12 @@ public:
 	const sl::SLVECTOR2& Control(const Player::MovableDirection& rMovableDirection);
 
 	/** 
+	*待機状態に変更する関数
+	* 死亡してまだ加護がある場合よぶ関数
+	*/
+	inline void ChangeWaitingMotion(void) { m_CurrentMotion = PlayerMotion::MOTION_ID::WAITING; }
+
+	/** 
 	* 動作を死亡動作に変更する関数
 	* 死亡条件を満たした場合によぶ関数
 	*/
@@ -45,7 +51,7 @@ public:
 
 	/**
 	* 現材の動作が死亡かどうか確認する関数
-	* @return 結果
+	* @return 結果 true→死んでいる false→死んでいない
 	*/
 	bool IsCurrrentMotionDeath(void);
 

@@ -50,8 +50,8 @@ GamePauseMenu::GamePauseMenu(int bgTexID, int btnTexID)
 
 GamePauseMenu::~GamePauseMenu(void)
 {
-	sl::DeleteSafely(m_pBackground);
-	sl::DeleteSafely(m_pButton);
+	sl::DeleteSafely(&m_pBackground);
+	sl::DeleteSafely(&m_pButton);
 }
 
 void GamePauseMenu::Control(void)

@@ -36,7 +36,7 @@ LightRoadBlock::~LightRoadBlock(void)
 {
 	for(auto pblock : m_pLightBlocks)
 	{
-		sl::DeleteSafely(pblock);
+		sl::DeleteSafely(&pblock);
 	}
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }

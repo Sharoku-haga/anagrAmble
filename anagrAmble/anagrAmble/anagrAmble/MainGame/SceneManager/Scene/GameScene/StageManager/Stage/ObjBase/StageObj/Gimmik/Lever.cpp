@@ -40,7 +40,7 @@ Lever::Lever(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 
 Lever::~Lever(void)
 {
-	sl::DeleteSafely(m_pSwitchOperatingArea);
+	sl::DeleteSafely(&m_pSwitchOperatingArea);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 

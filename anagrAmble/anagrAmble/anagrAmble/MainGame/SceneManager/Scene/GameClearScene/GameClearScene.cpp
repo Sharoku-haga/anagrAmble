@@ -29,7 +29,7 @@ GameClearScene::GameClearScene(void)
 
 GameClearScene::~GameClearScene(void)
 {
-	sl::DeleteSafely(m_pBackground);
+	sl::DeleteSafely(&m_pBackground);
 	m_pLibrary->ReleaseVertexALL();
 	m_pLibrary->ReleaseTexALL();
 }

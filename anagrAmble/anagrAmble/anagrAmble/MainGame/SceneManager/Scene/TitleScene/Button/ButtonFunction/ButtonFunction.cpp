@@ -20,7 +20,7 @@ ButtonFunction::ButtonFunction(Button* pButton)
 
 ButtonFunction::~ButtonFunction(void)
 {
-	sl::DeleteSafely(m_pButton);
+	sl::DeleteSafely(&m_pButton);
 }
 
 }	// namespace ar

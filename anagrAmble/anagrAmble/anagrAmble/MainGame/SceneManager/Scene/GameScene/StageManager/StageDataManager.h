@@ -56,7 +56,13 @@ public:
 	* ステージを1つ前に戻す際によぶ
 	* @return 結果 true→成功  false→失敗
 	*/
-	bool ReturnBeforeCurrentStageData(void);
+	void ReturnBeforeCurrentStageData(void);
+
+	/**
+	* ストックデータ存在するかどうか確認する関数
+	* @return 結果 true→存在する  false→存在しない
+	*/
+	bool ExistStockStageData(void);
 
 	/**
 	* Getter. ファイルからロードしたステージデータへの参照を取得する関数

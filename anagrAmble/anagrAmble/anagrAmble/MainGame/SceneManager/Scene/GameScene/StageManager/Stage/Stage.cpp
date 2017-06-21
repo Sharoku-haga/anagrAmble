@@ -39,12 +39,12 @@ Stage::Stage(StageDataManager*	pStageDataManager)
 
 Stage::~Stage(void)
 {
-	sl::DeleteSafely(m_pBackground);
-	sl::DeleteSafely(m_pStageObjManager);
-	sl::DeleteSafely(m_pPlayer);
-	sl::DeleteSafely(m_pBasePoint);
-	sl::DeleteSafely(m_pCollisionManager);
-	sl::DeleteSafely(m_pEventListener);
+	sl::DeleteSafely(&m_pBackground);
+	sl::DeleteSafely(&m_pStageObjManager);
+	sl::DeleteSafely(&m_pPlayer);
+	sl::DeleteSafely(&m_pBasePoint);
+	sl::DeleteSafely(&m_pCollisionManager);
+	sl::DeleteSafely(&m_pEventListener);
 }
 
 void Stage::Initialize(void)
@@ -115,11 +115,11 @@ void Stage::Control(void)
 		break;
 
 	case STAGE_SPACE_RETURN:
-		if(m_pStageDataManager->ReturnBeforeCurrentStageData())
-		{	// 入れ替え戻しが完了したら終了イベントをとばす
-			GameEventManager::Instance().ReceiveEvent("space_change_return_end");
-			GameEventManager::Instance().TriggerSynEvent("player_move");
-		}
+		m_pStageDataManager->ReturnBeforeCurrentStageData();
+		// 入れ替え戻しが完了したら終了イベントをとばす
+		GameEventManager::Instance().ReceiveEvent("space_change_return_end");
+		GameEventManager::Instance().TriggerSynEvent("player_move");
+
 		m_CurrentState = EXECUTE;
 
 		// 2回Controlをよぶことで背景を調整する
@@ -139,6 +139,16 @@ void Stage::Control(void)
 
 void Stage::Draw(void)
 {
+	switch(m_CurrentState)
+	{
+	case STAGE_SPACE_RETURN:
+		return;
+		break;
+
+	default:
+		// do nothing
+		break;
+	}
 	m_pBackground->Draw();
 	m_pStageObjManager->Draw();
 	m_pPlayer->Draw();
@@ -166,6 +176,7 @@ void Stage::CreateObj(int typeID, int yNum, int xNum)
 			data.m_YNum = yNum;
 			data.m_XNum = xNum;
 			m_pPlayer = new Player(m_pStageDataManager, m_pCollisionManager, data, m_PlayerTexID);
+			m_pStageDataManager->SetCurrentStageChipData(yNum, xNum, m_pPlayer);
 		}
 
 		break;

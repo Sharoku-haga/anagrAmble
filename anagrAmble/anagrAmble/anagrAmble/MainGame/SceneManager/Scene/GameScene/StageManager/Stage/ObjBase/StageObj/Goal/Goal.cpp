@@ -14,6 +14,16 @@
 namespace ar
 {
 
+/* Unnamed Namespace ------------------------------------------------------------------------------------------ */
+
+namespace
+{
+
+const sl::fRect		GoalUV				= { 0.6f, 0.444f, 0.75f, 0.8f	};				// TyepIDがGoalの画像のUV値
+const sl::fRect		LockedGoalUV		= { 0.0f, 0.088f, 0.15f, 0.444f	};				// TyepIDがLockedGoalの画像のUV値
+
+}
+
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 Goal::Goal(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
@@ -41,7 +51,16 @@ void  Goal::Initialize(void)
 	m_RectSize.m_Right	= ((m_StageChipSize * 3) / 2);
 	m_RectSize.m_Bottom = ((m_StageChipSize * 3) / 2);
 
-	const sl::fRect		uv = { 0.6f, 0.444f, 0.75f, 0.8f};			/** @todo 2017/06/17 とりあえず開いている画像にしておく*/
+	sl::fRect	uv;			// UV座標
+
+	if(m_TypeID == GOAL)
+	{
+		uv = GoalUV;	
+	}
+	else
+	{
+		uv = LockedGoalUV;	
+	}
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
@@ -51,6 +70,9 @@ void  Goal::Initialize(void)
 
 	// ゴールキーを取得するイベント
 	GameEventManager::Instance().RegisterEventType("goal_key_get", m_pEventListener);
+
+	// ゴールの位置を固定する
+	m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 }
 
 void Goal::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -113,6 +135,7 @@ void Goal::HandleEvent(void)
 			else if(gameEvent == "goal_key_get"  && m_TypeID == LOCKED_GOAL)
 			{
 				m_TypeID = GOAL;
+				m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, GoalUV);
 				break;
 			}
 		}
