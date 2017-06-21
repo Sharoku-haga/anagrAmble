@@ -37,7 +37,7 @@ LightDoor::~LightDoor(void)
 {
 	for(auto& pblock : m_pLightBlocks)
 	{
-		sl::DeleteSafely(pblock);
+		sl::DeleteSafely(&pblock);
 	}
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
@@ -82,6 +82,8 @@ void  LightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 
+	// 光ブロックを1回自分位置に収納してから再度展開する
+	Open();
 	Close();
 }
 

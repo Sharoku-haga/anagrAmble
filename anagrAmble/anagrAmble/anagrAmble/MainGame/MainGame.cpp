@@ -40,7 +40,7 @@ MainGame::MainGame(void)
 
 MainGame::~MainGame(void)
 {
-	sl::DeleteSafely(m_pSceneManager);
+	sl::DeleteSafely(&m_pSceneManager);
 	sl::ISharokuLibrary::Delete();
 }
 

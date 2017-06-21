@@ -14,11 +14,11 @@ namespace ar
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 TitleText::TitleText(int texID)
-	: m_Pos({720.0f, 0.0f})
+	: m_Pos({448.0f, 0.0f})
 	, m_pLibrary(sl::ISharokuLibrary::Instance())
 {
 	m_ID.m_TexID		= texID;
-	sl::fRect	size	= { 0.0f, 0.0f, 480.f, 480.f};
+	sl::fRect	size	= { 0.0f, 0.0f, 1024.f, 512.f};
 	sl::fRect	uv		= { 0.0f, 0.0f, 1.0f, 1.0f};
 	m_ID.m_VtxID		= m_pLibrary->CreateVertex2D(size, uv);
 }

@@ -33,12 +33,7 @@ ObjBase::ObjBase(StageDataManager* pStageDataManager, CollisionManager* pCollisi
 
 ObjBase::~ObjBase(void)
 {
-	sl::DeleteSafely(m_pEventListener);
-	
-	if(m_pEventListener != nullptr)
-	{
-
-	}
+	sl::DeleteSafely(&m_pEventListener);
 }
 
 const sl::fRect& ObjBase::GetCurrentRectData(void) 

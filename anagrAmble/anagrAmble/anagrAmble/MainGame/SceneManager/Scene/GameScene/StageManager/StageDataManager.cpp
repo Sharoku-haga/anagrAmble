@@ -124,7 +124,7 @@ void StageDataManager::AddStockStageData(void)
 }
 
 
-bool StageDataManager::ReturnBeforeCurrentStageData(void)
+void StageDataManager::ReturnBeforeCurrentStageData(void)
 {
 
 	int useStockDataNum = 0;	// 使用するストックデータの番号を格納する変数
@@ -142,7 +142,7 @@ bool StageDataManager::ReturnBeforeCurrentStageData(void)
 
 		if( i ==  m_StockStageDataOrder.size() - 1)
 		{	// 戻せるデータがなかったら即return
-			return false;
+			m_CurrentStageData = m_StageOriginData;
 		}
 	}
 
@@ -152,7 +152,7 @@ bool StageDataManager::ReturnBeforeCurrentStageData(void)
 	{
 		
 		if(i != useStockDataNum
-			&& m_StockStageDataOrder[i] > 0)
+			&& m_StockStageDataOrder[i] >= 0)
 		{
 			m_StockStageDataOrder[i] += 1;
 		}
@@ -170,8 +170,20 @@ bool StageDataManager::ReturnBeforeCurrentStageData(void)
 			m_CurrentStageData[i][j]->ChangeStagePos(i, j);
 		}
 	}
+}
 
-	return true;
+bool StageDataManager::ExistStockStageData(void)
+{
+	for(unsigned int i = 0; i < m_StockStageDataOrder.size(); ++i)
+	{
+		// ストックデータの中の1番最新のものがあるならtrueをかえす
+		if(m_StockStageDataOrder[i] == (m_StockStageDataOrderCount - 1))
+		{
+			return true;;
+		}
+
+	}
+	return false;
 }
 
 int StageDataManager::GetTypeID(int indexY, int indexX)

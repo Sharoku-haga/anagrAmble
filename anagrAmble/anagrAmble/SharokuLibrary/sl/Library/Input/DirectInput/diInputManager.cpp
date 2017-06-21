@@ -29,8 +29,8 @@ InputManager::InputManager(void)
 
 InputManager::~InputManager(void)
 {
-	DeleteSafely(m_pGamePad);
-	DeleteSafely(m_pKeyDevice);
+	DeleteSafely(&m_pGamePad);
+	DeleteSafely(&m_pKeyDevice);
 	ReleaseSafely(m_pDInput8);
 }
 
@@ -52,7 +52,7 @@ bool InputManager::Initialize(HWND hWnd)
 
 	if(RESULT_FAILED(m_pKeyDevice->Initialize(m_pDInput8, hWnd)))
 	{
-		DeleteSafely(m_pKeyDevice);
+		DeleteSafely(&m_pKeyDevice);
 		MessageBox(0, "キーボードデバイスの初期化に失敗しました。", NULL, MB_OK);
 		return false;
 	}

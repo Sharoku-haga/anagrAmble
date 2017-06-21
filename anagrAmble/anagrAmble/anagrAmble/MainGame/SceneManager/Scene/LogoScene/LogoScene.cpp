@@ -36,8 +36,8 @@ LogoScene::LogoScene(void)
 
 LogoScene::~LogoScene(void)
 {
-	sl::DeleteSafely(m_pText);
-	sl::DeleteSafely(m_pBackground);
+	sl::DeleteSafely(&m_pText);
+	sl::DeleteSafely(&m_pBackground);
 	m_pLibrary->ReleaseVertexALL();
 	m_pLibrary->ReleaseTexALL();
 }

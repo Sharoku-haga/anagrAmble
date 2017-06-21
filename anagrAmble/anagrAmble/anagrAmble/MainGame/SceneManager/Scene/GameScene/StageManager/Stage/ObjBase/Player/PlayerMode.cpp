@@ -40,11 +40,11 @@ PlayerMode::PlayerMode(StageDataManager* pStageDataManager, CollisionManager* pC
 
 PlayerMode::~PlayerMode(void)
 {
-	sl::DeleteSafely(m_pSandwichedStageSpace);
+	sl::DeleteSafely(&m_pSandwichedStageSpace);
 
 	for(auto& pAnchor : m_pAnchors)
 	{
-		sl::DeleteSafely(pAnchor);
+		sl::DeleteSafely(&pAnchor);
 	}
 }
 

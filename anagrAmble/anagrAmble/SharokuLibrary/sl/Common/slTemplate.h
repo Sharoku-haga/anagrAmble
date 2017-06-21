@@ -14,12 +14,12 @@ namespace sl
 
 // 安全デリートテンプレート
 template<typename T>
-void DeleteSafely(T* variable)
+void DeleteSafely(T** pVariable)
 {
-	if(variable != nullptr)
+	if(*pVariable != nullptr)
 	{
-		delete variable;
-		variable = nullptr;
+		delete *pVariable;
+		*pVariable = nullptr;
 	}
 }
 

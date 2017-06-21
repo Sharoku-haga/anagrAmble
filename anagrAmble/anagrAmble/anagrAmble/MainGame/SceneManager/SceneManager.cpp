@@ -35,8 +35,8 @@ SceneManager::SceneManager(void)
 
 SceneManager::~SceneManager(void)
 {
-	sl::DeleteSafely(m_pScene);
-	sl::DeleteSafely(m_pGameDataManager);
+	sl::DeleteSafely(&m_pScene);
+	sl::DeleteSafely(&m_pGameDataManager);
 }
 
 bool SceneManager::Updtae(void)

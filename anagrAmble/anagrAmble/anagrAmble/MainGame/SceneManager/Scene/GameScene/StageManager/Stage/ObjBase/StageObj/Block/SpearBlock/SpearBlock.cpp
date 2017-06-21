@@ -25,7 +25,7 @@ SpearBlock::SpearBlock(StageDataManager* pStageDataManager, CollisionManager* pC
 
 SpearBlock::~SpearBlock(void)
 {
-	sl::DeleteSafely(m_pSpear);
+	sl::DeleteSafely(&m_pSpear);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 

@@ -34,7 +34,7 @@ void ISharokuLibrary::Create(void)
 
 void ISharokuLibrary::Delete(void)
 {
-	DeleteSafely(m_pILibrary);
+	DeleteSafely(&m_pILibrary);
 }
 
 }	// namespace sl

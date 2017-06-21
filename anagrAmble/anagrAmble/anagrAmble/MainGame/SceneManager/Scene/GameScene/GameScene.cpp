@@ -45,9 +45,9 @@ GameScene::GameScene(GameDataManager* pGameDataManager)
 
 GameScene::~GameScene(void)
 {
-	sl::DeleteSafely(m_pStageManager);
-	sl::DeleteSafely(m_pPauseMenu);
-	sl::DeleteSafely(m_pEventListener);
+	sl::DeleteSafely(&m_pStageManager);
+	sl::DeleteSafely(&m_pPauseMenu);
+	sl::DeleteSafely(&m_pEventListener);
 	m_pLibrary->ReleaseVertexALL();
 	m_pLibrary->ReleaseTexALL();
 }

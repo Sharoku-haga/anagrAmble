@@ -36,7 +36,7 @@ RevolvingLightDoor::~RevolvingLightDoor(void)
 {
 	for(auto pblock : m_pLightBlocks)
 	{
-		sl::DeleteSafely(pblock);
+		sl::DeleteSafely(&pblock);
 	}
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
@@ -79,6 +79,12 @@ void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	// 光ブロックを自分の位置にもどしてから再度展開
+	for(auto& pLightBlock : m_pLightBlocks)
+	{
+		pLightBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);;
+	}
 
 	Revolve();
 }

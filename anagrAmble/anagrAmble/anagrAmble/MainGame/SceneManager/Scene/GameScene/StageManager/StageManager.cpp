@@ -31,8 +31,8 @@ StageManager::StageManager(GameDataManager*	pGameDataManager)
 
 StageManager::~StageManager(void)
 {
-	sl::DeleteSafely(m_pStageDataManager);
-	sl::DeleteSafely(m_pStage);
+	sl::DeleteSafely(&m_pStageDataManager);
+	sl::DeleteSafely(&m_pStage);
 }
 
 void StageManager::Contorl(void)

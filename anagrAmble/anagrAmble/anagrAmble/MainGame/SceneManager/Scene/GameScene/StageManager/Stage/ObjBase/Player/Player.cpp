@@ -31,7 +31,7 @@ const		int			GoddessPointMaxVal				= 3;				// 女神の加護の最大数
 const		float		CollisionCorrectionVal			= 12.f;				// 衝突における判定の補正値
 const		float		UpCollisionCorrectionVal		= 1.0f;				// 下の衝突判定補正値
 const		float		RightCollisionCorrectionVal		= -1.0f;			// 右の衝突判定補正値
-const		float		LeftCollisionCorrectionVal		= 1.0f;				// 左の衝突判定補正値
+const		float		LeftCollisionCorrectionVal		= -1.0f;				// 左の衝突判定補正値
 const		float		FallLimitVal					= 1368.f;			// 落下限界値. 
 const		float		BeltConverSpeed					= 15.f;				// ベルトコンベアーのスピード
 	
@@ -52,8 +52,8 @@ Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollision
 
 Player::~Player(void)
 {
-	sl::DeleteSafely(m_pPlayerMode);
-	sl::DeleteSafely(m_pPlayerMotion);
+	sl::DeleteSafely(&m_pPlayerMode);
+	sl::DeleteSafely(&m_pPlayerMotion);
 
 	for(auto& vtxID : m_VtxID)
 	{
@@ -77,8 +77,13 @@ void Player::Control(void)
 	// イベント処理
 	HandleEvent();
 
+	if(m_pPlayerMotion->IsCurrrentMotionDeath())
+	{	// 死んでいるなら即return
+		return;
+	}
+
 	if(m_Pos.y > FallLimitVal)
-	{	// 落下限界値以上落ちていたら死亡状態にする
+	{	// 落下限界値以上落ちていたら死亡状態にし、女神の加護の回数も減らす
 		m_pPlayerMotion->ChangeDeathMotion();
 	}
 
@@ -86,11 +91,7 @@ void Player::Control(void)
 	sl::SLVECTOR2 currentMoveVector = m_pPlayerMotion->Control(m_MovableDirection);
 	m_Pos +=  currentMoveVector;
 
-	if(m_Pos.y > FallLimitVal)
-	{	// 落下限界値以上落ちていたら死亡状態にし、女神の加護の回数も減らす
-		m_pPlayerMotion->ChangeDeathMotion();
-		--m_GoddessPointCount;
-	}
+
 
 	if(m_pPlayerMotion->IsCurrrentMotionDeath())
 	{	// 死亡動作ならここから下の処理はいらないので、
@@ -132,7 +133,8 @@ void Player::Control(void)
 
 	if(m_pLibrary->CheckCustomizeState(TIME_RETURN_L, sl::ON) 
 		&& m_pLibrary->CheckCustomizeState(TIME_RETURN_R, sl::PUSH)
-		&& m_GoddessPointCount != 0)
+		&& m_GoddessPointCount != 0
+		&& m_pStageDataManager->ExistStockStageData())
 	{	// 時戻しボタンが押されたら イベントを通知する
 		GameEventManager::Instance().ReceiveEvent("space_change_return_start");
 	}
@@ -250,7 +252,7 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 	// 上方向
 	if(m_Pos.y > rData.m_ObjPos.y
 		&& m_CurrentRectData.m_Top < rData.m_ObjRect.m_Bottom
-		&& std::abs(m_Pos.x - rData.m_ObjPos.x) < m_StageChipSize - CollisionCorrectionVal)
+		&& std::abs(m_Pos.x - rData.m_ObjPos.x) < (m_StageChipSize - CollisionCorrectionVal))
 	{
 		m_MovableDirection.m_Up = false;
 		m_Pos.y += rData.m_ObjRect.m_Bottom - m_CurrentRectData.m_Top;
@@ -259,7 +261,7 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 	// 下方向
 	if(m_Pos.y < rData.m_ObjPos.y
 		&& m_CurrentRectData.m_Bottom < rData.m_ObjPos.y
-		&& std::abs(m_Pos.x - rData.m_ObjPos.x) < m_StageChipSize - CollisionCorrectionVal)
+		&& std::abs(m_Pos.x - rData.m_ObjPos.x) < (m_StageChipSize - CollisionCorrectionVal))
 	{
 		m_MovableDirection.m_Down = false;
 
@@ -273,7 +275,7 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 	// 左方向
 	if(m_Pos.x > rData.m_ObjPos.x
 		&& m_CurrentRectData.m_Left > rData.m_ObjPos.x
-		&& std::abs(m_Pos.y - rData.m_ObjPos.y) < m_StageChipSize + m_StageChipSize / 2  - CollisionCorrectionVal)
+		&& std::abs(m_Pos.y - rData.m_ObjPos.y) < (m_StageChipSize + m_StageChipSize / 2  - CollisionCorrectionVal))
 	{
 		m_MovableDirection.m_Left = false;
 		m_Pos.x += rData.m_ObjRect.m_Right - m_CurrentRectData.m_Left + LeftCollisionCorrectionVal;
@@ -281,8 +283,8 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 
 	// 右方向
 	if(m_Pos.x < rData.m_ObjPos.x
-			&& m_CurrentRectData.m_Right < rData.m_ObjPos.x
-		&&  std::abs(m_Pos.y - rData.m_ObjPos.y) < m_StageChipSize + m_StageChipSize / 2 - CollisionCorrectionVal)
+		&& m_CurrentRectData.m_Right < rData.m_ObjPos.x
+		&&  std::abs(m_Pos.y - rData.m_ObjPos.y) < (m_StageChipSize + m_StageChipSize / 2 - CollisionCorrectionVal))
 	{
 		m_MovableDirection.m_Right = false;
 		m_Pos.x -= m_CurrentRectData.m_Right - rData.m_ObjRect.m_Left + RightCollisionCorrectionVal;
@@ -319,14 +321,29 @@ void Player::HandleEvent(void)
 		for(auto& gameEvent : currentEvents)
 		{
 			if(gameEvent == "player_death_anime_end")
-			{	// 死亡アニメーションが終了したらゲームオーバーイベントをとばして,return
-				GameEventManager::Instance().ReceiveEvent("game_over");
+			{	
+				if(m_GoddessPointCount != 0)
+				{	// 加護があるならときをもどす
+					GameEventManager::Instance().ReceiveEvent("space_change_return_start");
+				}
+				else
+				{	// 加護がないならゲームオーバーイベントをとばす
+					GameEventManager::Instance().ReceiveEvent("game_over");
+				}
 				m_pEventListener->DelEvent();
 				return;								
 			}
 			else if(gameEvent == "space_change_return_end")
-			{	// 入れ替え戻しが完了したら、女神の加護の数値を減らす
+			{	
+				if(m_pPlayerMotion->IsCurrrentMotionDeath())
+				{	// 死んでいるなら、待機状態にもどす
+					m_pPlayerMotion->ChangeWaitingMotion();
+				}
+				// 通常の入れ替え戻しが完了したら、女神の加護の数値を減らす
 				--m_GoddessPointCount;
+				
+				// 元データから消しておく
+				m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 			}
 		}
 
