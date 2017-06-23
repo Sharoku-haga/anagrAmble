@@ -24,7 +24,7 @@ UVAnimationManager::~UVAnimationManager(void)
 	{
 		for(auto& pUVAnimation : pAnime.second)
 		{
-			sl::DeleteSafely(&pUVAnimation);
+			sl::DeleteSafely(&pUVAnimation.second);
 		}
 	}
 }
@@ -33,7 +33,7 @@ int UVAnimationManager::RegisterAnimationID(int vtxID, int patternCount, bool re
 {
 	int id = m_pUVAnimations.size();
 
-	m_pUVAnimations[vtxID].emplace_back(new UVAnimation(patternCount, repeat));
+	m_pUVAnimations[vtxID][id] = new UVAnimation(patternCount, repeat);
 
 	return id;
 }
