@@ -55,6 +55,9 @@
     <Filter Include="sl\Library\Input\XInput">
       <UniqueIdentifier>{9223dbbe-3787-4a7e-94fe-99e10bf7be9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sl\Library\UVAnimation">
+      <UniqueIdentifier>{429dba97-50e9-4d4d-9289-5e24e33e3192}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sl\Common\slDefine.h">
@@ -129,6 +132,12 @@
     <ClInclude Include="sl\Library\Input\slCustomizeInputManager.h">
       <Filter>sl\Library\Input</Filter>
     </ClInclude>
+    <ClInclude Include="sl\Library\UVAnimation\slUVAnimation.h">
+      <Filter>sl\Library\UVAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="sl\Library\UVAnimation\slUVAnimationManager.h">
+      <Filter>sl\Library\UVAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sl\slISharokuLibrary.cpp">
@@ -181,6 +190,12 @@
     </ClCompile>
     <ClCompile Include="sl\Library\Input\slCustomizeInputManager.cpp">
       <Filter>sl\Library\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="sl\Library\UVAnimation\slUVAnimation.cpp">
+      <Filter>sl\Library\UVAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="sl\Library\UVAnimation\slUVAnimationManager.cpp">
+      <Filter>sl\Library\UVAnimation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

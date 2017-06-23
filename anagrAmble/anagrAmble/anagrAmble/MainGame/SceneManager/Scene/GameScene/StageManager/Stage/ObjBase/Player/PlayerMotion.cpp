@@ -175,8 +175,7 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 void PlayerMotion::ControlDeathMotion(void)
 {
 	// ここで死亡動作の処理(主にアニメーションを書く)
-
-	GameEventManager::Instance().ReceiveEvent("player_death_anime_end");		// アニメが終了したらイベント通知をする
+	GameEventManager::Instance().TriggerSynEvent("player_death_anime_end");		// アニメが終了したらイベント通知をする
 }
 
 }	// namespace ar
