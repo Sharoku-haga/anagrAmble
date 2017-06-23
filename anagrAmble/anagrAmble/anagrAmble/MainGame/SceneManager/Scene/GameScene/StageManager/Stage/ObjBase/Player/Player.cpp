@@ -31,7 +31,7 @@ const		int			GoddessPointMaxVal				= 3;				// 女神の加護の最大数
 const		float		CollisionCorrectionVal			= 12.f;				// 衝突における判定の補正値
 const		float		UpCollisionCorrectionVal		= 1.0f;				// 下の衝突判定補正値
 const		float		RightCollisionCorrectionVal		= -1.0f;			// 右の衝突判定補正値
-const		float		LeftCollisionCorrectionVal		= -1.0f;				// 左の衝突判定補正値
+const		float		LeftCollisionCorrectionVal		= -1.0f;			// 左の衝突判定補正値
 const		float		FallLimitVal					= 1368.f;			// 落下限界値. 
 const		float		BeltConverSpeed					= 15.f;				// ベルトコンベアーのスピード
 	

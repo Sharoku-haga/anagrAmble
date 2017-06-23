@@ -100,7 +100,7 @@ public:
 	void SetAnimeOrder(int vtxID, int animeID, const std::vector<int>& rAnimeOrder);
 
 private:
-	std::map<int, std::vector<UVAnimation*>>		m_pUVAnimations;			//!< VertexIDをキーとしたUVAnimationクラスのインスタンスへのポインタの配列(vector)を格納したmap
+	std::map<int, std::map<int, UVAnimation*>>		m_pUVAnimations;			//!< VertexIDをキーとしたUVAnimationクラスのインスタンスへのポインタの配列(vector)を格納したmap
 
 };
 

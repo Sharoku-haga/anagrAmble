@@ -41,13 +41,13 @@ public:
 	*待機状態に変更する関数
 	* 死亡してまだ加護がある場合よぶ関数
 	*/
-	inline void ChangeWaitingMotion(void) { m_CurrentMotion = PlayerMotion::MOTION_ID::WAITING; }
+	void ChangeWaitingMotion(void);
 
 	/** 
 	* 動作を死亡動作に変更する関数
 	* 死亡条件を満たした場合によぶ関数
 	*/
-	inline void ChangeDeathMotion(void) { m_CurrentMotion = PlayerMotion::MOTION_ID::DEATH; }
+	void ChangeDeathMotion(void);
 
 	/**
 	* 現材の動作が死亡かどうか確認する関数
@@ -81,8 +81,10 @@ private:
 	};
 
 	sl::ISharokuLibrary*			m_pLibrary;					//!< ライブラリ.sl::ISharokuLibraryクラスのインスタンスへのポインタ
-	std::vector<int>				m_VtxID;					//!< VertexIDを格納したvector
+	std::vector<int>				m_VtxID;					//!< VertexIDを格納した配列(vector)
+	std::vector<int>				m_UVAnimeID;				//!< UVAnimationIDを格納した配列(vector)
 	MOTION_ID						m_CurrentMotion;			//!< 現在の動作
+	MOTION_ID						m_PreviousMotion;			//!< 前の動作
 	sl::SLVECTOR2					m_CurrentMoveVector;		//!< 現在の移動ベクトル. 毎フレーム0に初期化される
 	bool							m_IsFacingRight;			//!< 右向きかどうか true→右向き false→右を向いていない(左向き)
 	int								m_FlightDurationCount;		//!< 滞空時間カウント数 
@@ -98,6 +100,11 @@ private:
 	* m_CurrentMotionがDeathになったら使用する関数
 	*/
 	void ControlDeathMotion(void);
+
+	/** 
+	* UVアニメーションを処理する関数 
+	*/
+	void ProcessUVAnimation(void);
 
 };	// class PlayerMotion
 
