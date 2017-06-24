@@ -82,6 +82,12 @@ private:
 	*/
 	virtual void HandleEvent(void)override;
 
+	/**
+	* 衝突判定に登録する関数. コールバック関数
+	* "space_change_end"と"space_change_return_end"のイベントの際によばれる
+	*/
+	void ResisterCollision(void);
+
 };	// class SwitchOperatingArea
 
 }	// namespace ar

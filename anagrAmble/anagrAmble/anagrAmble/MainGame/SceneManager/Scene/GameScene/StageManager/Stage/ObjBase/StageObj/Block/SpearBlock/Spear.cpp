@@ -65,7 +65,7 @@ void Spear::Initialize(void)
 	m_RectSize.m_Right = (m_StageChipSize / 2) - VertexCorrectionVal;
 	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 
-	const sl::fRect		uv = { 0.75f, 0.088f, 0.8f, 0.1777f };
+	const sl::fRect		uv = { 0.75f, 0.090f, 0.8f, 0.1777f };
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 

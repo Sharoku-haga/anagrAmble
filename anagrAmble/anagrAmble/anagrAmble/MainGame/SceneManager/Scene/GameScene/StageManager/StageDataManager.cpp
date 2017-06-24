@@ -141,7 +141,7 @@ void StageDataManager::ReturnBeforeCurrentStageData(void)
 		}
 
 		if( i ==  m_StockStageDataOrder.size() - 1)
-		{	// 戻せるデータがなかったら即return
+		{	// 戻せるデータがなかったらオリジナルデータをいれる
 			m_CurrentStageData = m_StageOriginData;
 		}
 	}

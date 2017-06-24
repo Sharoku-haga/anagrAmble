@@ -8,6 +8,8 @@
 
 #include "SwitchOperatingArea.h"
 #include "../../CollisionManager.h"
+#include "../../../../GameEventManager/GameEventManager.h"
+#include "../../../../GameEventManager/EventListener.h"
 
 namespace ar
 {
@@ -44,7 +46,15 @@ void SwitchOperatingArea::SwitchOffState(void)
 }
 
 void SwitchOperatingArea::Initialize(void)
-{}
+{
+	// 空間入れ替え終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::SwitchOperatingArea::ResisterCollision, this));
+
+	// 時戻し終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_return_end", std::bind(&ar::SwitchOperatingArea::ResisterCollision, this));
+}
 
 void SwitchOperatingArea::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
@@ -60,6 +70,11 @@ void SwitchOperatingArea::ProcessCollision(const CollisionManager::CollisionData
 
 void SwitchOperatingArea::HandleEvent(void)
 {}
+
+void SwitchOperatingArea::ResisterCollision(void)
+{
+	m_pCollisionManager->SetSwitchOperatingAreaData(this);
+}
 
 }	// namespace ar
 

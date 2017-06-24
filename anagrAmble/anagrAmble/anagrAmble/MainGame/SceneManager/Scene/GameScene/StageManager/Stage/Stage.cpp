@@ -69,6 +69,11 @@ void Stage::Initialize(void)
 	m_pPlayer->Initialize();
 	m_pStageObjManager->InitializeStageObj();
 
+	// ステージの元データをセーブして、
+	// プレイヤーの位置を現在のデータからなくす→入れ替え処理の妨げになるため
+	m_pStageDataManager->SaveStageOriginData();
+	m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YNum, m_pPlayer->GetStageIndex().m_XNum);
+
 	// ベースポイントの設定を行う 
 	m_pBasePoint->Initialize(m_pStageDataManager->GetStageWidth(), m_pPlayer);
 
@@ -86,7 +91,6 @@ void Stage::Initialize(void)
 
 	// 時戻し(ステージを入れ替える前の状態に戻す)イベント
 	GameEventManager::Instance().RegisterEventType("space_change_return_start", m_pEventListener);
-
 }
 
 void Stage::Control(void)
@@ -107,24 +111,28 @@ void Stage::Control(void)
 		break;
 
 	case STAGE_SPACE_CHANGE:
-		if(StageDataChangeManager::Instance().ChangeStageData())
+		if(StageDataChangeManager::Instance().ChangeSpace())
 		{
+			m_pCollisionManager->UpDate();
 			GameEventManager::Instance().TriggerSynEvent("space_change_end");
 		}
 		m_CurrentState = EXECUTE;
 		break;
 
 	case STAGE_SPACE_RETURN:
-		m_pStageDataManager->ReturnBeforeCurrentStageData();
-		// 入れ替え戻しが完了したら終了イベントをとばす
-		GameEventManager::Instance().ReceiveEvent("space_change_return_end");
-		GameEventManager::Instance().TriggerSynEvent("player_move");
+		if(StageDataChangeManager::Instance().ReturnChangedSpace())
+		{
+			m_pCollisionManager->UpDate();
+			// 入れ替え戻しが完了したら終了イベントをとばす
+			GameEventManager::Instance().ReceiveEvent("space_change_return_end");
+			GameEventManager::Instance().TriggerSynEvent("player_move");
 
-		m_CurrentState = EXECUTE;
+			// 2回Controlをよぶことで背景を調整する
+			m_pBackground->Control();
+			m_pBackground->Control();
+			m_CurrentState = EXECUTE;
+		}
 
-		// 2回Controlをよぶことで背景を調整する
-		m_pBackground->Control();
-		m_pBackground->Control();
 		break;
 
 	case EXIT:
