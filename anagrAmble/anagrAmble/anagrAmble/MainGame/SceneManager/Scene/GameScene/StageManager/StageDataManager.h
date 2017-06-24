@@ -110,7 +110,7 @@ public:
 	int GetTypeID(int indexY, int indexX);
 
 	/**
-	* Getter. 指定したｲﾝデックスからそこに存在するオブジェクトのポインタを取得する関数
+	* Getter. 指定したｲﾝデックスからそこに現在存在するオブジェクトのポインタを取得する関数
 	* その地点が空白、もしくはエラーの場合はnullptrがかえってくる
 	* @param[in] indexY y方向のインデックス
 	* @param[in] indexX	x方向のインデックス
@@ -149,8 +149,6 @@ private:
 	std::vector<int>									m_StockStageDataOrder;		//!< ストックしているステージデータの順番
 	std::vector<std::vector<std::vector<ObjBase*>>>		m_StockStageData;			//!< ストックしているステージデータを格納する三次元配列(vector)
 	std::string											m_BackGoundTexFileName;		//!< ステージ背景のテクスチャーファイル名
-
-	
 
 };	// class StageDataManager
 

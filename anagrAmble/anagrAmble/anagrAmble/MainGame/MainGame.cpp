@@ -221,17 +221,17 @@ void MainGame::CutomizeInputDebug(void)
 
 	// プレイヤーのモード切替 : MODE_CHANGE
 	{
-		m_pLibrary->RegisterCustomizeType(MODE_CHANGE, sl::KEYBOARD, sl::K_X);
+		m_pLibrary->RegisterCustomizeType(MODE_CHANGE, sl::KEYBOARD, sl::K_Z);
 	}
 
 	// プレイヤーのモード解除 : MODE_RELEASE
 	{
-		m_pLibrary->RegisterCustomizeType(MODE_CHANGE, sl::KEYBOARD, sl::K_X);
+		m_pLibrary->RegisterCustomizeType(MODE_CHANGE, sl::KEYBOARD, sl::K_Z);
 	}
 
 	// 空間入れ替え : SPACE_CHANGE
 	{
-		m_pLibrary->RegisterCustomizeType(SPACE_CHANGE, sl::KEYBOARD, sl::K_H);
+		m_pLibrary->RegisterCustomizeType(SPACE_CHANGE, sl::KEYBOARD, sl::K_RETURN);
 	}
 
 	// 空間反転 : SPACE_INVERTED
@@ -241,22 +241,23 @@ void MainGame::CutomizeInputDebug(void)
 
 	// アンカ-セット : ANCHOR_SET
 	{
-		m_pLibrary->RegisterCustomizeType(ANCHOR_SET, sl::KEYBOARD, sl::K_Z);
+		m_pLibrary->RegisterCustomizeType(ANCHOR_SET, sl::KEYBOARD, sl::K_SPACE);
 	}
 
 	// アンカー回収 : ANCHOR_RETRIEVE
 	{
-		m_pLibrary->RegisterCustomizeType(ANCHOR_RETRIEVE, sl::KEYBOARD, sl::K_M);
+		m_pLibrary->RegisterCustomizeType(ANCHOR_RETRIEVE, sl::KEYBOARD, sl::K_C);
 	}
 
 	// ダッシュ : DASH
 	{
-		m_pLibrary->RegisterCustomizeType(DASH, sl::KEYBOARD, sl::K_D);
+		m_pLibrary->RegisterCustomizeType(DASH, sl::KEYBOARD, sl::K_LSHIFT);
+		m_pLibrary->RegisterCustomizeType(DASH, sl::KEYBOARD, sl::K_RSHIFT);
 	}
 
 	// ジャンプ : JUMP
 	{
-		m_pLibrary->RegisterCustomizeType(JUMP, sl::KEYBOARD, sl::K_A);
+		m_pLibrary->RegisterCustomizeType(JUMP, sl::KEYBOARD, sl::K_UP);
 	}
 
 	// しゃがむ : SQUAT
@@ -266,7 +267,7 @@ void MainGame::CutomizeInputDebug(void)
 
 	// 特殊アクション : SPECIAL_ACTION
 	{
-		m_pLibrary->RegisterCustomizeType(SPECIAL_ACTION, sl::KEYBOARD, sl::K_K);
+		m_pLibrary->RegisterCustomizeType(SPECIAL_ACTION, sl::KEYBOARD, sl::K_X);
 	}
 
 	//  時もどしの左ボタン : TIME_RETURN_L
@@ -282,7 +283,6 @@ void MainGame::CutomizeInputDebug(void)
 	// ポーズボタン : PAUSE
 	{
 		m_pLibrary->RegisterCustomizeType(PAUSE, sl::KEYBOARD, sl::K_P);
-		m_pLibrary->RegisterCustomizeType(PAUSE, sl::KEYBOARD, sl::K_T);
 	}
 }
 

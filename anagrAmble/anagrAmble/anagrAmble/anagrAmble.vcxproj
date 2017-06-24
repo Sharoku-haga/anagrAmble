@@ -171,6 +171,7 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea\SwitchOperatingArea.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\Stage.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageBackground.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjFactory.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjManager.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.cpp" />
@@ -238,6 +239,7 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea\SwitchOperatingArea.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\Stage.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageBackground.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjFactory.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.h" />

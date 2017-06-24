@@ -82,6 +82,9 @@ void LightDoor::Initialize(void)
 	// 時戻し終了イベント
 	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
 	m_pEventListener->RegisterSynEventFunc("space_change_return_end", std::bind(&ar::LightDoor::Close, this));
+
+	// ステージに位置を固定する
+	//m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 }
 
 void  LightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)

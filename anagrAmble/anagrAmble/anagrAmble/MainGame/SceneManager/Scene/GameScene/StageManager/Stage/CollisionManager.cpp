@@ -19,7 +19,7 @@ namespace ar
 namespace
 {
 
-const short		SwitchOperatingAreaCount = 3;		// スイッチ作動範囲のエリア数
+const short		SwitchOperatingAreaCount = 4;		// スイッチ作動範囲のエリア数
 
 }
 
