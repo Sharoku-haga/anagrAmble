@@ -19,7 +19,7 @@ namespace ar
 namespace
 {
 
-const short		SwitchOperatingAreaCount = 4;		// スイッチ作動範囲のエリア数
+const short		SwitchOperatingAreaCount = 3;		// スイッチ作動範囲のエリア数
 
 }
 
@@ -37,9 +37,22 @@ void CollisionManager::UpDate(void)
 	// スイッチ作動範囲が登録されているなら専用の衝突判定を行う
 	if(RESULT_FAILED(m_SwitchOperatingAreaData.empty()))
 	{
+		// OFFだけチェックする
 		for(auto& AreaData : m_SwitchOperatingAreaData)
 		{
-			CheckCollisionSwitchOperatingArea(AreaData);
+			if(AreaData.m_TypeID == ObjBase::SWITCH_OPERATING_AREA_OFF)
+			{
+				CheckCollisionSwitchOperatingArea(AreaData);
+			}
+		}
+
+		// ONだけチェックする
+		for(auto& AreaData : m_SwitchOperatingAreaData)
+		{
+			if(AreaData.m_TypeID == ObjBase::SWITCH_OPERATING_AREA_ON)
+			{
+				CheckCollisionSwitchOperatingArea(AreaData);
+			}
 		}
 	
 		// データをクリアする

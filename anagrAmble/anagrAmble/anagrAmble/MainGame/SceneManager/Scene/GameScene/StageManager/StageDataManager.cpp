@@ -91,9 +91,9 @@ bool StageDataManager::LoadDataFile(void)
 	return true;
 }
 
-void StageDataManager::SaveStageOriginData(void)
+void StageDataManager::SaveStageOriginalData(void)
 {
-	m_StageOriginData = m_CurrentStageData;
+	m_StageOriginalData = m_CurrentStageData;
 }
 
 void StageDataManager::AddStockStageData(void)
@@ -142,7 +142,7 @@ void StageDataManager::ReturnBeforeCurrentStageData(void)
 
 		if( i ==  m_StockStageDataOrder.size() - 1)
 		{	// 戻せるデータがなかったらオリジナルデータをいれる
-			m_CurrentStageData = m_StageOriginData;
+			m_CurrentStageData = m_StageOriginalData;
 		}
 	}
 

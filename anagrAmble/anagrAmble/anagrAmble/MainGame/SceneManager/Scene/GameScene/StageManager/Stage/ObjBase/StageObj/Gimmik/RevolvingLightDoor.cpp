@@ -29,6 +29,7 @@ const int LightBlockCount	= 4;			//!< 光ブロックの数
 RevolvingLightDoor::RevolvingLightDoor(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
 			, const Stage::INDEX_DATA& rStageIndexData,  int texID,  ObjBase::TYPE_ID typeID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
+	, m_OriginalTypeID(typeID)
 {
 	m_TypeID = typeID;
 	m_DrawingID.m_TexID = texID;
@@ -106,7 +107,7 @@ void RevolvingLightDoor::ProcessCollision(const CollisionManager::CollisionData&
 	{
 
 	case SWITCH_OPERATING_AREA_ON:
-		if(m_TypeID == REVOLVING_LIGHT_DOOR_HORIZONTAL)
+		if(m_OriginalTypeID == REVOLVING_LIGHT_DOOR_HORIZONTAL)
 		{
 			m_TypeID = REVOLVING_LIGHT_DOOR_VERTICAL;
 		}
@@ -119,15 +120,7 @@ void RevolvingLightDoor::ProcessCollision(const CollisionManager::CollisionData&
 		break;
 
 	case SWITCH_OPERATING_AREA_OFF:
-		if(m_TypeID == REVOLVING_LIGHT_DOOR_HORIZONTAL)
-		{
-			m_TypeID = REVOLVING_LIGHT_DOOR_VERTICAL;
-		}
-		else
-		{
-			m_TypeID = REVOLVING_LIGHT_DOOR_HORIZONTAL;
-		}
-
+		m_TypeID = m_OriginalTypeID;
 		Revolve();
 		break;
 
@@ -149,11 +142,11 @@ void RevolvingLightDoor::Run(void)
 
 void RevolvingLightDoor::Render(void)
 {
-	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
 	for(auto pblock : m_pLightBlocks)
 	{
 		pblock->Draw();
 	}
+	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
 }
 
 void RevolvingLightDoor::HandleEvent(void)
@@ -161,7 +154,14 @@ void RevolvingLightDoor::HandleEvent(void)
 
 void RevolvingLightDoor::Revolve(void)
 {
+	// 一旦光ブロックを元位置に戻す
+	for(auto& pLightBlock : m_pLightBlocks)
+	{
+		pLightBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+	}
+
 	Stage::INDEX_DATA checkIndexData;
+
 	switch(m_TypeID)
 	{
 	case REVOLVING_LIGHT_DOOR_HORIZONTAL:
