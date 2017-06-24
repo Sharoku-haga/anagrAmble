@@ -181,7 +181,7 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 		const sl::fRect		uv = { 0.5f, 0.177f, 0.55f, 0.354f };
 		m_VtxID[WALKING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 		m_UVAnimeID[WALKING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[WALKING], 7, true);
-		m_pLibrary->CreateUVAnimeData(m_VtxID[WALKING], m_UVAnimeID[WALKING], 7, 0, uv, 4);
+		m_pLibrary->CreateUVAnimeData(m_VtxID[WALKING], m_UVAnimeID[WALKING], 7, 0, uv, 3);
 
 		// アニメーションの順番指定
 

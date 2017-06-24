@@ -66,9 +66,13 @@ void SetOfThreeEmblemBlock::Initialize(void)
 
 	CheckSetofThreeBlock();
 
-	// 入れ替え処理終了イベント
+	// 空間入れ替え処理終了イベント
 	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
 	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::SetOfThreeEmblemBlock::CheckSetofThreeBlock, this));
+
+	// 時戻し終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_return_end", std::bind(&ar::SetOfThreeEmblemBlock::CheckSetofThreeBlock, this));
 }
 
 void SetOfThreeEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)

@@ -42,7 +42,6 @@ void StageManager::Contorl(void)
 	case STAGE_INIT:
 		m_pStageDataManager->LoadDataFile();
 		m_pStage->Initialize();
-		m_pStageDataManager->SaveStageOriginData();
 		m_CurrentState = STAGE_RUN;
 		break;
 

@@ -9,6 +9,8 @@
 #include "LightDoor.h"
 #include "../Block/LightBlock.h"
 #include "../../../../StageDataManager.h"
+#include "../../../../../GameEventManager/GameEventManager.h"
+#include "../../../../../GameEventManager/EventListener.h"
 
 namespace ar
 {
@@ -72,6 +74,14 @@ void LightDoor::Initialize(void)
 
 	// 扉を閉じる
 	Close();
+
+	// 空間入れ替え処理終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::LightDoor::Close, this));
+
+	// 時戻し終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_return_end", std::bind(&ar::LightDoor::Close, this));
 }
 
 void  LightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)

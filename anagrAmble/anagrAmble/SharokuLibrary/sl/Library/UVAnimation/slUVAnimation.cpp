@@ -92,7 +92,7 @@ bool UVAnimation::Upadate(void)
 		{
 			if(m_Repeat)
 			{
-				m_CurrentAnimeOrderNum = 0;
+				m_CurrentAnimeOrderNum = m_AnimeOrder[0];
 			}
 			else
 			{

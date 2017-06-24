@@ -44,11 +44,18 @@ public:
 	void InitialIze(StageDataManager* pStageDataManager);
 
 	/**
-	* ステージデータを入れ替える処理を行う関数
+	* スペース入れ替え処理を行う関数
 	* Stageクラス内でよぶ関数
 	* @return 結果 true→入れ替え成功、 false→失敗
 	*/
-	bool ChangeStageData(void);
+	bool ChangeSpace(void);
+
+	/**
+	* 入れ替えたスペースを元に戻す処理を行う関数
+	* Stageクラス内でよぶ関数
+	* @return 結果 true→処理終了、 false→処理継続
+	*/
+	bool ReturnChangedSpace(void);
 
 	/**
 	* Setter.挟んだ空間の開始インデックスデータをセットする関数
@@ -85,6 +92,7 @@ private:
 	Stage::INDEX_DATA			m_SandwichedSpaceEndIndex;			//!< 挟んだ空間の終了地点のインデックスデータ
 	Player*						m_pPlayer;							//!< Playerクラスのインスタンスへのポインタ
 	float						m_StageMapChipSize;					//!< ステージのチップサイズ
+	int							m_ChanegedSpaceReturningTimeCount;	//!< 入れ替えた空間戻し処理の時間のカウント数(ホワイトアウトの時間)
 
 	/**
 	* 入れ替えたい空間の開始地点のインデックスデータを計算する関数

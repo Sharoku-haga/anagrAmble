@@ -13,6 +13,14 @@
 
 namespace ar
 {
+/* Unnamed namespace ------------------------------------------------------------------------------------------ */
+
+namespace
+{
+
+const int ChanegedSpaceReturningTime = 25;			// 入れ替えた空間戻し処理の時間
+
+}
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
@@ -20,9 +28,10 @@ void StageDataChangeManager::InitialIze(StageDataManager* pStageDataManager)
 {
 	m_pStageDataManager = pStageDataManager;
 	m_StageMapChipSize = m_pStageDataManager->GetStageChipSize();
+	m_ChanegedSpaceReturningTimeCount = 0;
 }
 
-bool StageDataChangeManager::ChangeStageData(void)
+bool StageDataChangeManager::ChangeSpace(void)
 {
 	// 挟んだ空間内にプレイヤーがいるなら入れ替えはしない
 	if(m_pPlayer->GetStageIndex().m_XNum >= m_SandwichedSpaceStartIndex.m_XNum
@@ -51,8 +60,8 @@ bool StageDataChangeManager::ChangeStageData(void)
 
 	if(m_pPlayer->IsFacingRight())
 	{
-		if((changeStartIndexData.m_XNum + changeSpaceXNum) > (m_pStageDataManager->GetStageWidthChipNum() - 1))
-		{	// インデックスがステージに範囲を超えるなら入れ替えできない
+		if((changeStartIndexData.m_XNum + changeSpaceXNum) > (m_pStageDataManager->GetStageWidthChipNum() - 2))
+		{	// インデックスがステージに範囲(1番端の壁の向こう)を超えるなら入れ替えできない
 			return false;
 		}
 
@@ -102,7 +111,7 @@ bool StageDataChangeManager::ChangeStageData(void)
 	}
 	else
 	{
-		if((changeStartIndexData.m_XNum - changeSpaceXNum) < 0 )
+		if((changeStartIndexData.m_XNum - changeSpaceXNum) < 1 )
 		{	// インデックスがステージに範囲を超えるなら入れ替えできない
 			return false;
 		}
@@ -152,6 +161,20 @@ bool StageDataChangeManager::ChangeStageData(void)
 	}
 
 	return true;
+}
+
+bool StageDataChangeManager::ReturnChangedSpace(void)
+{
+	// 少し間をあけてから処理をする(ホワイトアウトさせるため)
+	if(m_ChanegedSpaceReturningTimeCount == ChanegedSpaceReturningTime)
+	{
+		m_pStageDataManager->ReturnBeforeCurrentStageData();
+		m_ChanegedSpaceReturningTimeCount = 0;
+		return true;
+	}
+
+	++m_ChanegedSpaceReturningTimeCount;
+	return false;
 }
 
 StageDataChangeManager::~StageDataChangeManager(void)
