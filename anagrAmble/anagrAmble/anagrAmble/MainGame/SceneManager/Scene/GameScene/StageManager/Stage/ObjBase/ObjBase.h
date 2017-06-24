@@ -174,7 +174,7 @@ protected:
 	sl::fRect				m_CurrentRectData;				//!< 位置座標 + 基本矩形サイズ
 	sl::DrawingID			m_DrawingID;					//!< 描画関連のIDをまとめた群
 	TYPE_ID					m_TypeID;						//!< オブジェクトのタイプID
-	EventListener*			m_pEventListener;					//!< EventListenerクラスのインスタンスへのポインタ
+	EventListener*			m_pEventListener;				//!< EventListenerクラスのインスタンスへのポインタ
 	StageDataManager*		m_pStageDataManager;			//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*		m_pCollisionManager;			//!< CollisionManagerクラスのインスタンスへのポインタ
 

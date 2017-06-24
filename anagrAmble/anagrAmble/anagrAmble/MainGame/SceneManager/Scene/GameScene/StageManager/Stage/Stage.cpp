@@ -13,6 +13,7 @@
 #include "../StageDataChangeManager.h"
 #include "CollisionManager.h"
 #include "BasePoint.h"
+#include "StageEffect/StageEffect.h"
 #include "ObjBase/Player/Player.h"
 #include "StageObjManager/StageObjManager.h"
 #include "StageBackground.h"
@@ -49,6 +50,8 @@ Stage::~Stage(void)
 
 void Stage::Initialize(void)
 {
+	ObjBase::SetDisplayArea(m_pLibrary->GetClientSize().m_Right, m_pLibrary->GetClientSize().m_Bottom);
+	StageEffect::SetDisplayArea(m_pLibrary->GetClientSize().m_Right, m_pLibrary->GetClientSize().m_Bottom);
 	ObjBase::SetStageChipSize(m_pStageDataManager->GetStageChipSize());
 	
 	m_PlayerTexID = m_pLibrary->LoadTexture("../Resource/GameScene/PlayerFile.png");
@@ -69,9 +72,9 @@ void Stage::Initialize(void)
 	m_pPlayer->Initialize();
 	m_pStageObjManager->InitializeStageObj();
 
-	// ステージの元データをセーブして、
-	// プレイヤーの位置を現在のデータからなくす→入れ替え処理の妨げになるため
+	// ステージの元データをセーブする
 	m_pStageDataManager->SaveStageOriginalData();
+	// プレイヤーが入れ替えできないようにする為ステージデータから消す
 	m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YNum, m_pPlayer->GetStageIndex().m_XNum);
 
 	// ベースポイントの設定を行う 

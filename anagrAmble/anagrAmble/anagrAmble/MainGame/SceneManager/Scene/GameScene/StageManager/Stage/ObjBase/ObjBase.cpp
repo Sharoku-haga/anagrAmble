@@ -17,7 +17,7 @@ namespace ar
 /* Static Variable -------------------------------------------------------------------------------------------- */
 
 sl::SLVECTOR2	ObjBase::m_BasePointPos		= {0.0f, 0.0f};
-sl::fRect		ObjBase::m_DisplayArea		= {0.0f, 0.0f, 1920.0f, 0.0f};
+sl::fRect		ObjBase::m_DisplayArea		= {0.0f, 0.0f, 0.0f, 0.0f};
 float			ObjBase::m_StageChipSize	= 0.0f;
 
 /* Public Functions ------------------------------------------------------------------------------------------- */

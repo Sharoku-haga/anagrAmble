@@ -85,6 +85,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\SwitchOperatingArea">
       <UniqueIdentifier>{c7ddd97e-3d4b-4ef9-9a62-d3cc0be00ee9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect">
+      <UniqueIdentifier>{97e40374-2ee0-43d3-92bc-1c5916a216bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -282,6 +285,9 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventListener.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -478,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventListener.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

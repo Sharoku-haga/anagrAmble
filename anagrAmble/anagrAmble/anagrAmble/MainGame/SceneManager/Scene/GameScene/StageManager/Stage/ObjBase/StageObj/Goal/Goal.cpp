@@ -19,7 +19,7 @@ namespace ar
 namespace
 {
 
-const sl::fRect		GoalUV				= { 0.6f, 0.444f, 0.75f, 0.8f	};				// TyepIDがGoalの画像のUV値
+const sl::fRect		GoalUV				= { 0.45f, 0.444f, 0.6f, 0.8f	};				// TyepIDがGoalの画像のUV値
 const sl::fRect		LockedGoalUV		= { 0.0f, 0.088f, 0.15f, 0.444f	};				// TyepIDがLockedGoalの画像のUV値
 
 }

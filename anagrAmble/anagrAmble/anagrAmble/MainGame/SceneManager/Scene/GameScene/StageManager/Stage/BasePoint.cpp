@@ -10,6 +10,7 @@
 #include "../../GameEventManager/GameEventManager.h"
 #include "../../GameEventManager/EventListener.h"
 #include "ObjBase/ObjBase.h"
+#include "StageEffect/StageEffect.h"
 #include "ObjBase/Player/Player.h"
 #include "../../../../../ControllerEnum.h"
 #include "ObjBase/Player/SandwichedStageSpace/SandwichedStageSpaceObj.h"
@@ -70,6 +71,7 @@ void BasePoint::Initialize(float stageWidth, Player* pPlayer)
 
 	// ObJbaseのBasePointPosを更新する
 	ObjBase::SetBasePointPos(m_Pos);
+	StageEffect::SetBasePointPos(m_Pos);
 	SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
 	SandwichedSpaceBackground::SetBasePointPos(m_Pos);
 
@@ -93,6 +95,7 @@ void BasePoint::Move(void)
 			m_Pos.x = 0.0f;
 		}
 		ObjBase::SetBasePointPos(m_Pos);
+		StageEffect::SetBasePointPos(m_Pos);
 		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
 		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
 		m_OldPlayerPos = m_CurrentPlayerPos;
@@ -106,6 +109,7 @@ void BasePoint::Move(void)
 		}
 
 		ObjBase::SetBasePointPos(m_Pos);
+		StageEffect::SetBasePointPos(m_Pos);
 		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
 		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
 		m_OldPlayerPos = m_CurrentPlayerPos;
@@ -125,6 +129,7 @@ void BasePoint::Move(void)
 		}
 
 		ObjBase::SetBasePointPos(m_Pos);
+		StageEffect::SetBasePointPos(m_Pos);
 		SandwichedStageSpaceObj::SetBasePointPos(m_Pos);
 		SandwichedSpaceBackground::SetBasePointPos(m_Pos);
 		m_OldPlayerPos = m_CurrentPlayerPos;

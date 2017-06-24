@@ -81,6 +81,9 @@ void RevolvingLightDoor::Initialize(void)
 	// 時戻し終了イベント
 	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
 	m_pEventListener->RegisterSynEventFunc("space_change_return_end", std::bind(&ar::RevolvingLightDoor::Revolve, this));
+
+	// ステージに位置を固定する
+	//m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 }
 
 void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -90,6 +93,8 @@ void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+
+	m_TypeID = m_OriginalTypeID;
 
 	// 光ブロックを自分の位置にもどしてから再度展開
 	for(auto& pLightBlock : m_pLightBlocks)
