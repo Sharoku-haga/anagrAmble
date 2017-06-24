@@ -28,9 +28,6 @@ SwitchOperatingArea::SwitchOperatingArea(StageDataManager* pStageDataManager, Co
 SwitchOperatingArea::~SwitchOperatingArea(void)
 {}
 
-void SwitchOperatingArea::Draw(void)
-{}
-
 void SwitchOperatingArea::SwitchOnState(void)
 {
 	m_TypeID = ObjBase::SWITCH_OPERATING_AREA_ON;

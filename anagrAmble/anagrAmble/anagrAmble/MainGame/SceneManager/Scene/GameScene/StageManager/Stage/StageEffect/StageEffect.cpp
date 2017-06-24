@@ -39,15 +39,9 @@ void StageEffect::Control(void)
 
 void StageEffect::Draw(void)
 {
-	// 画面外にあるオブジェクトは描画しない
-	if( m_Pos.x < (m_BasePointPos.x - AreaCorrectionVal)
-		|| m_Pos.x > (m_BasePointPos.x + AreaCorrectionVal + m_DisplayArea.m_Right))
-	{
-		return;
-	}
-	
 	Render();
 }
+
 }	// namespace ar
 
 //==================================================================================================================================//

@@ -77,7 +77,6 @@ void ElectricalBlock::ProcessCollision(const CollisionManager::CollisionData& rD
 		break;
 
 	case SWITCH_OPERATING_AREA_OFF:
-
 		// スイッチがOFF状態なら通電状態にする
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, ElectricalOnUV);
 		m_IsEnergizedState = true;

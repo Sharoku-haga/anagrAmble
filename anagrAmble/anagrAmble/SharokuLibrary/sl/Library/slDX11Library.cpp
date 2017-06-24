@@ -170,6 +170,7 @@ void DX11Library::UpdateUVAnime(int vtxID, int animeID)
 void DX11Library::ReturnUVAnimeInitialState(int vtxID, int animeID)
 {
 	m_pUVAnimationManager->ReturnUVAnimeInitialState(vtxID, animeID);
+	m_pVertex2DManager->SetUV(vtxID, m_pUVAnimationManager->GetCurrentAnimeUV(vtxID, animeID));
 }
 
 bool DX11Library::CheckLastNumCurrnttUVAnime(int vtxID, int animeID)

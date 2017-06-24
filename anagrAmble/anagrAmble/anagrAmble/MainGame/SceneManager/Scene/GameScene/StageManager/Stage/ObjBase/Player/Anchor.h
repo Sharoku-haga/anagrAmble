@@ -13,6 +13,7 @@ namespace ar
 {
 
 class Player;
+class AnchorLightEffect;
 
 //======================================================================//
 //!< プレイヤーが使用するアンカーのクラス
@@ -38,7 +39,7 @@ public:
 
 	/**
 	* ペアとなるAnchorクラスのインスタンスへのポインタをセットする関数
-	* @attention ペアになるAnchorクラスのインスタンスを生成したら、ペアのクラスとともに必ずよぶこと
+	* @attention 初期化関数の前で、ペアのクラスとともに必ずよぶこと
 	* @param[in] pPairAnchor ペアになるAnchorクラスのインスタンスへのポインタ
 	*/
 	void SetPairAnchorPointer(Anchor* pPairAnchor) { m_pPairAnchor = pPairAnchor; }
@@ -80,9 +81,16 @@ public:
 	bool GetHasPlacePosStage(void) { return m_HasPlacePosStage; }
 
 	/**
+	* 初期化関数
+	* @attention 初期関数はこちらを使用する
+	* 関数内でInitialize関数をよんでいる
+	*/
+	void InitializeData(Anchor* pPairAnchor);
+
+	/**
 	* 初期化関数. 
-	* このクラスの場合、
-	* PlayerModeの初期化関数内でよぶ
+	* ***********このクラスの場合、この関数は使用しない。****************
+	* ***********上記のInitializeData関数を使用する***************
 	*/
 	virtual void Initialize(void)override;
 
@@ -100,22 +108,29 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 	 
 private:
-	Player*		m_pPlayer;					//!< オーナーとなるPlayerクラスのインスタンスへのポインタ
-	Anchor*		m_pPairAnchor;				//!< ペアとなるAnchorクラスのインスタンスへのポインタ
-	bool		m_HasPlacePosStage;			//!< 位置座標がステージに置かれたかどうか. true→置かれている false→置かれていない
-	bool		m_HasCollidedWithPlayer;	//!< プレイヤー衝突したかどうか. true→衝突している false→衝突していない
-
-	/** 
-	* イベント処理関数
-	* この関数内でEventListenerから受け取ったイベントの処理を行う
-	*/
-	virtual void HandleEvent(void)override;
+	Player*				m_pPlayer;					//!< オーナーとなるPlayerクラスのインスタンスへのポインタ
+	AnchorLightEffect*	m_pLightEffect;				//!< エフェクト.AnchorLightEffectクラスのインスタンスへのポインタ
+	Anchor*				m_pPairAnchor;				//!< ペアとなるAnchorクラスのインスタンスへのポインタ
+	bool				m_HasPlacePosStage;			//!< 位置座標がステージに置かれたかどうか. true→置かれている false→置かれていない
+	bool				m_HasCollidedWithPlayer;	//!< プレイヤー衝突したかどうか. true→衝突している false→衝突していない
 
 	/**
 	* 位置を調整するコールバック関数
 	* 衝突処理により、プレイヤーの位置が変更に使用する
 	*/
 	void AdjustPos(void);
+
+	/**
+	* プレイヤーの前を移動する関数
+	* ステージに置かれていないときに使用する
+	*/
+	void MovePlayerFront(void);
+
+	/** 
+	* イベント処理関数
+	* この関数内でEventListenerから受け取ったイベントの処理を行う
+	*/
+	virtual void HandleEvent(void)override;
 
 };	// class Anchor
 

@@ -23,7 +23,7 @@ public:
 	StageEffect(void);
 
 	/** Destructor */
-	~StageEffect(void) = default;
+	virtual ~StageEffect(void) = default;
 
 	/** コントロール関数 */
 	void Control(void);
@@ -36,6 +36,11 @@ public:
 	* 座標などをここで設定する
 	*/
 	virtual void Initialize(void) = 0;
+
+	/** 
+	* ステージの位置を変更する関数. 純粋仮想関数
+	*/
+	virtual void ChangeStagePos(sl::SLVECTOR2 pos) = 0;
 
 	/** 
 	* Setter ベースポイントの位置座標をセットする関数.static
@@ -54,7 +59,7 @@ public:
 		m_DisplayArea.m_Bottom = displayHeight;
 	}
 
-private:
+protected:
 	static	sl::SLVECTOR2	m_BasePointPos;					//!< ベースポイントの位置座標.static
 	static  sl::fRect		m_DisplayArea;					//!< 画面範囲.static
 
