@@ -43,7 +43,7 @@ public:
 	* ステージのオリジナルデータを保存する関数
 	* StageManagerの初期化がすべて終わったらよぶ
 	*/
-	void SaveStageOriginData(void);
+	void SaveStageOriginalData(void);
 
 	/**
 	* StockStageDataに現在のステージデータを加える関数
@@ -144,7 +144,7 @@ private:
 	short												m_StageWidthChipNum;		//!< ステージチップの横の数
 	short												m_StageHeightChipNum;		//!< ステージチップの縦の数
 	std::vector<std::vector<short>>						m_LoadStageIndexData;		//!< ファイルからロードしたステージのインデックスデータを格納する二次元配列(vector)
-	std::vector<std::vector<ObjBase*>>					m_StageOriginData;			//!< 今回のステージの元データを格納する二次元配列(vector)
+	std::vector<std::vector<ObjBase*>>					m_StageOriginalData;		//!< 今回のステージの元データを格納する二次元配列(vector)
 	std::vector<std::vector<ObjBase*>>					m_CurrentStageData;			//!< 現在のステージデータを格納する二次元配列(vector)
 	std::vector<int>									m_StockStageDataOrder;		//!< ストックしているステージデータの順番
 	std::vector<std::vector<std::vector<ObjBase*>>>		m_StockStageData;			//!< ストックしているステージデータを格納する三次元配列(vector)

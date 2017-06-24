@@ -18,8 +18,8 @@ namespace ar
 namespace
 {
 
-const sl::fRect		BlockOffUV						= { 0.15f, 0.0f, 0.2f, 0.088f};				// 感圧OFFのときのUV値
-const sl::fRect		BlockOnUV						= {0.1f, 0.0f, 0.15f,  0.088f};				// 感圧ONのときのUV値
+const sl::fRect		BlockOnUV						= { 0.15f, 0.0f, 0.2f, 0.088f};				// 感圧ONのときのUV値
+const sl::fRect		BlockOffUV						= { 0.1f, 0.0f, 0.15f,  0.088f};			// 感圧OFFのときのUV値
 const float			CollisionCorrectionVal			= 12.f;										// 衝突における判定の補正値
 
 }
@@ -82,8 +82,6 @@ void PressureSensitiveBlock::ProcessCollision(const CollisionManager::CollisionD
 			&& std::abs(m_Pos.x - rData.m_ObjPos.x) < m_StageChipSize - CollisionCorrectionVal)
 		{
 			m_HasCollidedWithPlayer = true;
-			m_pSwitchOperatingArea->SwitchOnState();
-			m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
 		}
 
 		break;
@@ -101,6 +99,9 @@ void PressureSensitiveBlock::Run(void)
 	if(m_HasCollidedWithPlayer)
 	{
 		m_HasCollidedWithPlayer = false;
+		m_pSwitchOperatingArea->SwitchOnState();
+		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
+		return;
 	}
 	else
 	{

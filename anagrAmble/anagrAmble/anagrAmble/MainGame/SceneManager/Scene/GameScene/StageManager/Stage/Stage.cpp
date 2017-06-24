@@ -71,7 +71,7 @@ void Stage::Initialize(void)
 
 	// ステージの元データをセーブして、
 	// プレイヤーの位置を現在のデータからなくす→入れ替え処理の妨げになるため
-	m_pStageDataManager->SaveStageOriginData();
+	m_pStageDataManager->SaveStageOriginalData();
 	m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YNum, m_pPlayer->GetStageIndex().m_XNum);
 
 	// ベースポイントの設定を行う 

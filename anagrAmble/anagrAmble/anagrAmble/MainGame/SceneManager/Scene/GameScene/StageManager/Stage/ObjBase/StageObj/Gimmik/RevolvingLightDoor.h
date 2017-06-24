@@ -55,6 +55,7 @@ public:
 
 private:
 	std::vector<LightBlock*>			m_pLightBlocks;			//!< LightBlockクラスのインスタンスへのポインタを格納するvector
+	ObjBase::TYPE_ID					m_OriginalTypeID;		//!< 元のタイプID
 
 	/** 
 	* 処理実行関数 
