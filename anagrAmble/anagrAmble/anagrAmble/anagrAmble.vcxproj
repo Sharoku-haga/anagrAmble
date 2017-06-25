@@ -142,6 +142,7 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageManager.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\BasePoint.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\CollisionManager.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI\GoddessPointUI.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\ObjBase.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\Anchor.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\BasePoint.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\CollisionManager.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI\GoddessPointUI.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\ObjBase.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\Anchor.h" />

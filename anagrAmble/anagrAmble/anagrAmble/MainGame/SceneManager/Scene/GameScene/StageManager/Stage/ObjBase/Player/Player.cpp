@@ -324,8 +324,9 @@ void Player::HandleEvent(void)
 				{	// 死んでいるなら、待機状態にもどす
 					m_pPlayerMotion->ChangeWaitingMotion();
 				}
-				// 通常の入れ替え戻しが完了したら、女神の加護の数値を減らす
+				// 通常の入れ替え戻しが完了したら、女神の加護の数値を減らし、イベントをとばす
 				--m_GoddessPointCount;
+				GameEventManager::Instance().ReceiveEvent("goddess_point_minus");
 
 				// 元データから消しておく
 				m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);

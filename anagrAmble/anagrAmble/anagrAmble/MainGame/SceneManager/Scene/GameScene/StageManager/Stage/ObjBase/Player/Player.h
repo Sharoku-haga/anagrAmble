@@ -96,6 +96,12 @@ public:
 	bool IsFacingRight(void);
 
 	/**
+	* 女神の加護の数を取得する関数
+	* @return 女神の加護の数
+	*/
+	int GetGoddessPointCount(void) { return m_GoddessPointCount; }
+
+	/**
 	* 初期化関数. 
 	* オブジェクトの生成後(ステージ初期化の時)によぶ
 	*/
