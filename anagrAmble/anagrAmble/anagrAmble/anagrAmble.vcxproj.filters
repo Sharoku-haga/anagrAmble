@@ -288,6 +288,9 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\AnchorLightEffect.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -486,6 +489,9 @@
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager</Filter>
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\AnchorLightEffect.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect</Filter>
     </ClInclude>
   </ItemGroup>

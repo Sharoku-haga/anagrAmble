@@ -83,6 +83,12 @@ public:
 	inline float GetStageWidth(void) { return m_StageWidth; }
 
 	/**
+	* Getter.ステージの縦の長さを取得する関数
+	* @return ステージの縦の長さ
+	*/
+	inline float GetStageHeight(void) { return m_StageHeight; }
+
+	/**
 	* Getter. ステージの横のチップ数を取得する関数
 	* @return ステージの横のチップ数
 	*/

@@ -8,7 +8,6 @@
 
 #include "slUVAnimation.h"
 
-
 namespace sl
 {
 
@@ -92,7 +91,7 @@ bool UVAnimation::Upadate(void)
 		{
 			if(m_Repeat)
 			{
-				m_CurrentAnimeOrderNum = m_AnimeOrder[0];
+				m_CurrentAnimeOrderNum = 0;
 			}
 			else
 			{
@@ -118,7 +117,7 @@ void UVAnimation::ReturnInitialState(void)
 {
 	m_CurrentAnimeOrderNum = 0;
 	m_CurentDispFlameCount = 0;
-	m_CurrentAnimeData = m_AnimeData[0];
+	m_CurrentAnimeData = m_AnimeData[m_AnimeOrder[m_CurrentAnimeOrderNum]];
 }
 
 bool UVAnimation::CheckLastNumCurrnttAnime(void)

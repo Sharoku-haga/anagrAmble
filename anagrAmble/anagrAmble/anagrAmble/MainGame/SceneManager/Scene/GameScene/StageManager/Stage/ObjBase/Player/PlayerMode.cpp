@@ -32,9 +32,6 @@ PlayerMode::PlayerMode(StageDataManager* pStageDataManager, CollisionManager* pC
 							, m_pPlayer->GetStageIndex(), m_pPlayer, texID);
 	}
 
-	m_pAnchors[0]->SetPairAnchorPointer(m_pAnchors[1]);
-	m_pAnchors[1]->SetPairAnchorPointer(m_pAnchors[0]);
-
 	m_pSandwichedStageSpace = new SandwichedStageSpace(pStageDataManager, pCollisionManager, pPlayer);
 }
 
@@ -50,10 +47,8 @@ PlayerMode::~PlayerMode(void)
 
 void PlayerMode::InitializeAnchor(void)
 {
-	for(auto& pAnchor : m_pAnchors)
-	{
-		pAnchor->Initialize();
-	}
+	m_pAnchors[0]->InitializeData(m_pAnchors[1]);
+	m_pAnchors[1]->InitializeData(m_pAnchors[0]);
 }
 
 void PlayerMode::Control(void)

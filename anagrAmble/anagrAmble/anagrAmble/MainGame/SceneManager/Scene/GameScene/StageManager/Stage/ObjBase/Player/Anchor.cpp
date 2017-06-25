@@ -9,6 +9,7 @@
 #include <cmath> 
 #include "Anchor.h"
 #include "Player.h"
+#include "../../StageEffect/AnchorLightEffect.h"
 #include "../../../StageDataManager.h"
 #include "../../../../GameEventManager/GameEventManager.h"
 #include "../../../../GameEventManager/EventListener.h"
@@ -31,16 +32,19 @@ Anchor::Anchor(StageDataManager* pStageDataManager, CollisionManager* pCollision
 			, const Stage::INDEX_DATA& rStageIndexData, Player* pPlayer, int texID)
 	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
 	, m_pPlayer(pPlayer)
+	, m_pLightEffect(nullptr)
 	, m_HasPlacePosStage(false)
 	, m_HasCollidedWithPlayer(false)
 
 {
 	m_TypeID = ANCHOR;
 	m_DrawingID.m_TexID = texID;
+	m_pPairAnchor;
 }
 
 Anchor::~Anchor(void)
 {
+	sl::DeleteSafely(&m_pLightEffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -52,29 +56,26 @@ void Anchor::Control(void)
 
 	if(m_HasPlacePosStage)
 	{
-		if(m_Pos.x < m_BasePointPos.x
-			|| m_Pos.x >(m_BasePointPos.x + m_DisplayArea.m_Right))
+		if(m_Pos.x >= m_BasePointPos.x
+			|| m_Pos.x  <= (m_BasePointPos.x + m_DisplayArea.m_Right))
 		{
-			return;
+			// フィールドに置かれており、かつ画面内にあるなら衝突判定に登録する
+			m_pCollisionManager->SetObjBasePointer(this);
 		}
-		
-		// フィールドに置かれており、かつ画面内にあるなら衝突判定に登録する
-		m_pCollisionManager->SetObjBasePointer(this);
 	}
 	else
 	{
-		// プレイヤーの前に常に座標を置く
-		PlacePosPlayerFront();
+		// プレイヤーの前を常に動く
+		MovePlayerFront();
 	}
+
+	m_pLightEffect->Control();
 }
 
 void Anchor::Draw(void)
 {
-	if(m_Pos.x < m_BasePointPos.x
-		|| m_Pos.x >(m_BasePointPos.x + m_DisplayArea.m_Right))
-	{
-		return;
-	}
+	m_pLightEffect->Draw();
+
 	// 画面内にあるなら描画する
 	m_pLibrary->Draw2D(m_DrawingID, (m_Pos - m_BasePointPos));
 }
@@ -113,6 +114,12 @@ void Anchor::PlacePosStage(void)
 		// プレイヤーの位置座標からインデックスをずらして位置調整をする
 		short xNumCorrectionVal =  m_pPlayer->IsFacingRight() ?  2 : -2 ;
 
+		if( m_pPairAnchor->GetHasPlacePosStage()
+			&& (playerIndex.m_XNum + xNumCorrectionVal) == m_pPairAnchor->GetStageIndex().m_XNum)
+		{	// ぺアとなるアンカーがすでにおかれているなら即return
+			return;
+		}
+
 		if(std::abs((playerIndex.m_XNum + xNumCorrectionVal) - m_pPairAnchor->GetStageIndex().m_XNum) > PairAreaIntervalChipCount)
 		{	// アンカーの間がペアとのエリア間隔チップ数よりはなれていたら即return
 			return;
@@ -121,9 +128,15 @@ void Anchor::PlacePosStage(void)
 		m_Pos.x = ((playerIndex.m_XNum + xNumCorrectionVal) * m_StageChipSize);
 		m_StageIndexData.m_XNum += xNumCorrectionVal;
 	}
-	else 
+	else
 	{
-		short xNumCorrectionVal =  m_pPlayer->IsFacingRight() ?  1 : -1 ;
+		short xNumCorrectionVal = m_pPlayer->IsFacingRight() ? 1 : -1;
+
+		if(m_pPairAnchor->GetHasPlacePosStage()
+			&& (playerIndex.m_XNum + xNumCorrectionVal) == m_pPairAnchor->GetStageIndex().m_XNum)
+		{	// ぺアとなるアンカーがすでにおかれているなら即return
+			return;
+		}
 
 		if(std::abs((playerIndex.m_XNum + xNumCorrectionVal) - m_pPairAnchor->GetStageIndex().m_XNum) > PairAreaIntervalChipCount)
 		{	// アンカーの間がペアとのエリア間隔チップ数よりはなれていたら即return
@@ -137,8 +150,13 @@ void Anchor::PlacePosStage(void)
 	m_HasPlacePosStage = true;
 	m_Pos.y = m_pPlayer->GetPos().y + m_StageChipSize / 2;
 
-	// 設置されるので半透明を解除する
-	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 1.0f);
+	m_pLightEffect->ChangeStagePos(m_Pos);
+
+	// 設置されるのでサイズ(見えている光エフェクトの範囲)を大きくし、透明にする
+	m_RectSize.m_Top	=  -((m_pStageDataManager->GetStageHeight()) / 2);
+	m_RectSize.m_Bottom = ((m_pStageDataManager->GetStageHeight()) / 2);
+	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.0f);
+
 }
 
 void Anchor::PlacePosPlayerFront(void)
@@ -146,23 +164,22 @@ void Anchor::PlacePosPlayerFront(void)
 	m_HasPlacePosStage = false;
 	m_HasCollidedWithPlayer = false;
 
-	// ステージインデックスをプレイヤーにあわせる
-	Stage::INDEX_DATA playerIndex = m_pPlayer->GetStageIndex();
-	m_StageIndexData.m_XNum = playerIndex.m_XNum;
-	m_StageIndexData.m_YNum = playerIndex.m_YNum;
+	// プレイヤー前に移動
+	MovePlayerFront();
 
-	// プレイヤーの前に位置するよう座標を調整
-	// 向きのによって位置調整
-	float posXCorrectionVal =  m_pPlayer->IsFacingRight() ?  m_StageChipSize / 2 : -(m_StageChipSize / 2) ;
-	m_Pos.x = m_pPlayer->GetPos().x + posXCorrectionVal;
-	m_Pos.y = m_pPlayer->GetPos().y + m_StageChipSize / 2;
+	m_pLightEffect->ChangeStagePos(m_Pos);
 
-	m_StageIndexData.m_XNum = 0;
-	m_StageIndexData.m_YNum = 0;
-
-	// ステージに設置されていないので少し半透明にしておく
-	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.5f);
+	// ステージに設置されていないのでサイズを元に戻し、透明を解除する
+	m_RectSize.m_Top	=  -(m_StageChipSize / 2);
+	m_RectSize.m_Bottom = (m_StageChipSize / 2);
+	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 1.0f);
 	m_HasCollidedWithPlayer = false;
+}
+
+void Anchor::InitializeData(Anchor* pPairAnchor)
+{
+	m_pPairAnchor = pPairAnchor;
+	Initialize();
 }
 
 void Anchor::Initialize(void)
@@ -172,9 +189,13 @@ void Anchor::Initialize(void)
 	m_RectSize.m_Right	= (m_StageChipSize / 2);
 	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 	
-	const sl::fRect		uv = {0.891f, 0.955f, 0.916f, 1.0f};
+	const sl::fRect		uv = {0.891f, 0.91f, 0.916f, 0.955f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+
+	/** エフェクトの作成 */
+	m_pLightEffect = new AnchorLightEffect(this, m_pPairAnchor, m_pStageDataManager->GetStageHeight(), m_DrawingID.m_TexID);
+	m_pLightEffect->Initialize();
 
 	/** プレイヤーの前に座標をおく */
 	PlacePosPlayerFront();
@@ -193,9 +214,7 @@ void Anchor::Initialize(void)
 }
 
 void Anchor::ChangeStagePos(short yIndexNum, short xIndexNum)
-{
-	// 空処理.よばれることはない
-}
+{}
 
 void Anchor::ProcessCollision(const CollisionManager::CollisionData& rData)
 {
@@ -212,6 +231,43 @@ void Anchor::ProcessCollision(const CollisionManager::CollisionData& rData)
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
+
+void Anchor::AdjustPos(void)
+{
+	if(m_HasPlacePosStage)
+	{	// ステージにおかれていたら即return
+		return;
+	}
+
+	MovePlayerFront();
+}
+
+void Anchor::MovePlayerFront(void)
+{
+	// ステージインデックスにプレイヤーのインデックスを入れる
+	Stage::INDEX_DATA playerIndex = m_pPlayer->GetStageIndex();
+	m_StageIndexData.m_XNum = playerIndex.m_XNum;
+	m_StageIndexData.m_YNum = playerIndex.m_YNum;
+
+	// ブロックとブロックの隙間に位置するように座標を調整
+	if(std::abs(m_pPlayer->GetPos().x - playerIndex.m_XNum * m_StageChipSize) > ((m_StageChipSize / 2) + (m_StageChipSize / 4)))
+	{
+		// プレイヤーの位置座標からインデックスをずらして位置調整をする
+		short xNumCorrectionVal =  m_pPlayer->IsFacingRight() ?  2 : -2 ;
+
+		m_StageIndexData.m_XNum += xNumCorrectionVal;
+	}
+	else
+	{
+		short xNumCorrectionVal = m_pPlayer->IsFacingRight() ? 1 : -1;
+		m_StageIndexData.m_XNum += xNumCorrectionVal;
+	}
+
+	// 座標計算
+	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize;
+	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
+
+}
 
 void Anchor::HandleEvent(void)
 {
@@ -244,24 +300,6 @@ void Anchor::HandleEvent(void)
 	}
 }
 
-void Anchor::AdjustPos(void)
-{
-	if(m_HasPlacePosStage)
-	{	// ステージにおかれていたら即return
-		return;
-	}
-
-	// ステージインデックスをプレイヤーにあわせる
-	Stage::INDEX_DATA playerIndex = m_pPlayer->GetStageIndex();
-	m_StageIndexData.m_XNum = playerIndex.m_XNum;
-	m_StageIndexData.m_YNum = playerIndex.m_YNum;
-
-	// プレイヤーの前に位置するよう座標を調整
-	// 向きのによって位置調整
-	float posXCorrectionVal =  m_pPlayer->IsFacingRight() ?  m_StageChipSize / 2 : -(m_StageChipSize / 2) ;
-	m_Pos.x = m_pPlayer->GetPos().x + posXCorrectionVal;
-	m_Pos.y = m_pPlayer->GetPos().y + m_StageChipSize / 2;
-}
 
 }	// namespace ar
 

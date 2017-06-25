@@ -82,7 +82,6 @@ void PairOfEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_pSwitchOperatingArea->SwitchOffState();
-
 	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
 	CheckPairBlock();
 }

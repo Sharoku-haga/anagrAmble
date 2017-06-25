@@ -94,7 +94,7 @@ private:
 	std::vector<AnimeData>		m_AnimeData;				//!< アニメデータを格納している配列(vector)
 	std::vector<int>			m_AnimeOrder;				//!< アニメーションの順番を格納している配列(vector)
 	int							m_AnimePatternCount;		//!< アニメーションのパターン数
-	int							m_CurrentAnimeOrderNum;		//!< 現在のアニメーションの順番の番号
+	unsigned int				m_CurrentAnimeOrderNum;		//!< 現在のアニメーションの順番の番号
 	int							m_CurentDispFlameCount;		//!< 現在のアニメーションを表示しているフレームカウント数
 	AnimeData					m_CurrentAnimeData;			//!< 現在のアニメデータ
 	bool						m_Repeat;					//!< アニメーションを繰り返すかどうかのフラグ true→繰り返す false→繰り返さない 

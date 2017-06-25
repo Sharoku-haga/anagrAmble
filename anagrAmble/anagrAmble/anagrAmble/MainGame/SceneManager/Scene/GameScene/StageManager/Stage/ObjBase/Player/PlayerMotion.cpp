@@ -170,7 +170,7 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 
 	// 待機
 	{
-		const sl::fRect		uv = { 0.0f, 0.0f, 0.05f, 0.176f };
+		sl::fRect		uv = { 0.0f, 0.0f, 0.05f, 0.176f };
 		m_VtxID[WAITING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 		m_UVAnimeID[WAITING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[WAITING], 5, true);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[WAITING], m_UVAnimeID[WAITING], 5, 0, uv, 8);
@@ -178,7 +178,7 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 
 	// 歩き
 	{
-		const sl::fRect		uv = { 0.5f, 0.177f, 0.55f, 0.354f };
+		sl::fRect		uv = { 0.5f, 0.177f, 0.55f, 0.354f };
 		m_VtxID[WALKING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 		m_UVAnimeID[WALKING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[WALKING], 7, true);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[WALKING], m_UVAnimeID[WALKING], 7, 0, uv, 3);
@@ -201,7 +201,7 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 
 	// 走っている
 	{
-		const sl::fRect		uv = { 0.0f, 0.355f, 0.05f, 0.533f };
+		sl::fRect		uv = { 0.0f, 0.355f, 0.05f, 0.533f };
 		m_VtxID[RUNNING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 		m_UVAnimeID[RUNNING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[RUNNING], 9, true);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[RUNNING], m_UVAnimeID[RUNNING], 9, 0, uv, 2);
@@ -209,7 +209,7 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 
 	// ジャンプ
 	{
-		const sl::fRect		uv = { 0.5f, 0.355f, 0.55f, 0.533f };
+		sl::fRect		uv = { 0.5f, 0.355f, 0.55f, 0.533f };
 		m_VtxID[JUMPING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 		m_UVAnimeID[JUMPING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[JUMPING], 4);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[JUMPING], m_UVAnimeID[JUMPING], 4, 0, uv, 2);
@@ -217,7 +217,7 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 
 	// 落下(今のところは待機と一緒)
 	{
-		const sl::fRect		uv = { 0.75f, 0.355f, 0.8f, 0.533f };
+		sl::fRect		uv = { 0.75f, 0.355f, 0.8f, 0.533f };
 		m_VtxID[FALLING] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 		m_UVAnimeID[FALLING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[FALLING], 1);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[FALLING], m_UVAnimeID[FALLING], 1, 0, uv, 10);
@@ -225,7 +225,7 @@ void PlayerMotion::InitializeVertex(const sl::fRect& rPlayerRect)
 
 	// 死亡
 	{
-		const sl::fRect		uv = { 0.35f, 0.533f, 0.4f, 0.711f };
+		sl::fRect		uv = { 0.35f, 0.533f, 0.4f, 0.711f };
 		m_VtxID[DEATH] = m_pLibrary->CreateVertex2D(rPlayerRect, uv);
 		m_UVAnimeID[DEATH] = m_pLibrary->RegisterUVAnimeID(m_VtxID[DEATH], 10);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[DEATH], m_UVAnimeID[DEATH], 10, 0, uv, 4);

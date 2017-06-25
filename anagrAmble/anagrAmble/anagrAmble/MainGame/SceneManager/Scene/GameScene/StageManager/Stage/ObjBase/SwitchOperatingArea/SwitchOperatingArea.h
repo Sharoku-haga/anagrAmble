@@ -34,12 +34,6 @@ public:
 	/** Destructor */
 	virtual ~SwitchOperatingArea(void);
 
-	/** 
-	* 描画関数
-	* 描画処理を行う関数
-	*/
-	void Draw(void);
-
 	/**
 	* ON状態に切り替える関数
 	* ObjBase::TypeIDをSWITCH_OPERATING_AREA_ONにする
