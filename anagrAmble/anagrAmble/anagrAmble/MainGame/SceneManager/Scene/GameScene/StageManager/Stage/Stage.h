@@ -65,6 +65,7 @@ private:
 		EXECUTE,			//!< 通常処理
 		STAGE_SPACE_CHANGE,	//!< ステージ入れ替え処理
 		STAGE_SPACE_RETURN,	//!< ステージを元に戻す処理
+		PLAYER_RESPAWN,		//!< プレイヤーを復活させる処理
 		EXIT,				//!< 終了処理
 	};
 

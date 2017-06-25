@@ -34,6 +34,9 @@ public:
 	/** Destructor */
 	virtual ~SwitchOperatingArea(void);
 
+	/** コントロール関数 */
+	void Control(void);
+
 	/**
 	* ON状態に切り替える関数
 	* ObjBase::TypeIDをSWITCH_OPERATING_AREA_ONにする
@@ -78,7 +81,7 @@ private:
 
 	/**
 	* 衝突判定に登録する関数. コールバック関数
-	* "space_change_end"と"space_change_return_end"のイベントの際によばれる
+	* "space_change_end"と"space_change_return_end"と"player_respawn_end"のイベントの際によばれる
 	*/
 	void ResisterCollision(void);
 

@@ -101,7 +101,6 @@ void PressureSensitiveBlock::Run(void)
 		m_HasCollidedWithPlayer = false;
 		m_pSwitchOperatingArea->SwitchOnState();
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
-		return;
 	}
 	else
 	{
@@ -115,6 +114,8 @@ void PressureSensitiveBlock::Run(void)
 		m_pSwitchOperatingArea->SwitchOnState();
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
 	}
+
+	m_pSwitchOperatingArea->Control();
 }
 
 void PressureSensitiveBlock::Render(void)

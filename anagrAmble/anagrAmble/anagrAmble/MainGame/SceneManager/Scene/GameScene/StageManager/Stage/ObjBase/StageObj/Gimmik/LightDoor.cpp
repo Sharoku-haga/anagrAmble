@@ -83,6 +83,10 @@ void LightDoor::Initialize(void)
 	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
 	m_pEventListener->RegisterSynEventFunc("space_change_return_end", std::bind(&ar::LightDoor::Close, this));
 
+	// プレイヤーリスポーン終了イベント
+	GameEventManager::Instance().RegisterEventType("player_respawn_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("player_respawn_end", std::bind(&ar::LightDoor::Close, this));
+
 	// ステージに位置を固定する
 	//m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 }

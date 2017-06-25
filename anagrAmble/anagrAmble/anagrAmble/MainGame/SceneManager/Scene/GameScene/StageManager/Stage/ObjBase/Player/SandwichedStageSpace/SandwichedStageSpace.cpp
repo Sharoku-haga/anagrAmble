@@ -60,6 +60,9 @@ SandwichedStageSpace::SandwichedStageSpace(StageDataManager* pStageDataManager, 
 
 	// 入れ替え戻し終了イベント
 	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
+
+	// プレイヤーリスポーンイベント
+	GameEventManager::Instance().RegisterEventType("player_respawn_end", m_pEventListener);
 }
 
 SandwichedStageSpace::~SandwichedStageSpace(void)
@@ -185,6 +188,23 @@ void SandwichedStageSpace::HandleEvent(void)
 					CreateSandwichedObj();
 				}
 			}
+			else if(gameEvent == "player_respawn_end")
+			{	// もし挟んだ空間にオブジェクトがあるなら
+				// データが入れ替わっている場合は一旦オブジェクトを破棄してから再度構成し直す
+				if(RESULT_FAILED(m_pObjs.empty()))
+				{
+					for(auto& pObj : m_pObjs)
+					{
+						sl::DeleteSafely(&pObj);
+					}
+					m_pObjs.clear();
+					std::vector<SandwichedStageSpaceObj*>().swap(m_pObjs);
+
+					m_pBackground->DiscardData();
+
+					CreateSandwichedObj();
+				}
+			}
 		}
 
 		m_pEventListener->DelEvent();
@@ -221,7 +241,6 @@ void SandwichedStageSpace::CreateSandwichedObj(void)
 		}
 	}
 }
-
 
 void SandwichedStageSpace::Move(void)
 {

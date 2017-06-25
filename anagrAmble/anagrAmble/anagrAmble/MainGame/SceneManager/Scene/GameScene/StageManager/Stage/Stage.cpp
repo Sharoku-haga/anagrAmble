@@ -103,6 +103,9 @@ void Stage::Initialize(void)
 
 	// 時戻し(ステージを入れ替える前の状態に戻す)イベント
 	GameEventManager::Instance().RegisterEventType("space_change_return_start", m_pEventListener);
+
+	// プレイヤーリスポーン開始イベント
+	GameEventManager::Instance().RegisterEventType("player_respawn_start", m_pEventListener);
 }
 
 void Stage::Control(void)
@@ -144,6 +147,22 @@ void Stage::Control(void)
 			m_pBackground->Control();
 			m_CurrentState = EXECUTE;
 		}
+		break;
+
+	case PLAYER_RESPAWN:
+		// リスポーン処理は前に入れ替えた場所まで戻る処理を行う
+		if(StageDataChangeManager::Instance().ReturnBeforeStageData())
+		{
+			m_pCollisionManager->UpDate();
+			// 処理が完了したら終了イベントをとばす
+			GameEventManager::Instance().ReceiveEvent("player_respawn_end");
+			GameEventManager::Instance().TriggerSynEvent("player_move");
+
+			// 2回Controlをよぶことで背景を調整する
+			m_pBackground->Control();
+			m_pBackground->Control();
+			m_CurrentState = EXECUTE;
+		}
 
 		break;
 
@@ -164,6 +183,10 @@ void Stage::Draw(void)
 	switch(m_CurrentState)
 	{
 	case STAGE_SPACE_RETURN:
+		return;
+		break;
+
+	case PLAYER_RESPAWN:
 		return;
 		break;
 
@@ -233,6 +256,14 @@ void Stage::HandleEvent(void)
 			else if(gameEvent == "space_change_return_start")
 			{
 				m_CurrentState = STAGE_SPACE_RETURN;
+				m_pEventListener->DelEvent();
+				return;
+			}
+			else if(gameEvent == "player_respawn_start")
+			{
+				m_CurrentState = PLAYER_RESPAWN;
+				m_pEventListener->DelEvent();
+				return;
 			}
 
 		}

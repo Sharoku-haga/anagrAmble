@@ -18,7 +18,7 @@ namespace ar
 namespace
 {
 
-const int ChanegedSpaceReturningTime = 25;			// 入れ替えた空間戻し処理の時間
+const int WhiteOutTime = 25;			// ホワイトアウト処理の時間
 
 }
 
@@ -28,14 +28,14 @@ void StageDataChangeManager::InitialIze(StageDataManager* pStageDataManager)
 {
 	m_pStageDataManager = pStageDataManager;
 	m_StageMapChipSize = m_pStageDataManager->GetStageChipSize();
-	m_ChanegedSpaceReturningTimeCount = 0;
+	m_WhiteOutTimeCount = 0;
 }
 
 bool StageDataChangeManager::ChangeSpace(void)
 {
 	// 挟んだ空間内にプレイヤーがいるなら入れ替えはしない
-	if(m_pPlayer->GetStageIndex().m_XNum >= m_SandwichedSpaceStartIndex.m_XNum
-		&& m_pPlayer->GetStageIndex().m_XNum <= m_SandwichedSpaceEndIndex.m_XNum)
+	if(m_pPlayer->GetStageIndex().m_XNum > m_SandwichedSpaceStartIndex.m_XNum
+		&& m_pPlayer->GetStageIndex().m_XNum < m_SandwichedSpaceEndIndex.m_XNum)
 	{
 		return false;
 	}
@@ -166,14 +166,28 @@ bool StageDataChangeManager::ChangeSpace(void)
 bool StageDataChangeManager::ReturnChangedSpace(void)
 {
 	// 少し間をあけてから処理をする(ホワイトアウトさせるため)
-	if(m_ChanegedSpaceReturningTimeCount == ChanegedSpaceReturningTime)
+	if(m_WhiteOutTimeCount == WhiteOutTime)
 	{
-		m_pStageDataManager->ReturnBeforeCurrentStageData();
-		m_ChanegedSpaceReturningTimeCount = 0;
+		m_pStageDataManager->ReturnStageDataChangeBefore();
+		m_WhiteOutTimeCount = 0;
 		return true;
 	}
 
-	++m_ChanegedSpaceReturningTimeCount;
+	++m_WhiteOutTimeCount;
+	return false;
+}
+
+bool StageDataChangeManager::ReturnBeforeStageData(void)
+{
+	// 少し間をあけてから処理をする(ホワイトアウトさせるため)
+	if(m_WhiteOutTimeCount == WhiteOutTime)
+	{
+		m_pStageDataManager->ReturnBeforeStageData();
+		m_WhiteOutTimeCount = 0;
+		return true;
+	}
+
+	++m_WhiteOutTimeCount;
 	return false;
 }
 

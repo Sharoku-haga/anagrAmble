@@ -9,6 +9,8 @@
 #include "LightRoadBlock.h"
 #include "LightBlock.h"
 #include "../../../../StageDataManager.h"
+#include "../../../../../GameEventManager/GameEventManager.h"
+#include "../../../../../GameEventManager/EventListener.h"
 
 namespace ar
 {
@@ -69,6 +71,18 @@ void LightRoadBlock::Initialize(void)
 	}
 
 	DischargeLightBlock();
+
+	// 空間入れ替え処理終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_end", std::bind(&ar::LightRoadBlock::DischargeLightBlock, this));
+
+	// 時戻し終了イベント
+	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("space_change_return_end", std::bind(&ar::LightRoadBlock::DischargeLightBlock, this));
+
+	// プレイヤーリスポーン終了イベント
+	GameEventManager::Instance().RegisterEventType("player_respawn_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("player_respawn_end", std::bind(&ar::LightRoadBlock::DischargeLightBlock, this));
 }
 
 void LightRoadBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -114,6 +128,12 @@ void LightRoadBlock::HandleEvent(void)
 
 void LightRoadBlock::DischargeLightBlock(void)
 {
+	// ブロックの位置に戻す
+	for(auto pBlock : m_pLightBlocks)
+	{
+		pBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);;
+	}
+
 	// チェックしたいY方向のインデックス. 
 	// 横のチェックだけなのでここで変数を作成
 	int checkIndexY = m_StageIndexData.m_YNum;

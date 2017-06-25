@@ -187,6 +187,11 @@ void Player::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 {
+	if(m_pPlayerMotion->IsCurrrentMotionDeath())
+	{	// 死亡動作ならここから下の処理はいらないので、即return;
+		return;
+	}
+
 	switch(rData.m_ObjType)
 	{
 	case GROUND_B:
@@ -246,6 +251,25 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 	}
 
 	// 移動可能な方向の確認と補正値を足す
+		
+	// 左方向
+	if(m_Pos.x > rData.m_ObjPos.x
+		&& m_CurrentRectData.m_Left > rData.m_ObjPos.x
+		&& std::abs(m_Pos.y - rData.m_ObjPos.y) < (m_StageChipSize + m_StageChipSize / 2  - CollisionCorrectionVal))
+	{
+		m_MovableDirection.m_Left = false;
+		m_Pos.x += rData.m_ObjRect.m_Right - m_CurrentRectData.m_Left + LeftCollisionCorrectionVal;
+	}
+
+	// 右方向
+	if(m_Pos.x < rData.m_ObjPos.x
+		&& m_CurrentRectData.m_Right < rData.m_ObjPos.x
+		&&  std::abs(m_Pos.y - rData.m_ObjPos.y) < (m_StageChipSize + m_StageChipSize / 2 - CollisionCorrectionVal))
+	{
+		m_MovableDirection.m_Right = false;
+		m_Pos.x -= m_CurrentRectData.m_Right - rData.m_ObjRect.m_Left + RightCollisionCorrectionVal;
+	}
+
 
 	// 上方向
 	if(m_Pos.y > rData.m_ObjPos.y
@@ -268,24 +292,6 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		{
 			m_Pos.y -= m_CurrentRectData.m_Bottom - rData.m_ObjRect.m_Top;
 		}
-	}
-	
-	// 左方向
-	if(m_Pos.x > rData.m_ObjPos.x
-		&& m_CurrentRectData.m_Left > rData.m_ObjPos.x
-		&& std::abs(m_Pos.y - rData.m_ObjPos.y) < (m_StageChipSize + m_StageChipSize / 2  - CollisionCorrectionVal))
-	{
-		m_MovableDirection.m_Left = false;
-		m_Pos.x += rData.m_ObjRect.m_Right - m_CurrentRectData.m_Left + LeftCollisionCorrectionVal;
-	}
-
-	// 右方向
-	if(m_Pos.x < rData.m_ObjPos.x
-		&& m_CurrentRectData.m_Right < rData.m_ObjPos.x
-		&&  std::abs(m_Pos.y - rData.m_ObjPos.y) < (m_StageChipSize + m_StageChipSize / 2 - CollisionCorrectionVal))
-	{
-		m_MovableDirection.m_Right = false;
-		m_Pos.x -= m_CurrentRectData.m_Right - rData.m_ObjRect.m_Left + RightCollisionCorrectionVal;
 	}
 
 	// 座標が動いたのでステージインデックスを計算しなおす
@@ -320,6 +326,15 @@ void Player::HandleEvent(void)
 		{
 			if(gameEvent == "space_change_return_end")
 			{
+				// 通常の入れ替え戻しが完了したら、女神の加護の数値を減らし、イベントをとばす
+				--m_GoddessPointCount;
+				GameEventManager::Instance().ReceiveEvent("goddess_point_minus");
+
+				// 元データから消しておく
+				m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+			}
+			else if(gameEvent == "player_respawn_end")
+			{
 				if(m_pPlayerMotion->IsCurrrentMotionDeath())
 				{	// 死んでいるなら、待機状態にもどす
 					m_pPlayerMotion->ChangeWaitingMotion();
@@ -353,6 +368,9 @@ void Player::RegisterEvent(void)
 
 	// 入れ替え戻し終了イベント
 	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
+
+	// プレイヤーリスポーン終了イベント
+	GameEventManager::Instance().RegisterEventType("player_respawn_end", m_pEventListener);
 }
 
 void Player::PrepareSpaceChange(void)
@@ -372,8 +390,8 @@ void  Player::RunSpaceChangeEndProcessing(void)
 void Player::RunDeathEndProcessing(void)
 {
 	if(m_GoddessPointCount > 0)
-	{	// 加護があるならときをもどす
-		GameEventManager::Instance().ReceiveEvent("space_change_return_start");
+	{	// 加護があるなら復活させる
+		GameEventManager::Instance().ReceiveEvent("player_respawn_start");
 
 		if(m_pPlayerMotion->IsCurrrentMotionDeath())
 		{	// 死んでいるなら、待機状態にもどす
