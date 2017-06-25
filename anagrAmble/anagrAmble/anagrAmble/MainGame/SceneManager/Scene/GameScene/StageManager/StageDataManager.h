@@ -52,11 +52,16 @@ public:
 	void AddStockStageData(void);
 
 	/**
-	* 現在のステージデータを1つ入れ替える前のデータに戻す関数
-	* ステージを1つ前に戻す際によぶ
+	* 前のステージデータに戻す関数
 	* @return 結果 true→成功  false→失敗
 	*/
-	void ReturnBeforeCurrentStageData(void);
+	void ReturnBeforeStageData(void);
+
+	/**
+	* 変更前(入れ替え前)のステージデータに戻す関数
+	* @return 結果 true→成功  false→失敗
+	*/
+	void ReturnStageDataChangeBefore(void);
 
 	/**
 	* ストックデータ存在するかどうか確認する関数

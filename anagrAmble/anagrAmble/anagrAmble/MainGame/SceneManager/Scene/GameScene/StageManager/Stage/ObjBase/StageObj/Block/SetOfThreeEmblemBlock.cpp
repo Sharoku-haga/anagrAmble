@@ -73,6 +73,10 @@ void SetOfThreeEmblemBlock::Initialize(void)
 	// 時戻し終了イベント
 	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
 	m_pEventListener->RegisterSynEventFunc("space_change_return_end", std::bind(&ar::SetOfThreeEmblemBlock::CheckSetofThreeBlock, this));
+
+	// プレイヤーリスポーン終了イベント
+	GameEventManager::Instance().RegisterEventType("player_respawn_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("player_respawn_end", std::bind(&ar::SetOfThreeEmblemBlock::CheckSetofThreeBlock, this));
 }
 
 void SetOfThreeEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -95,7 +99,9 @@ void SetOfThreeEmblemBlock::ProcessCollision(const CollisionManager::CollisionDa
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void SetOfThreeEmblemBlock::Run(void)
-{}
+{
+	m_pSwitchOperatingArea->Control();
+}
 
 void SetOfThreeEmblemBlock::Render(void)
 {

@@ -71,6 +71,9 @@ void PairOfEmblemBlock::Initialize(void)
 	GameEventManager::Instance().RegisterEventType("space_change_return_end", m_pEventListener);
 	m_pEventListener->RegisterSynEventFunc("space_change_return_end", std::bind(&ar::PairOfEmblemBlock::CheckPairBlock, this));
 
+	// プレイヤーリスポーン終了イベント
+	GameEventManager::Instance().RegisterEventType("player_respawn_end", m_pEventListener);
+	m_pEventListener->RegisterSynEventFunc("player_respawn_end", std::bind(&ar::PairOfEmblemBlock::CheckPairBlock, this));
 }
 
 void PairOfEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -92,7 +95,9 @@ void PairOfEmblemBlock::ProcessCollision(const CollisionManager::CollisionData& 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void PairOfEmblemBlock::Run(void)
-{}
+{
+	m_pSwitchOperatingArea->Control();
+}
 
 void PairOfEmblemBlock::Render(void)
 {

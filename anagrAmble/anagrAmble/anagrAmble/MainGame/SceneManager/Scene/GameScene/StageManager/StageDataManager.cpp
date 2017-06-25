@@ -123,24 +123,53 @@ void StageDataManager::AddStockStageData(void)
 	}
 }
 
-
-void StageDataManager::ReturnBeforeCurrentStageData(void)
+void StageDataManager::ReturnBeforeStageData(void)
 {
+	for(unsigned int i = 0; i < m_StockStageDataOrder.size(); ++i)
+	{
+		// ストックデータの中の1番最新のもので現在のステージデータを更新する
+		if(m_StockStageDataOrder[i] == (m_StockStageDataOrderCount - 1))
+		{
+			m_CurrentStageData = m_StockStageData[i];
+			break;
+		}
 
+		if(i == m_StockStageDataOrder.size() - 1)
+		{	// 戻せるデータがなかったらオリジナルデータをいれる
+			m_CurrentStageData = m_StageOriginalData;
+		}
+	}
+
+	// オブジェクトを再配置する
+	for(short i = 0; i < (m_StageHeightChipNum - 1); ++i)
+	{
+		for(short j = 0; j < (m_StageWidthChipNum - 1); ++j)
+		{
+			if(m_CurrentStageData[i][j] == nullptr)
+			{
+				continue;
+			}
+			m_CurrentStageData[i][j]->ChangeStagePos(i, j);
+		}
+	}
+}
+
+void StageDataManager::ReturnStageDataChangeBefore(void)
+{
 	int useStockDataNum = 0;	// 使用するストックデータの番号を格納する変数
 
 	for(unsigned int i = 0; i < m_StockStageDataOrder.size(); ++i)
 	{
 		// ストックデータの中の1番最新のもので現在のステージデータを更新する
 		if(m_StockStageDataOrder[i] == (m_StockStageDataOrderCount - 1))
-		{	
+		{
 			m_CurrentStageData = m_StockStageData[i];
 			m_StockStageDataOrder[i] = 0;
 			useStockDataNum = i;
 			break;
 		}
 
-		if( i ==  m_StockStageDataOrder.size() - 1)
+		if(i == m_StockStageDataOrder.size() - 1)
 		{	// 戻せるデータがなかったらオリジナルデータをいれる
 			m_CurrentStageData = m_StageOriginalData;
 		}
@@ -150,7 +179,6 @@ void StageDataManager::ReturnBeforeCurrentStageData(void)
 	// 1つずつ後ろにずらしておく
 	for(unsigned int i = 0; i < m_StockStageDataOrder.size(); ++i)
 	{
-		
 		if(i != useStockDataNum
 			&& m_StockStageDataOrder[i] >= 0)
 		{

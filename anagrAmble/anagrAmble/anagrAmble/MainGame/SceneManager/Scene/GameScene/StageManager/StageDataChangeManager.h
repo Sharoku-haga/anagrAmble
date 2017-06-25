@@ -58,6 +58,13 @@ public:
 	bool ReturnChangedSpace(void);
 
 	/**
+	* 現在のステージデータを前のデータに戻す処理を行う関数
+	* Stageクラス内でよぶ関数
+	* @return 結果 true→処理終了、 false→処理継続
+	*/
+	bool ReturnBeforeStageData(void);
+
+	/**
 	* Setter.挟んだ空間の開始インデックスデータをセットする関数
 	* @param[in] rSandwichedSpaceStartIndex  挟んだ空間の開始インデックスデータ
 	*/
@@ -92,7 +99,7 @@ private:
 	Stage::INDEX_DATA			m_SandwichedSpaceEndIndex;			//!< 挟んだ空間の終了地点のインデックスデータ
 	Player*						m_pPlayer;							//!< Playerクラスのインスタンスへのポインタ
 	float						m_StageMapChipSize;					//!< ステージのチップサイズ
-	int							m_ChanegedSpaceReturningTimeCount;	//!< 入れ替えた空間戻し処理の時間のカウント数(ホワイトアウトの時間)
+	int							m_WhiteOutTimeCount;				//!< ホワイトアウトの時間のカウント数
 
 	/**
 	* 入れ替えたい空間の開始地点のインデックスデータを計算する関数

@@ -106,6 +106,7 @@ void Lever::ProcessCollision(const CollisionManager::CollisionData& rData)
 void Lever::Run(void)
 {
 	m_HasCollidedWithPlayer = false;
+	m_pSwitchOperatingArea->Control();
 }
 
 void Lever::Render(void)
