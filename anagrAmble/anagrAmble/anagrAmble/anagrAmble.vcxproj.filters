@@ -88,6 +88,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect">
       <UniqueIdentifier>{97e40374-2ee0-43d3-92bc-1c5916a216bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI">
+      <UniqueIdentifier>{3e8206f0-09e4-435d-8246-9b333d61af79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -291,6 +294,9 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\AnchorLightEffect.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI\GoddessPointUI.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -493,6 +499,9 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\AnchorLightEffect.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI\GoddessPointUI.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

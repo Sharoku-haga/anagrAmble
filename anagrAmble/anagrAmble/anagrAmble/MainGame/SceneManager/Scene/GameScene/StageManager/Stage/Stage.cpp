@@ -17,6 +17,7 @@
 #include "ObjBase/Player/Player.h"
 #include "StageObjManager/StageObjManager.h"
 #include "StageBackground.h"
+#include "GoddessPointUI/GoddessPointUI.h"
 
 namespace ar
 {
@@ -32,6 +33,7 @@ Stage::Stage(StageDataManager*	pStageDataManager)
 	, m_pPlayer(nullptr)
 	, m_pStageObjManager(nullptr)
 	, m_pBackground(nullptr)
+	, m_pGoddessPointUI(nullptr)
 	, m_CurrentState(ENTER)
 {
 	// デバック用
@@ -40,6 +42,7 @@ Stage::Stage(StageDataManager*	pStageDataManager)
 
 Stage::~Stage(void)
 {
+	sl::DeleteSafely(&m_pGoddessPointUI);
 	sl::DeleteSafely(&m_pBackground);
 	sl::DeleteSafely(&m_pStageObjManager);
 	sl::DeleteSafely(&m_pPlayer);
@@ -50,13 +53,15 @@ Stage::~Stage(void)
 
 void Stage::Initialize(void)
 {
+	m_PlayerTexID = m_pLibrary->LoadTexture("../Resource/GameScene/PlayerFile.png");
+	m_StageObjTexID = m_pLibrary->LoadTexture("../Resource/GameScene/ObjectFile.png");
+	int	goddessPointUI = m_pLibrary->LoadTexture("../Resource/GameScene/GoddessPoint.png");
+
 	ObjBase::SetDisplayArea(m_pLibrary->GetClientSize().m_Right, m_pLibrary->GetClientSize().m_Bottom);
 	StageEffect::SetDisplayArea(m_pLibrary->GetClientSize().m_Right, m_pLibrary->GetClientSize().m_Bottom);
 	ObjBase::SetStageChipSize(m_pStageDataManager->GetStageChipSize());
 	
-	m_PlayerTexID = m_pLibrary->LoadTexture("../Resource/GameScene/PlayerFile.png");
 
-	m_StageObjTexID = m_pLibrary->LoadTexture("../Resource/GameScene/ObjectFile.png");
 	m_pStageObjManager = new StageObjManager(m_pStageDataManager, m_pCollisionManager, m_StageObjTexID);
 
 	// オブジェクトを生成し、初期位置へ
@@ -83,6 +88,10 @@ void Stage::Initialize(void)
 	// 背景の設定を行う
 	int stageBGTexID = m_pLibrary->LoadTexture(m_pStageDataManager->GetBackGoundTexFileName().c_str());
 	m_pBackground = new StageBackground(m_pBasePoint, stageBGTexID);
+
+	// UIの設定を行う
+	m_pGoddessPointUI = new GoddessPointUI(goddessPointUI, m_pPlayer->GetGoddessPointCount());
+	m_pGoddessPointUI->Initialize();
 
 	// イベント登録
 	// ゴール到達イベント
@@ -146,6 +155,8 @@ void Stage::Control(void)
 		// do nothing
 		break;
 	}
+
+	m_pGoddessPointUI->Control();
 }
 
 void Stage::Draw(void)
@@ -163,8 +174,7 @@ void Stage::Draw(void)
 	m_pBackground->Draw();
 	m_pStageObjManager->Draw();
 	m_pPlayer->Draw();
-
-	// プレイヤーの描画
+	m_pGoddessPointUI->Draw();
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
