@@ -61,9 +61,12 @@ Player::~Player(void)
 	}
 }
 
-void Player::StartStage(void)
+bool Player::StartStage(void)
 {
 	// ステージ開始時の処理を書く
+	GameEventManager::Instance().ReceiveEvent("stage_start");
+
+	return true;
 }
 
 void Player::CompleteStage(void)
@@ -242,6 +245,10 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		break;
 
 	case SWITCH_OPERATING_AREA_OFF:
+		return;
+		break;
+
+	case ENTRANCE:
 		return;
 		break;
 

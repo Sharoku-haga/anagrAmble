@@ -59,6 +59,7 @@ public:
 		ANCHOR,								//!< アンカー
 		SWITCH_OPERATING_AREA_ON,			//!< スイッチ作動範囲ON状態
 		SWITCH_OPERATING_AREA_OFF,			//!< スイッチ作動範囲OFF状態
+		ENTRANCE = 98,						//!< 入口
 		PLAYER = 99,						//!< プレイヤー
 		ID_MAX,
 		TYPE_ERROR = -1,					//!< エラー番号

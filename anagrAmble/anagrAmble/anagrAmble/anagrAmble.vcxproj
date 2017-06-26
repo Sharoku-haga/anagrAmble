@@ -163,6 +163,7 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\SetOfThreeEmblemBlock.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\SpearBlock\Spear.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\SpearBlock\SpearBlock.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Entrance\Entrance.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Gimmik\Lever.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Gimmik\LightDoor.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Gimmik\RevolvingLightDoor.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\SetOfThreeEmblemBlock.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\SpearBlock\Spear.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Block\SpearBlock\SpearBlock.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Entrance\Entrance.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Gimmik\Lever.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Gimmik\LightDoor.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Gimmik\RevolvingLightDoor.h" />

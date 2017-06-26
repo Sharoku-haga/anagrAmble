@@ -91,6 +91,9 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI">
       <UniqueIdentifier>{3e8206f0-09e4-435d-8246-9b333d61af79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Entrance">
+      <UniqueIdentifier>{0061d5d0-1f58-4e96-ad54-8f300d03e740}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -297,6 +300,9 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI\GoddessPointUI.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI</Filter>
     </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Entrance\Entrance.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Entrance</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\MainGame.h">
@@ -502,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI\GoddessPointUI.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Entrance\Entrance.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\Entrance</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
