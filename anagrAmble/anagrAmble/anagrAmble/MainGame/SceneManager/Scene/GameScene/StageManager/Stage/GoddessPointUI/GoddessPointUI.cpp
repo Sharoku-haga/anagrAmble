@@ -39,12 +39,12 @@ GoddessPointUI::~GoddessPointUI(void)
 void GoddessPointUI::Initialize(void)
 {
 	// 座標の設定
-	sl::SLVECTOR2 startPos = {1680.f, 48.0f};			// 開始座標
+	sl::SLVECTOR2 startPos = {1860.f, 48.0f};			// 開始座標
 	float	scrollPosX = UISize;						// X方向にスクロールする量
 
 	for(int i = 0; i < m_GoddessPointCount; ++i)
 	{
-		m_Pos.emplace_back((startPos.x + (scrollPosX * i)), startPos.y);
+		m_Pos.emplace_back((startPos.x - (scrollPosX * i)), startPos.y);
 	}
 
 	// Vertexの作成
@@ -57,7 +57,6 @@ void GoddessPointUI::Initialize(void)
 
 	//  加護消費イベント
 	GameEventManager::Instance().RegisterEventType("goddess_point_minus", m_pEventListener);	
-
 }
 
 void GoddessPointUI::Control(void)
