@@ -24,6 +24,7 @@
 #include "../ObjBase//StageObj/Block/BeltConverBlock.h"
 #include "../ObjBase/StageObj/Block/SpearBlock/SpearBlock.h"
 #include "../ObjBase/StageObj/Block/LightBlock.h"
+#include "../ObjBase/StageObj/Entrance/Entrance.h"
 
 namespace ar
 {
@@ -163,6 +164,10 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 
 	case ObjBase::SPEAR_B:
 		pStageObj = new SpearBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
+		break;
+
+	case ObjBase::ENTRANCE:
+		pStageObj = new Entrance(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);
 		break;
 
 	default:

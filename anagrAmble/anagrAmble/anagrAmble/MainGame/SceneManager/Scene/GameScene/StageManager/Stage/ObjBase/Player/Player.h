@@ -71,8 +71,9 @@ public:
 	/**
 	* ステージ開始処理時の関数
 	* ステージが開始したらよぶ
+	* @return 結果 true→処理終了 false→処理継続
 	*/
-	void StartStage(void);
+	bool StartStage(void);
 
 	/**
 	* ステージクリア時の処理関数

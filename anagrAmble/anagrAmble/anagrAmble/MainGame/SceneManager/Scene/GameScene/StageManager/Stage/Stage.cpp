@@ -37,7 +37,7 @@ Stage::Stage(StageDataManager*	pStageDataManager)
 	, m_CurrentState(ENTER)
 {
 	// デバック用
-	m_CurrentState = EXECUTE;
+	//m_CurrentState = EXECUTE;
 }
 
 Stage::~Stage(void)
@@ -115,7 +115,10 @@ void Stage::Control(void)
 	switch(m_CurrentState)
 	{
 	case ENTER:
-		m_pPlayer->StartStage();
+		if(m_pPlayer->StartStage())
+		{
+			m_CurrentState = EXECUTE;
+		}
 		break;
 
 	case EXECUTE:

@@ -45,7 +45,6 @@ void  Goal::Initialize(void)
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize - (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
 	m_RectSize.m_Left	=  -((m_StageChipSize * 3) / 2);
 	m_RectSize.m_Top	=  -((m_StageChipSize * 3) / 2);
 	m_RectSize.m_Right	= ((m_StageChipSize * 3) / 2);
