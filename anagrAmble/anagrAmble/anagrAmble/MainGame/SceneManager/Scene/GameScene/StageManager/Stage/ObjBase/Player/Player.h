@@ -43,18 +43,6 @@ public:
 		{}
 	};
 
-	/** プレイヤーの状態 */
-	enum STATE
-	{				
-		WAITING,		//!< 待機している状態
-		WALKING,		//!< 歩いている状態
-		RUNNING,		//!< 走っている状態
-		JUMPING,		//!< ジャンプ
-		FALLING,		//!< 落下
-		DEATH,			//!< 死亡
-		ID_MAX,
-	};
-
 	/** 
 	* Constructor
 	* @param[in] pStageDataManager	StageDataManagerクラスのインスタンスへのポインタ
@@ -78,8 +66,9 @@ public:
 	/**
 	* ステージクリア時の処理関数
 	* プレイヤーがステージをクリアしたらよぶ
+	* @return 結果 true→処理終了 false→処理継続
 	*/
-	void CompleteStage(void);
+	bool CompleteStage(void);
 
 	/**
 	* 制御関数
@@ -126,6 +115,7 @@ private:
 	PlayerMotion*		m_pPlayerMotion;			//!< プレイヤーの動作.  PlayerMotionクラスのインスタンスへのポインタ
 	PlayerMode*			m_pPlayerMode;				//!< プレイヤーのモード. PlayerModeクラスのインスタンスへのポインタ
 	MovableDirection	m_MovableDirection;			//!< 移動可能方向の構造体
+	sl::SLVECTOR2		m_GoalPos;					//!< ゴールの座標
 	int					m_GoddessPointCount;		//!< ゲーム中女神の加護の回数。死んだり、時戻しを使用すると数値が減る
 
 	/** 
