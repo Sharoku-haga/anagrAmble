@@ -117,8 +117,11 @@ void Stage::Control(void)
 	case ENTER:
 		if(m_pPlayer->StartStage())
 		{
+			// 入場したらステージ開始イベントをとばす
+			GameEventManager::Instance().ReceiveEvent("stage_start");
 			m_CurrentState = EXECUTE;
 		}
+		m_pStageObjManager->Control();
 		break;
 
 	case EXECUTE:
@@ -170,7 +173,13 @@ void Stage::Control(void)
 		break;
 
 	case EXIT:
-		m_pPlayer->CompleteStage();
+		if(m_pPlayer->CompleteStage())
+		{
+			// 退場したらステージ終了イベントをとばす
+			GameEventManager::Instance().ReceiveEvent("stage_end");
+		}
+
+		m_pStageObjManager->Control();
 		break;
 
 	default:

@@ -53,7 +53,18 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 
 private:
-	bool		m_HasCollidedWithPlayer;	//!< プレイヤー衝突したかどうか. true→衝突している false→衝突していない
+	/** ゴールの状態 */
+	enum STATE
+	{
+		IS_OPENING_DOOR,		//!< 扉を開いている状態
+		HAS_OPENED_DOOR,		//!< 扉を開いた状態
+		IS_CLOSEING_DOOR,		//!< 扉を閉めている状態
+		HAS_CLOSED_DOOR,		//!< 扉を閉めた
+	};
+
+	int			m_UVAnimeID;				//!< UVアニメーションのID
+	bool		m_HasCollidedWithPlayer;	//!< プレイヤー衝突したかどうかのフラグ. true→衝突している false→衝突していない
+	STATE		m_CurrentState;				//!< 現在の状態
 
 	/** 
 	* 処理実行関数 

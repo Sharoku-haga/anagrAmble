@@ -55,11 +55,11 @@ void Entrance::Initialize(void)
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
-	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 0.0f, 1.0f, 0.0f, 1.0f);
+	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 0.5f, 0.5f, 0.5f, 1.0f);
 
 	// アニメーション登録と作成
 	m_UVAnimeID = m_pLibrary->RegisterUVAnimeID(m_DrawingID.m_VtxID, 9);
-	m_pLibrary->CreateUVAnimeData(m_DrawingID.m_VtxID, m_UVAnimeID, 5, 1, uv, 20);
+	m_pLibrary->CreateUVAnimeData(m_DrawingID.m_VtxID, m_UVAnimeID, 5, 1, uv, 12);
 
 	// アニメーション番号の順番を逆にする
 	std::vector<int> animeOrder;
@@ -103,7 +103,7 @@ void Entrance::Run(void)
 		{
 			m_HasClosed = true;
 			// 閉じたら少し透明にする
-			m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 0.0f, 1.0f, 0.0f, 0.7f);
+			m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 0.5f, 0.5f, 0.5f, 0.3f);
 		}
 	}
 }

@@ -44,6 +44,7 @@ Player::Player(StageDataManager* pStageDataManager, CollisionManager* pCollision
 	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
 	, m_pPlayerMotion(nullptr)
 	, m_pPlayerMode(nullptr)
+	, m_GoalPos({ 0.0f, 0.0f })
 	, m_GoddessPointCount(GoddessPointMaxVal)
 {
 	m_TypeID = PLAYER;		// タイプID
@@ -63,16 +64,27 @@ Player::~Player(void)
 
 bool Player::StartStage(void)
 {
-	// ステージ開始時の処理を書く
-	GameEventManager::Instance().ReceiveEvent("stage_start");
+	if(m_pPlayerMotion->RunEnteringMotion())
+	{	
+		return true;
+	}
 
-	return true;
+	return false;
 }
 
-void Player::CompleteStage(void)
+bool Player::CompleteStage(void)
 {
-	// ステージクリア時の処理を書く
-	GameEventManager::Instance().ReceiveEvent("game_clear");
+	if(m_Pos.x != m_GoalPos.x)
+	{
+		m_Pos.x = m_GoalPos.x;
+	}
+
+	if(m_pPlayerMotion->RunExitingMotion())
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void Player::Control(void)
@@ -213,6 +225,7 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		break;
 
 	case GOAL:
+		m_GoalPos = rData.m_ObjPos;
 		return;
 		break;
 
@@ -220,7 +233,8 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		return;
 		break;
 
-	case  LOCKED_GOAL:
+	case LOCKED_GOAL:
+		m_GoalPos = rData.m_ObjPos;
 		return;
 		break;
 

@@ -50,6 +50,20 @@ public:
 	void ChangeDeathMotion(void);
 
 	/**
+	* 入場動作を行う関数
+	* ステージ開始処理の際によぶ関数
+	* @return 結果 true→アニメーション終了 false→アニメーション継続
+	*/
+	bool RunEnteringMotion(void);
+
+	/**
+	* 退場動作を行う関数
+	* ステージクリア処理の際によぶ関数
+	* @return 結果 true→アニメーション終了 false→アニメーション継続
+	*/
+	bool RunExitingMotion(void);
+
+	/**
 	* 現材の動作が死亡かどうか確認する関数
 	* @return 結果 true→死んでいる false→死んでいない
 	*/
@@ -62,7 +76,7 @@ public:
 	bool IsFacingRight(void) { return m_IsFacingRight; }
 
 	/**
-	* 現在の動作VertexIDを取得する関数
+	* Getter 現在の動作VertexIDを取得する関数
 	* @return 現在のVtxIDを取得する関数
 	*/
 	inline int GetCurrentMotionVtxID(void) { return m_VtxID[m_CurrentMotion];  }
@@ -77,6 +91,8 @@ private:
 		JUMPING,		//!< ジャンプ
 		FALLING,		//!< 落下
 		DEATH,			//!< 死亡
+		ENTERING,		//!< 入場
+		EXITING,		//!< 退場
 		ID_MAX,
 	};
 
@@ -85,15 +101,17 @@ private:
 	std::vector<int>				m_UVAnimeID;				//!< UVAnimationIDを格納した配列(vector)
 	MOTION_ID						m_CurrentMotion;			//!< 現在の動作
 	MOTION_ID						m_PreviousMotion;			//!< 前の動作
+	sl::fRect						m_BasicRectSize;			//!< 基本矩形サイズ
+	sl::fRect						m_CurrentEnteringRectSize;	//!< 入場状態の矩形サイズ
+	sl::fRect						m_CurrentExitingRectSize;	//!< 退場状態の矩形サイズ
 	sl::SLVECTOR2					m_CurrentMoveVector;		//!< 現在の移動ベクトル. 毎フレーム0に初期化される
 	bool							m_IsFacingRight;			//!< 右向きかどうか true→右向き false→右を向いていない(左向き)
 	int								m_FlightDurationCount;		//!< 滞空時間カウント数 
 
 	/** 
 	* 動作ごとのVertexを作成する関数
-	* @param[in] rPlayerRect プレイヤーのRect構造体
 	*/
-	void InitializeVertex(const sl::fRect& rPlayerRect);
+	void InitializeVertex(void);
 
 	/** 
 	* 死亡動作の制御関数

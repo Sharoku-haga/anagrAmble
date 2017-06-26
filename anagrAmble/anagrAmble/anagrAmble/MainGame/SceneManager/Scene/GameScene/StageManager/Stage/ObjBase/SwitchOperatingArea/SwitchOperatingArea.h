@@ -56,7 +56,6 @@ public:
 	*/
 	virtual void Initialize(void)override;
 
-
 	/** 
 	* ステージの位置を変更する関数. 純粋仮想関数
 	* @param[in] yIndexNum	y軸方向のインデックス
