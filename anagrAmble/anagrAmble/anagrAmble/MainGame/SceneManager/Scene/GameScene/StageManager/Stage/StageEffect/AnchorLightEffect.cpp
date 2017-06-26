@@ -37,7 +37,10 @@ AnchorLightEffect::AnchorLightEffect(Anchor* pOwner, Anchor* pOwnerPairAnchor, f
 {}
 
 AnchorLightEffect::~AnchorLightEffect(void)
-{}
+{
+	m_pLibrary->ReleaseVertex2D(m_VtxID[MOVING_LIGHT]);
+	m_pLibrary->ReleaseVertex2D(m_VtxID[NORMAL_LIGHT]);
+}
 
 void AnchorLightEffect::Initialize(void)
 {

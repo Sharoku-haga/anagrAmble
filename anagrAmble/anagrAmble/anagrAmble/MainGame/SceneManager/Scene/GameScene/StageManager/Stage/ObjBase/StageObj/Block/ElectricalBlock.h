@@ -12,6 +12,8 @@
 namespace ar
 {
 
+class ElectricEffect;
+
 //======================================================================//
 //!< ステージオブジェクトである通電ブロッククラス
 //======================================================================//
@@ -52,7 +54,7 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 
 private:
-	bool			m_IsEnergizedState;					//!< 通電状態かどうかフラグ true→通電している  false→通電していない
+	ElectricEffect* m_pEffect;							//!< ElectricEffectクラスのインスタンスへのポインタ
 
 	/** 
 	* 処理実行関数

@@ -8,6 +8,7 @@
 
 #include "ElectricalBlock.h"
 #include "../../../../StageDataManager.h"
+#include "../../../StageEffect/ElectricEffect.h"
 
 namespace ar
 {
@@ -27,7 +28,7 @@ const sl::fRect		ElectricalOnUV = { 0.25f, 0.0f, 0.3f, 0.088f};				// 通電OFF�
 ElectricalBlock::ElectricalBlock(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager,
 								const Stage::INDEX_DATA& rStageIndexData, int texID)
 	: StageObj(pStageDataManager, pCollisionManager, rStageIndexData)
-	, m_IsEnergizedState(true)
+	, m_pEffect(nullptr)
 {
 	m_TypeID = ELECTICAL_B;
 	m_DrawingID.m_TexID = texID;
@@ -35,6 +36,7 @@ ElectricalBlock::ElectricalBlock(StageDataManager* pStageDataManager, CollisionM
 
 ElectricalBlock::~ElectricalBlock(void)
 {
+	sl::DeleteSafely(&m_pEffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -50,6 +52,11 @@ void ElectricalBlock::Initialize(void)
 	m_RectSize.m_Bottom = (m_StageChipSize  / 2);
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, ElectricalOnUV);
+
+	// エフェクトの作成
+	m_pEffect = new ElectricEffect(m_DrawingID.m_TexID, m_RectSize);
+	m_pEffect->Initialize();
+	m_pEffect->ChangeStagePos(m_Pos);
 }
 
 void ElectricalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -60,8 +67,9 @@ void ElectricalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, ElectricalOnUV);
-	m_IsEnergizedState = true;
 	m_TypeID = ELECTICAL_B;
+
+	m_pEffect->ChangeStagePos(m_Pos);
 }
 
 void ElectricalBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -72,14 +80,12 @@ void ElectricalBlock::ProcessCollision(const CollisionManager::CollisionData& rD
 	case SWITCH_OPERATING_AREA_ON:
 		// スイッチがON状態なら通電状態を解除する
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, ElectricalOffUV);
-		m_IsEnergizedState = false;
 		m_TypeID = NORMAL_B;
 		break;
 
 	case SWITCH_OPERATING_AREA_OFF:
 		// スイッチがOFF状態なら通電状態にする
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, ElectricalOnUV);
-		m_IsEnergizedState = true;
 		m_TypeID = ELECTICAL_B;
 		break;
 
@@ -92,11 +98,21 @@ void ElectricalBlock::ProcessCollision(const CollisionManager::CollisionData& rD
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void ElectricalBlock::Run(void)
-{}
+{
+	if(m_TypeID == ELECTICAL_B)
+	{
+		m_pEffect->Control();
+	}
+}
 
 void ElectricalBlock::Render(void)
 {
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
+
+	if(m_TypeID == ELECTICAL_B)
+	{
+		m_pEffect->Draw();
+	}
 }
 
 void ElectricalBlock::HandleEvent(void)

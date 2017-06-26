@@ -34,10 +34,7 @@ public:
 	/** Destructor */
 	virtual ~AnchorLightEffect(void);
 
-	/**
-	* 初期化関数. 
-	* 座標などをここで設定する
-	*/
+	/** 初期化関数 */
 	virtual void Initialize(void)override;
 
 	/** 
