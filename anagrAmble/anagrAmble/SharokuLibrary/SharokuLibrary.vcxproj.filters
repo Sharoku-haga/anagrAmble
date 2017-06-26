@@ -69,9 +69,6 @@
     <ClInclude Include="sl\sl.h">
       <Filter>sl</Filter>
     </ClInclude>
-    <ClInclude Include="sl\slBuild.h">
-      <Filter>sl</Filter>
-    </ClInclude>
     <ClInclude Include="sl\Common\slTemplate.h">
       <Filter>sl\Common</Filter>
     </ClInclude>
@@ -137,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="sl\Library\UVAnimation\slUVAnimationManager.h">
       <Filter>sl\Library\UVAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="sl\slBuild.h">
+      <Filter>sl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

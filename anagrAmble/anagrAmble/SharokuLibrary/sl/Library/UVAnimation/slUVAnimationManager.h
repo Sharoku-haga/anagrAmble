@@ -74,6 +74,11 @@ public:
 	bool CheckLastNumCurrnttAnime(int vtxID, int animeID);
 
 	/**
+	* アニメーションを全て解放する関数
+	*/
+	void ReleaseAll(void);
+
+	/**
 	* Getter 現在のアニメのUV値を取得する関数
 	* @param[in] vtxID			バーテックスのID
 	* @param[in] animeID		アニメーションのID

@@ -45,6 +45,7 @@ GameScene::GameScene(GameDataManager* pGameDataManager)
 
 GameScene::~GameScene(void)
 {
+	m_pLibrary->ReleaseUVAnimeDataALL();
 	sl::DeleteSafely(&m_pStageManager);
 	sl::DeleteSafely(&m_pPauseMenu);
 	sl::DeleteSafely(&m_pEventListener);

@@ -107,7 +107,13 @@ void Goal::ProcessCollision(const CollisionManager::CollisionData& rData)
 	{
 
 	case ObjBase::PLAYER:
-		m_HasCollidedWithPlayer = true;
+		if(m_CurrentRectData.m_Left < rData.m_ObjRect.m_Left
+			&& m_CurrentRectData.m_Top < rData.m_ObjRect.m_Top
+			&& m_CurrentRectData.m_Right > rData.m_ObjRect.m_Right)
+		{
+			m_HasCollidedWithPlayer = true;
+		}
+		
 		break;
 
 	default:

@@ -29,7 +29,7 @@ SceneManager::SceneManager(void)
 	//m_NextSceneID = Scene::GAME_OVER;
 #endif	// _DEBUG
 
-	//m_NextSceneID = Scene::TITLE;
+	m_NextSceneID = Scene::TITLE;
 	m_pGameDataManager = new GameDataManager();
 	SceneFactory::Initialize(m_pGameDataManager);
 }

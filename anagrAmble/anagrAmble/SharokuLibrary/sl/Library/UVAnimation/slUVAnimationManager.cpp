@@ -59,6 +59,21 @@ bool UVAnimationManager::CheckLastNumCurrnttAnime(int vtxID, int animeID)
 	return (m_pUVAnimations[vtxID][animeID]->CheckLastNumCurrnttAnime());
 }
 
+void UVAnimationManager::ReleaseAll(void)
+{
+	for(auto& pAnime : m_pUVAnimations)
+	{
+		for(auto& pUVAnimation : pAnime.second)
+		{
+			sl::DeleteSafely(&pUVAnimation.second);
+		}
+
+		pAnime.second.clear();
+	}
+
+	m_pUVAnimations.clear();
+}
+
 const sl::fRect& UVAnimationManager::GetCurrentAnimeUV(int vtxID, int animeID)
 {
 	return (m_pUVAnimations[vtxID][animeID]->GetCurrentAnimeUV());

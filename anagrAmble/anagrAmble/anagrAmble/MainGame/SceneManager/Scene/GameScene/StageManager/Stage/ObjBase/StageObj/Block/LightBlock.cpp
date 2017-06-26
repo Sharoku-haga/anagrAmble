@@ -38,9 +38,14 @@ void LightBlock::Initialize(void)
 	m_RectSize.m_Right		= (m_StageChipSize / 2);
 	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
 
-	const sl::fRect		uv = {0.6f, 0.0f, 0.65f, 0.088f};
+	const sl::fRect		uv = {0.0f, 0.8f, 0.05f, 0.889f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+
+	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.8f);
+
+	m_UVAnimeID = m_pLibrary->RegisterUVAnimeID(m_DrawingID.m_VtxID, 11, true);
+	m_pLibrary->CreateUVAnimeData(m_DrawingID.m_VtxID, m_UVAnimeID, 11, 0, uv, 5);
 }
 
 void LightBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -58,7 +63,10 @@ void LightBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void LightBlock::Run(void)
-{}
+{
+	// アニメーションを更新する
+	m_pLibrary->UpdateUVAnime(m_DrawingID.m_VtxID, m_UVAnimeID);
+}
 
 void LightBlock::Render(void)
 {
