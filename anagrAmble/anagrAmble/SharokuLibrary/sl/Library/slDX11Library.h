@@ -15,6 +15,7 @@ namespace sl
 
 class CustomizeInputManager;
 class UVAnimationManager;
+class DirectSoundManager;
 
 namespace dx11
 {
@@ -266,7 +267,8 @@ public:
 	* @param[in] rScale	スケール値. デフォルトは1.0f,1.0f,1.0f
 	* @param[in] angle	角度
 	*/
-	virtual void Draw2D(const DrawingID& rID, const SLVECTOR2& rPos, const SLVECTOR3& rScale = SLVECTOR3(1.0f, 1.0f, 1.0f), float angle = 0.0f)override;
+	virtual void Draw2D(const DrawingID& rID, const SLVECTOR2& rPos
+						, const SLVECTOR3& rScale = SLVECTOR3(1.0f, 1.0f, 1.0f), float angle = 0.0f)override;
 
 	//-----------------------------------------------------------------//
 	// インプットデバイス関連関数
@@ -308,6 +310,33 @@ public:
 	virtual bool CheckCustomizeState(int ID, DEVICE_STATE  checkState, int deviceNum = 0)override;
 
 	//-----------------------------------------------------------------//
+	// 音関連関数
+	//-----------------------------------------------------------------//
+
+	/**
+	* 音楽を読み込む関数.
+	* @param[in]	pFilepath	音楽ファイル名
+	* @return		登録したID もし読み込みに失敗した場合はINT_MAXが返ってくる
+	*/
+	virtual int LoadSound(TCHAR* pFilePath)override;
+
+	/**
+	* 音を再生する関数
+	* @param[in]	soundId			登録したサウンドID
+	* @param[in]	soundMode		音の再生方式
+	*/
+	virtual void PlayBackSound(int soundId, int soundMode)override; 
+
+	/**
+	* 登録しているサウンドを解放関数
+	* @param[in] soundId 登録したID
+	*/
+	virtual void ReleaseSound(int soundId)override;
+
+	/** 登録しているサウンド全てを解放する関数 */
+	virtual void ReleaseSoundALL(void)override;
+
+	//-----------------------------------------------------------------//
 	// その他
 	//-----------------------------------------------------------------//
 
@@ -321,6 +350,7 @@ private:
 	xi::GamePad*				m_pGamePad;
 	CustomizeInputManager*		m_pCustomizeInputManager;
 	UVAnimationManager*			m_pUVAnimationManager;
+	DirectSoundManager*			m_pDirectSoundManager;
 
 };	// class DX11Library 
 

@@ -26,7 +26,7 @@ void DeleteSafely(T** pVariable)
 
 // DirectX関連解放関数テンプレート
 template<typename T>
-void ReleaseSafely(T* variable)
+void ReleaseSafely(T*& variable)
 {
 	if(variable != NULL)
 	{
