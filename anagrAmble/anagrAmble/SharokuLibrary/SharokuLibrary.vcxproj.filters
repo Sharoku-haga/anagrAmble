@@ -7,6 +7,9 @@
     <Filter Include="sl\Common">
       <UniqueIdentifier>{7177cc4d-36d7-46d8-a145-6912bbd9765b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sl\Common\slVECTOR">
+      <UniqueIdentifier>{78e9353f-3f00-4aa3-b734-b3520fe92a8e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="sl\Library">
       <UniqueIdentifier>{b4a07008-3815-4c71-8bd7-668c56c031d3}</UniqueIdentifier>
     </Filter>
@@ -24,6 +27,12 @@
     </Filter>
     <Filter Include="sl\Library\Input">
       <UniqueIdentifier>{851a3e94-a49f-4858-854b-553a72a7fc27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sl\Library\Input\DirectInput">
+      <UniqueIdentifier>{8e68132b-8194-4e25-b3a8-b6abce70698f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sl\Library\Input\XInput">
+      <UniqueIdentifier>{9223dbbe-3787-4a7e-94fe-99e10bf7be9b}</UniqueIdentifier>
     </Filter>
     <Filter Include="sl\Library\Vertex">
       <UniqueIdentifier>{974a1091-3440-4c00-8b58-de1485ba349f}</UniqueIdentifier>
@@ -46,17 +55,14 @@
     <Filter Include="sl\Library\Shader\dx11ShaderManager">
       <UniqueIdentifier>{6c567279-36b1-4483-8c5c-67baa6ea651d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="sl\Common\slVECTOR">
-      <UniqueIdentifier>{78e9353f-3f00-4aa3-b734-b3520fe92a8e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sl\Library\Input\DirectInput">
-      <UniqueIdentifier>{8e68132b-8194-4e25-b3a8-b6abce70698f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sl\Library\Input\XInput">
-      <UniqueIdentifier>{9223dbbe-3787-4a7e-94fe-99e10bf7be9b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="sl\Library\UVAnimation">
       <UniqueIdentifier>{429dba97-50e9-4d4d-9289-5e24e33e3192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sl\Library\Sound">
+      <UniqueIdentifier>{5610c30f-6350-4f6d-8620-d4af0c780d30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sl\Library\Sound\DirectSound">
+      <UniqueIdentifier>{e9735e37-d332-4676-a970-991804235553}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +144,12 @@
     <ClInclude Include="sl\slBuild.h">
       <Filter>sl</Filter>
     </ClInclude>
+    <ClInclude Include="sl\Library\Sound\DirectSound\DirectSoundManager.h">
+      <Filter>sl\Library\Sound\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="sl\Common\slSoundEnum.h">
+      <Filter>sl\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sl\slISharokuLibrary.cpp">
@@ -196,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="sl\Library\UVAnimation\slUVAnimationManager.cpp">
       <Filter>sl\Library\UVAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="sl\Library\Sound\DirectSound\DirectSoundManager.cpp">
+      <Filter>sl\Library\Sound\DirectSound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

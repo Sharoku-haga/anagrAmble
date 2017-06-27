@@ -15,6 +15,7 @@
 #include "Input/XInput/xiGamePad.h"
 #include "Input\slCustomizeInputManager.h"
 #include "UVAnimation/slUVAnimationManager.h"
+#include "Sound/DirectSound/DirectSoundManager.h"
 #include "../Common/slTemplate.h"
 #include "../slBuild.h"
 
@@ -32,6 +33,7 @@ DX11Library::DX11Library(void)
 	, m_pGamePad(nullptr)
 	, m_pCustomizeInputManager(nullptr)
 	, m_pUVAnimationManager(nullptr)
+	, m_pDirectSoundManager(nullptr)
 {}
 
 DX11Library::~DX11Library(void)
@@ -61,10 +63,13 @@ void DX11Library::Initialize(t_char*  pWinTitle, int winWidth, int winHeight)
 
 	m_pCustomizeInputManager = new CustomizeInputManager(m_pInputManager, m_pGamePad);
 	m_pUVAnimationManager = new UVAnimationManager();
+	m_pDirectSoundManager = new DirectSoundManager();
+	m_pDirectSoundManager->Initialize(m_pWindow->GetHwnd());
 }
 
 void DX11Library::Finalize(void)
 {
+	DeleteSafely(&m_pDirectSoundManager);
 	DeleteSafely(&m_pUVAnimationManager);
 	DeleteSafely(&m_pCustomizeInputManager);
 #ifdef USING_XI_GAMEPAD
@@ -260,6 +265,26 @@ void DX11Library::RegisterCustomizeType(int ID, HID_TYPE device, int inputType)
 bool DX11Library::CheckCustomizeState(int ID, DEVICE_STATE  checkState, int deviceNum)
 {
 	return m_pCustomizeInputManager->CheckState(ID, checkState, deviceNum);
+}
+
+int  DX11Library::LoadSound(TCHAR* pFilePath)
+{
+	return m_pDirectSoundManager->LoadSound(pFilePath);
+}
+
+void  DX11Library::PlayBackSound(int soundId, int soundMode)
+{
+	m_pDirectSoundManager->PlayBackSound(soundId, soundMode);
+}
+
+void  DX11Library::ReleaseSound(int soundId)
+{
+	m_pDirectSoundManager->Release(soundId);
+}
+
+void  DX11Library::ReleaseSoundALL(void)
+{
+	m_pDirectSoundManager->ReleaseALL();
 }
 
 }	// namespace sl

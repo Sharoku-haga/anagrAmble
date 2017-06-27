@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="sl\Common\slDefine.h" />
     <ClInclude Include="sl\Common\slInputEnum.h" />
+    <ClInclude Include="sl\Common\slSoundEnum.h" />
     <ClInclude Include="sl\Common\slStruct.h" />
     <ClInclude Include="sl\Common\slTemplate.h" />
     <ClInclude Include="sl\Common\slTypes.h" />
@@ -34,6 +35,7 @@
     <ClInclude Include="sl\Library\Input\XInput\xiGamePad.h" />
     <ClInclude Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.h" />
     <ClInclude Include="sl\Library\slDX11Library.h" />
+    <ClInclude Include="sl\Library\Sound\DirectSound\DirectSoundManager.h" />
     <ClInclude Include="sl\Library\Texture\dx11Texture\dx11TextureManager.h" />
     <ClInclude Include="sl\Library\UVAnimation\slUVAnimation.h" />
     <ClInclude Include="sl\Library\UVAnimation\slUVAnimationManager.h" />
@@ -57,6 +59,7 @@
     <ClCompile Include="sl\Library\Input\XInput\xiGamePad.cpp" />
     <ClCompile Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.cpp" />
     <ClCompile Include="sl\Library\slDX11Library.cpp" />
+    <ClCompile Include="sl\Library\Sound\DirectSound\DirectSoundManager.cpp" />
     <ClCompile Include="sl\Library\Texture\dx11Texture\dx11TextureManager.cpp" />
     <ClCompile Include="sl\Library\UVAnimation\slUVAnimation.cpp" />
     <ClCompile Include="sl\Library\UVAnimation\slUVAnimationManager.cpp" />
