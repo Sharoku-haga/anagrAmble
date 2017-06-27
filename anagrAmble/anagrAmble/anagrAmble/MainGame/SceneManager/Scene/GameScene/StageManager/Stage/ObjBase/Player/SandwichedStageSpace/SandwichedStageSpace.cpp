@@ -235,8 +235,11 @@ void SandwichedStageSpace::Move(void)
 	SandwichedStageSpaceObj::SetIsPlayerFacingRight(m_pPlayer->IsFacingRight());
 	m_pBackground->SetIsPlayerFacingRight(m_pPlayer->IsFacingRight());
 
-	SandwichedStageSpaceObj::SetPlayerIndexData(m_pPlayer->GetStageIndex());
-	m_pBackground->SetPlayerIndexData(m_pPlayer->GetStageIndex());
+
+	Stage::INDEX_DATA playerIndexData = m_pPlayer->GetStageIndex();
+
+	SandwichedStageSpaceObj::SetPlayerIndexData(playerIndexData);
+	m_pBackground->SetPlayerIndexData(playerIndexData);
 }
 
 void SandwichedStageSpace::PrepareSpaceChange(void)

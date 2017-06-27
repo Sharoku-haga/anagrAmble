@@ -87,7 +87,26 @@ bool Anchor::CanPlaceStage(void)
 		return false;
 	}
 
-	if(std::abs(m_pPlayer->GetStageIndex().m_XNum - m_pPairAnchor->GetStageIndex().m_XNum) > PairAreaIntervalChipCount)
+	// ステージインデックスにプレイヤーのインデックスを入れる
+	Stage::INDEX_DATA playerIndex = m_pPlayer->GetStageIndex();
+	m_StageIndexData.m_XNum = playerIndex.m_XNum;
+	m_StageIndexData.m_YNum = playerIndex.m_YNum;
+
+	// ブロックとブロックの隙間に位置するように座標を調整
+	if(std::abs(m_pPlayer->GetPos().x - playerIndex.m_XNum * m_StageChipSize) > ((m_StageChipSize / 2) + (m_StageChipSize / 4)))
+	{
+		// プレイヤーの位置座標からインデックスをずらして位置調整をする
+		short xNumCorrectionVal =  m_pPlayer->IsFacingRight() ?  2 : -2 ;
+
+		m_StageIndexData.m_XNum += xNumCorrectionVal;
+	}
+	else
+	{
+		short xNumCorrectionVal = m_pPlayer->IsFacingRight() ? 1 : -1;
+		m_StageIndexData.m_XNum += xNumCorrectionVal;
+	}
+
+	if(std::abs(m_StageIndexData.m_XNum - m_pPairAnchor->GetStageIndex().m_XNum) > PairAreaIntervalChipCount)
 	{	// アンカーの間がペアとのエリア間隔チップ数よりはなれていたらfalse
 		return false;
 	}
@@ -266,7 +285,6 @@ void Anchor::MovePlayerFront(void)
 	// 座標計算
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize;
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
-
 }
 
 void Anchor::HandleEvent(void)

@@ -45,6 +45,8 @@ bool StageDataChangeManager::ChangeSpace(void)
 	
 	// 変数宣言
 	std::vector<std::vector<ChangeData>> tmp;		// 交換用の入れ物
+
+	// それぞれの幅を求める。ｙのIndexは引くと1少なくなるため +1しておく
 	short changeSpaceXNum = (m_SandwichedSpaceEndIndex.m_XNum - m_SandwichedSpaceStartIndex.m_XNum);
 	short changeSpaceYNum = (m_SandwichedSpaceEndIndex.m_YNum - m_SandwichedSpaceStartIndex.m_YNum) + 1;
 

@@ -73,8 +73,7 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 	// ジャンプ処理
 	if(m_CurrentMotion == JUMPING
 		&& rMovableDirection.m_Up
-		&& rMovableDirection.m_Down
-		)
+		&& rMovableDirection.m_Down)
 	{
 		m_CurrentMoveVector.y -= JumpSpeed;
 	}
