@@ -15,6 +15,7 @@ namespace ar
 
 class StageDataManager;
 class ObjBase;
+class Player;
 
 //======================================================================//
 //!< 衝突判定などを管理するクラス
@@ -64,7 +65,7 @@ public:
 	 * 衝突判定を行うプレイヤーオブジェクトを登録する関数 
 	 * @param[in] pObj 衝突判定を行いたいObjBaseクラスのインスタンス(プレイヤー)へのポインタ
 	 */
-	void SetPlayerPointer(ObjBase* pPlayer) { m_pPlayer = pPlayer; }
+	void SetPlayerPointer(Player* pPlayer) { m_pPlayer = pPlayer; }
 
 private:
 
@@ -85,7 +86,7 @@ private:
 	StageDataManager*								m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
 	std::vector<ObjBase*>							m_pStageObj;				//!< 衝突判定を行うObjBase群
 	std::vector<SwitchOperatingAreaData>			m_SwitchOperatingAreaData;	//!< スイッチの作動範囲をチェックするときに使用するデータ
-	ObjBase*										m_pPlayer;					//!< 衝突判定を行うプレイヤー
+	Player*											m_pPlayer;					//!< 衝突判定を行うプレイヤー
 
 	/**
 	* プレイヤーとの衝突判定を行う関数

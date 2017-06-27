@@ -20,22 +20,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch(iMsg)
 	{
+
+	case WM_CLOSE:
+		DestroyWindow(hWnd);
+		return 0;
+		break;
+
 	case WM_KEYDOWN:
 		switch(static_cast<char>(wParam))
 		{
 		case VK_ESCAPE:
 			PostQuitMessage(0);
+			return 0;
 			break;
 		}
 		break;
 
 	case WM_DESTROY:
 		PostQuitMessage(0);
+		return 0;
 		break;
 
-	case WM_CLOSE:
-		DestroyWindow(hWnd);
-		break;
 	}
 
 	return DefWindowProc(hWnd, iMsg, wParam, lParam);
@@ -152,11 +157,14 @@ bool Window::Update(void)
 	{
 		if(PeekMessage(&m_WinMsg, NULL, 0U, 0U, PM_REMOVE))
 		{
+			TranslateMessage(&m_WinMsg);
 			DispatchMessage(&m_WinMsg);
 		}
 
 		return false;
 	}
+
+	m_hWnd = NULL;
 	return true;
 }
 

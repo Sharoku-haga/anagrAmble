@@ -24,12 +24,13 @@ SceneManager::SceneManager(void)
 	, m_IsGameEnd(false)
 	, m_pGameDataManager(nullptr)
 {
+	m_NextSceneID = Scene::TITLE;
 #ifdef _DEBUG
 	m_NextSceneID = Scene::GAME;
 	//m_NextSceneID = Scene::GAME_OVER;
 #endif	// _DEBUG
 
-	m_NextSceneID = Scene::TITLE;
+
 	m_pGameDataManager = new GameDataManager();
 	SceneFactory::Initialize(m_pGameDataManager);
 }

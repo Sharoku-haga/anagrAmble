@@ -10,6 +10,7 @@
 #include "CollisionManager.h"
 #include "../StageDataManager.h"
 #include "ObjBase/ObjBase.h"
+#include "ObjBase/Player/Player.h"
 
 namespace ar
 {
@@ -66,9 +67,21 @@ void CollisionManager::UpDate(void)
 	}
 
 	// プレイヤーの衝突判定処理
-	for(auto& pStageObj : m_pStageObj)
+	if(m_pPlayer->IsFacingRight())
 	{
-		CheckCollisionPlayer(pStageObj);
+		for(unsigned int i = 0; i < m_pStageObj.size() ; ++i)
+		{
+			CheckCollisionPlayer(m_pStageObj[i]);
+		}
+	}
+	else
+	{
+		unsigned int count = 0;
+		count = (m_pStageObj.size() - 1);
+		for(int i = count; i >= 0  ; --i)
+		{
+			CheckCollisionPlayer(m_pStageObj[i]);
+		}
 	}
 
 	// データをクリアする

@@ -126,7 +126,7 @@ void Player::Control(void)
 	// 向きによってステージインデックスの計算方法をかえる
 	if(m_pPlayerMotion->IsFacingRight())
 	{ 
-		m_StageIndexData.m_XNum = static_cast<short>((m_Pos.x - (m_StageChipSize / 2)) / m_StageChipSize);
+		m_StageIndexData.m_XNum = static_cast<short>((m_Pos.x - (m_StageChipSize / 2))/ m_StageChipSize);
  	    m_StageIndexData.m_YNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
 	}
 	else
@@ -212,6 +212,9 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 
 	switch(rData.m_ObjType)
 	{
+	case NORMAL_B:
+		break;
+
 	case GROUND_B:
 		break;
 
@@ -283,13 +286,13 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 	{
 		m_MovableDirection.m_Right = false;
 		m_Pos.x -= ((m_CurrentRectData.m_Right - rData.m_ObjRect.m_Left) + RightCollisionCorrectionVal);
+
 	}
 
 	// 左方向
 	if(m_Pos.x > rData.m_ObjPos.x
 		&& m_CurrentRectData.m_Left > rData.m_ObjPos.x
-		&& std::abs(m_Pos.y - rData.m_ObjPos.y) < (m_StageChipSize + m_StageChipSize / 2  - CollisionCorrectionVal)
-		&& !m_pPlayerMotion->IsFacingRight())
+		&& std::abs(m_Pos.y - rData.m_ObjPos.y) < (m_StageChipSize + m_StageChipSize / 2 - CollisionCorrectionVal))
 	{
 		m_MovableDirection.m_Left = false;
 		m_Pos.x += ((rData.m_ObjRect.m_Right - m_CurrentRectData.m_Left) + LeftCollisionCorrectionVal);
@@ -317,6 +320,7 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 			m_MovableDirection.m_Up = false;
 			m_Pos.y += rData.m_ObjRect.m_Bottom - m_CurrentRectData.m_Top;
 		}
+
 	}
 
 	// 下方向
@@ -379,6 +383,9 @@ void Player::HandleEvent(void)
 				--m_GoddessPointCount;
 				GameEventManager::Instance().ReceiveEvent("goddess_point_minus");
 
+				// 待機状態に戻す
+				m_pPlayerMotion->ChangeWaitingMotion();
+
 				// 元データから消しておく
 				m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 			}
@@ -428,9 +435,6 @@ void Player::RunDeathAnimeEndProcessing(void)
 	if(m_GoddessPointCount > 0)
 	{	// 加護があるなら復活させる
 		GameEventManager::Instance().ReceiveEvent("player_respawn_start");
-
-		// 待機状態に戻す
-		m_pPlayerMotion->ChangeWaitingMotion();
 
 		// モードをリセットする
 		m_pPlayerMode->Reset();

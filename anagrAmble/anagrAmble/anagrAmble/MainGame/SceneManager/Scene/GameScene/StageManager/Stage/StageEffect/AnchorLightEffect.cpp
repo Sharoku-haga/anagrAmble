@@ -6,6 +6,7 @@
 
 /* Includes --------------------------------------------------------------------------------------------------- */
 
+#include <cmath> 
 #include "AnchorLightEffect.h"
 #include "../ObjBase/Player/Anchor.h"
 
@@ -17,9 +18,10 @@ namespace ar
 namespace
 {
 
-const float  EffectWidth			= 24.f;					//!< エフェクトの横の大きさ
-const float  HeightCorrectionVal	= 288.f;				//!< 縦の大きさの補正値
-const float	 MoveSpeed				= 4.8f;					//!< 動くスピード
+const float  EffectWidth						= 24.f;					//!< エフェクトの横の大きさ
+const float  HeightCorrectionVal				= 288.f;				//!< 縦の大きさの補正値
+const float	 MoveSpeed							= 4.8f;					//!< 動くスピード
+const short  PairAnchorAreaIntervalChipCount	= 6;					//!< 2つのAnchorエリア間隔チップ数
 
 }
 
@@ -173,6 +175,19 @@ void AnchorLightEffect::RunSandwichedSpaceState(void)
 
 void AnchorLightEffect::Run(void)
 {
+	if(m_pOwnerPairAnchor->GetHasPlacePosStage())
+	{
+		// 置かれているペアとのアンカーのインデックスの差が一定以上離れていたら赤くする
+		if(std::abs(m_pOwnerAnchor->GetStageIndex().m_XNum - m_pOwnerPairAnchor->GetStageIndex().m_XNum) > PairAnchorAreaIntervalChipCount)
+		{
+			m_pLibrary->SetVtxColor(m_VtxID[NORMAL_LIGHT], 1.0f, 0.0f, 0.0f, 1.0f);
+		}
+		else
+		{
+			m_pLibrary->SetVtxColor(m_VtxID[NORMAL_LIGHT], 1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+
 	switch(m_CurrentState)
 	{
 	case PLACED_PLAYER_FRONT:
