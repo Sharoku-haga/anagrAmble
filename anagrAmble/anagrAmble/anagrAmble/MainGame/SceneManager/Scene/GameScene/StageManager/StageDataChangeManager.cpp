@@ -18,7 +18,7 @@ namespace ar
 namespace
 {
 
-const int WhiteOutTime = 25;			// ホワイトアウト処理の時間
+const int WhiteOutTime = 40;			// ホワイトアウト処理の時間
 
 }
 

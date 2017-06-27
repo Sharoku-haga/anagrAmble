@@ -146,7 +146,7 @@ private:
 	* 死亡アニメが終了した後の処理を行う関数.コールバック関数
 	* "player_death_anime_end"のイベントがおこった際によばれる
 	*/
-	void RunDeathEndProcessing(void);
+	void RunDeathAnimeEndProcessing(void);
 
 };	// class Player
 

@@ -59,6 +59,11 @@ public:
 	void Draw(void);
 
 	/**
+	* 現在のモードに関することをリセットする
+	*/
+	void Reset(void);
+
+	/**
 	* モードを通常モードに変更する関数
 	*/
 	void ChangeNormalMode(void) { m_CurrentModeType = PlayerMode::MODE_TYPE::NORMAL; }

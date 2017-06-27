@@ -189,6 +189,11 @@ void  DX11Library::SeUVtAnimeOrder(int vtxID, int animeID, const std::vector<int
 	m_pUVAnimationManager->SetAnimeOrder(vtxID, animeID, rAnimeOrder);
 }
 
+void  DX11Library::ReleaseUVAnimeDataALL(void)
+{
+	m_pUVAnimationManager->ReleaseAll();
+}
+
 void DX11Library::SetDepthStencilTest(bool isStencilTest)
 {
 	m_pGraphicsDevice->SetDepthStencilTest(isStencilTest);

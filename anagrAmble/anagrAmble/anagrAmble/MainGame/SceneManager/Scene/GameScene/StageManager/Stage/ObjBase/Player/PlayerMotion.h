@@ -49,6 +49,12 @@ public:
 	*/
 	void ChangeDeathMotion(void);
 
+	/** 
+	* しゃがむ関連の動作に変更する関数
+	* 基本的nにしゃがむ動作に変更するが、移動していたらしゃがみ歩きに変更
+	*/
+	void ChangeSquatingMotion(void);
+
 	/**
 	* 入場動作を行う関数
 	* ステージ開始処理の際によぶ関数
@@ -64,10 +70,28 @@ public:
 	bool RunExitingMotion(void);
 
 	/**
-	* 現材の動作が死亡かどうか確認する関数
+	* 現在の動作が死亡かどうか確認する関数
 	* @return 結果 true→死んでいる false→死んでいない
 	*/
 	bool IsCurrrentMotionDeath(void);
+
+	/**
+	* 現在の動作がジャンプかどうか確認する関数
+	* @return 結果 true→ジャンプ動作 false→ジャンプ動作じゃない
+	*/
+	bool IsCurrrentMotionJumping(void);
+
+	/**
+	* 現在の動作が落下状態かどうか確認する関数
+	* @return 結果 true→落下状態である false→落下状態でない
+	*/
+	bool IsCurrrentMotionFalling(void);
+
+	/**
+	* 現在の動作がしゃがんでいる関連かどうか確認する関数
+	* @return 結果 true→しゃがんでいる false→しゃがんでいない
+	*/
+	bool IsCurrrentMotionSquat(void);
 
 	/**
 	* プレイヤーが右を向いているかどうかを確認する関数
@@ -77,9 +101,15 @@ public:
 
 	/**
 	* Getter 現在の動作VertexIDを取得する関数
-	* @return 現在のVtxIDを取得する関数
+	* @return 現在のVtxID
 	*/
 	inline int GetCurrentMotionVtxID(void) { return m_VtxID[m_CurrentMotion];  }
+
+	/**
+	* Getter 現在の矩形サイズを取得する関数
+	* @return  現在の矩形サイズ
+	*/
+	inline const sl::fRect& GetCurrentMotionRectSize(void) { return m_RectSize[m_CurrentMotion];  }
 
 private:
 	/** プレイヤーの動作ID */
@@ -89,6 +119,8 @@ private:
 		WALKING,		//!< 歩いている
 		RUNNING,		//!< 走っている
 		JUMPING,		//!< ジャンプ
+		SQUATING,		//!< しゃがみ
+		SQUAT_WALKING,	//!< しゃがみ歩き
 		FALLING,		//!< 落下
 		DEATH,			//!< 死亡
 		ENTERING,		//!< 入場
@@ -99,14 +131,14 @@ private:
 	sl::ISharokuLibrary*			m_pLibrary;					//!< ライブラリ.sl::ISharokuLibraryクラスのインスタンスへのポインタ
 	std::vector<int>				m_VtxID;					//!< VertexIDを格納した配列(vector)
 	std::vector<int>				m_UVAnimeID;				//!< UVAnimationIDを格納した配列(vector)
+	std::vector<sl::fRect>			m_RectSize;					//!< モーションごとの矩形サイズを格納した配列(vector)
+	sl::fRect						m_BasicRectSize;			//!< 基本矩形サイズ
+	sl::SLVECTOR2					m_CurrentMoveVector;		//!< 現在の移動ベクトル. 毎フレーム0に初期化される
 	MOTION_ID						m_CurrentMotion;			//!< 現在の動作
 	MOTION_ID						m_PreviousMotion;			//!< 前の動作
-	sl::fRect						m_BasicRectSize;			//!< 基本矩形サイズ
-	sl::fRect						m_CurrentEnteringRectSize;	//!< 入場状態の矩形サイズ
-	sl::fRect						m_CurrentExitingRectSize;	//!< 退場状態の矩形サイズ
-	sl::SLVECTOR2					m_CurrentMoveVector;		//!< 現在の移動ベクトル. 毎フレーム0に初期化される
-	bool							m_IsFacingRight;			//!< 右向きかどうか true→右向き false→右を向いていない(左向き)
 	int								m_FlightDurationCount;		//!< 滞空時間カウント数 
+	float							m_DashSpeedCorrectionVal;	//!< ダッシュ時のスピードの補正値
+	bool							m_IsFacingRight;			//!< 右向きかどうか true→右向き false→右を向いていない(左向き)
 
 	/** 
 	* 動作ごとのVertexを作成する関数

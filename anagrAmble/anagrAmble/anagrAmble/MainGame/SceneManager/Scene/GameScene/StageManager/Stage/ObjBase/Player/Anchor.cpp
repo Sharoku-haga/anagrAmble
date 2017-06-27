@@ -284,14 +284,13 @@ void Anchor::HandleEvent(void)
 		{
 			if(gameEvent == "anchor_retrieve")
 			{
-				if(m_HasCollidedWithPlayer )
+				if(m_HasCollidedWithPlayer)
 				{
 					PlacePosPlayerFront();
-				}
-
-				if(m_pPairAnchor->GetHasPlacePosStage())
-				{	// もう片方が置かれている状況なら挟んでいる空間を開放するイベントをとばす
-					GameEventManager::Instance().ReceiveEvent("sandwiched_space_release");
+					if(m_pPairAnchor->GetHasPlacePosStage())
+					{	// もう片方が置かれている状況なら挟んでいる空間を開放するイベントをとばす
+						GameEventManager::Instance().ReceiveEvent("sandwiched_space_release");
+					}
 				}
 			}
 		}

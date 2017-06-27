@@ -239,6 +239,9 @@ public:
 	*/
 	virtual void SeUVtAnimeOrder(int vtxID, int animeID, const std::vector<int>& rAnimeOrder)override;
 
+	/** UVアニメデータを全て解放する関数 */
+	virtual void  ReleaseUVAnimeDataALL(void)override;
+
 	//-----------------------------------------------------------------//
 	// 描画関連関数
 	//-----------------------------------------------------------------//

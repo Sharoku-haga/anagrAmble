@@ -53,7 +53,6 @@ void PlayerMode::InitializeAnchor(void)
 
 void PlayerMode::Control(void)
 {
-
 	if(m_pLibrary->CheckCustomizeState(ANCHOR_RETRIEVE, sl::PUSH))
 	{
 		// アンカー回収
@@ -112,6 +111,15 @@ void PlayerMode::Control(void)
 		break;
 
 	case AREA_CHENGE:
+		if(RESULT_FAILED(m_pAnchors[0]->GetHasPlacePosStage())
+			|| RESULT_FAILED(m_pAnchors[1]->GetHasPlacePosStage()))
+		{	// どちらかのアンカーが置かれていなかったら、挟んだ空間を破棄して、
+			// アンカーセットモードで移行
+			m_pSandwichedStageSpace->DiscardData();
+				m_CurrentModeType = ANCHOR_ACTION;
+				break;
+		}
+
 		if(m_pLibrary->CheckCustomizeState(SPACE_CHANGE, sl::PUSH))
 		{
 			GameEventManager::Instance().TriggerSynEvent("space_change_start");
@@ -171,6 +179,21 @@ void PlayerMode::Draw(void)
 			pAnchor->Draw();
 		}
 	}
+}
+
+void PlayerMode::Reset(void)
+{
+	// 挟んだ空間を削除
+	m_pSandwichedStageSpace->DiscardData();
+
+	// アンカーをプレイヤーの元に戻す
+	for(auto& pAnchor : m_pAnchors)
+	{
+		pAnchor->PlacePosPlayerFront();
+	}
+
+	// 通常モードに変更する
+	m_CurrentModeType = NORMAL;
 }
 
 }	// namespace ar

@@ -18,7 +18,7 @@ namespace ar
 namespace
 {
 
-const		float		MoveSpeed		= 6.f;				// プレイヤーの移動スピード
+const		float		MoveSpeed		= 4.f;				// プレイヤーの移動スピード
 const		float		ScrollSpeed		= 0.2f;				// スクロールスピード(入場、退場スピード)
 const		float		JumpSpeed		= 16.f;				// ジャンプスピード
 const		float		JumpPower		= 36.f;				// ジャンプの初動
@@ -33,6 +33,7 @@ PlayerMotion::PlayerMotion(const sl::fRect& rPlayerRect)
 	, m_PreviousMotion(ENTERING)
 	, m_BasicRectSize(rPlayerRect)
 	, m_CurrentMoveVector({ 0.0f, 0.0f })
+	, m_DashSpeedCorrectionVal(0.0f)
 	, m_IsFacingRight(true)
 {
 	InitializeVertex();
@@ -46,6 +47,14 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 	// 移動量を初期化
 	m_CurrentMoveVector.x = 0.0f;
 	m_CurrentMoveVector.y = 0.0f;
+
+	// 前のモーションと違ったら、前のモーションのアニメーションを初期化して、
+	// 前のモーションを更新しておく
+	if(m_CurrentMotion != m_PreviousMotion)
+	{
+		m_pLibrary->ReturnUVAnimeInitialState(m_VtxID[m_PreviousMotion], m_UVAnimeID[m_PreviousMotion]);
+		m_PreviousMotion = m_CurrentMotion;
+	}
 
 	if(m_CurrentMotion == DEATH)
 	{	// モーションが死亡しているなら死亡処理を行い 即リターン
@@ -71,18 +80,16 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 	}
 
 	// 左右キー処理
-	if(m_pLibrary->CheckCustomizeState(LEFT, sl::ON)
-		&& rMovableDirection.m_Left)
+	if(m_pLibrary->CheckCustomizeState(LEFT, sl::ON))
 	{
-		m_CurrentMoveVector.x -= MoveSpeed;
 		m_IsFacingRight = false;
+		m_CurrentMoveVector.x -= MoveSpeed;
 	}
 
-	if(m_pLibrary->CheckCustomizeState(RIGHT, sl::ON)
-		&& rMovableDirection.m_Right)
+	if(m_pLibrary->CheckCustomizeState(RIGHT, sl::ON))
 	{
-		m_CurrentMoveVector.x += MoveSpeed;
 		m_IsFacingRight = true;
+		m_CurrentMoveVector.x += MoveSpeed;
 	}
 
 	if(rMovableDirection.m_Down)
@@ -103,35 +110,82 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 			m_FlightDurationCount = 0;
 		}
 
+		m_CurrentMoveVector.x += m_DashSpeedCorrectionVal;
 		ProcessUVAnimation();
 		return m_CurrentMoveVector;
 	}
 	else
 	{
-		m_CurrentMotion = WALKING;
 		m_FlightDurationCount = 0;
 	}
 
-
-	if(m_pLibrary->CheckCustomizeState(DASH, sl::ON))
+	// ダッシュ補正値を入れる
+	if( m_pLibrary->CheckCustomizeState(DASH, sl::PUSH)
+		, m_pLibrary->CheckCustomizeState(DASH, sl::ON))
 	{
-		m_CurrentMoveVector.x = m_CurrentMoveVector.x * 2;
-		m_CurrentMotion = RUNNING;
+		if(m_IsFacingRight)
+		{
+			m_DashSpeedCorrectionVal = MoveSpeed;
+		}
+		else
+		{
+			m_DashSpeedCorrectionVal = -MoveSpeed;
+		}
+	}
+	else
+	{
+		m_DashSpeedCorrectionVal = 0;
 	}
 
+	// ジャンプ条件
 	if(m_pLibrary->CheckCustomizeState(JUMP, sl::PUSH)
-		&& m_CurrentMotion != JUMPING
-		&& m_CurrentMotion != FALLING
 		&& rMovableDirection.m_Up
 		&& RESULT_FAILED(rMovableDirection.m_Down))
 	{
 		m_CurrentMoveVector.y -= JumpPower;
 		m_CurrentMotion = JUMPING;
+
+		m_CurrentMoveVector.x += m_DashSpeedCorrectionVal;
+		ProcessUVAnimation();
+		return m_CurrentMoveVector;
 	}
 
-	if(m_CurrentMoveVector.x == 0.0f && m_CurrentMoveVector.y == 0.0f)
+	if(m_CurrentMoveVector.x == 0.0f 
+		&& m_CurrentMoveVector.y == 0.0f)
 	{	// 位置が変化していなかったら待機状態へ
 		m_CurrentMotion = WAITING;
+	}
+	
+	if(m_CurrentMoveVector.x != 0.0f)
+	{
+		m_CurrentMotion = WALKING;
+	}
+
+	// ダッシュ補正値が0じゃないなら走っているとみなす
+	if(m_DashSpeedCorrectionVal != 0
+		&& m_CurrentMoveVector.x != 0.0f)
+	{
+		m_CurrentMotion = RUNNING;
+		m_CurrentMoveVector.x += m_DashSpeedCorrectionVal;
+	}
+
+	// しゃがみ動作
+	if(m_pLibrary->CheckCustomizeState(SQUAT, sl::ON))
+	{
+		if(m_CurrentMotion == RUNNING)
+		{
+			m_CurrentMoveVector.x -= m_DashSpeedCorrectionVal;
+		}
+
+		if(m_CurrentMotion == WAITING)
+		{
+			m_CurrentMotion = SQUATING;
+		}
+		else
+		{
+			m_CurrentMotion = SQUAT_WALKING;
+			m_CurrentMoveVector.x = m_CurrentMoveVector.x / 2;
+		}
 	}
 
 	ProcessUVAnimation();
@@ -152,24 +206,49 @@ void PlayerMotion::ChangeDeathMotion(void)
 	m_PreviousMotion = m_CurrentMotion;
 }
 
+void PlayerMotion::ChangeSquatingMotion(void)
+{
+	if(m_CurrentMotion == JUMPING)
+	{
+		return;
+	}
+
+	if(m_CurrentMoveVector.x != 0.0f)
+	{
+		m_CurrentMotion = SQUAT_WALKING;
+	}
+	else
+	{
+		m_CurrentMotion = SQUATING;
+		m_pLibrary->ReturnUVAnimeInitialState(m_VtxID[m_PreviousMotion], m_UVAnimeID[m_PreviousMotion]);
+	}
+
+	ProcessUVAnimation();
+	m_PreviousMotion = m_CurrentMotion;
+}
+
 bool PlayerMotion::RunEnteringMotion(void)
 {
-	if(m_CurrentEnteringRectSize.m_Left <= m_BasicRectSize.m_Left
-		&& m_CurrentEnteringRectSize.m_Top <= m_BasicRectSize.m_Top
-		&& m_CurrentEnteringRectSize.m_Right >= m_BasicRectSize.m_Right
-		&& m_CurrentEnteringRectSize.m_Bottom >= m_BasicRectSize.m_Bottom)
+	if(m_CurrentMotion != ENTERING)
+	{
+		m_CurrentMotion = ENTERING;
+	}
+
+	if(m_RectSize[ENTERING].m_Left <= m_BasicRectSize.m_Left
+		&& m_RectSize[ENTERING].m_Top <= m_BasicRectSize.m_Top
+		&& m_RectSize[ENTERING].m_Right >= m_BasicRectSize.m_Right
+		&& m_RectSize[ENTERING].m_Bottom >= m_BasicRectSize.m_Bottom)
 	{
 		m_CurrentMotion = WAITING;
 		return true;
 	}
 	else
 	{
-		m_CurrentEnteringRectSize.m_Left	-= ScrollSpeed;
-		m_CurrentEnteringRectSize.m_Top		-= ScrollSpeed * 2;
-		m_CurrentEnteringRectSize.m_Right	+= ScrollSpeed;
-		m_CurrentEnteringRectSize.m_Bottom	+= ScrollSpeed * 2;
-		m_pLibrary->SetVtxSize(m_VtxID[ENTERING], m_CurrentEnteringRectSize);
-
+		m_RectSize[ENTERING].m_Left	-= ScrollSpeed;
+		m_RectSize[ENTERING].m_Top		-= ScrollSpeed * 2;
+		m_RectSize[ENTERING].m_Right	+= ScrollSpeed;
+		m_RectSize[ENTERING].m_Bottom	+= ScrollSpeed * 2;
+		m_pLibrary->SetVtxSize(m_VtxID[ENTERING], m_RectSize[ENTERING]);
 	}
 
 	// アニメーションを更新する
@@ -179,22 +258,25 @@ bool PlayerMotion::RunEnteringMotion(void)
 
 bool PlayerMotion::RunExitingMotion(void)
 {
-	if(m_CurrentEnteringRectSize.m_Left >= 0.0f
-		&& m_CurrentEnteringRectSize.m_Top >= 0.0f
-		&& m_CurrentEnteringRectSize.m_Right <= 0.0f
-		&& m_CurrentEnteringRectSize.m_Bottom <= 0.0f)
+	if(m_CurrentMotion != EXITING)
+	{
+		m_CurrentMotion = EXITING;
+	}
+
+	if(m_RectSize[EXITING] .m_Left >= 0.0f
+		&& m_RectSize[EXITING] .m_Top >= 0.0f
+		&& m_RectSize[EXITING] .m_Right <= 0.0f
+		&& m_RectSize[EXITING] .m_Bottom <= 0.0f)
 	{
 		return true;
 	}
 	else
 	{
-		m_CurrentEnteringRectSize.m_Left += ScrollSpeed;
-		m_CurrentEnteringRectSize.m_Top += ScrollSpeed * 2;
-		m_CurrentEnteringRectSize.m_Right -= ScrollSpeed;
-		m_CurrentEnteringRectSize.m_Bottom -= ScrollSpeed * 2;
-		m_pLibrary->SetVtxSize(m_VtxID[EXITING], m_CurrentEnteringRectSize);
-		m_CurrentMotion = EXITING;
-
+		m_RectSize[EXITING] .m_Left += ScrollSpeed;
+		m_RectSize[EXITING] .m_Top += ScrollSpeed * 2;
+		m_RectSize[EXITING] .m_Right -= ScrollSpeed;
+		m_RectSize[EXITING] .m_Bottom -= ScrollSpeed * 2;
+		m_pLibrary->SetVtxSize(m_VtxID[EXITING], m_RectSize[EXITING] );
 	}
 
 	// アニメーションを更新する
@@ -212,26 +294,59 @@ bool PlayerMotion::IsCurrrentMotionDeath(void)
 	return false;
 }
 
+bool PlayerMotion::IsCurrrentMotionJumping(void)
+{
+	if(m_CurrentMotion == JUMPING)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool PlayerMotion::IsCurrrentMotionFalling(void)
+{	
+	if(m_CurrentMotion == FALLING)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool PlayerMotion::IsCurrrentMotionSquat(void)
+{
+	if(m_CurrentMotion == SQUATING 
+		|| m_CurrentMotion == SQUAT_WALKING)
+	{
+		return true;
+	}
+	return false;
+}
+
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void PlayerMotion::InitializeVertex(void)
 {
-	// 状態ごとのVertexとUVアニメのIDを個数分を作成
+	// 状態ごとのVertexとUVアニメのIDと矩形サイズを作成
 	m_VtxID.resize(ID_MAX);
 	m_UVAnimeID.resize(ID_MAX);
+	m_RectSize.resize(ID_MAX);
 
 	// 待機
 	{
+		m_RectSize[WAITING] = m_BasicRectSize;
 		sl::fRect		uv = { 0.0f, 0.0f, 0.05f, 0.176f };
-		m_VtxID[WAITING] = m_pLibrary->CreateVertex2D(m_BasicRectSize, uv);
-		m_UVAnimeID[WAITING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[WAITING], 5, true);
-		m_pLibrary->CreateUVAnimeData(m_VtxID[WAITING], m_UVAnimeID[WAITING], 5, 0, uv, 8);
+		m_VtxID[WAITING] = m_pLibrary->CreateVertex2D(m_RectSize[WAITING], uv);
+		m_UVAnimeID[WAITING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[WAITING], 17, true);
+		m_pLibrary->CreateUVAnimeData(m_VtxID[WAITING], m_UVAnimeID[WAITING], 17, 0, uv, 8);
 	}
 
 	// 歩き
 	{
+		m_RectSize[WALKING] = m_BasicRectSize;
 		sl::fRect		uv = { 0.5f, 0.177f, 0.55f, 0.354f };
-		m_VtxID[WALKING] = m_pLibrary->CreateVertex2D(m_BasicRectSize, uv);
+		m_VtxID[WALKING] = m_pLibrary->CreateVertex2D(m_RectSize[WALKING], uv);
 		m_UVAnimeID[WALKING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[WALKING], 7, true);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[WALKING], m_UVAnimeID[WALKING], 7, 0, uv, 3);
 
@@ -253,22 +368,66 @@ void PlayerMotion::InitializeVertex(void)
 
 	// 走っている
 	{
+		m_RectSize[RUNNING] = m_BasicRectSize;
 		sl::fRect		uv = { 0.0f, 0.355f, 0.05f, 0.533f };
-		m_VtxID[RUNNING] = m_pLibrary->CreateVertex2D(m_BasicRectSize, uv);
-		m_UVAnimeID[RUNNING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[RUNNING], 9, true);
-		m_pLibrary->CreateUVAnimeData(m_VtxID[RUNNING], m_UVAnimeID[RUNNING], 9, 0, uv, 2);
+		m_VtxID[RUNNING] = m_pLibrary->CreateVertex2D(m_RectSize[RUNNING], uv);
+		m_UVAnimeID[RUNNING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[RUNNING], 10, true);
+		m_pLibrary->CreateUVAnimeData(m_VtxID[RUNNING], m_UVAnimeID[RUNNING], 10, 0, uv, 2);
 	}
 
 	// ジャンプ
 	{
+		m_RectSize[JUMPING] = m_BasicRectSize;
 		sl::fRect		uv = { 0.5f, 0.355f, 0.55f, 0.533f };
-		m_VtxID[JUMPING] = m_pLibrary->CreateVertex2D(m_BasicRectSize, uv);
+		m_VtxID[JUMPING] = m_pLibrary->CreateVertex2D(m_RectSize[JUMPING], uv);
 		m_UVAnimeID[JUMPING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[JUMPING], 4);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[JUMPING], m_UVAnimeID[JUMPING], 4, 0, uv, 2);
 	}
 
+	// しゃがみ
+	// Vertex作成はm_BasicRectSizeを元に作成するが、m_RectSize[SQUATING]にはサイズを変更していれる
+	{
+		sl::fRect		uv = { 0.15f, 0.533f, 0.2f, 0.711f };
+		m_VtxID[SQUATING] = m_pLibrary->CreateVertex2D(m_BasicRectSize, uv);
+		m_UVAnimeID[SQUATING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[SQUATING], 1, true);
+		m_pLibrary->CreateUVAnimeData(m_VtxID[SQUATING], m_UVAnimeID[SQUATING], 1, 0, uv, 3);
+
+		m_RectSize[SQUATING].m_Left = m_BasicRectSize.m_Left;
+		m_RectSize[SQUATING].m_Top = -0.0f;
+		m_RectSize[SQUATING].m_Right = m_BasicRectSize.m_Right;
+		m_RectSize[SQUATING].m_Bottom = m_BasicRectSize.m_Bottom;
+	}
+
+	// しゃがみ歩き
+	// Vertex作成はm_BasicRectSizeを元に作成するが、m_RectSize[SQUATING]にはサイズを変更していれる
+	{
+		sl::fRect		uv = { 0.15f, 0.533f, 0.2f, 0.711f };
+		m_VtxID[SQUAT_WALKING] = m_pLibrary->CreateVertex2D(m_BasicRectSize, uv);
+		m_UVAnimeID[SQUAT_WALKING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[SQUAT_WALKING], 3, true);
+		m_pLibrary->CreateUVAnimeData(m_VtxID[SQUAT_WALKING], m_UVAnimeID[SQUAT_WALKING], 3, 0, uv, 3);
+
+		// アニメーションの順番指定
+		std::vector<int> animeOrder;
+		for(int i = 0; i < 3; ++i)
+		{
+			animeOrder.push_back(i);
+		}
+		// 逆に番号を入れる
+		for(int i = 2; i >= 0; --i)
+		{
+			animeOrder.push_back(i);
+		}
+		m_pLibrary->SeUVtAnimeOrder(m_VtxID[SQUAT_WALKING], m_UVAnimeID[SQUAT_WALKING], animeOrder);
+
+		m_RectSize[SQUAT_WALKING].m_Left = m_BasicRectSize.m_Left;
+		m_RectSize[SQUAT_WALKING].m_Top = 0.0f;
+		m_RectSize[SQUAT_WALKING].m_Right = m_BasicRectSize.m_Right;
+		m_RectSize[SQUAT_WALKING].m_Bottom = m_BasicRectSize.m_Bottom;
+	}
+
 	// 落下(今のところは待機と一緒)
 	{
+		m_RectSize[FALLING] = m_BasicRectSize;
 		sl::fRect		uv = { 0.75f, 0.355f, 0.8f, 0.533f };
 		m_VtxID[FALLING] = m_pLibrary->CreateVertex2D(m_BasicRectSize, uv);
 		m_UVAnimeID[FALLING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[FALLING], 1);
@@ -277,6 +436,7 @@ void PlayerMotion::InitializeVertex(void)
 
 	// 死亡
 	{
+		m_RectSize[DEATH] = m_BasicRectSize;
 		sl::fRect		uv = { 0.35f, 0.533f, 0.4f, 0.711f };
 		m_VtxID[DEATH] = m_pLibrary->CreateVertex2D(m_BasicRectSize, uv);
 		m_UVAnimeID[DEATH] = m_pLibrary->RegisterUVAnimeID(m_VtxID[DEATH], 10);
@@ -284,10 +444,15 @@ void PlayerMotion::InitializeVertex(void)
 	}
 
 	// 入場
+	// 入場の最初の矩形サイズは0.0f
 	{
-		m_CurrentEnteringRectSize = {0.0f, 0.0f, 0.0f, 0.0f};
+		m_RectSize[ENTERING].m_Left = 0.0f;
+		m_RectSize[ENTERING].m_Top = 0.0f;
+		m_RectSize[ENTERING].m_Right = 0.0f;
+		m_RectSize[ENTERING].m_Bottom = 0.0f;
+		
 		sl::fRect		uv = { 0.0f, 0.711f, 0.05f, 0.888f };
-		m_VtxID[ENTERING] = m_pLibrary->CreateVertex2D(m_CurrentEnteringRectSize, uv);
+		m_VtxID[ENTERING] = m_pLibrary->CreateVertex2D(m_RectSize[ENTERING], uv);
 		m_UVAnimeID[ENTERING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[ENTERING], 6, true);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[ENTERING], m_UVAnimeID[ENTERING], 6, 0, uv, 5);
 
@@ -308,9 +473,9 @@ void PlayerMotion::InitializeVertex(void)
 
 	// 退場
 	{
-		m_CurrentExitingRectSize = m_BasicRectSize;
+		m_RectSize[EXITING]  = m_BasicRectSize;
 		sl::fRect		uv = { 0.35f, 0.711f, 0.4f, 0.888f };
-		m_VtxID[EXITING] = m_pLibrary->CreateVertex2D(m_CurrentExitingRectSize, uv);
+		m_VtxID[EXITING] = m_pLibrary->CreateVertex2D(m_RectSize[EXITING] , uv);
 		m_UVAnimeID[EXITING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[EXITING], 6, true);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[EXITING], m_UVAnimeID[EXITING], 6, 0, uv, 5);
 
@@ -343,14 +508,6 @@ void PlayerMotion::ProcessUVAnimation(void)
 {
 	// アニメーションを更新する
 	m_pLibrary->UpdateUVAnime(m_VtxID[m_CurrentMotion], m_UVAnimeID[m_CurrentMotion]);
-
-	// 前のモーションと違ったら、前のモーションのアニメーションを初期化して、
-	// 前のモーションを更新しておく
-	if(m_CurrentMotion != m_PreviousMotion)
-	{
-		m_pLibrary->ReturnUVAnimeInitialState(m_VtxID[m_PreviousMotion], m_UVAnimeID[m_PreviousMotion]);
-		m_PreviousMotion = m_CurrentMotion;
-	}
 
 	// アニメーション反転処理
 	sl::fRect uv = m_pLibrary->GetUVRect(m_VtxID[m_CurrentMotion]);
