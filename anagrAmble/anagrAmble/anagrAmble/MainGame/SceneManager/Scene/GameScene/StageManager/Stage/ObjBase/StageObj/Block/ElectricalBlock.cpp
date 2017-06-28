@@ -9,6 +9,7 @@
 #include "ElectricalBlock.h"
 #include "../../../../StageDataManager.h"
 #include "../../../StageEffect/ElectricEffect.h"
+#include "../../../../../GameSceneSoundID.h"
 
 namespace ar
 {
@@ -44,12 +45,12 @@ void ElectricalBlock::Initialize(void)
 {
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-	
+
 	// ブロックサイズのRect構造体を作成
-	m_RectSize.m_Left	=  -(m_StageChipSize  / 2);
-	m_RectSize.m_Top	=  -(m_StageChipSize  / 2);
-	m_RectSize.m_Right	= (m_StageChipSize  / 2);
-	m_RectSize.m_Bottom = (m_StageChipSize  / 2);
+	m_RectSize.m_Left = -(m_StageChipSize / 2);
+	m_RectSize.m_Top = -(m_StageChipSize / 2);
+	m_RectSize.m_Right = (m_StageChipSize / 2);
+	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, ElectricalOnUV);
 
@@ -102,6 +103,14 @@ void ElectricalBlock::Run(void)
 	if(m_TypeID == ELECTICAL_B)
 	{
 		m_pEffect->Control();
+		
+		// 画面内にあるならオブジェクトを鳴らす
+		if(m_Pos.x > m_BasePointPos.x
+			&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
+		{
+			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL), sl::PLAY);
+			return;
+		}
 	}
 }
 

@@ -19,7 +19,7 @@ namespace
 const float			AlphaMinVal				= 0.0f;				// アルファ値の最小値
 const float			AlphaMaxVal				= 1.0f;				// アルファ値の最大値
 const float			FadeSpeed				= 0.01f;			// フェードスピード値
-const int			DisplayTime				= 180;				// 背景表示時間. 60FPS
+const int			DisplayTime				= 300;				// 背景表示時間. 60FPS
 const int			ChangeSceneWaitingTime	= 30;				// シーン変更するまでの待機時間. 60FPS
 
 }

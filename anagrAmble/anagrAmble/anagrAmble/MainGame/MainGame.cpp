@@ -134,8 +134,8 @@ void MainGame::CustomizeInput(void)
 
 	// しゃがむ : SQUAT
 	{
-		//m_pLibrary->RegisterCustomizeType(SQUAT, sl::GAMEPAD, sl::XIGAMEPAD_LSTICK_DOWN);
-		//m_pLibrary->RegisterCustomizeType(SQUAT, sl::GAMEPAD, sl::XIGAMEPAD_DPAD_DOWN );
+		m_pLibrary->RegisterCustomizeType(SQUAT, sl::GAMEPAD, sl::XIGAMEPAD_LSTICK_DOWN);
+		m_pLibrary->RegisterCustomizeType(SQUAT, sl::GAMEPAD, sl::XIGAMEPAD_DPAD_DOWN );
 	}
 
 	// 特殊アクション : SPECIAL_ACTION

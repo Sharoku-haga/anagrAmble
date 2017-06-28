@@ -9,6 +9,7 @@
 #include "PressureSensitiveBlock.h"
 #include "../../../../StageDataManager.h"
 #include "../../SwitchOperatingArea/SwitchOperatingArea.h"
+#include "../../../../../GameSceneSoundID.h"
 
 namespace ar
 {
@@ -100,6 +101,7 @@ void PressureSensitiveBlock::Run(void)
 	{
 		m_HasCollidedWithPlayer = false;
 		m_pSwitchOperatingArea->SwitchOnState();
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON), sl::PLAY);
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
 	}
 	else
@@ -112,6 +114,7 @@ void PressureSensitiveBlock::Run(void)
 	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YNum - 1), m_StageIndexData.m_XNum) != BLANK)
 	{
 		m_pSwitchOperatingArea->SwitchOnState();
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON), sl::PLAY);
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
 	}
 

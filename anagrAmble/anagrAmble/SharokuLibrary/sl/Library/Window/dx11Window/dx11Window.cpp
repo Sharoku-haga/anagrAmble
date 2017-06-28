@@ -56,16 +56,7 @@ Window::Window(void)
 }
 
 Window::~Window(void)
-{
-	if(m_hWnd != NULL)
-	{
-		SendMessage(m_hWnd, WM_CLOSE, 0, 0);						
-	}
-	else
-	{
-		// テスト用空処理. Finalizeでウィンドウを破棄しているか。そもそも生成していない場合にこの処理に入る
-	}
-}
+{}
 
 bool Window::Initialize(t_char*  pWinTitle, int winWidth, int winHeight, HWND hWndParent)
 {

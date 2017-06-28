@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <mmsystem.h>
 #include <vector>
+#include <map>
 #include <dsound.h>
 
 namespace sl
@@ -36,10 +37,12 @@ public:
 
 	/**
 	* 音楽を読み込む関数.
+	* @param[in]	id			登録したいID
 	* @param[in]	pFilepath	音楽ファイル名
-	* @return		登録したID もし読み込みに失敗した場合はINT_MAXが返ってくる
+	* @retval	true	waveファイルオープン成功
+	* @retval	false	waveファイルオープン失敗
 	*/
-	int LoadSound(TCHAR* pFilePath);
+	bool LoadSound(int id, TCHAR* pFilePath);
 
 	/**
 	* 音を再生する関数
@@ -61,7 +64,7 @@ private:
 	static	WAVEFORMATEX						m_WFmt;				//!< WAVEオーディオデータのフォーマット情報
 
 	IDirectSound8*								m_pDSound8;			//!< DirectSoundのインターフェイス
-	std::vector<LPDIRECTSOUNDBUFFER8>			m_Sounds;			//!< サウンドを格納する動的配列
+	std::map<int, LPDIRECTSOUNDBUFFER8>			m_Sounds;			//!< サウンドを格納する連想配列
 
 	/**
 	* WAVEファイルオープン関数.

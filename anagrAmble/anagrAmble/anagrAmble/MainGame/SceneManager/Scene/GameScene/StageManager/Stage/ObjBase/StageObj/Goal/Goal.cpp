@@ -10,6 +10,7 @@
 #include "../../../../StageDataManager.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
+#include "../../../../../GameSceneSoundID.h"
 
 namespace ar
 {
@@ -136,6 +137,7 @@ void Goal::Run(void)
 		m_pLibrary->UpdateUVAnime(m_DrawingID.m_VtxID, m_UVAnimeID);
 		if(m_pLibrary->CheckLastNumCurrnttUVAnime(m_DrawingID.m_VtxID, m_UVAnimeID))
 		{
+			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::DOOR), sl::STOP);
 			m_CurrentState = HAS_OPENED_DOOR;
 
 			if(m_TypeID == LOCKED_GOAL)
@@ -160,6 +162,7 @@ void Goal::Run(void)
 		m_pLibrary->UpdateUVAnime(m_DrawingID.m_VtxID, m_UVAnimeID);
 		if(m_pLibrary->CheckLastNumCurrnttUVAnime(m_DrawingID.m_VtxID, m_UVAnimeID))
 		{
+			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::DOOR), sl::STOP);
 			GameEventManager::Instance().ReceiveEvent("game_clear");
 		}
 		break;
@@ -200,11 +203,13 @@ void Goal::HandleEvent(void)
 			}
 			else if(gameEvent == "goal_key_get"  && m_TypeID == LOCKED_GOAL)
 			{
+				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::DOOR), sl::PLAY_LOOP);
 				m_CurrentState = IS_OPENING_DOOR;
 				break;
 			}
 			else if(gameEvent == "stage_end"  && m_CurrentState == HAS_OPENED_DOOR)
 			{
+				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::DOOR), sl::PLAY_LOOP);
 				m_CurrentState = IS_CLOSEING_DOOR;
 				break;
 			}

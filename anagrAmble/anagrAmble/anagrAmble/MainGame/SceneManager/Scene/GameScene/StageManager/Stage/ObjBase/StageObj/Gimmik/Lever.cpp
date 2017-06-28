@@ -11,6 +11,7 @@
 #include "../../SwitchOperatingArea/SwitchOperatingArea.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
+#include "../../../../../GameSceneSoundID.h"
 
 /* Unnamed Namespace ------------------------------------------------------------------------------------------ */
 
@@ -133,11 +134,13 @@ void Lever::HandleEvent(void)
 				{
 					m_pSwitchOperatingArea->SwitchOffState();
 					m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, LeverOffUV);
+					m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
 					m_IsOnState = false;
 				}
 				else
 				{
 					m_pSwitchOperatingArea->SwitchOnState();
+					m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
 					m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, LeverOnUV);
 					m_IsOnState = true;
 				}

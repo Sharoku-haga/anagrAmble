@@ -315,10 +315,11 @@ public:
 
 	/**
 	* 音楽を読み込む関数.
+	* @param[in]	id			登録したいID
 	* @param[in]	pFilepath	音楽ファイル名
-	* @return		登録したID もし読み込みに失敗した場合はINT_MAXが返ってくる
+	* @return		結果 true→成功 false→失敗
 	*/
-	virtual int LoadSound(TCHAR* pFilePath)override;
+	virtual bool LoadSound(int id, TCHAR* pFilePath)override;
 
 	/**
 	* 音を再生する関数

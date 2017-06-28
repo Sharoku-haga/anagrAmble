@@ -9,6 +9,7 @@
 #include "GameScene.h"
 #include "../../GameDataManager/GameDataManager.h"
 #include "../../../ControllerEnum.h"
+#include "GameSceneSoundID.h"
 #include "GamePauseMenu/GamePauseMenu.h"
 #include "GameEventManager/GameEventManager.h"
 #include "GameEventManager/EventListener.h"
@@ -41,10 +42,15 @@ GameScene::GameScene(GameDataManager* pGameDataManager)
 	}
 
 	m_pStageManager = new StageManager(m_pGameDataManager);
+
+	// 音楽読み込みは基本的にStage内で読み込む
+	m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::SELECT)
+			, "../Sounds/SE/Select.wav");
 }
 
 GameScene::~GameScene(void)
 {
+	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::SELECT));
 	m_pLibrary->ReleaseUVAnimeDataALL();
 	sl::DeleteSafely(&m_pStageManager);
 	sl::DeleteSafely(&m_pPauseMenu);
@@ -67,6 +73,7 @@ Scene::ID GameScene::Control(void)
 	case GAME_PLAY:
 		if(m_pLibrary->CheckCustomizeState(PAUSE, sl::PUSH))
 		{
+			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::SELECT), sl::RESET_PLAY);
 			m_CurrentState = PAUSE_MENU;
 		}
 		m_pStageManager->Contorl();
@@ -76,6 +83,7 @@ Scene::ID GameScene::Control(void)
 		m_pPauseMenu->Control();
 		if(m_pLibrary->CheckCustomizeState(PAUSE, sl::PUSH))
 		{
+			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::SELECT), sl::RESET_PLAY);
 			m_CurrentState = GAME_PLAY;
 		}
 		break;

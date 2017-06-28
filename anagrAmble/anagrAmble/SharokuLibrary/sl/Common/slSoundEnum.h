@@ -14,7 +14,7 @@ namespace sl
 enum SOUND_MODE
 {
 	PLAY,			//!< 再生
-	PLAYLOOP,		//!< ループ再生
+	PLAY_LOOP,		//!< ループ再生
 	STOP,			//!< 停止
 	RESET,			//!< 初期位置に戻す
 	STOP_RESET,		//!< 停めて初期位置戻す

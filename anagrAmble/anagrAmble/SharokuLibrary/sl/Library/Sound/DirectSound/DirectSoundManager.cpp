@@ -36,9 +36,10 @@ void DirectSoundManager::Initialize(HWND hWnd)
 	m_pDSound8->SetCooperativeLevel(hWnd, DSSCL_NORMAL);
 }
 
-int DirectSoundManager::LoadSound(TCHAR* pFilePath)
+bool DirectSoundManager::LoadSound(int id, TCHAR* pFilePath)
 {
 	LPDIRECTSOUNDBUFFER8 pDSBuffer = NULL;
+	m_Sounds[id] = pDSBuffer;
 
 	// Waveファイルオープン
 	char *pWaveData = 0;
@@ -47,7 +48,7 @@ int DirectSoundManager::LoadSound(TCHAR* pFilePath)
 	if(!OpenWave((pFilePath), &m_WFmt, &pWaveData, &waveSize))
 	{
 		MessageBox(0, "WAVEファイルオープンに失敗しました。", NULL, MB_OK);
-		return INT_MAX;
+		return false;
 	}
 
 	DSBUFFERDESC DSBufferDesc;
@@ -60,14 +61,14 @@ int DirectSoundManager::LoadSound(TCHAR* pFilePath)
 
 	IDirectSoundBuffer *ptmpBuf = 0;
 	m_pDSound8->CreateSoundBuffer(&DSBufferDesc, &ptmpBuf, NULL);
-	ptmpBuf->QueryInterface(IID_IDirectSoundBuffer8, (void**)&pDSBuffer);
+	ptmpBuf->QueryInterface(IID_IDirectSoundBuffer8, (void**)&m_Sounds[id]);
 
 	ptmpBuf->Release();
-	if (pDSBuffer == NULL)
+	if (m_Sounds[id] == NULL)
 	{
 		m_pDSound8->Release();
 		MessageBox(0, "WAVEファイルオープンに失敗しました。", NULL, MB_OK);
-		return INT_MAX;
+		return false;
 	}
 
 	// セカンダリバッファにWaveデータ書き込み
@@ -76,20 +77,16 @@ int DirectSoundManager::LoadSound(TCHAR* pFilePath)
 		LPVOID lpvWrite = 0;
 		//音声データの大きさ
 		DWORD dwLength = 0;
-		if(DS_OK == pDSBuffer->Lock(0, 0, &lpvWrite, &dwLength, NULL, NULL, DSBLOCK_ENTIREBUFFER))
+		if(DS_OK == m_Sounds[id]->Lock(0, 0, &lpvWrite, &dwLength, NULL, NULL, DSBLOCK_ENTIREBUFFER))
 		{
 			memcpy(lpvWrite, pWaveData, dwLength);
-			pDSBuffer->Unlock(lpvWrite, dwLength, NULL, 0);
+			m_Sounds[id]->Unlock(lpvWrite, dwLength, NULL, 0);
 		}
 	}
 
 	delete[] pWaveData; // 元音はもういらない
 
-	int id = m_Sounds.size();		// 登録キー
-
-	m_Sounds.push_back(pDSBuffer);
-
-	return id;
+	return true;
 }
 
 void DirectSoundManager::PlayBackSound(int id, int soundMode)
@@ -99,7 +96,7 @@ void DirectSoundManager::PlayBackSound(int id, int soundMode)
 	case PLAY:
 		m_Sounds[id]->Play(0, 0, 0);
 		break;
-	case PLAYLOOP:
+	case PLAY_LOOP:
 		m_Sounds[id]->Play(0, 0, DSBPLAY_LOOPING);
 		break;
 	case STOP:
@@ -125,22 +122,25 @@ void DirectSoundManager::PlayBackSound(int id, int soundMode)
 
 void DirectSoundManager::Release(int id)
 {
-	m_Sounds[id]->Release();
-	m_Sounds[id] = NULL;
+	if(m_Sounds[id] != NULL)
+	{
+		m_Sounds[id]->Release();
+		m_Sounds[id] = NULL;
+	}
 }
 
 void DirectSoundManager::ReleaseALL(void)
 {
 	for(auto& itr = m_Sounds.begin(); itr != m_Sounds.end(); ++itr)
 	{
-		if((*itr) != NULL)
+		if (itr->second)
 		{
-			(*itr)->Release();
-			(*itr) = NULL;
+			itr->second->Release();
+			itr->second = NULL;
 		}
 	}
 
-	std::vector<LPDIRECTSOUNDBUFFER8>().swap(m_Sounds);
+	m_Sounds.clear();
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

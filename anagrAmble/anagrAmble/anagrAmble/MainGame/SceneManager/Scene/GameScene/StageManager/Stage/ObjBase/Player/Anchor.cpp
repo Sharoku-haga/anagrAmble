@@ -13,6 +13,7 @@
 #include "../../../StageDataManager.h"
 #include "../../../../GameEventManager/GameEventManager.h"
 #include "../../../../GameEventManager/EventListener.h"
+#include "../../../../GameSceneSoundID.h"
 
 namespace ar
 {
@@ -176,6 +177,8 @@ void Anchor::PlacePosStage(void)
 	m_RectSize.m_Bottom = ((m_pStageDataManager->GetStageHeight()) / 2);
 	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.0f);
 
+	// 音を鳴らす
+	m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ANCHOR), sl::RESET_PLAY);
 }
 
 void Anchor::PlacePosPlayerFront(void)

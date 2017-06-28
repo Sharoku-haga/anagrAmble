@@ -105,7 +105,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>winmm.lib;d3d10.lib;dinput8.lib;dxguid.lib;d3d11.lib;SharokuLibrary.lib;d3dx10.lib;d3dx11.lib;Xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;d3d10.lib;dinput8.lib;dxguid.lib;d3d11.lib;SharokuLibrary.lib;d3dx10.lib;d3dx11.lib;Xinput.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -202,13 +202,16 @@
     <ClInclude Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearSceneSoundID.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameOverScene\GameOverBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameOverScene\GameOverScene.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameOverScene\GameOverSceneSoundID.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\EventListener.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameEventManager\GameEventManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenu.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GamePauseMenu\GamePauseMenuBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameScene.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameSceneSoundID.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataChangeManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageDataManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageManager.h" />
@@ -263,6 +266,7 @@
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleSceneSoundID.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleText.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
