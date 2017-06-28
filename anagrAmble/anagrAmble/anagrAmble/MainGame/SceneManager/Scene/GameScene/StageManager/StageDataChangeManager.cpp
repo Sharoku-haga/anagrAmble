@@ -62,7 +62,7 @@ bool StageDataChangeManager::ChangeSpace(void)
 
 	if(m_pPlayer->IsFacingRight())
 	{
-		if((changeStartIndexData.m_XNum + changeSpaceXNum) > (m_pStageDataManager->GetStageWidthChipNum() - 2))
+		if((changeStartIndexData.m_XNum + changeSpaceXNum) > (m_pStageDataManager->GetStageWidthChipNum() - 1))
 		{	// インデックスがステージに範囲(1番端の壁の向こう)を超えるなら入れ替えできない
 			return false;
 		}

@@ -213,7 +213,8 @@ void SandwichedStageSpace::CreateSandwichedObj(void)
 		{
 			// 挟んだ空間のオブジェクトの設定する
 			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
-			if(pObj == nullptr)
+			if(pObj == nullptr
+				|| pObj->GetTypeID() == ObjBase::GROUND_B)
 			{
 				continue;
 			}

@@ -13,6 +13,7 @@
 #include "../../../../ControllerEnum.h"
 #include "../GameEventManager/GameEventManager.h"
 #include "GamePauseMenuBackground.h"
+#include "../GameSceneSoundID.h"
 #include "../SharokuLibrary/sl/sl.h"
 
 namespace ar
@@ -70,6 +71,7 @@ void GamePauseMenu::Control(void)
 	if(m_pLibrary->CheckCustomizeState(ENTER, sl::PUSH))
 	{
 		GameEventManager::Instance().ReceiveEvent("title_return");
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ENTER), sl::RESET_PLAY);
 	}
 
 	++m_ButtonMoveTimeCount;

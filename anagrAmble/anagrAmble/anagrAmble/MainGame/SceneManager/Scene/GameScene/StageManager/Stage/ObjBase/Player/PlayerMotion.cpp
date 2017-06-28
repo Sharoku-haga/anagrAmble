@@ -9,6 +9,7 @@
 #include "PlayerMotion.h"
 #include "../../../../../../../ControllerEnum.h"
 #include "../../../../GameEventManager/GameEventManager.h"
+#include "../../../../GameSceneSoundID.h"
 
 namespace ar
 {
@@ -59,6 +60,7 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 	if(m_CurrentMotion == DEATH)
 	{	// モーションが死亡しているなら死亡処理を行い 即リターン
 		ControlDeathMotion();
+		ProcessSound();
 		ProcessUVAnimation();
 		return m_CurrentMoveVector;
 	}
@@ -110,6 +112,7 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 		}
 
 		m_CurrentMoveVector.x += m_DashSpeedCorrectionVal;
+		ProcessSound();
 		ProcessUVAnimation();
 		return m_CurrentMoveVector;
 	}
@@ -139,12 +142,16 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 	// ジャンプ条件
 	if(m_pLibrary->CheckCustomizeState(JUMP, sl::PUSH)
 		&& rMovableDirection.m_Up
-		&& RESULT_FAILED(rMovableDirection.m_Down))
+		&& RESULT_FAILED(rMovableDirection.m_Down)
+		&& m_PreviousMotion != SQUATING
+		&& m_PreviousMotion != SQUAT_WALKING)
 	{
 		m_CurrentMoveVector.y -= JumpPower;
 		m_CurrentMotion = JUMPING;
 
 		m_CurrentMoveVector.x += m_DashSpeedCorrectionVal;
+		ProcessSound();
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::JUMP), sl::RESET_PLAY);
 		ProcessUVAnimation();
 		return m_CurrentMoveVector;
 	}
@@ -188,6 +195,7 @@ const sl::SLVECTOR2& PlayerMotion::Control(const Player::MovableDirection& rMova
 	}
 
 	ProcessUVAnimation();
+	ProcessSound();
 	return m_CurrentMoveVector;
 }
 
@@ -239,6 +247,7 @@ bool PlayerMotion::RunEnteringMotion(void)
 		&& m_RectSize[ENTERING].m_Bottom >= m_BasicRectSize.m_Bottom)
 	{
 		m_CurrentMotion = WAITING;
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::WALK), sl::STOP);
 		return true;
 	}
 	else
@@ -249,7 +258,7 @@ bool PlayerMotion::RunEnteringMotion(void)
 		m_RectSize[ENTERING].m_Bottom	+= ScrollSpeed * 2;
 		m_pLibrary->SetVtxSize(m_VtxID[ENTERING], m_RectSize[ENTERING]);
 	}
-
+	m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::WALK), sl::PLAY);
 	// アニメーションを更新する
 	m_pLibrary->UpdateUVAnime(m_VtxID[m_CurrentMotion], m_UVAnimeID[m_CurrentMotion]);
 	return false;
@@ -267,6 +276,7 @@ bool PlayerMotion::RunExitingMotion(void)
 		&& m_RectSize[EXITING] .m_Right <= 0.0f
 		&& m_RectSize[EXITING] .m_Bottom <= 0.0f)
 	{
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::WALK), sl::STOP);
 		return true;
 	}
 	else
@@ -279,6 +289,7 @@ bool PlayerMotion::RunExitingMotion(void)
 	}
 
 	// アニメーションを更新する
+	m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::WALK), sl::PLAY);
 	m_pLibrary->UpdateUVAnime(m_VtxID[m_CurrentMotion], m_UVAnimeID[m_CurrentMotion]);
 	return false;
 }
@@ -500,6 +511,7 @@ void PlayerMotion::ControlDeathMotion(void)
 	{
 		// ここで死亡動作の処理(主にアニメーションを書く)
 		GameEventManager::Instance().TriggerSynEvent("player_death_anime_end");		// アニメが終了したらイベント通知をする
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::DEATH), sl::STOP_RESET);
 	}
 }
 
@@ -525,6 +537,35 @@ void PlayerMotion::ProcessUVAnimation(void)
 		uv.m_Left = uv.m_Right;
 		uv.m_Right = tmp;
 		m_pLibrary->SetVtxUV(m_VtxID[m_CurrentMotion], uv);
+	}
+}
+
+void PlayerMotion::ProcessSound(void)
+{
+	if(m_CurrentMotion == WALKING)
+	{
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::WALK), sl::PLAY);
+		return;
+	}
+	else
+	{
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::WALK), sl::STOP);
+	}
+
+	if(m_CurrentMotion == RUNNING)
+	{
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::RUN), sl::PLAY);
+		return;
+	}
+	else
+	{
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::RUN), sl::STOP);
+	}
+
+	if(m_CurrentMotion == DEATH)
+	{
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::DEATH), sl::PLAY);
+		return;
 	}
 }
 

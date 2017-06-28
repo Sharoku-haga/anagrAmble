@@ -156,6 +156,12 @@ private:
 	*/
 	void ProcessUVAnimation(void);
 
+	/** 
+	* サウンド処理を行う関数
+	* コントロール内でよぶ関数
+	*/
+	void ProcessSound(void);
+
 };	// class PlayerMotion
 
 }	// namespace ar

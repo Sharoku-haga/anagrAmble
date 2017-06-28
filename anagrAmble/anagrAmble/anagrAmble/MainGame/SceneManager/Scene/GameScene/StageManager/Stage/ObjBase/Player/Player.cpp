@@ -16,6 +16,7 @@
 #include "../../../../GameEventManager/GameEventManager.h"
 #include "../../../../GameEventManager/EventListener.h"
 #include "../../../StageDataChangeManager.h"
+#include "../../../../GameSceneSoundID.h"
 
 namespace ar
 {
@@ -222,6 +223,7 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		if(RESULT_FAILED(m_pPlayerMotion->IsCurrrentMotionDeath()))
 		{
 			m_pPlayerMotion->ChangeDeathMotion();
+			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT), sl::PLAY);
 		}
 	
 		break;
@@ -253,7 +255,11 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		break;
 
 	case SPEAR:
-		m_pPlayerMotion->ChangeDeathMotion();
+		if(RESULT_FAILED(m_pPlayerMotion->IsCurrrentMotionDeath()))
+		{
+			m_pPlayerMotion->ChangeDeathMotion();
+			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT), sl::PLAY);
+		}
 		break;
 
 	case ANCHOR:
@@ -435,7 +441,7 @@ void Player::RunDeathAnimeEndProcessing(void)
 	if(m_GoddessPointCount > 0)
 	{	// 加護があるなら復活させる
 		GameEventManager::Instance().ReceiveEvent("player_respawn_start");
-
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::REVIVE), sl::RESET_PLAY);
 		// モードをリセットする
 		m_pPlayerMode->Reset();
 		

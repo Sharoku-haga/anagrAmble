@@ -10,6 +10,8 @@
 #include "../../../../StageDataManager.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
+#include "../../../../../GameSceneSoundID.h"
+
 
 namespace ar
 {
@@ -98,9 +100,11 @@ void Entrance::Run(void)
 	if(m_HasStartedStage)
 	{
 		m_pLibrary->UpdateUVAnime(m_DrawingID.m_VtxID, m_UVAnimeID);
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::DOOR), sl::PLAY_LOOP);
 
 		if(m_pLibrary->CheckLastNumCurrnttUVAnime(m_DrawingID.m_VtxID, m_UVAnimeID))
 		{
+			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::DOOR), sl::STOP);
 			m_HasClosed = true;
 			// 閉じたら少し透明にする
 			m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 0.5f, 0.5f, 0.5f, 0.3f);

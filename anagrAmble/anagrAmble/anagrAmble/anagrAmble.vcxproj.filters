@@ -518,5 +518,17 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\ElectricEffect.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect</Filter>
     </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleSceneSoundID.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\GameSceneSoundID.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearSceneSoundID.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameClearScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\Scene\GameOverScene\GameOverSceneSoundID.h">
+      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameOverScene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

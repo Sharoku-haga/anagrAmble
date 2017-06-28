@@ -11,6 +11,7 @@
 #include "../../SwitchOperatingArea/SwitchOperatingArea.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
+#include "../../../../../GameSceneSoundID.h"
 
 namespace ar
 {
@@ -121,6 +122,11 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 		{
 			m_TexUV = EmblemROnUV;
 			m_pSwitchOperatingArea->SwitchOnState();
+			if(m_Pos.x > m_BasePointPos.x
+				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
+			{
+				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::RESET_PLAY);
+			}
 		}
 		else
 		{
@@ -136,6 +142,11 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 		{
 			m_TexUV = EmblemFOnUV;
 			m_pSwitchOperatingArea->SwitchOnState();
+			if(m_Pos.x > m_BasePointPos.x
+				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
+			{
+				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::PLAY);
+			}
 		}
 		else
 		{
@@ -151,6 +162,11 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 		{
 			m_TexUV = EmblemLOnUV;
 			m_pSwitchOperatingArea->SwitchOnState();
+			if(m_Pos.x > m_BasePointPos.x
+				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
+			{
+				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::PLAY);
+			}
 		}
 		else
 		{

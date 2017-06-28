@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "SceneFactory.h"
 #include "GameDataManager/GameDataManager.h"
+#include "Scene/TitleScene/TitleSceneSoundID.h"
 
 namespace ar
 {
@@ -26,17 +27,22 @@ SceneManager::SceneManager(void)
 {
 	m_NextSceneID = Scene::TITLE;
 #ifdef _DEBUG
-	m_NextSceneID = Scene::GAME;
+	//m_NextSceneID = Scene::GAME;
 	//m_NextSceneID = Scene::GAME_OVER;
 #endif	// _DEBUG
 
 
 	m_pGameDataManager = new GameDataManager();
 	SceneFactory::Initialize(m_pGameDataManager);
+
+	// 全シーン共通なのでここで読み込む
+	sl::ISharokuLibrary::Instance()->LoadSound(static_cast<int>(TITLE_SCENE_SOUND_ID::ENTER)
+			, "../Sounds/SE/Decision.wav");
 }
 
 SceneManager::~SceneManager(void)
 {
+	sl::ISharokuLibrary::Instance()->ReleaseSoundALL();
 	sl::DeleteSafely(&m_pScene);
 	sl::DeleteSafely(&m_pGameDataManager);
 }

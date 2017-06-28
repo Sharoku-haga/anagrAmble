@@ -267,9 +267,9 @@ bool DX11Library::CheckCustomizeState(int ID, DEVICE_STATE  checkState, int devi
 	return m_pCustomizeInputManager->CheckState(ID, checkState, deviceNum);
 }
 
-int  DX11Library::LoadSound(TCHAR* pFilePath)
+bool  DX11Library::LoadSound(int id, TCHAR* pFilePath)
 {
-	return m_pDirectSoundManager->LoadSound(pFilePath);
+	return m_pDirectSoundManager->LoadSound(id, pFilePath);
 }
 
 void  DX11Library::PlayBackSound(int soundId, int soundMode)
