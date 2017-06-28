@@ -10,6 +10,7 @@
 #include "../../../../StageDataManager.h"
 #include "../../SwitchOperatingArea/SwitchOperatingArea.h"
 #include "../../../../../GameSceneSoundID.h"
+#include "../../../StageEffect/SandwichEffect.h"
 
 namespace ar
 {
@@ -39,6 +40,7 @@ PressureSensitiveBlock::PressureSensitiveBlock(StageDataManager* pStageDataManag
 
 PressureSensitiveBlock::~PressureSensitiveBlock(void)
 {
+	sl::DeleteSafely(&m_pSandwicheffect);
 	sl::DeleteSafely(&m_pSwitchOperatingArea);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
@@ -58,6 +60,8 @@ void PressureSensitiveBlock::Initialize(void)
 	m_pSwitchOperatingArea->Initialize();
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, BlockOffUV);
+	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 }
 
 void PressureSensitiveBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -70,6 +74,8 @@ void PressureSensitiveBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_pSwitchOperatingArea->SwitchOffState();
 	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
+
+	m_pSandwicheffect->ChangeStagePos(m_Pos);
 }
 
 void PressureSensitiveBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -103,11 +109,13 @@ void PressureSensitiveBlock::Run(void)
 		m_pSwitchOperatingArea->SwitchOnState();
 		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON), sl::PLAY);
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
+		m_pSandwicheffect->ChangeUV();
 	}
 	else
 	{
 		m_pSwitchOperatingArea->SwitchOffState();
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOffUV);
+		m_pSandwicheffect->ChangeUV();
 	}
 
 	// 上に何かのっていたらON状態にする
@@ -116,14 +124,25 @@ void PressureSensitiveBlock::Run(void)
 		m_pSwitchOperatingArea->SwitchOnState();
 		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON), sl::PLAY);
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
+		m_pSandwicheffect->ChangeUV();
 	}
 
 	m_pSwitchOperatingArea->Control();
+
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
+	}
 }
 
 void PressureSensitiveBlock::Render(void)
 {
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
+
+	if(m_HasBeenSandwiched)
+	{
+		m_pSandwicheffect->Draw();
+	}
 }
 
 void PressureSensitiveBlock::HandleEvent(void)

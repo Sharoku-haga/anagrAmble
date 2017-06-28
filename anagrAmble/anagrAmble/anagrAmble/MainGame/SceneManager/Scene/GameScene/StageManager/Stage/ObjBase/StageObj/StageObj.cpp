@@ -23,7 +23,6 @@ const float AreaCorrectionVal	= 576.f;		//!< 表示画面エリアの補正値. 
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-
 StageObj::StageObj(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, const Stage::INDEX_DATA& rStageIndexData)
 	: ObjBase(pStageDataManager, pCollisionManager, rStageIndexData)
 {}

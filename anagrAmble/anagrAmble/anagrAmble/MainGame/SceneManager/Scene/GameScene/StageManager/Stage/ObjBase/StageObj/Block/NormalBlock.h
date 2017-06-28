@@ -24,10 +24,10 @@ public:
 	* @param[in] pStageDataManager	StageDataManagerクラスのインスタンスへのポインタ
 	* @param[in] pCollisionManager	CollisionManagerクラスのインスタンスへのポインタ
 	* @param[in] rStageIndexData	ステージインデックスデータ
-	* @param[in] rID				描画関連のID
+	* @param[in] texD				テクスチャーのID
 	*/
 	NormalBlock(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager, 
-					const Stage::INDEX_DATA& rStageIndexData, const sl::DrawingID& rID);
+					const Stage::INDEX_DATA& rStageIndexData, int texID);
 
 	/** Destructor */
 	virtual ~NormalBlock(void);

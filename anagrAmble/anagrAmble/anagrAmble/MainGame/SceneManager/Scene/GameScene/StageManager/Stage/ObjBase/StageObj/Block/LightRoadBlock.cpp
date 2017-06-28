@@ -11,6 +11,7 @@
 #include "../../../../StageDataManager.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
+#include "../../../StageEffect/SandwichEffect.h"
 
 namespace ar
 {
@@ -40,6 +41,7 @@ LightRoadBlock::~LightRoadBlock(void)
 	{
 		sl::DeleteSafely(&pblock);
 	}
+	sl::DeleteSafely(&m_pSandwicheffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -57,6 +59,9 @@ void LightRoadBlock::Initialize(void)
 	const sl::fRect		uv = {0.45f, 0.0f, 0.5f, 0.088f};
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+
+	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 
 	// 光ブロック生成 探査範囲部分をカバーできる分だけ作成する
 	for(int count = 0; count < SearchArea; ++count)
@@ -98,6 +103,8 @@ void LightRoadBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 		pBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);;
 	}
 
+	m_pSandwicheffect->ChangeStagePos(m_Pos);
+
 	DischargeLightBlock();
 }
 
@@ -108,6 +115,11 @@ void LightRoadBlock::ProcessCollision(const CollisionManager::CollisionData& rDa
 
 void LightRoadBlock::Run(void)
 {
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
+	}
+
 	for(auto pblock : m_pLightBlocks)
 	{
 		pblock->Control();
@@ -120,7 +132,13 @@ void LightRoadBlock::Render(void)
 	{
 		pblock->Draw();
 	}
+
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
+
+	if(m_HasBeenSandwiched)
+	{
+		m_pSandwicheffect->Draw();
+	}
 }
 
 void LightRoadBlock::HandleEvent(void)

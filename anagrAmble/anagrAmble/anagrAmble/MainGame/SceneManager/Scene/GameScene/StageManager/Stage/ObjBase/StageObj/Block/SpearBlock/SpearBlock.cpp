@@ -9,6 +9,7 @@
 #include "SpearBlock.h"
 #include "Spear.h"
 #include "../../../../../StageDataManager.h"
+#include "../../../../StageEffect/SandwichEffect.h"
 
 namespace ar
 {
@@ -25,6 +26,7 @@ SpearBlock::SpearBlock(StageDataManager* pStageDataManager, CollisionManager* pC
 
 SpearBlock::~SpearBlock(void)
 {
+	sl::DeleteSafely(&m_pSandwicheffect);
 	sl::DeleteSafely(&m_pSpear);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
@@ -46,6 +48,9 @@ void SpearBlock::Initialize(void)
 	
 	m_pSpear = new Spear(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, m_DrawingID.m_TexID);
 	m_pSpear->Initialize();
+
+	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 }
 
 void SpearBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -57,6 +62,8 @@ void SpearBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_pSpear->ChangeStagePos(yIndexNum, xIndexNum);
+
+	m_pSandwicheffect->ChangeStagePos(m_Pos);
 }
 
 void SpearBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -83,6 +90,28 @@ void SpearBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
 
 void SpearBlock::Run(void)
 {
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
+
+		if(RESULT_FAILED(m_pSpear->HasBeenSandwiched()))
+		{
+			m_pSpear->ApplySandwichEffect(m_pSandwicheffect->GetSandwichedSpaceCenterPos());
+		}
+		else if(m_pSpear->EndSandwichEffect())
+		{
+			m_pSpear->DetachSandwichEffect();
+			m_pSpear->ApplySandwichEffect(m_pSandwicheffect->GetSandwichedSpaceCenterPos());
+		}
+	}
+	else
+	{
+		if(m_pSpear->HasBeenSandwiched())
+		{
+			m_pSpear->DetachSandwichEffect();
+		}
+	}
+
 	m_pSpear->Control();
 }
 
@@ -90,6 +119,11 @@ void SpearBlock::Render(void)
 {
 	m_pSpear->Draw();
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));	
+
+	if(m_HasBeenSandwiched)
+	{
+		m_pSandwicheffect->Draw();
+	}
 }
 
 void SpearBlock::HandleEvent(void)

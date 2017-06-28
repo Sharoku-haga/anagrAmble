@@ -16,6 +16,7 @@ namespace ar
 
 class EventListener;
 class StageDataManager;
+class SandwichEffect;
 
 //======================================================================//
 //!< ゲーム画面のオブジェクトの基底クラス
@@ -77,6 +78,30 @@ public:
 
 	/** Destructor */
 	virtual ~ObjBase(void);
+
+	/**
+	* 挟むエフェクトを適用する関数
+	* @param[in] rSandwichedSpaceCenterPos	挟まれた空間の中心座標
+	*/
+	void ApplySandwichEffect(const sl::SLVECTOR2&	rSandwichedSpaceCenterPos);
+
+	/** 
+	* 挟むエフェクトをきる関数
+	* 基本的に挟まれた状態から解放された際に呼ぶ
+	*/
+	void DetachSandwichEffect(void);
+
+	/**
+	* 挟まれているかどうかのフラグ確認
+	* @return 結果 true→挟まれている false→挟まれていない
+	*/
+	bool HasBeenSandwiched(void) { return m_HasBeenSandwiched; }
+
+	/**
+	* 挟む効果が終了したかどうかのフラグ
+	* @return 結果 true→終了 false→終了していない
+	*/
+	bool EndSandwichEffect(void);
 
 	/**
 	* 初期化関数. 純粋仮想関数
@@ -178,7 +203,9 @@ protected:
 	EventListener*			m_pEventListener;				//!< EventListenerクラスのインスタンスへのポインタ
 	StageDataManager*		m_pStageDataManager;			//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*		m_pCollisionManager;			//!< CollisionManagerクラスのインスタンスへのポインタ
-
+	SandwichEffect*			m_pSandwicheffect;				//!< SandwichEffectクラスのインスタンスへのポインタ
+	bool					m_HasBeenSandwiched;			//!< 挟まれているかどうかのフラグ true→挟まれている false→はさまれていない
+	
 	/** 
 	* イベント処理関数.純粋仮想関数 
 	* この関数内でEventListenerから受け取ったイベントの処理を行う

@@ -12,6 +12,7 @@
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
 #include "../../../../../GameSceneSoundID.h"
+#include "../../../StageEffect/SandwichEffect.h"
 
 namespace ar
 {
@@ -42,6 +43,7 @@ PairOfEmblemBlock::PairOfEmblemBlock(StageDataManager* pStageDataManager, Collis
 
 PairOfEmblemBlock::~PairOfEmblemBlock(void)
 {
+	sl::DeleteSafely(&m_pSandwicheffect);
 	sl::DeleteSafely(&m_pSwitchOperatingArea);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
@@ -61,6 +63,9 @@ void PairOfEmblemBlock::Initialize(void)
 	m_pSwitchOperatingArea->Initialize();
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, m_TexUV);
+
+	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 
 	CheckPairBlock();
 
@@ -88,6 +93,8 @@ void PairOfEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_pSwitchOperatingArea->SwitchOffState();
 	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
 	CheckPairBlock();
+	m_pSandwicheffect->ChangeStagePos(m_Pos);
+
 }
 
 void PairOfEmblemBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -98,11 +105,21 @@ void PairOfEmblemBlock::ProcessCollision(const CollisionManager::CollisionData& 
 void PairOfEmblemBlock::Run(void)
 {
 	m_pSwitchOperatingArea->Control();
+
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
+	}
 }
 
 void PairOfEmblemBlock::Render(void)
 {
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
+
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Draw();
+	}
 }
 
 void PairOfEmblemBlock::HandleEvent(void)
@@ -119,7 +136,7 @@ void PairOfEmblemBlock::CheckPairBlock(void)
 			m_pSwitchOperatingArea->SwitchOnState();
 			if(m_Pos.x > m_BasePointPos.x
 				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
-			{
+			{	// 左からチェックされるため右い音を鳴らすソースを実装
 				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::PLAY);
 			}
 		}
@@ -135,11 +152,6 @@ void PairOfEmblemBlock::CheckPairBlock(void)
 		{
 			m_TexUV = EmblemROnUV;
 			m_pSwitchOperatingArea->SwitchOnState();
-			if(m_Pos.x > m_BasePointPos.x
-				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
-			{
-				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::PLAY);
-			}
 		}
 		else
 		{
@@ -149,6 +161,7 @@ void PairOfEmblemBlock::CheckPairBlock(void)
 	}
 
 	m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, m_TexUV);
+	m_pSandwicheffect->ChangeUV();
 }
 
 }	// namespace ar

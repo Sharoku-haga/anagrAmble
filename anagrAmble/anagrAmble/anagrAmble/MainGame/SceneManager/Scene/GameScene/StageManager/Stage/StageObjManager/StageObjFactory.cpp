@@ -61,12 +61,7 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 	{
 
 	case ObjBase::NORMAL_B:	
-	{
-		sl::DrawingID id;
-		id.m_VtxID = m_NormalBlockVtxID;
-		id.m_TexID = m_TexID;
-		pStageObj = new NormalBlock(m_pStageDataManager, m_pCollisionManager, rIndex, id);
-	}
+		pStageObj = new NormalBlock(m_pStageDataManager, m_pCollisionManager, rIndex, m_TexID);	
 		break;
 
 	case ObjBase::GROUND_B:
@@ -182,12 +177,6 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 
 void StageObjFactory::InitializeVertex(void)
 {
-	// 通常ブロック
-	{
-		sl::fRect	uv = { 0.0f, 0.0f, 0.05f, 0.088f};
-		m_NormalBlockVtxID = m_pLibrary->CreateVertex2D(m_BlockSize, uv);
-	}
-
 	// 地面ブロック
 	{
 		sl::fRect	uv = { 0.05f, 0.0f, 0.1f, 0.088f};

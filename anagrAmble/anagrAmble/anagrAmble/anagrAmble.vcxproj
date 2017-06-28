@@ -175,6 +175,7 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageBackground.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\AnchorLightEffect.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\ElectricEffect.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\SandwichEffect.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjFactory.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjManager.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\AnchorLightEffect.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\ElectricEffect.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\SandwichEffect.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjFactory.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjManager.h" />

@@ -53,9 +53,9 @@ void ElectricEffect::Initialize(void)
 	m_pLibrary->CreateUVAnimeData(m_DrawingID.m_VtxID, m_UVAnimeID, 1, 6, uv, 3);
 }
 
-void ElectricEffect::ChangeStagePos(sl::SLVECTOR2 pos)
+void ElectricEffect::ChangeStagePos(const sl::SLVECTOR2& rPos)
 {
-	m_Pos = pos;
+	m_Pos = rPos;
 	m_pLibrary->ReturnUVAnimeInitialState(m_DrawingID.m_VtxID, m_UVAnimeID);
 }
 

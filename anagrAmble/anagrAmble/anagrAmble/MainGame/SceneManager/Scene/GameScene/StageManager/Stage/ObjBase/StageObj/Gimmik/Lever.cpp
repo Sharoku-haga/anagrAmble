@@ -12,6 +12,8 @@
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
 #include "../../../../../GameSceneSoundID.h"
+#include "../../../StageEffect/SandwichEffect.h"
+
 
 /* Unnamed Namespace ------------------------------------------------------------------------------------------ */
 
@@ -41,6 +43,7 @@ Lever::Lever(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 
 Lever::~Lever(void)
 {
+	sl::DeleteSafely(&m_pSandwicheffect);
 	sl::DeleteSafely(&m_pSwitchOperatingArea);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
@@ -60,6 +63,9 @@ void Lever::Initialize(void)
 
 	m_pSwitchOperatingArea = new SwitchOperatingArea(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, this);
 	m_pSwitchOperatingArea->Initialize();
+
+	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 
 	// イベント登録
 	// 特殊アクションボタンが押されるイベント
@@ -86,6 +92,8 @@ void Lever::ChangeStagePos(short yIndexNum, short xIndexNum)
 	{
 		m_pSwitchOperatingArea->SwitchOffState();
 	}
+
+	m_pSandwicheffect->ChangeStagePos(m_Pos);
 }
 
 void Lever::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -108,11 +116,21 @@ void Lever::Run(void)
 {
 	m_HasCollidedWithPlayer = false;
 	m_pSwitchOperatingArea->Control();
+
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
+	}
 }
 
 void Lever::Render(void)
 {
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
+
+	if(m_HasBeenSandwiched)
+	{
+		m_pSandwicheffect->Draw();
+	}
 }
 
 void Lever::HandleEvent(void)
@@ -134,15 +152,17 @@ void Lever::HandleEvent(void)
 				{
 					m_pSwitchOperatingArea->SwitchOffState();
 					m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, LeverOffUV);
-					m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
+					m_pSandwicheffect->ChangeUV();
 					m_IsOnState = false;
+					m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
 				}
 				else
 				{
 					m_pSwitchOperatingArea->SwitchOnState();
-					m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
 					m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, LeverOnUV);
+					m_pSandwicheffect->ChangeUV();
 					m_IsOnState = true;
+					m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
 				}
 			}
 		}

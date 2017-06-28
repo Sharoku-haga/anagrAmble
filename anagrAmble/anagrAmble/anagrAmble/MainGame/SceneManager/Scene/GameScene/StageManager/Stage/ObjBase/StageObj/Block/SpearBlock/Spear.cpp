@@ -8,6 +8,7 @@
 
 #include "Spear.h"
 #include "../../../../../StageDataManager.h"
+#include "../../../../StageEffect/SandwichEffect.h"
 
 namespace ar
 {
@@ -39,6 +40,7 @@ Spear::Spear(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 
 Spear::~Spear(void)
 {
+	sl::DeleteSafely(&m_pSandwicheffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -65,9 +67,14 @@ void Spear::Initialize(void)
 	m_RectSize.m_Right = (m_StageChipSize / 2) - VertexCorrectionVal;
 	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 
-	const sl::fRect		uv = { 0.75f, 0.090f, 0.8f, 0.1777f };
+	const sl::fRect		uv = { 0.751f, 0.090f, 0.8f, 0.1777f };
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+
+	// 挟むエフェクトには少し大きめ(通常ブロックと同じ大きさの矩形を渡す)
+	sl::fRect effectRectSize = {  -(m_StageChipSize / 2), -(m_StageChipSize / 2), (m_StageChipSize / 2), (m_StageChipSize / 2)};
+	m_pSandwicheffect = new SandwichEffect(m_Pos, effectRectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 
 	// 動作スピードと動作限界
 	m_MovePosYMAXLimit = m_Pos.y - m_pStageDataManager->GetStageChipSize() + VertexCorrectionVal;
@@ -110,6 +117,12 @@ void Spear::Run(void)
 		m_HasMoved = false;
 		m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 		m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+		m_pSandwicheffect->SetOwnerPos(m_Pos);
+
+		if(m_HasBeenSandwiched)
+		{
+			m_pSandwicheffect->Control();
+		}
 		return;
 	}
 
@@ -123,11 +136,22 @@ void Spear::Run(void)
 	}
 
 	m_Pos.y += m_MoveSpeed;
+	m_pSandwicheffect->SetOwnerPos(m_Pos);
+
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
+	}
 }
 
 void Spear::Render(void)
 {
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
+
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Draw();
+	}
 }
 
 void Spear::HandleEvent(void)
