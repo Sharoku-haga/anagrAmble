@@ -43,7 +43,7 @@ PairOfEmblemBlock::PairOfEmblemBlock(StageDataManager* pStageDataManager, Collis
 
 PairOfEmblemBlock::~PairOfEmblemBlock(void)
 {
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 	sl::DeleteSafely(&m_pSwitchOperatingArea);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
@@ -64,8 +64,8 @@ void PairOfEmblemBlock::Initialize(void)
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, m_TexUV);
 
-	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 
 	CheckPairBlock();
 
@@ -93,7 +93,7 @@ void PairOfEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_pSwitchOperatingArea->SwitchOffState();
 	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
 	CheckPairBlock();
-	m_pSandwicheffect->ChangeStagePos(m_Pos);
+	m_pSandwichEffect->ChangeStagePos(m_Pos);
 
 }
 
@@ -108,7 +108,7 @@ void PairOfEmblemBlock::Run(void)
 
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Control();
+		m_pSandwichEffect->Control();
 	}
 }
 
@@ -118,7 +118,7 @@ void PairOfEmblemBlock::Render(void)
 
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Draw();
+		m_pSandwichEffect->Draw();
 	}
 }
 
@@ -161,7 +161,7 @@ void PairOfEmblemBlock::CheckPairBlock(void)
 	}
 
 	m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, m_TexUV);
-	m_pSandwicheffect->ChangeUV();
+	m_pSandwichEffect->ChangeUV();
 }
 
 }	// namespace ar

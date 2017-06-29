@@ -36,7 +36,7 @@ BeltConverBlock::BeltConverBlock(StageDataManager* pStageDataManager, CollisionM
 
 BeltConverBlock::~BeltConverBlock(void)
 {
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -60,8 +60,8 @@ void BeltConverBlock::Initialize(void)
 		m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, LeftDirectionUV);
 	}
 
-	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 }
 
 void BeltConverBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -84,8 +84,8 @@ void BeltConverBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 		m_TypeID = BELT_CONVER_B_L;
 	}
 
-	m_pSandwicheffect->ChangeUV();
-	m_pSandwicheffect->ChangeStagePos(m_Pos);
+	m_pSandwichEffect->ChangeUV();
+	m_pSandwichEffect->ChangeStagePos(m_Pos);
 }
 
 void BeltConverBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -129,7 +129,7 @@ void BeltConverBlock::ProcessCollision(const CollisionManager::CollisionData& rD
 		break;
 	}
 
-	m_pSandwicheffect->ChangeUV();
+	m_pSandwichEffect->ChangeUV();
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
@@ -138,7 +138,7 @@ void BeltConverBlock::Run(void)
 {
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Control();
+		m_pSandwichEffect->Control();
 	}
 }
 
@@ -148,7 +148,7 @@ void BeltConverBlock::Render(void)
 
 	if(m_HasBeenSandwiched)
 	{
-		m_pSandwicheffect->Draw();
+		m_pSandwichEffect->Draw();
 	}
 }
 

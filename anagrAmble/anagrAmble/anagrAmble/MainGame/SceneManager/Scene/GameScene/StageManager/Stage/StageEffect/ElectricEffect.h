@@ -12,6 +12,8 @@
 namespace ar
 {
 
+class SandwichEffect;
+
 //======================================================================//
 //!< 通電ブロックに使用するエフェクトのクラス
 //======================================================================//
@@ -30,6 +32,30 @@ public:
 	virtual ~ElectricEffect(void);
 
 	/**
+	* 挟むエフェクトを適用する関数
+	* @param[in] rSandwichedSpaceCenterPos	挟まれた空間の中心座標
+	*/
+	void ApplySandwichEffect(const sl::SLVECTOR2&	rSandwichedSpaceCenterPos);
+
+	/** 
+	* 挟むエフェクトをきる関数
+	* 基本的に挟まれた状態から解放された際に呼ぶ
+	*/
+	void DetachSandwichEffect(void);
+
+	/**
+	* 挟まれているかどうかのフラグ確認
+	* @return 結果 true→挟まれている false→挟まれていない
+	*/
+	bool HasBeenSandwiched(void) { return m_HasBeenSandwiched; }
+
+	/**
+	* 挟む効果が終了したかどうかのフラグ
+	* @return 結果 true→終了 false→終了していない
+	*/
+	bool EndSandwichEffect(void);
+
+	/**
 	* 初期化関数. 
 	* 座標などをここで設定する
 	*/
@@ -42,8 +68,10 @@ public:
 	virtual void ChangeStagePos(const sl::SLVECTOR2& rPos)override;
 
 private:
-	sl::DrawingID				m_DrawingID;		//!< 描画関連のID構造体
-	int							m_UVAnimeID;		//!< UVアニメID
+	sl::DrawingID				m_DrawingID;					//!< 描画関連のID構造体
+	int							m_UVAnimeID;					//!< UVアニメID
+	SandwichEffect*				m_pSandwichEffect;				//!< SandwichEffectクラスのインスタンスへのポインタ
+	bool						m_HasBeenSandwiched;			//!< 挟まれているかどうかのフラグ true→挟まれている false→はさまれていない
 
 	/** 
 	* 処理実行関数.

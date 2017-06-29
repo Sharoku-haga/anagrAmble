@@ -41,7 +41,7 @@ LightRoadBlock::~LightRoadBlock(void)
 	{
 		sl::DeleteSafely(&pblock);
 	}
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -60,8 +60,8 @@ void LightRoadBlock::Initialize(void)
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
-	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 
 	// 光ブロック生成 探査範囲部分をカバーできる分だけ作成する
 	for(int count = 0; count < SearchArea; ++count)
@@ -103,7 +103,7 @@ void LightRoadBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 		pBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);;
 	}
 
-	m_pSandwicheffect->ChangeStagePos(m_Pos);
+	m_pSandwichEffect->ChangeStagePos(m_Pos);
 
 	DischargeLightBlock();
 }
@@ -117,7 +117,7 @@ void LightRoadBlock::Run(void)
 {
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Control();
+		m_pSandwichEffect->Control();
 	}
 
 	for(auto pblock : m_pLightBlocks)
@@ -137,7 +137,7 @@ void LightRoadBlock::Render(void)
 
 	if(m_HasBeenSandwiched)
 	{
-		m_pSandwicheffect->Draw();
+		m_pSandwichEffect->Draw();
 	}
 }
 

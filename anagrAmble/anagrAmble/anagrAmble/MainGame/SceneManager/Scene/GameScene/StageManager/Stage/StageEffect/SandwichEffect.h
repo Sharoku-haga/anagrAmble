@@ -45,6 +45,12 @@ public:
 	*/
 	void ChangeUV(void);
 
+	/** 
+	* アルファ値を変更する関数
+	* オーナーのオブジェクトでよぶ関数
+	*/
+	void ChangeAlpha(float alpha);
+
 	/**
 	* 挟む効果が終わったかどうかのフラグを確認する関数
 	* @return 結果 true→終了 false→継続 
