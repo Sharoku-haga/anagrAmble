@@ -75,9 +75,9 @@ void AnchorLightEffect::Initialize(void)
 	}
 }
 
-void AnchorLightEffect::ChangeStagePos(sl::SLVECTOR2 pos)
+void AnchorLightEffect::ChangeStagePos(const sl::SLVECTOR2& rPos)
 {
-	m_Pos = m_MovingLightPos = pos;
+	m_Pos = m_MovingLightPos = rPos;
 	m_CurrentState = PLACED_PLAYER_FRONT;
 	m_pLibrary->ReturnUVAnimeInitialState(m_VtxID[NORMAL_LIGHT], m_UVAnimeID[NORMAL_LIGHT]);
 }

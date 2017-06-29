@@ -11,6 +11,7 @@
 #include "../../../../StageDataManager.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
+#include "../../../StageEffect/SandwichEffect.h"
 
 namespace ar
 {
@@ -41,6 +42,7 @@ LightDoor::~LightDoor(void)
 	{
 		sl::DeleteSafely(&pblock);
 	}
+	sl::DeleteSafely(&m_pSandwicheffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -58,6 +60,9 @@ void LightDoor::Initialize(void)
 	const sl::fRect		uv = { 0.55f, 0.0f, 0.6f, 0.088f };
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+
+	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 
 	// 光ブロックを生成する
 	for(int count = 0; count < LightBlockCount; ++count)
@@ -99,6 +104,8 @@ void  LightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 
+	m_pSandwicheffect->ChangeStagePos(m_Pos);
+
 	// 光ブロックを1回自分位置に収納してから再度展開する
 	Open();
 	Close();
@@ -128,6 +135,11 @@ void LightDoor::ProcessCollision(const CollisionManager::CollisionData& rData)
 
 void LightDoor::Run(void)
 {
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
+	}
+
 	// 開いているなら光ブロックの処理を飛ばす
 	if(m_HasOpened)
 	{
@@ -152,6 +164,11 @@ void LightDoor::Render(void)
 	}
 
 	m_pLibrary->Draw2D(m_DrawingID, (m_Pos - m_BasePointPos));
+
+	if(m_HasBeenSandwiched)
+	{
+		m_pSandwicheffect->Draw();
+	}
 }
 
 void LightDoor::HandleEvent(void)

@@ -12,6 +12,8 @@
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
 #include "../../../../../GameSceneSoundID.h"
+#include "../../../StageEffect/SandwichEffect.h"
+
 
 namespace ar
 {
@@ -45,6 +47,7 @@ SetOfThreeEmblemBlock::SetOfThreeEmblemBlock(StageDataManager* pStageDataManager
 
 SetOfThreeEmblemBlock::~SetOfThreeEmblemBlock(void)
 {
+	sl::DeleteSafely(&m_pSandwicheffect);
 	sl::DeleteSafely(&m_pSwitchOperatingArea);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
@@ -64,6 +67,9 @@ void SetOfThreeEmblemBlock::Initialize(void)
 
 	m_pSwitchOperatingArea = new SwitchOperatingArea(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, this);
 	m_pSwitchOperatingArea->Initialize();
+
+	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 
 	CheckSetofThreeBlock();
 
@@ -92,6 +98,8 @@ void SetOfThreeEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
 
 	CheckSetofThreeBlock();
+
+	m_pSandwicheffect->ChangeStagePos(m_Pos);
 }
 
 void SetOfThreeEmblemBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -102,11 +110,21 @@ void SetOfThreeEmblemBlock::ProcessCollision(const CollisionManager::CollisionDa
 void SetOfThreeEmblemBlock::Run(void)
 {
 	m_pSwitchOperatingArea->Control();
+
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
+	}
 }
 
 void SetOfThreeEmblemBlock::Render(void)
 {
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
+
+	if(m_HasBeenSandwiched)
+	{
+		m_pSandwicheffect->Draw();
+	}
 }
 
 void SetOfThreeEmblemBlock::HandleEvent(void)
@@ -124,7 +142,7 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 			m_pSwitchOperatingArea->SwitchOnState();
 			if(m_Pos.x > m_BasePointPos.x
 				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
-			{
+			{	// 左からチェックされるため右い音を鳴らすソースを実装
 				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::RESET_PLAY);
 			}
 		}
@@ -142,11 +160,6 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 		{
 			m_TexUV = EmblemFOnUV;
 			m_pSwitchOperatingArea->SwitchOnState();
-			if(m_Pos.x > m_BasePointPos.x
-				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
-			{
-				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::PLAY);
-			}
 		}
 		else
 		{
@@ -162,11 +175,6 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 		{
 			m_TexUV = EmblemLOnUV;
 			m_pSwitchOperatingArea->SwitchOnState();
-			if(m_Pos.x > m_BasePointPos.x
-				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
-			{
-				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::PLAY);
-			}
 		}
 		else
 		{
@@ -182,6 +190,7 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 	}
 
 	m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, m_TexUV);
+	m_pSandwicheffect->ChangeUV();
 }
 
 }	// namespace ar

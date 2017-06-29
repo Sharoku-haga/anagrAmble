@@ -53,6 +53,8 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData)override;
 
 private:
+	ObjBase::TYPE_ID					m_OriginalTypeID;		//!< 元のタイプID
+
 	/** 
 	* 処理実行関数 
 	* StageObj::Control()内で使用

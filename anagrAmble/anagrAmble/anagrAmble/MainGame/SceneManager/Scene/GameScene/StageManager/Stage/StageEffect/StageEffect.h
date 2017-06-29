@@ -40,7 +40,7 @@ public:
 	/** 
 	* ステージの位置を変更する関数. 純粋仮想関数
 	*/
-	virtual void ChangeStagePos(sl::SLVECTOR2 pos) = 0;
+	virtual void ChangeStagePos(const sl::SLVECTOR2& rPos) = 0;
 
 	/** 
 	* Setter ベースポイントの位置座標をセットする関数.static
@@ -65,7 +65,7 @@ protected:
 
 	sl::ISharokuLibrary*	m_pLibrary;						//!< sl::ISharokuLibrary*クラスのインスタンスへのポインタ
 	sl::SLVECTOR2			m_Pos;							//!< 位置座標
-	sl::fRect				m_RectSize;						//!< 基本矩形サイズ
+	sl::fRect				m_RectSize;						//!< 矩形サイズ
 
 	/** 
 	* 処理実行関数.純粋仮想関数 

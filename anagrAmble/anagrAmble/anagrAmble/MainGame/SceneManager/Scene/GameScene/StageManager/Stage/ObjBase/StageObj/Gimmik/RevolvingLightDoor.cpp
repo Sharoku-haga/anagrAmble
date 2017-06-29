@@ -11,6 +11,7 @@
 #include "../../../../StageDataManager.h"
 #include "../../../../../GameEventManager/GameEventManager.h"
 #include "../../../../../GameEventManager/EventListener.h"
+#include "../../../StageEffect/SandwichEffect.h"
 
 namespace ar
 {
@@ -41,6 +42,8 @@ RevolvingLightDoor::~RevolvingLightDoor(void)
 	{
 		sl::DeleteSafely(&pblock);
 	}
+
+	sl::DeleteSafely(&m_pSandwicheffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -58,6 +61,8 @@ void RevolvingLightDoor::Initialize(void)
 	const sl::fRect		uv = { 0.5f, 0.0f, 0.55f, 0.088f };
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
+	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 
 	// 光ブロックを生成する
 	for(int count = 0; count < LightBlockCount; ++count)
@@ -86,8 +91,6 @@ void RevolvingLightDoor::Initialize(void)
 	GameEventManager::Instance().RegisterEventType("player_respawn_end", m_pEventListener);
 	m_pEventListener->RegisterSynEventFunc("player_respawn_end", std::bind(&ar::RevolvingLightDoor::Revolve, this));
 
-	// ステージに位置を固定する
-	//m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 }
 
 void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -100,10 +103,12 @@ void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_TypeID = m_OriginalTypeID;
 
+	m_pSandwicheffect->ChangeStagePos(m_Pos);
+
 	// 光ブロックを自分の位置にもどしてから再度展開
 	for(auto& pLightBlock : m_pLightBlocks)
 	{
-		pLightBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);;
+		pLightBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 	}
 
 	Revolve();
@@ -143,6 +148,11 @@ void RevolvingLightDoor::ProcessCollision(const CollisionManager::CollisionData&
 
 void RevolvingLightDoor::Run(void)
 {
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
+	}
+
 	for(auto pblock : m_pLightBlocks)
 	{
 		pblock->Control();
@@ -156,6 +166,11 @@ void RevolvingLightDoor::Render(void)
 		pblock->Draw();
 	}
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
+
+	if(m_HasBeenSandwiched)
+	{
+		m_pSandwicheffect->Draw();
+	}
 }
 
 void RevolvingLightDoor::HandleEvent(void)

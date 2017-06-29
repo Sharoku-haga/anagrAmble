@@ -10,6 +10,7 @@
 #include "../../../../StageDataManager.h"
 #include "../../../StageEffect/ElectricEffect.h"
 #include "../../../../../GameSceneSoundID.h"
+#include "../../../StageEffect/SandwichEffect.h"
 
 namespace ar
 {
@@ -38,6 +39,7 @@ ElectricalBlock::ElectricalBlock(StageDataManager* pStageDataManager, CollisionM
 ElectricalBlock::~ElectricalBlock(void)
 {
 	sl::DeleteSafely(&m_pEffect);
+	sl::DeleteSafely(&m_pSandwicheffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -53,6 +55,9 @@ void ElectricalBlock::Initialize(void)
 	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, ElectricalOnUV);
+
+	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwicheffect->Initialize();
 
 	// エフェクトの作成
 	m_pEffect = new ElectricEffect(m_DrawingID.m_TexID, m_RectSize);
@@ -70,6 +75,8 @@ void ElectricalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, ElectricalOnUV);
 	m_TypeID = ELECTICAL_B;
 
+	m_pSandwicheffect->ChangeStagePos(m_Pos);
+
 	m_pEffect->ChangeStagePos(m_Pos);
 }
 
@@ -82,6 +89,7 @@ void ElectricalBlock::ProcessCollision(const CollisionManager::CollisionData& rD
 		// スイッチがON状態なら通電状態を解除する
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, ElectricalOffUV);
 		m_TypeID = NORMAL_B;
+		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL), sl::STOP);
 		break;
 
 	case SWITCH_OPERATING_AREA_OFF:
@@ -94,6 +102,7 @@ void ElectricalBlock::ProcessCollision(const CollisionManager::CollisionData& rD
 		// do nothing
 		break;
 	}
+	m_pSandwicheffect->ChangeUV();
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
@@ -109,8 +118,12 @@ void ElectricalBlock::Run(void)
 			&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
 		{
 			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL), sl::PLAY);
-			return;
 		}
+	}
+
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwicheffect->Control();
 	}
 }
 
@@ -121,6 +134,11 @@ void ElectricalBlock::Render(void)
 	if(m_TypeID == ELECTICAL_B)
 	{
 		m_pEffect->Draw();
+	}
+
+	if(m_HasBeenSandwiched)
+	{
+		m_pSandwicheffect->Draw();
 	}
 }
 

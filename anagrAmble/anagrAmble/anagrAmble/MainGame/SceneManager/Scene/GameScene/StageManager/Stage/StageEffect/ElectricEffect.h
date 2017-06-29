@@ -39,7 +39,7 @@ public:
 	* ステージの位置を変更する関数. 
 	* @param[in] pos	変更したい位置座標
 	*/
-	virtual void ChangeStagePos(sl::SLVECTOR2 pos)override;
+	virtual void ChangeStagePos(const sl::SLVECTOR2& rPos)override;
 
 private:
 	sl::DrawingID				m_DrawingID;		//!< 描画関連のID構造体

@@ -56,6 +56,7 @@ public:
 	virtual void ProcessCollision(const CollisionManager::CollisionData& rData) = 0;
 
 protected:
+
 	/** 
 	* 処理実行関数.純粋仮想関数 
 	* Control()内で使用

@@ -85,10 +85,21 @@ bool StageDataChangeManager::ChangeSpace(void)
 			for(short xNum = 0; xNum < changeSpaceXNum; ++xNum)
 			{
 				ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum));
+
 				if(pObj == nullptr)
 				{
 					continue;
 				}
+
+				if(pObj->GetTypeID() == ObjBase::LIGHT_B)
+				{	// 光ブロックの場合は入れ替えないので、データを消しおく
+					pObj->DetachSandwichEffect();	
+					m_pStageDataManager->SetCurrentStageChipData(yNum, xNum);
+					continue;
+				}
+
+				pObj->DetachSandwichEffect();		// 挟む効果をきる
+
 				m_pStageDataManager->SetCurrentStageChipData(yNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum));
 				pObj->ChangeStagePos(yNum, (changeStartIndexData.m_XNum + xNum));
 				m_pStageDataManager->SetCurrentStageChipData(yNum, (changeStartIndexData.m_XNum + xNum), pObj);
@@ -105,6 +116,14 @@ bool StageDataChangeManager::ChangeSpace(void)
 				{
 					continue;
 				}
+
+				if(pObj->GetTypeID() == ObjBase::LIGHT_B)
+				{	// 光ブロックの場合は入れ替えないので、データを消しおく
+					pObj->DetachSandwichEffect();	
+					m_pStageDataManager->SetCurrentStageChipData(yNum, xNum);
+					continue;
+				}
+
 				pObj->ChangeStagePos(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum));
 				m_pStageDataManager->SetCurrentStageChipData(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum), pObj);
 			}
@@ -140,6 +159,15 @@ bool StageDataChangeManager::ChangeSpace(void)
 				{
 					continue;
 				}
+
+				if(pObj->GetTypeID() == ObjBase::LIGHT_B)
+				{	// 光ブロックの場合は入れ替えないので、データを消しおく
+					m_pStageDataManager->SetCurrentStageChipData(yNum, xNum);
+					continue;
+				}
+
+				pObj->DetachSandwichEffect();		// 挟む効果をきる
+
 				m_pStageDataManager->SetCurrentStageChipData(yNum, (m_SandwichedSpaceEndIndex.m_XNum - xNum));
 				pObj->ChangeStagePos(yNum, (changeStartIndexData.m_XNum - xNum));
 				m_pStageDataManager->SetCurrentStageChipData(yNum, (changeStartIndexData.m_XNum - xNum), pObj);
@@ -156,6 +184,13 @@ bool StageDataChangeManager::ChangeSpace(void)
 				{
 					continue;
 				}
+
+				if(pObj->GetTypeID() == ObjBase::LIGHT_B)
+				{	// 光ブロックの場合は入れ替えないので、データを消しおく
+					m_pStageDataManager->SetCurrentStageChipData(yNum, xNum);
+					continue;
+				}
+
 				pObj->ChangeStagePos(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum));
 				m_pStageDataManager->SetCurrentStageChipData(tmp[yNum][xNum].m_YNum, (m_SandwichedSpaceStartIndex.m_XNum + xNum), pObj);
 			}

@@ -39,9 +39,9 @@ public:
 
 	/** 
 	* ステージの位置を変更する関数. 
-	* @param[in] pos	変更したい位置座標
+	* @param[in] rPos	変更したい位置座標
 	*/
-	virtual void ChangeStagePos(sl::SLVECTOR2 pos)override;
+	virtual void ChangeStagePos(const sl::SLVECTOR2& rPos)override;
 
 private:
 	/** 状態の種類 */
