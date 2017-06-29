@@ -203,7 +203,7 @@ protected:
 	EventListener*			m_pEventListener;				//!< EventListenerクラスのインスタンスへのポインタ
 	StageDataManager*		m_pStageDataManager;			//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*		m_pCollisionManager;			//!< CollisionManagerクラスのインスタンスへのポインタ
-	SandwichEffect*			m_pSandwicheffect;				//!< SandwichEffectクラスのインスタンスへのポインタ
+	SandwichEffect*			m_pSandwichEffect;				//!< SandwichEffectクラスのインスタンスへのポインタ
 	bool					m_HasBeenSandwiched;			//!< 挟まれているかどうかのフラグ true→挟まれている false→はさまれていない
 	
 	/** 

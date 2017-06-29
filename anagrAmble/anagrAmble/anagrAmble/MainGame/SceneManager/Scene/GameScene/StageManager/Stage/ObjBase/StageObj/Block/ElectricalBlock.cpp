@@ -39,7 +39,7 @@ ElectricalBlock::ElectricalBlock(StageDataManager* pStageDataManager, CollisionM
 ElectricalBlock::~ElectricalBlock(void)
 {
 	sl::DeleteSafely(&m_pEffect);
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -56,8 +56,8 @@ void ElectricalBlock::Initialize(void)
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, ElectricalOnUV);
 
-	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 
 	// エフェクトの作成
 	m_pEffect = new ElectricEffect(m_DrawingID.m_TexID, m_RectSize);
@@ -75,7 +75,7 @@ void ElectricalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, ElectricalOnUV);
 	m_TypeID = ELECTICAL_B;
 
-	m_pSandwicheffect->ChangeStagePos(m_Pos);
+	m_pSandwichEffect->ChangeStagePos(m_Pos);
 
 	m_pEffect->ChangeStagePos(m_Pos);
 }
@@ -102,13 +102,34 @@ void ElectricalBlock::ProcessCollision(const CollisionManager::CollisionData& rD
 		// do nothing
 		break;
 	}
-	m_pSandwicheffect->ChangeUV();
+	m_pSandwichEffect->ChangeUV();
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void ElectricalBlock::Run(void)
 {
+	if(m_HasBeenSandwiched)
+	{	
+		m_pSandwichEffect->Control();
+		if(RESULT_FAILED(m_pEffect->HasBeenSandwiched()))
+		{
+			m_pEffect->ApplySandwichEffect(m_pSandwichEffect->GetSandwichedSpaceCenterPos());
+		}
+		else if(m_pEffect->EndSandwichEffect())
+		{
+			m_pEffect->DetachSandwichEffect();
+			m_pEffect->ApplySandwichEffect(m_pSandwichEffect->GetSandwichedSpaceCenterPos());
+		}
+	}
+	else
+	{
+		if(m_pEffect->HasBeenSandwiched())
+		{
+			m_pEffect->DetachSandwichEffect();
+		}
+	}
+
 	if(m_TypeID == ELECTICAL_B)
 	{
 		m_pEffect->Control();
@@ -120,25 +141,20 @@ void ElectricalBlock::Run(void)
 			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL), sl::PLAY);
 		}
 	}
-
-	if(m_HasBeenSandwiched)
-	{	
-		m_pSandwicheffect->Control();
-	}
 }
 
 void ElectricalBlock::Render(void)
 {
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
 
+	if(m_HasBeenSandwiched)
+	{
+		m_pSandwichEffect->Draw();
+	}
+
 	if(m_TypeID == ELECTICAL_B)
 	{
 		m_pEffect->Draw();
-	}
-
-	if(m_HasBeenSandwiched)
-	{
-		m_pSandwicheffect->Draw();
 	}
 }
 

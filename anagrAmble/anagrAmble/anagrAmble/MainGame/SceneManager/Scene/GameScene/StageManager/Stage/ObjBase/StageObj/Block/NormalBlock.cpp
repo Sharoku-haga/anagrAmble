@@ -24,7 +24,7 @@ NormalBlock::NormalBlock(StageDataManager* pStageDataManager, CollisionManager* 
 
 NormalBlock::~NormalBlock(void)
 {
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 }
 
 void NormalBlock::Initialize(void)
@@ -40,8 +40,8 @@ void NormalBlock::Initialize(void)
 
 	sl::fRect	uv = { 0.0f, 0.0f, 0.05f, 0.088f};
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
-	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 }
 
 void NormalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -52,7 +52,7 @@ void NormalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	m_pSandwicheffect->ChangeStagePos(m_Pos);
+	m_pSandwichEffect->ChangeStagePos(m_Pos);
 }
 
 void NormalBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -68,7 +68,7 @@ void NormalBlock::Run(void)
 
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Control();
+		m_pSandwichEffect->Control();
 	}
 }
 
@@ -78,7 +78,7 @@ void NormalBlock::Render(void)
 
 	if(m_HasBeenSandwiched)
 	{
-		m_pSandwicheffect->Draw();
+		m_pSandwichEffect->Draw();
 	}
 }
 

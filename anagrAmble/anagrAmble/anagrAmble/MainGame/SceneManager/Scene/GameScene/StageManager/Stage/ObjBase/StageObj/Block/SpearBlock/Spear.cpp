@@ -40,7 +40,7 @@ Spear::Spear(StageDataManager* pStageDataManager, CollisionManager* pCollisionMa
 
 Spear::~Spear(void)
 {
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -73,8 +73,8 @@ void Spear::Initialize(void)
 
 	// 挟むエフェクトには少し大きめ(通常ブロックと同じ大きさの矩形を渡す)
 	sl::fRect effectRectSize = {  -(m_StageChipSize / 2), -(m_StageChipSize / 2), (m_StageChipSize / 2), (m_StageChipSize / 2)};
-	m_pSandwicheffect = new SandwichEffect(m_Pos, effectRectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, effectRectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 
 	// 動作スピードと動作限界
 	m_MovePosYMAXLimit = m_Pos.y - m_pStageDataManager->GetStageChipSize() + VertexCorrectionVal;
@@ -117,11 +117,11 @@ void Spear::Run(void)
 		m_HasMoved = false;
 		m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 		m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
-		m_pSandwicheffect->SetOwnerPos(m_Pos);
+		m_pSandwichEffect->SetOwnerPos(m_Pos);
 
 		if(m_HasBeenSandwiched)
 		{
-			m_pSandwicheffect->Control();
+			m_pSandwichEffect->Control();
 		}
 		return;
 	}
@@ -136,11 +136,11 @@ void Spear::Run(void)
 	}
 
 	m_Pos.y += m_MoveSpeed;
-	m_pSandwicheffect->SetOwnerPos(m_Pos);
+	m_pSandwichEffect->SetOwnerPos(m_Pos);
 
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Control();
+		m_pSandwichEffect->Control();
 	}
 }
 
@@ -150,7 +150,7 @@ void Spear::Render(void)
 
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Draw();
+		m_pSandwichEffect->Draw();
 	}
 }
 

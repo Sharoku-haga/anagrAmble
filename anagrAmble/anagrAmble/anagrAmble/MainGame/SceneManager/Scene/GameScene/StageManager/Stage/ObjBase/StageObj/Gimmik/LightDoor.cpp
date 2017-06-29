@@ -42,7 +42,7 @@ LightDoor::~LightDoor(void)
 	{
 		sl::DeleteSafely(&pblock);
 	}
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -61,8 +61,8 @@ void LightDoor::Initialize(void)
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
-	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 
 	// 光ブロックを生成する
 	for(int count = 0; count < LightBlockCount; ++count)
@@ -104,7 +104,7 @@ void  LightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	m_pSandwicheffect->ChangeStagePos(m_Pos);
+	m_pSandwichEffect->ChangeStagePos(m_Pos);
 
 	// 光ブロックを1回自分位置に収納してから再度展開する
 	Open();
@@ -137,7 +137,7 @@ void LightDoor::Run(void)
 {
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Control();
+		m_pSandwichEffect->Control();
 	}
 
 	// 開いているなら光ブロックの処理を飛ばす
@@ -167,7 +167,7 @@ void LightDoor::Render(void)
 
 	if(m_HasBeenSandwiched)
 	{
-		m_pSandwicheffect->Draw();
+		m_pSandwichEffect->Draw();
 	}
 }
 

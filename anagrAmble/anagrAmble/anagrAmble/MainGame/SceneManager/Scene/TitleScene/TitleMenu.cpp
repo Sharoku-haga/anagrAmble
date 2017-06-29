@@ -16,11 +16,22 @@
 namespace ar
 {
 
+/* Unnamed Namespace ------------------------------------------------------------------------------------------ */
+
+namespace
+{
+
+const	int		ButtonMoveTimeInterval = 20;	// ボタンが動く間隔
+
+}
+
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 TitleMenu::TitleMenu(int btnTexID)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
 	, m_CurrentSelectBtn(GAME_START)
+	, m_ButtonMoveTimeCount(0)
+	, m_MovesButton(false)
 {
 	
 	// ボタンの生成
@@ -57,9 +68,18 @@ TitleMenu::~TitleMenu(void)
 
 Scene::ID TitleMenu::Control(void)
 {
+	if(m_ButtonMoveTimeCount == ButtonMoveTimeInterval)
+	{
+		m_MovesButton = m_MovesButton ? false : true;		// trueならfalseへ falseならtrueへと逆転させる
+		m_ButtonMoveTimeCount = 0;
+	}
+
 	SelectButton();
 
-	m_pButtons[m_CurrentSelectBtn]->Control();
+	if(m_MovesButton)
+	{
+		m_pButtons[m_CurrentSelectBtn]->Control();
+	}
 
 	// Aボタンを押したとき現在選んでいるボタンの種類から
 	// 次のSceneIDを判断してかえす
@@ -83,6 +103,8 @@ Scene::ID TitleMenu::Control(void)
 		}
 	}
 
+	++m_ButtonMoveTimeCount;
+
 	return Scene::TITLE;
 }
 
@@ -104,6 +126,8 @@ void TitleMenu::SelectButton(void)
 		{
 			m_pLibrary->PlayBackSound(static_cast<int>(TITLE_SCENE_SOUND_ID::SELECT), sl::RESET_PLAY);
 			m_CurrentSelectBtn = GAME_END;
+			m_MovesButton = true;
+			m_ButtonMoveTimeCount = 0;
 		}
 		break;
 
@@ -112,6 +136,8 @@ void TitleMenu::SelectButton(void)
 		{
 			m_pLibrary->PlayBackSound(static_cast<int>(TITLE_SCENE_SOUND_ID::SELECT), sl::RESET_PLAY);
 			m_CurrentSelectBtn = GAME_START;
+			m_MovesButton = true;
+			m_ButtonMoveTimeCount = 0;
 		}
 		break;
 

@@ -43,7 +43,7 @@ RevolvingLightDoor::~RevolvingLightDoor(void)
 		sl::DeleteSafely(&pblock);
 	}
 
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -61,8 +61,8 @@ void RevolvingLightDoor::Initialize(void)
 	const sl::fRect		uv = { 0.5f, 0.0f, 0.55f, 0.088f };
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
-	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 
 	// 光ブロックを生成する
 	for(int count = 0; count < LightBlockCount; ++count)
@@ -103,7 +103,7 @@ void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_TypeID = m_OriginalTypeID;
 
-	m_pSandwicheffect->ChangeStagePos(m_Pos);
+	m_pSandwichEffect->ChangeStagePos(m_Pos);
 
 	// 光ブロックを自分の位置にもどしてから再度展開
 	for(auto& pLightBlock : m_pLightBlocks)
@@ -150,7 +150,7 @@ void RevolvingLightDoor::Run(void)
 {
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Control();
+		m_pSandwichEffect->Control();
 	}
 
 	for(auto pblock : m_pLightBlocks)
@@ -169,7 +169,7 @@ void RevolvingLightDoor::Render(void)
 
 	if(m_HasBeenSandwiched)
 	{
-		m_pSandwicheffect->Draw();
+		m_pSandwichEffect->Draw();
 	}
 }
 

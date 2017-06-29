@@ -37,8 +37,9 @@ GameScene::GameScene(GameDataManager* pGameDataManager)
 	// ポーズメニューの作成
 	{
 		int menuBGTexID = m_pLibrary->LoadTexture("../Resource/GameScene/PauseMenuBG.png");
-		int btnTexID = m_pLibrary->LoadTexture("../Resource/GameScene/PauseMeneBtn.png");
-		m_pPauseMenu = new GamePauseMenu( menuBGTexID, btnTexID);
+		int pauseBtnTexID = m_pLibrary->LoadTexture("../Resource/GameScene/PauseMenuPauseBtn.png");
+		int titleReturnBtnID= m_pLibrary->LoadTexture("../Resource/GameScene/PauseMenuTitleBtn.png");
+		m_pPauseMenu = new GamePauseMenu(menuBGTexID, pauseBtnTexID, titleReturnBtnID);
 	}
 
 	m_pStageManager = new StageManager(m_pGameDataManager);

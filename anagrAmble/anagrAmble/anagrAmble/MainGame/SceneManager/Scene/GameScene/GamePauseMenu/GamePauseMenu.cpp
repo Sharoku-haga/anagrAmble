@@ -30,29 +30,43 @@ const	int		ButtonMoveTimeInterval = 30;	// ボタンが動く間隔
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-GamePauseMenu::GamePauseMenu(int bgTexID, int btnTexID)
+GamePauseMenu::GamePauseMenu(int bgTexID, int pauseBtnTexID, int titleReturnBtnID)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
 	, m_pBackground(nullptr)
-	, m_pButton(nullptr)
 	, m_ButtonMoveTimeCount(0)
 	, m_MovesButton(false)
 {
 	// 背景作成
 	m_pBackground = new GamePauseMenuBackground(bgTexID);
 
-	// ボタン生成
+
+	// ボタン作成
+	m_pButtons.resize(BTN_MAX);
+
+	// ポーズボタン(表示のみ)
 	{
-		sl::fRect		size		= { -170.f, -90.f, 170.f, 90.f };		// サイズ
+		sl::fRect		size		= { -170.f, -90.f, 170.f, 90.f };	// サイズ
+		sl::fRect		uv			= { 0.0f, 0.0f, 1.0f, 1.0f };		// UV値
+		sl::SLVECTOR2	pos			= { 960.f, 340.f };					// 開始座標
+		m_pButtons[PAUSE] = new BasicButton(pauseBtnTexID, size, uv, pos);
+	}
+
+	// タイトルへ戻るボタン生成
+	{
+		sl::fRect		size		= { -170.f, -90.f, 170.f, 90.f };	// サイズ
 		sl::fRect		uv			= { 0.0f, 0.0f, 1.0f, 1.0f };		// UV値
 		sl::SLVECTOR2	pos			= { 960.f, 680.f };					// 開始座標
-		m_pButton = ButtonFactory::AddScaleFunction(new BasicButton(btnTexID, size, uv, pos));
+		m_pButtons[TITLE_RETUN] = ButtonFactory::AddScaleFunction(new BasicButton(titleReturnBtnID, size, uv, pos));
 	}
 }
 
 GamePauseMenu::~GamePauseMenu(void)
 {
+	for(auto& pBtn : m_pButtons)
+	{
+		sl::DeleteSafely(&pBtn);
+	}
 	sl::DeleteSafely(&m_pBackground);
-	sl::DeleteSafely(&m_pButton);
 }
 
 void GamePauseMenu::Control(void)
@@ -65,7 +79,7 @@ void GamePauseMenu::Control(void)
 	
 	if(m_MovesButton)
 	{
-		m_pButton->Control();
+		m_pButtons[TITLE_RETUN]->Control();
 	}
 	
 	if(m_pLibrary->CheckCustomizeState(ENTER, sl::PUSH))
@@ -80,7 +94,10 @@ void GamePauseMenu::Control(void)
 void GamePauseMenu::Draw(void)
 {
 	m_pBackground->Draw();
-	m_pButton->Draw();
+	for(auto& pBtn : m_pButtons)
+	{
+		pBtn->Draw();
+	}
 }
 
 }	// namespace ar	

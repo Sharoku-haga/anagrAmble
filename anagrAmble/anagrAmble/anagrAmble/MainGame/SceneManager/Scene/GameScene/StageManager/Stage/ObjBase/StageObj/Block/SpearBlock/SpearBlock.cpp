@@ -26,7 +26,7 @@ SpearBlock::SpearBlock(StageDataManager* pStageDataManager, CollisionManager* pC
 
 SpearBlock::~SpearBlock(void)
 {
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 	sl::DeleteSafely(&m_pSpear);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
@@ -49,8 +49,8 @@ void SpearBlock::Initialize(void)
 	m_pSpear = new Spear(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, m_DrawingID.m_TexID);
 	m_pSpear->Initialize();
 
-	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 }
 
 void SpearBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -63,7 +63,7 @@ void SpearBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 
 	m_pSpear->ChangeStagePos(yIndexNum, xIndexNum);
 
-	m_pSandwicheffect->ChangeStagePos(m_Pos);
+	m_pSandwichEffect->ChangeStagePos(m_Pos);
 }
 
 void SpearBlock::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -92,16 +92,16 @@ void SpearBlock::Run(void)
 {
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Control();
+		m_pSandwichEffect->Control();
 
 		if(RESULT_FAILED(m_pSpear->HasBeenSandwiched()))
 		{
-			m_pSpear->ApplySandwichEffect(m_pSandwicheffect->GetSandwichedSpaceCenterPos());
+			m_pSpear->ApplySandwichEffect(m_pSandwichEffect->GetSandwichedSpaceCenterPos());
 		}
 		else if(m_pSpear->EndSandwichEffect())
 		{
 			m_pSpear->DetachSandwichEffect();
-			m_pSpear->ApplySandwichEffect(m_pSandwicheffect->GetSandwichedSpaceCenterPos());
+			m_pSpear->ApplySandwichEffect(m_pSandwichEffect->GetSandwichedSpaceCenterPos());
 		}
 	}
 	else
@@ -122,7 +122,7 @@ void SpearBlock::Render(void)
 
 	if(m_HasBeenSandwiched)
 	{
-		m_pSandwicheffect->Draw();
+		m_pSandwichEffect->Draw();
 	}
 }
 

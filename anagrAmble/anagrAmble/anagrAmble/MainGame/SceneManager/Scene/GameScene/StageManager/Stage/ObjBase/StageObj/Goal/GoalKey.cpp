@@ -31,7 +31,7 @@ GoalKey::GoalKey(StageDataManager* pStageDataManager, CollisionManager* pCollisi
 
 GoalKey::~GoalKey(void)
 {
-	sl::DeleteSafely(&m_pSandwicheffect);
+	sl::DeleteSafely(&m_pSandwichEffect);
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
@@ -51,8 +51,8 @@ void GoalKey::Initialize(void)
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 
-	m_pSandwicheffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
-	m_pSandwicheffect->Initialize();
+	m_pSandwichEffect = new SandwichEffect(m_Pos, m_RectSize, m_DrawingID, m_StageChipSize);
+	m_pSandwichEffect->Initialize();
 
 	// イベント登録
 	// 特殊アクションボタンが押されるイベント
@@ -73,7 +73,7 @@ void GoalKey::ChangeStagePos(short yIndexNum, short xIndexNum)
 	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	m_pSandwicheffect->ChangeStagePos(m_Pos);
+	m_pSandwichEffect->ChangeStagePos(m_Pos);
 }
 
 void GoalKey::ProcessCollision(const CollisionManager::CollisionData& rData)
@@ -98,7 +98,7 @@ void GoalKey::Run(void)
 
 	if(m_HasBeenSandwiched)
 	{	
-		m_pSandwicheffect->Control();
+		m_pSandwichEffect->Control();
 	}
 }
 
@@ -113,7 +113,7 @@ void GoalKey::Render(void)
 
 	if(m_HasBeenSandwiched)
 	{
-		m_pSandwicheffect->Draw();
+		m_pSandwichEffect->Draw();
 	}
 }
 

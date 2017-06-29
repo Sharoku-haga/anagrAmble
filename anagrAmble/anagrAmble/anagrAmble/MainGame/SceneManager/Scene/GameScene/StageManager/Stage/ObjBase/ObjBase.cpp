@@ -37,7 +37,7 @@ ObjBase::ObjBase(StageDataManager* pStageDataManager, CollisionManager* pCollisi
 	, m_pEventListener(new EventListener())
 	, m_pStageDataManager(pStageDataManager)
 	, m_pCollisionManager(pCollisionManager)
-	, m_pSandwicheffect(nullptr)
+	, m_pSandwichEffect(nullptr)
 	, m_HasBeenSandwiched(false)
 {}
 
@@ -57,13 +57,13 @@ const sl::fRect& ObjBase::GetCurrentRectData(void)
 
 void ObjBase::ApplySandwichEffect(const sl::SLVECTOR2& rSandwichedSpaceCenterPos)
 {
-	if(m_pSandwicheffect == nullptr)
+	if(m_pSandwichEffect == nullptr)
 	{
 		return;
 	}
 
 	m_HasBeenSandwiched = true;
-	m_pSandwicheffect->ProcessBeforeEffectStart(rSandwichedSpaceCenterPos);
+	m_pSandwichEffect->ProcessBeforeEffectStart(rSandwichedSpaceCenterPos);
 	// 不透明にする
 	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.6f);
 }
@@ -76,9 +76,9 @@ void ObjBase::DetachSandwichEffect(void)
 
 bool ObjBase::EndSandwichEffect(void)
 {
-	if(m_pSandwicheffect != nullptr)
+	if(m_pSandwichEffect != nullptr)
 	{
-		return m_pSandwicheffect->EndEffect();
+		return m_pSandwichEffect->EndEffect();
 	}
 
 	return false;

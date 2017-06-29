@@ -54,6 +54,8 @@ private:
 	sl::ISharokuLibrary*	m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
 	BTN_TYPE				m_CurrentSelectBtn;		//!< 現在選んでいるボタンの種類
 	std::vector<Button*>	m_pButtons;				//!< Buttonクラスのインスタンス
+	int						m_ButtonMoveTimeCount;	//!< ボタンの動作時間カウント変数
+	bool					m_MovesButton;			//!< ボタンが動いているかどうか. true→ボタンが動作している. false→ボタンは動いていない
 
 	/** コントローラー処理によりボタンを選択する関数 */
 	void SelectButton(void);

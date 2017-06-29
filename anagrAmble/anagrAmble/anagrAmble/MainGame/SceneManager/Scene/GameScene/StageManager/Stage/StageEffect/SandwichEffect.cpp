@@ -63,6 +63,11 @@ void SandwichEffect::ChangeUV(void)
 	m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, uv);
 }
 
+void SandwichEffect::ChangeAlpha(float alpha)
+{
+	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, alpha);
+}
+
 void SandwichEffect::Initialize(void)
 {
 	m_Pos = m_OwnerPos;
