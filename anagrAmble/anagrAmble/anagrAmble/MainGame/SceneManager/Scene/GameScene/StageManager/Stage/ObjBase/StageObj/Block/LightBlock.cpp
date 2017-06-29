@@ -57,7 +57,11 @@ void LightBlock::Initialize(void)
 
 void LightBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	DetachSandwichEffect();
+	if(m_HasBeenSandwiched)
+	{
+		DetachSandwichEffect();
+	}
+	
 	if(m_pStageDataManager->GetObjBasePointer(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum) == this)
 	{
 		m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);

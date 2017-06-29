@@ -138,12 +138,7 @@ void LightDoor::Run(void)
 	if(m_HasBeenSandwiched)
 	{	
 		m_pSandwichEffect->Control();
-	}
 
-	// 開いているなら光ブロックの処理を飛ばす
-	if(m_HasOpened)
-	{
-		return;
 	}
 
 	for(auto& pblock : m_pLightBlocks)

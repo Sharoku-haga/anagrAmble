@@ -130,10 +130,10 @@ void ElectricalBlock::Run(void)
 		}
 	}
 
+
+	m_pEffect->Control();
 	if(m_TypeID == ELECTICAL_B)
 	{
-		m_pEffect->Control();
-		
 		// 画面内にあるならオブジェクトを鳴らす
 		if(m_Pos.x > m_BasePointPos.x
 			&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
