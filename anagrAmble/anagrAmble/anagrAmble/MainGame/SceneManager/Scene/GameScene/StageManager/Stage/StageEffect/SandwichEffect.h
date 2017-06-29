@@ -38,6 +38,11 @@ public:
 	*/
 	void ProcessBeforeEffectStart(const sl::SLVECTOR2& rSandwichedSpaceCenterPos);
 
+	/**
+	* 効果を切り離したときの処理
+	*/
+	void ProcessDetachEffect(void);
+
 	/** 
 	* UVを変更する関数
 	* オーナーのオブジェクトでよぶ関数

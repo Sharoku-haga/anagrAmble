@@ -71,6 +71,7 @@ void ObjBase::ApplySandwichEffect(const sl::SLVECTOR2& rSandwichedSpaceCenterPos
 void ObjBase::DetachSandwichEffect(void)
 {
 	m_HasBeenSandwiched = false;
+	m_pSandwichEffect->ProcessDetachEffect();
 	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 1.0f);
 }
 

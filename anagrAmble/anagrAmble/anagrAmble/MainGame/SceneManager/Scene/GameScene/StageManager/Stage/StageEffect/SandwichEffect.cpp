@@ -39,9 +39,9 @@ SandwichEffect::~SandwichEffect(void)
 void SandwichEffect::ProcessBeforeEffectStart(const sl::SLVECTOR2& rSandwichedSpaceCenterPos)
 {
 	m_Pos = m_OwnerPos;
-	m_SandwichedSpaceCenterPos = rSandwichedSpaceCenterPos;
 	m_RectSize = m_BasicRectSize;
 	m_EndEffect = false;
+	m_SandwichedSpaceCenterPos = rSandwichedSpaceCenterPos;
 
 	// スピードを計算する。離れている分(マップチップ分)だけ速くする
 	// 左側、右側で処理を変更
@@ -55,6 +55,17 @@ void SandwichEffect::ProcessBeforeEffectStart(const sl::SLVECTOR2& rSandwichedSp
 		int chipCount = static_cast<int>((m_Pos.x - m_SandwichedSpaceCenterPos.x) / m_StageChipSize);
 		m_EffectSpeed = (EffectBasicSpeed * chipCount);
 	}
+}
+
+void SandwichEffect::ProcessDetachEffect(void)
+{
+	m_EndEffect = true;
+
+	// 矩形を消しておく
+	m_RectSize.m_Left = 0.0f;
+	m_RectSize.m_Top = 0.0f;
+	m_RectSize.m_Right = 0.0f;
+	m_RectSize.m_Bottom = 0.0f;
 }
 
 void SandwichEffect::ChangeUV(void)
