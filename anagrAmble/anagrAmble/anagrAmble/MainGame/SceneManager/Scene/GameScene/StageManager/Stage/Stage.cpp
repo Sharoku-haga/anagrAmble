@@ -7,7 +7,9 @@
 /* Includes --------------------------------------------------------------------------------------------------- */
 
 #include "Stage.h"
+#include "../../../Scene.h"
 #include "../../GameSceneSoundID.h"
+#include "../../../../GameDataManager/GameDataManager.h"
 #include "../../GameEventManager/EventListener.h"
 #include "../../GameEventManager/GameEventManager.h"
 #include "../StageDataManager.h"
@@ -18,15 +20,20 @@
 #include "ObjBase/Player/Player.h"
 #include "StageObjManager/StageObjManager.h"
 #include "StageBackground.h"
-#include "GoddessPointUI/GoddessPointUI.h"
+#include "UI/GoddessPointUI.h"
+#include "UI/StageTimer.h"
+#include "../../../../GameDataManager/NumberDrawer.h"
+#include "../../../../GameDataManager/ScoreTextDrawer.h"
+#include "../../../../GameDataManager/HighScoreText.h"
 
 namespace ar
 {
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
-Stage::Stage(StageDataManager*	pStageDataManager)
+Stage::Stage(GameDataManager* pGameDataManager, StageDataManager*	pStageDataManager)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
+	, m_pGameDataManager(pGameDataManager)
 	, m_pEventListener(new EventListener())
 	, m_pStageDataManager(pStageDataManager)
 	, m_pCollisionManager(new CollisionManager(pStageDataManager))
@@ -35,14 +42,19 @@ Stage::Stage(StageDataManager*	pStageDataManager)
 	, m_pStageObjManager(nullptr)
 	, m_pBackground(nullptr)
 	, m_pGoddessPointUI(nullptr)
+	, m_pNumberDrawer(nullptr)
+	, m_pScoreTextDrawer(nullptr)
+	, m_pStageTimer(nullptr)
+	, m_pHighScoreText(nullptr)
 	, m_CurrentState(ENTER)
-{
-	// デバック用
-	//m_CurrentState = EXECUTE;
-}
+{}
 
 Stage::~Stage(void)
 {
+	sl::DeleteSafely(&m_pHighScoreText);
+	sl::DeleteSafely(&m_pStageTimer);
+	sl::DeleteSafely(&m_pScoreTextDrawer);
+	sl::DeleteSafely(&m_pNumberDrawer);
 	sl::DeleteSafely(&m_pGoddessPointUI);
 	sl::DeleteSafely(&m_pBackground);
 	sl::DeleteSafely(&m_pStageObjManager);
@@ -71,9 +83,11 @@ Stage::~Stage(void)
 
 void Stage::Initialize(void)
 {
+	// テクスチャー読み込み
 	m_PlayerTexID = m_pLibrary->LoadTexture("../Resource/GameScene/PlayerFile.png");
 	m_StageObjTexID = m_pLibrary->LoadTexture("../Resource/GameScene/ObjectFile.png");
-	int	goddessPointUI = m_pLibrary->LoadTexture("../Resource/GameScene/GoddessPoint.png");
+	int	goddessPointUITexID = m_pLibrary->LoadTexture("../Resource/GameScene/GoddessPoint.png");
+	int uiNumberTexID = m_pLibrary->LoadTexture("../Resource/GameScene/UiNumber.png");
 
 	// 音楽読み込み
 	{
@@ -133,6 +147,10 @@ void Stage::Initialize(void)
 
 	// ステージの元データをセーブする
 	m_pStageDataManager->SaveStageOriginalData();
+	
+	// リスポーンデータをセーブする
+	m_pStageDataManager->SaveRespawnStageData();
+
 	// プレイヤーが入れ替えできないようにする為ステージデータから消す
 	m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YNum, m_pPlayer->GetStageIndex().m_XNum);
 
@@ -144,8 +162,22 @@ void Stage::Initialize(void)
 	m_pBackground = new StageBackground(m_pBasePoint, stageBGTexID);
 
 	// UIの設定を行う
-	m_pGoddessPointUI = new GoddessPointUI(goddessPointUI, m_pPlayer->GetGoddessPointCount());
+	m_pGoddessPointUI = new GoddessPointUI(goddessPointUITexID, m_pPlayer->GetGoddessPointCount());
 	m_pGoddessPointUI->Initialize();
+
+	m_pNumberDrawer = new NumberDrawer(Scene::GAME, uiNumberTexID);
+	m_pNumberDrawer->Initialize();
+	
+	m_pScoreTextDrawer = new ScoreTextDrawer(Scene::GAME, uiNumberTexID);
+	m_pScoreTextDrawer->Initialize();
+	
+	m_pStageTimer = new StageTimer(m_pGameDataManager, m_pNumberDrawer, m_pScoreTextDrawer);
+	m_pStageTimer->Initialize();
+
+	m_pHighScoreText = new HighScoreText(m_pGameDataManager->GetHighScoreGameTime(),m_pNumberDrawer, m_pScoreTextDrawer);
+	// ハイスコアの位置座標 チップの7番目ぐらいから描画
+	sl::SLVECTOR2 highScorePos = {(m_pStageDataManager->GetStageChipSize() * 8 + (m_pStageDataManager->GetStageChipSize() / 2)), (m_pStageDataManager->GetStageChipSize() / 4)};
+	m_pHighScoreText->Initialize(highScorePos);
 
 	// イベント登録
 	// ゴール到達イベント
@@ -174,6 +206,10 @@ void Stage::Control(void)
 		{
 			// 入場したらステージ開始イベントをとばす
 			GameEventManager::Instance().ReceiveEvent("stage_start");
+
+			// 時間計測開始
+			m_pStageTimer->StartTimeMeasurement();
+
 			m_CurrentState = EXECUTE;
 		}
 		m_pStageObjManager->Control();
@@ -184,6 +220,15 @@ void Stage::Control(void)
 		m_pStageObjManager->Control();
 		m_pCollisionManager->UpDate();
 		m_pBackground->Control();
+
+		if(m_pPlayer->GetStageIndex().m_XNum == 85)
+		{
+			m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YNum, m_pPlayer->GetStageIndex().m_XNum, m_pPlayer);
+			m_pStageDataManager->SaveRespawnStageData();
+			m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YNum, m_pPlayer->GetStageIndex().m_XNum);
+
+		}
+
 		break;
 
 	case STAGE_SPACE_CHANGE:
@@ -234,6 +279,7 @@ void Stage::Control(void)
 		{
 			// 退場したらステージ終了イベントをとばす
 			GameEventManager::Instance().ReceiveEvent("stage_end");
+			m_pStageTimer->EndTimeMeasurment();
 		}
 
 		m_pStageObjManager->Control();
@@ -245,6 +291,7 @@ void Stage::Control(void)
 	}
 
 	m_pGoddessPointUI->Control();
+	m_pStageTimer->Control();
 }
 
 void Stage::Draw(void)
@@ -267,6 +314,8 @@ void Stage::Draw(void)
 	m_pStageObjManager->Draw();
 	m_pPlayer->Draw();
 	m_pGoddessPointUI->Draw();
+	m_pStageTimer->Draw();
+	m_pHighScoreText->Draw();
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */

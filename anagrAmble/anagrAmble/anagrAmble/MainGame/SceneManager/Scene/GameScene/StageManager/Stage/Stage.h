@@ -13,6 +13,7 @@
 namespace ar
 {
 
+class GameDataManager;
 class EventListener;
 class StageDataManager;
 class CollisionManager;
@@ -21,6 +22,10 @@ class Player;
 class StageObjManager;
 class StageBackground;
 class GoddessPointUI;
+class NumberDrawer;
+class ScoreTextDrawer;
+class StageTimer;
+class HighScoreText;
 
 //======================================================================//
 //!< ゲームステージクラス
@@ -38,9 +43,10 @@ public:
 
 	/** 
 	* Constructor
-	* @param[in] pStageDataManager StageDataManagerクラスのインスタンスへのポインタ
+	* @param[in] pGameDataManager	GameDataManagerクラスのインスタンスへのポインタ
+	* @param[in] pStageDataManager	StageDataManagerクラスのインスタンスへのポインタ
 	*/
-	explicit Stage(StageDataManager*	pStageDataManager);
+	Stage(GameDataManager* pGameDataManager, StageDataManager*	pStageDataManager);
 
 	/** Destructor */
 	~Stage(void);
@@ -70,6 +76,7 @@ private:
 	};
 
 	sl::ISharokuLibrary*				m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
+	GameDataManager*					m_pGameDataManager;		//!< GameDataManagerクラスのインスタンスへのポインタ
 	EventListener*						m_pEventListener;		//!< EventListenerクラスのインスタンスへのポインタ
 	StageDataManager*					m_pStageDataManager;	//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*					m_pCollisionManager;	//!< CollisionManagerクラスのインスタンスへのポインタ
@@ -78,6 +85,10 @@ private:
 	StageObjManager*					m_pStageObjManager;		//!< StageObjManagerクラスのインスタンスへのポインタ
 	StageBackground*					m_pBackground;			//!< StageBackgroundクラスのインスタンスへのポインタ
 	GoddessPointUI*						m_pGoddessPointUI;		//!< GoddessPointUIクラスのインスタンスへのポインタ
+	NumberDrawer*						m_pNumberDrawer;		//!< NumberDrawerクラスのインスタンスへのポインタ
+	ScoreTextDrawer*					m_pScoreTextDrawer;		//!< ScoreTextDrawerクラスのインスタンスへのポインタ
+	StageTimer*							m_pStageTimer;			//!< StageTimerクラスのインスタンスへのポインタ
+	HighScoreText*						m_pHighScoreText;		//!< HighScoreTextクラスのインスタンスへのポインタ
 	std::vector<std::vector<short>>		m_CurrentStageData;		//!< 現在のステージデータを格納する二次元配列(vector)
 	STATE								m_CurrentState;			//!< 現在のステージの状態
 	int									m_PlayerTexID;			//!< プレイヤーのテクスチャーID

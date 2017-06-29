@@ -24,15 +24,18 @@ SceneManager::SceneManager(void)
 	, m_NextSceneID(Scene::LOGO)
 	, m_IsGameEnd(false)
 	, m_pGameDataManager(nullptr)
-{
-	m_NextSceneID = Scene::TITLE;
+{	
 #ifdef _DEBUG
+	//m_NextSceneID = Scene::TITLE;
 	//m_NextSceneID = Scene::GAME;
-	//m_NextSceneID = Scene::GAME_OVER;
+	m_NextSceneID = Scene::GAME_CLEAR;
 #endif	// _DEBUG
 
 
 	m_pGameDataManager = new GameDataManager();
+
+	m_pGameDataManager->Initialize();
+
 	SceneFactory::Initialize(m_pGameDataManager);
 
 	// 全シーン共通なのでここで読み込む

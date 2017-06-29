@@ -219,7 +219,7 @@ bool StageDataChangeManager::ReturnBeforeStageData(void)
 	// 少し間をあけてから処理をする(ホワイトアウトさせるため)
 	if(m_WhiteOutTimeCount == WhiteOutTime)
 	{
-		m_pStageDataManager->ReturnBeforeStageData();
+		m_pStageDataManager->ReturnmRespawnStageData();
 		m_WhiteOutTimeCount = 0;
 		return true;
 	}

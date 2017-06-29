@@ -49,7 +49,7 @@ Scene* SceneFactory::CreateScene(Scene::ID id)
 		break;
 
 	case Scene::GAME_CLEAR:
-		pScene = new GameClearScene();
+		pScene = new GameClearScene(m_pGameDataManager);
 		break;
 
 	case Scene::GAME_OVER:

@@ -45,6 +45,12 @@ public:
 	*/
 	void SaveStageOriginalData(void);
 
+	/** 
+	* リスポーンステージデータをセーブする関数
+	* StageManagerの初期化か、プレイヤーが一定値に達したらよばれる
+	*/
+	void SaveRespawnStageData(void);
+
 	/**
 	* StockStageDataに現在のステージデータを加える関数
 	* ステージを入れ替える際によぶ
@@ -52,10 +58,11 @@ public:
 	void AddStockStageData(void);
 
 	/**
-	* 前のステージデータに戻す関数
+	* リスポーンステージデータに戻す関数
+	* リスポーンステージデータがない場合は開始地点のステージデータにもどす
 	* @return 結果 true→成功  false→失敗
 	*/
-	void ReturnBeforeStageData(void);
+	void ReturnmRespawnStageData(void);
 
 	/**
 	* 変更前(入れ替え前)のステージデータに戻す関数
@@ -156,6 +163,7 @@ private:
 	short												m_StageHeightChipNum;		//!< ステージチップの縦の数
 	std::vector<std::vector<short>>						m_LoadStageIndexData;		//!< ファイルからロードしたステージのインデックスデータを格納する二次元配列(vector)
 	std::vector<std::vector<ObjBase*>>					m_StageOriginalData;		//!< 今回のステージの元データを格納する二次元配列(vector)
+	std::vector<std::vector<ObjBase*>>					m_RespawnStageData;			//!< リスポーンするステージのデータを格納する二次元配列(vector)
 	std::vector<std::vector<ObjBase*>>					m_CurrentStageData;			//!< 現在のステージデータを格納する二次元配列(vector)
 	std::vector<int>									m_StockStageDataOrder;		//!< ストックしているステージデータの順番
 	std::vector<std::vector<std::vector<ObjBase*>>>		m_StockStageData;			//!< ストックしているステージデータを格納する三次元配列(vector)

@@ -51,6 +51,7 @@ GameScene::GameScene(GameDataManager* pGameDataManager)
 
 GameScene::~GameScene(void)
 {
+	
 	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::SELECT));
 	m_pLibrary->ReleaseUVAnimeDataALL();
 	sl::DeleteSafely(&m_pStageManager);

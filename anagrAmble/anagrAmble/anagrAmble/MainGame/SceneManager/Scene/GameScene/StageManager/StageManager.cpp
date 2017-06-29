@@ -26,7 +26,7 @@ StageManager::StageManager(GameDataManager*	pGameDataManager)
 {
 	m_pStageDataManager = new StageDataManager(m_pGameDataManager);
 	StageDataChangeManager::Instance().InitialIze(m_pStageDataManager);
-	m_pStage = new Stage(m_pStageDataManager);
+	m_pStage = new Stage(m_pGameDataManager, m_pStageDataManager);
 }
 
 StageManager::~StageManager(void)

@@ -96,6 +96,11 @@ void StageDataManager::SaveStageOriginalData(void)
 	m_StageOriginalData = m_CurrentStageData;
 }
 
+void StageDataManager::SaveRespawnStageData(void)
+{
+	m_RespawnStageData = m_CurrentStageData;
+}
+
 void StageDataManager::AddStockStageData(void)
 {
 	int newStockDataNum = 0;	// 新しく更新するストックデータの番号を格納する変数
@@ -123,22 +128,9 @@ void StageDataManager::AddStockStageData(void)
 	}
 }
 
-void StageDataManager::ReturnBeforeStageData(void)
+void StageDataManager::ReturnmRespawnStageData(void)
 {
-	for(unsigned int i = 0; i < m_StockStageDataOrder.size(); ++i)
-	{
-		// ストックデータの中の1番最新のもので現在のステージデータを更新する
-		if(m_StockStageDataOrder[i] == (m_StockStageDataOrderCount - 1))
-		{
-			m_CurrentStageData = m_StockStageData[i];
-			break;
-		}
-
-		if(i == m_StockStageDataOrder.size() - 1)
-		{	// 戻せるデータがなかったらオリジナルデータをいれる
-			m_CurrentStageData = m_StageOriginalData;
-		}
-	}
+	m_CurrentStageData = m_RespawnStageData;
 
 	// オブジェクトを再配置する
 	for(short i = 0; i < (m_StageHeightChipNum - 1); ++i)

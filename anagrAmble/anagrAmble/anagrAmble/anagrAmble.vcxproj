@@ -125,6 +125,10 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainGame\MainGame.cpp" />
     <ClCompile Include="MainGame\SceneManager\GameDataManager\GameDataManager.cpp" />
+    <ClCompile Include="MainGame\SceneManager\GameDataManager\HighScoreText.cpp" />
+    <ClCompile Include="MainGame\SceneManager\GameDataManager\NumberDrawer.cpp" />
+    <ClCompile Include="MainGame\SceneManager\GameDataManager\ScoreTextDrawer.cpp" />
+    <ClCompile Include="MainGame\SceneManager\GameDataManager\ThisPlayedTimeText.cpp" />
     <ClCompile Include="MainGame\SceneManager\SceneFactory.cpp" />
     <ClCompile Include="MainGame\SceneManager\SceneManager.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.cpp" />
@@ -142,7 +146,6 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageManager.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\BasePoint.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\CollisionManager.cpp" />
-    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI\GoddessPointUI.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\ObjBase.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\Anchor.cpp" />
@@ -179,6 +182,8 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjFactory.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjManager.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI\GoddessPointUI.cpp" />
+    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI\StageTimer.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoText.cpp" />
@@ -198,6 +203,10 @@
     <ClInclude Include="MainGame\ControllerEnum.h" />
     <ClInclude Include="MainGame\MainGame.h" />
     <ClInclude Include="MainGame\SceneManager\GameDataManager\GameDataManager.h" />
+    <ClInclude Include="MainGame\SceneManager\GameDataManager\HighScoreText.h" />
+    <ClInclude Include="MainGame\SceneManager\GameDataManager\NumberDrawer.h" />
+    <ClInclude Include="MainGame\SceneManager\GameDataManager\ScoreTextDrawer.h" />
+    <ClInclude Include="MainGame\SceneManager\GameDataManager\ThisPlayedTimeText.h" />
     <ClInclude Include="MainGame\SceneManager\SceneFactory.h" />
     <ClInclude Include="MainGame\SceneManager\SceneManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.h" />
@@ -218,7 +227,6 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\StageManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\BasePoint.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\CollisionManager.h" />
-    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\GoddessPointUI\GoddessPointUI.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\ObjBase.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\Anchor.h" />
@@ -255,6 +263,8 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageEffect\StageEffect.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjFactory.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\StageObjManager\StageObjManager.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI\GoddessPointUI.h" />
+    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI\StageTimer.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoText.h" />
