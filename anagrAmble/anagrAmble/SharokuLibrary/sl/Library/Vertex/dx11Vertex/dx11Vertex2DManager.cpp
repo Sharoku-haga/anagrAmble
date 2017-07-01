@@ -201,7 +201,7 @@ bool Vertex2DManager::InitVertexShader(void)
 {
 	ID3DBlob* pErrors = NULL;
 	if (FAILED(D3DX11CompileFromFile(
-		TEXT("../SharokuLibrary/sl/Library/Vertex/dx11Vertex/dx11CommonHLSL/dx11CommonVS.hlsl"),
+		TEXT("../Resource/dx11CommonVS.hlsl"),
 		NULL,
 		NULL,
 		"VS",
@@ -255,7 +255,7 @@ bool Vertex2DManager::InitPixelShader(void)
 	ID3DBlob* pCompiledShader = NULL;
 	ID3DBlob* pErrors = NULL;
 	if (FAILED(D3DX11CompileFromFile(
-		TEXT("../SharokuLibrary/sl/Library/Vertex/dx11Vertex/dx11CommonHLSL/dx11CommonPS.hlsl"),
+		TEXT("../Resource/dx11CommonPS.hlsl"),
 		NULL,
 		NULL,
 		"PS",

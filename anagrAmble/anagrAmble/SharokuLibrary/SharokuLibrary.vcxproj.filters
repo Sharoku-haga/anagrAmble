@@ -141,14 +141,14 @@
     <ClInclude Include="sl\Library\UVAnimation\slUVAnimationManager.h">
       <Filter>sl\Library\UVAnimation</Filter>
     </ClInclude>
-    <ClInclude Include="sl\slBuild.h">
-      <Filter>sl</Filter>
-    </ClInclude>
     <ClInclude Include="sl\Library\Sound\DirectSound\DirectSoundManager.h">
       <Filter>sl\Library\Sound\DirectSound</Filter>
     </ClInclude>
     <ClInclude Include="sl\Common\slSoundEnum.h">
       <Filter>sl\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="sl\slBuild.h">
+      <Filter>sl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

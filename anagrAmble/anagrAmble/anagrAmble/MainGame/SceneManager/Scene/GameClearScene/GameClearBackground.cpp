@@ -29,11 +29,8 @@ const int			ChangeSceneWaitingTime	= 30;				// シーン変更するまでの待
 GameClearBackground::GameClearBackground(int texID)
 	: m_pLibrary(sl::ISharokuLibrary::Instance())
 	, m_Pos({ 0.0f, 0.0f })
-	, m_CurrentState(FADE_IN)
 	, m_CurrentAlphaVal(AlphaMinVal)
-	, m_EndsProcessing(false)
 	, m_DisplayTimeCount(0)
-	, m_ChangeSceneWaitingTimeCount(0)
 {
 	m_DrawingID.m_TexID = texID;
 
@@ -55,58 +52,37 @@ GameClearBackground::~GameClearBackground(void)
 	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
 }
 
-bool GameClearBackground::Control(void)
+bool GameClearBackground::ControlDisplayTime(void)
 {
-	switch(m_CurrentState)
-	{
-	case FADE_IN:
-
-		m_CurrentAlphaVal += FadeSpeed;
-		if(m_CurrentAlphaVal >= AlphaMaxVal)
-		{	// アルファ値が最大値になったら表示中へ
-			m_CurrentAlphaVal = AlphaMaxVal;
-			m_CurrentState = DISPLAYING;
-		}
-		break;
-
-	case DISPLAYING:
-		if(m_DisplayTimeCount == DisplayTime)
-		{
-			m_CurrentState = FADE_OUT;
-		}
-		else
-		{
-			++m_DisplayTimeCount;
-		}
-		break;
-
-	case FADE_OUT:
-
-		m_CurrentAlphaVal -= FadeSpeed;
-		if(m_CurrentAlphaVal <= AlphaMinVal)
-		{	// アルファ値が最小値になったら処理完了フラグをたてる
-			m_CurrentAlphaVal = AlphaMinVal;
-			m_CurrentState = WAITING_CHANGE_OF_SCENE;
-		}
-
-		break;
-
-	case WAITING_CHANGE_OF_SCENE:
-
-		++m_ChangeSceneWaitingTimeCount;
-		if(m_ChangeSceneWaitingTimeCount >= ChangeSceneWaitingTime)
-		{
-				m_EndsProcessing = true;
-		}
-
-		break;
-
-	default:
-		// do nothing
-		break;
+	++m_DisplayTimeCount;
+	if(m_DisplayTimeCount >= DisplayTime)
+	{	// 表示時間に達したらtrueをかえす
+		return true;
 	}
 
-	return m_EndsProcessing;
+	return false;
+}
+
+bool GameClearBackground::FadeIn(void)
+{
+	m_CurrentAlphaVal += FadeSpeed;
+	if(m_CurrentAlphaVal >= AlphaMaxVal)
+	{	// アルファ値が最大値になったらtrueをかえす
+		m_CurrentAlphaVal = AlphaMaxVal;
+		return true;
+	}
+	return false;
+}
+
+bool GameClearBackground::FadeOut(void)
+{
+	m_CurrentAlphaVal -= FadeSpeed;
+	if(m_CurrentAlphaVal <= AlphaMinVal)
+	{	// アルファ値が最小値になったらtrueをかえす
+		m_CurrentAlphaVal = AlphaMinVal;
+		return true;
+	}
+	return false;
 }
 
 void GameClearBackground::Draw(void)
