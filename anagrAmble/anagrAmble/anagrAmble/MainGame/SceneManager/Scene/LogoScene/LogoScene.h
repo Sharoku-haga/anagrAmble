@@ -13,7 +13,6 @@ namespace ar
 {
 
 class LogoBackground;
-class LogoText;
 
 //======================================================================//
 //!< anagrAmbleにおけるロゴシーンのクラス
@@ -29,7 +28,6 @@ public:
 
 private:
 	LogoBackground*			m_pBackground;			//!< LogoBackgroundクラスのインスタンスへのポインタ
-	LogoText*				m_pText;				//!< LogoTextクラスのインスタンスへのポインタ
 
 	/** 
 	* コントロール関数 

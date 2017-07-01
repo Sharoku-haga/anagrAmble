@@ -68,7 +68,7 @@ bool ElectricEffect::EndSandwichEffect(void)
 
 void ElectricEffect::Initialize(void)
 {
-	// チップサイズを先に計算しておく。じゃないとエフェクトのサイズの補正がかかってしまう為
+	// チップサイズを先に計算しておく。じゃないと挟むエフェクトのサイズの補正がかかってしまう為
 	float chipSize = (m_RectSize.m_Right - m_RectSize.m_Left);
 
 	// Vertex作成

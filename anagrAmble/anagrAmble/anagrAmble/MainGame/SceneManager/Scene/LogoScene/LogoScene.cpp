@@ -8,7 +8,6 @@
 
 #include "LogoScene.h"
 #include "LogoBackground.h"
-#include "LogoText.h"
 #include "../SharokuLibrary/sl/sl.h"
 
 namespace ar
@@ -18,25 +17,17 @@ namespace ar
 
 LogoScene::LogoScene(void)
 	: m_pBackground(nullptr)
-	, m_pText(nullptr)
 {
 	m_NextSceneID = Scene::LOGO;
-	// 背景
+	 // 背景
 	{
-		int texID = m_pLibrary->LoadTexture("../Resource/LogoScene/LogoBG.png");
+		int texID = m_pLibrary->LoadTexture("../Resource/LogoScene/LogoSceneBG.png");
 		m_pBackground = new LogoBackground(texID);
-	}
-
-	// テキスト
-	{
-		int texID = m_pLibrary->LoadTexture("../Resource/LogoScene/LogoText.png");
-		m_pText = new LogoText(texID);
 	}
 }
 
 LogoScene::~LogoScene(void)
 {
-	sl::DeleteSafely(&m_pText);
 	sl::DeleteSafely(&m_pBackground);
 	m_pLibrary->ReleaseVertexALL();
 	m_pLibrary->ReleaseTexALL();
@@ -46,10 +37,9 @@ LogoScene::~LogoScene(void)
 
 Scene::ID LogoScene::Control(void)
 {
-	
-	if(m_pText->Control())
+	if(m_pBackground->Control())
 	{
-		// ロゴの表示時間が終わったらタイトルシーンへ移行
+		// 背景の表示時間が終わったらタイトルシーンへ移行
 		m_NextSceneID = Scene::TITLE;
 	}
 
@@ -59,7 +49,6 @@ Scene::ID LogoScene::Control(void)
 void LogoScene::Draw(void)
 {
 	m_pBackground->Draw();
-	m_pText->Draw();
 }
 
 }	// namespace ar
