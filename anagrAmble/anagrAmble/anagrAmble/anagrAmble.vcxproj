@@ -186,7 +186,6 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI\StageTimer.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.cpp" />
-    <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoText.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\Scene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\BasicButton.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\Button\Button.cpp" />
@@ -267,7 +266,6 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI\StageTimer.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoScene.h" />
-    <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoText.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\Scene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\BasicButton.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\Button\Button.h" />

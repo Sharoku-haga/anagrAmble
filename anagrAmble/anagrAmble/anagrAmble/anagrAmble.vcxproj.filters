@@ -132,9 +132,6 @@
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoText.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\TitleScene</Filter>
     </ClCompile>
@@ -357,9 +354,6 @@
       <Filter>anagrAmble\MainGame\SceneManager\Scene\CreditsRollScene</Filter>
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoText.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.h">
