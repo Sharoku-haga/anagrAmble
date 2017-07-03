@@ -133,9 +133,9 @@ void StageDataManager::ReturnmRespawnStageData(void)
 	m_CurrentStageData = m_RespawnStageData;
 
 	// オブジェクトを再配置する
-	for(short i = 0; i < (m_StageHeightChipNum - 1); ++i)
+	for(short i = 0; i < m_StageHeightChipNum ; ++i)
 	{
-		for(short j = 0; j < (m_StageWidthChipNum - 1); ++j)
+		for(short j = 0; j < m_StageWidthChipNum ; ++j)
 		{
 			if(m_CurrentStageData[i][j] == nullptr)
 			{
@@ -179,9 +179,9 @@ void StageDataManager::ReturnStageDataChangeBefore(void)
 	}
 
 	// オブジェクトを再配置する
-	for(short i = 0; i < (m_StageHeightChipNum - 1); ++i)
+	for(short i = 0; i < m_StageHeightChipNum ; ++i)
 	{
-		for(short j = 0; j < (m_StageWidthChipNum - 1); ++j)
+		for(short j = 0; j < m_StageWidthChipNum ; ++j)
 		{
 			if(m_CurrentStageData[i][j] == nullptr)
 			{

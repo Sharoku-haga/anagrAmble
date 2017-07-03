@@ -103,12 +103,12 @@ void HighScoreText::StoreHighScoreUnit(void)
 {
 	// 10分単位
 	//m_DispPlayTimeNum[TEN_MINUTE_UNITS] = static_cast<int>(m_ThisPlayTime / 3600000);
-	int tM =  static_cast<int>(m_HighScoreGameTime / 3600000);
+	int tM =  static_cast<int>((m_HighScoreGameTime % 3600000) / 600000);
 	m_HighScoreGameTimeNum[TEN_MINUTE_UNITS] = tM;
 
 	// 1分単位
 	//m_DispPlayTimeNum[ONE_MINUTE_UNITS] = static_cast<int>((m_ThisPlayTime % 3600000) / 60000);
-	int oM = static_cast<int>((m_HighScoreGameTime % 3600000) / 60000);
+	int oM = static_cast<int>(((m_HighScoreGameTime % 3600000) % 600000)/ 60000);
 	m_HighScoreGameTimeNum[ONE_MINUTE_UNITS] = oM;
 
 	// 10秒単位
