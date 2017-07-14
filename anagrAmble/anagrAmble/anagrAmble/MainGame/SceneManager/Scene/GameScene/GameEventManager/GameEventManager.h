@@ -4,7 +4,6 @@
 //!< @author	T.Haga
 //==================================================================================================================================//
 
-
 #ifndef AR_GAME_EVENT_MANAGER_H
 #define AR_GAME_EVENT_MANAGER_H
 
@@ -79,8 +78,8 @@ public:
 	~GameEventManager(void);
 
 private:
-	std::map<std::string, std::vector<EventListener*> >  m_EventType;			//!< 登録しているイベントタイプとそれに対応するリスナーのポインタ群
-	std::deque<std::string>							   m_CuurentEvent;		//!< 現在ゲーム中で発生したイベントを格納しておくdeque
+	std::map<std::string, std::vector<EventListener*> >		m_EventType;			//!< 登録しているイベントタイプとそれに対応するリスナーのポインタ群
+	std::deque<std::string>									m_CurrentEvent;			//!< 現在ゲーム中で発生したイベントを格納しておくdeque
 	
 	/** Constructor */
 	GameEventManager(void) =default;

@@ -111,6 +111,7 @@ void Spear::ProcessCollision(const CollisionManager::CollisionData& rData)
 
 void Spear::Run(void)
 {
+
 	if(RESULT_FAILED(m_HasMoved)
 		|| m_pStageDataManager->GetTypeID((m_StageIndexData.m_YNum - 1), m_StageIndexData.m_XNum) != BLANK)
 	{

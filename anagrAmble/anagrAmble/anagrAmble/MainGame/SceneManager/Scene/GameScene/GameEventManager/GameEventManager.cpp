@@ -19,8 +19,8 @@ GameEventManager::~GameEventManager(void)
 
 void GameEventManager::InitEventType(void)
 {
-	m_CuurentEvent.clear();
-	std::deque<std::string>().swap(m_CuurentEvent);
+	m_CurrentEvent.clear();
+	std::deque<std::string>().swap(m_CurrentEvent);
 
 	for(auto& eventType : m_EventType)
 	{
@@ -40,7 +40,7 @@ void GameEventManager::Update(void)
 	else
 	{
 		// イベントがある場合はそれそれ対応するリスナーに通知する
-		for(auto& currentEvent : m_CuurentEvent)
+		for(auto& currentEvent : m_CurrentEvent)
 		{
 			std::vector<EventListener*>& pListeners = m_EventType[currentEvent];
 
@@ -50,8 +50,8 @@ void GameEventManager::Update(void)
 			}
 		}
 
-		m_CuurentEvent.clear();
-		std::deque<std::string>().swap(m_CuurentEvent);
+		m_CurrentEvent.clear();
+		std::deque<std::string>().swap(m_CurrentEvent);
 	}
 }
 
@@ -79,16 +79,15 @@ void GameEventManager::TriggerSynEvent(const std::string& rEventType)
 
 void GameEventManager::ReceiveEvent(const std::string& rEventType)
 {
-	for(auto& currentEvent : m_CuurentEvent )
+	for(auto& currentEvent : m_CurrentEvent )
 	{
 		if(currentEvent == rEventType)
 		{ // すでにイベントが登録されていたらreturn
 			return;
 		}
 	}
-	m_CuurentEvent.push_back(rEventType);
+	m_CurrentEvent.push_back(rEventType);
 }
-
 
 }	// namespace ar
 
