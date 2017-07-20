@@ -37,8 +37,8 @@ public:
 	/** ステージのインデックスIDの構造体 */
 	struct INDEX_DATA
 	{
-		short m_YNum;		//!< Y軸のインデックス
-		short m_XNum;		//!< X軸のインデックス
+		short m_YIndexNum;		//!< Y軸(縦)のインデックス番号
+		short m_XIndexNum;		//!< X軸(横)のインデックス番号
 	};
 
 	/** 
@@ -96,11 +96,11 @@ private:
 
 	/** 
 	* オブジェクトを作成し、初期位置に配置させる関数
-	* @param[in] typeID オブジェクトのID
-	* @param[in] yNum	ｙ方向のインデックス
-	* @param[in] xNum	x方向のインデックス
+	* @param[in] typeID		オブジェクトのID
+	* @param[in] yIndexNum	y方向のインデックス番号
+	* @param[in] xIndexNum	x方向のインデックス番号
 	*/
-	void CreateObj(int typeID , int yNum, int xNum);
+	void CreateObj(int typeID , int yIndexNum, int xIndexNum);
 
 	/** イベントを処理する関数 */
 	void HandleEvent(void);

@@ -28,9 +28,6 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameClearScene">
       <UniqueIdentifier>{c5e634a1-88a5-4bb6-9e5d-f8d76e845699}</UniqueIdentifier>
     </Filter>
-    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\CreditsRollScene">
-      <UniqueIdentifier>{c450ea80-846c-4148-931a-a76f6f071e42}</UniqueIdentifier>
-    </Filter>
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\GameEventManager">
       <UniqueIdentifier>{a2f79aed-8b09-4a7d-98f5-bb8c52e6205a}</UniqueIdentifier>
     </Filter>
@@ -54,9 +51,6 @@
     </Filter>
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player">
       <UniqueIdentifier>{5efa63c2-6569-4236-970f-259695663f18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy">
-      <UniqueIdentifier>{9db18ad1-5865-4a3c-9536-b6f87d2a448d}</UniqueIdentifier>
     </Filter>
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj">
       <UniqueIdentifier>{61fede62-d22c-49a8-95e4-7ff0a74e8cc2}</UniqueIdentifier>
@@ -126,9 +120,6 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameClearScene</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\CreditsRollScene</Filter>
-    </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
     </ClCompile>
@@ -182,9 +173,6 @@
     </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\Player.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\StageObj.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj</Filter>
@@ -350,9 +338,6 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearScene.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameClearScene</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\CreditsRollScene\CreditsRollScene.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\CreditsRollScene</Filter>
-    </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\LogoScene\LogoBackground.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\LogoScene</Filter>
     </ClInclude>
@@ -409,9 +394,6 @@
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player\Player.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy\Enemy.h">
-      <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj\StageObj.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\ObjBase\StageObj</Filter>

@@ -33,7 +33,7 @@ void StageObj::Control(void)
 
 	Run();
 
-	// 画面外にあるオブジェクトは衝突処理を登録せずに処理終了
+	// 画面外にあるオブジェクトは衝突処理を登録せずに即return
 	if( m_Pos.x < (m_BasePointPos.x - AreaCorrectionVal)
 		|| m_Pos.x > (m_BasePointPos.x + AreaCorrectionVal + m_DisplayArea.m_Right))
 	{

@@ -48,10 +48,10 @@ LightDoor::~LightDoor(void)
 
 void LightDoor::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
+	// 矩形サイズを設定
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
 	m_RectSize.m_Top		= -(m_StageChipSize / 2);
 	m_RectSize.m_Right		= (m_StageChipSize / 2);
@@ -91,18 +91,15 @@ void LightDoor::Initialize(void)
 	// プレイヤーリスポーン終了イベント
 	GameEventManager::Instance().RegisterEventType("player_respawn_end", m_pEventListener);
 	m_pEventListener->RegisterSynEventFunc("player_respawn_end", std::bind(&ar::LightDoor::Close, this));
-
-	// ステージに位置を固定する
-	//m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
 }
 
 void  LightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_pSandwichEffect->ChangeStagePos(m_Pos);
 
@@ -174,7 +171,7 @@ void LightDoor::Open(void)
 	m_HasOpened = true;
 	for(auto& pblock : m_pLightBlocks)
 	{
-		pblock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+		pblock->ChangeStagePos(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);
 	}
 }
 
@@ -189,12 +186,12 @@ void LightDoor::Close(void)
 	case LIGHT_DOOR_UP:
 		for(int count = 1; count <= LightBlockCount; ++count)
 		{
-			checkIndexData.m_YNum = m_StageIndexData.m_YNum - count;
-			checkIndexData.m_XNum = m_StageIndexData.m_XNum;
+			checkIndexData.m_YIndexNum = m_StageIndexData.m_YIndexNum - count;
+			checkIndexData.m_XIndexNum = m_StageIndexData.m_XIndexNum;
 
-			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
+			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum) == BLANK)
 			{
-				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum);
 			}
 			else
 			{	// 空白じゃないなら再配置をやめる
@@ -206,12 +203,12 @@ void LightDoor::Close(void)
 	case LIGHT_DOOR_DOWN:
 		for(int count = 1; count <= LightBlockCount; ++count)
 		{
-			checkIndexData.m_YNum = m_StageIndexData.m_YNum + count;
-			checkIndexData.m_XNum = m_StageIndexData.m_XNum;
+			checkIndexData.m_YIndexNum = m_StageIndexData.m_YIndexNum + count;
+			checkIndexData.m_XIndexNum = m_StageIndexData.m_XIndexNum;
 
-			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
+			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum) == BLANK)
 			{
-				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum);
 			}
 			else
 			{	// 空白じゃないなら再配置をやめる
@@ -223,12 +220,12 @@ void LightDoor::Close(void)
 	case LIGHT_DOOR_RIGHT:
 		for(int count = 1; count <= LightBlockCount; ++count)
 		{
-			checkIndexData.m_YNum = m_StageIndexData.m_YNum;
-			checkIndexData.m_XNum = m_StageIndexData.m_XNum + count;
+			checkIndexData.m_YIndexNum = m_StageIndexData.m_YIndexNum;
+			checkIndexData.m_XIndexNum = m_StageIndexData.m_XIndexNum + count;
 
-			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
+			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum) == BLANK)
 			{
-				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum);
 			}
 			else
 			{	// 空白じゃないなら再配置をやめる
@@ -240,11 +237,11 @@ void LightDoor::Close(void)
 	case LIGHT_DOOR_LEFT:
 		for(int count = 1; count <= LightBlockCount; ++count)
 		{
-			checkIndexData.m_YNum = m_StageIndexData.m_YNum;
-			checkIndexData.m_XNum = m_StageIndexData.m_XNum - count;
-			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
+			checkIndexData.m_YIndexNum = m_StageIndexData.m_YIndexNum;
+			checkIndexData.m_XIndexNum = m_StageIndexData.m_XIndexNum - count;
+			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum) == BLANK)
 			{
-				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum);
 			}
 			else
 			{	// 空白じゃないなら再配置をやめる

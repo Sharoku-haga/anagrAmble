@@ -47,10 +47,10 @@ LightRoadBlock::~LightRoadBlock(void)
 
 void LightRoadBlock::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
+	// 矩形サイズを設定
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
 	m_RectSize.m_Top		= -(m_StageChipSize / 2);
 	m_RectSize.m_Right		= (m_StageChipSize / 2);
@@ -92,15 +92,15 @@ void LightRoadBlock::Initialize(void)
 
 void LightRoadBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	for(auto pBlock : m_pLightBlocks)
 	{
-		pBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);;
+		pBlock->ChangeStagePos(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);;
 	}
 
 	m_pSandwichEffect->ChangeStagePos(m_Pos);
@@ -149,31 +149,31 @@ void LightRoadBlock::DischargeLightBlock(void)
 	// ブロックの位置に戻す
 	for(auto pBlock : m_pLightBlocks)
 	{
-		pBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);;
+		pBlock->ChangeStagePos(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);;
 	}
 
 	// チェックしたいY方向のインデックス. 
 	// 横のチェックだけなのでここで変数を作成
-	int checkIndexY = m_StageIndexData.m_YNum;
+	int checkYIndexNum = m_StageIndexData.m_YIndexNum;
 
 	// 足場排出ブロックの後方チェック。後方のためインデックスを引きながらチェックしている
 	// 2からチェックを開始しているのは、1からだと光ブロックを作成する必要がないため
-	for(int indexX = 2 ; indexX <= SearchArea ; ++indexX)
+	for(int xIndexCount = 2 ; xIndexCount <= SearchArea ; ++xIndexCount)
 	{
-		int checkIndexX = m_StageIndexData.m_XNum - indexX;
+		int checkXIndexNum = m_StageIndexData.m_XIndexNum - xIndexCount;
 
-		if(m_pStageDataManager->GetTypeID(checkIndexY, checkIndexX) == LIGHT_ROAD_B)
+		if(m_pStageDataManager->GetTypeID(checkYIndexNum, checkXIndexNum) == LIGHT_ROAD_B)
 		{
 			// 発見したブロックまでの距離に到達するようにブロックを生成する
 			// -1しているのはその手前までに光ブロックを作成するため
-			int lightBlockCount = indexX -1;		// 光ブロック生成数
+			int lightBlockCount = xIndexCount -1;		// 光ブロック生成数
 
 			for(int count = 1; count <= lightBlockCount; ++count)
 			{
 				Stage::INDEX_DATA stageIndexData;
-				stageIndexData.m_YNum = m_StageIndexData.m_YNum;
-				stageIndexData.m_XNum = m_StageIndexData.m_XNum - count;
-				m_pLightBlocks[count - 1]->ChangeStagePos(stageIndexData.m_YNum, stageIndexData.m_XNum);
+				stageIndexData.m_YIndexNum = m_StageIndexData.m_YIndexNum;
+				stageIndexData.m_XIndexNum = m_StageIndexData.m_XIndexNum - count;
+				m_pLightBlocks[count - 1]->ChangeStagePos(stageIndexData.m_YIndexNum, stageIndexData.m_XIndexNum);
 			}
 			break;
 		}

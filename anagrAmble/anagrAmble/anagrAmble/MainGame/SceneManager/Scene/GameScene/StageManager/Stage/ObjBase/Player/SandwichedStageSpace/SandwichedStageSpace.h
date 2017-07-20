@@ -106,6 +106,12 @@ private:
 	*/
 	void PrepareSpaceChange(void);
 
+	/** 挟んだ空間に挟む効果を適用する関数 */
+	void ApplySandwichEffect(void);
+
+	/** 挟んだ空間の挟む効果をきる関数 */
+	void DetachSandwichEffect(void);
+
 };	// class SandwichedStageSpace
 
 }	// namespace ar

@@ -36,7 +36,6 @@ private:
 	sl::SLVECTOR2			m_Pos;					//!< 位置座標
 	sl::DrawingID			m_ID;					//!< グラフィック関連のIDをまとめた構造体
 	
-
 };	// GamePauseMenuBackground
 
 }	// namespace ar

@@ -178,7 +178,7 @@ void AnchorLightEffect::Run(void)
 	if(m_pOwnerPairAnchor->GetHasPlacePosStage())
 	{
 		// 置かれているペアとのアンカーのインデックスの差が一定以上離れていたら赤くする
-		if(std::abs(m_pOwnerAnchor->GetStageIndex().m_XNum - m_pOwnerPairAnchor->GetStageIndex().m_XNum) > PairAnchorAreaIntervalChipCount)
+		if(std::abs(m_pOwnerAnchor->GetStageIndex().m_XIndexNum - m_pOwnerPairAnchor->GetStageIndex().m_XIndexNum) > PairAnchorAreaIntervalChipCount)
 		{
 			m_pLibrary->SetVtxColor(m_VtxID[NORMAL_LIGHT], 1.0f, 0.0f, 0.0f, 1.0f);
 		}

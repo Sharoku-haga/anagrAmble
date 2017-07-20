@@ -12,7 +12,6 @@
 #include "../../../../../GameEventManager/EventListener.h"
 #include "../../../../../GameSceneSoundID.h"
 
-
 namespace ar
 {
 
@@ -44,13 +43,13 @@ Entrance::~Entrance(void)
 
 void Entrance::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize - (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize - (m_StageChipSize / 2);
 
-	// Vertex作成
-	m_RectSize.m_Left = -((m_StageChipSize * SizeChipCount) / 2);
-	m_RectSize.m_Top = -((m_StageChipSize * SizeChipCount) / 2);
-	m_RectSize.m_Right = ((m_StageChipSize * SizeChipCount) / 2);
+	// 矩形サイズを設定
+	m_RectSize.m_Left	= -((m_StageChipSize * SizeChipCount) / 2);
+	m_RectSize.m_Top	= -((m_StageChipSize * SizeChipCount) / 2);
+	m_RectSize.m_Right	= ((m_StageChipSize * SizeChipCount) / 2);
 	m_RectSize.m_Bottom = ((m_StageChipSize * SizeChipCount) / 2);
 
 	sl::fRect	uv = { 0.0f, 0.088f, 0.15f, 0.444f };			// UV座標
@@ -77,7 +76,7 @@ void Entrance::Initialize(void)
 	GameEventManager::Instance().RegisterEventType("stage_start", m_pEventListener);
 
 	// 入口の位置を固定する
-	m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+	m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);
 }
 
 void Entrance::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -119,7 +118,7 @@ void Entrance::Render(void)
 
 void Entrance::HandleEvent(void)
 {
-		if(m_pEventListener->EmptyCurrentEvent())
+	if(m_pEventListener->EmptyCurrentEvent())
 	{
 		return;
 	}

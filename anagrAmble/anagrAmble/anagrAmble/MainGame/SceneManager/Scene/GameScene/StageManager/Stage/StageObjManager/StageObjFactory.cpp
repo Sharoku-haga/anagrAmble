@@ -50,7 +50,6 @@ StageObjFactory::StageObjFactory(StageDataManager* pStageDataManager, CollisionM
 StageObjFactory::~StageObjFactory(void)
 {
 	m_pLibrary->ReleaseVertex2D(m_GroundBlockVtxID);
-	m_pLibrary->ReleaseVertex2D(m_NormalBlockVtxID);
 }
 
 StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex)
@@ -177,7 +176,7 @@ StageObj* StageObjFactory::CreateStageObj(int typeID, const Stage::INDEX_DATA rI
 
 void StageObjFactory::InitializeVertex(void)
 {
-	// 地面ブロック
+	// 地面ブロックのVertexを作成
 	{
 		sl::fRect	uv = { 0.05f, 0.0f, 0.1f, 0.088f};
 		m_GroundBlockVtxID = m_pLibrary->CreateVertex2D(m_BlockSize, uv);

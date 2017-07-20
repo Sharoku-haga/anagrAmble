@@ -49,13 +49,13 @@ RevolvingLightDoor::~RevolvingLightDoor(void)
 
 void RevolvingLightDoor::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
-	m_RectSize.m_Left = -(m_StageChipSize / 2);
-	m_RectSize.m_Top = -(m_StageChipSize / 2);
-	m_RectSize.m_Right = (m_StageChipSize / 2);
+	// 矩形サイズを設定
+	m_RectSize.m_Left	= -(m_StageChipSize / 2);
+	m_RectSize.m_Top	= -(m_StageChipSize / 2);
+	m_RectSize.m_Right	= (m_StageChipSize / 2);
 	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 
 	const sl::fRect		uv = { 0.5f, 0.0f, 0.55f, 0.088f };
@@ -95,11 +95,11 @@ void RevolvingLightDoor::Initialize(void)
 
 void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_TypeID = m_OriginalTypeID;
 
@@ -108,7 +108,7 @@ void RevolvingLightDoor::ChangeStagePos(short yIndexNum, short xIndexNum)
 	// 光ブロックを自分の位置にもどしてから再度展開
 	for(auto& pLightBlock : m_pLightBlocks)
 	{
-		pLightBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+		pLightBlock->ChangeStagePos(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);
 	}
 
 	Revolve();
@@ -181,7 +181,7 @@ void RevolvingLightDoor::Revolve(void)
 	// 一旦光ブロックを元位置に戻す
 	for(auto& pLightBlock : m_pLightBlocks)
 	{
-		pLightBlock->ChangeStagePos(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+		pLightBlock->ChangeStagePos(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);
 	}
 
 	Stage::INDEX_DATA checkIndexData;
@@ -193,12 +193,12 @@ void RevolvingLightDoor::Revolve(void)
 		// 右方向へまず光ブロックの半分を展開
 		for(int count = 1; count <= (LightBlockCount / 2); ++count)
 		{
-			checkIndexData.m_YNum = m_StageIndexData.m_YNum;
-			checkIndexData.m_XNum = m_StageIndexData.m_XNum + count;
+			checkIndexData.m_YIndexNum = m_StageIndexData.m_YIndexNum;
+			checkIndexData.m_XIndexNum = m_StageIndexData.m_XIndexNum + count;
 
-			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
+			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum) == BLANK)
 			{	// 空白ならそのスペースに光ブロックを展開する
-				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum);
 			}
 			else
 			{	// 空白じゃないなら展開をやめる
@@ -209,12 +209,12 @@ void RevolvingLightDoor::Revolve(void)
 		// 左方向へ残り半分の光ブロックを展開
 		for(int count = 1; count <= (LightBlockCount / 2); ++count)
 		{
-			checkIndexData.m_YNum = m_StageIndexData.m_YNum;
-			checkIndexData.m_XNum = m_StageIndexData.m_XNum - count;
+			checkIndexData.m_YIndexNum = m_StageIndexData.m_YIndexNum;
+			checkIndexData.m_XIndexNum = m_StageIndexData.m_XIndexNum - count;
 
-			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
+			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum) == BLANK)
 			{	// 空白ならそのスペースに光ブロックを展開する
-				m_pLightBlocks[(count - 1 + (LightBlockCount / 2))]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
+				m_pLightBlocks[(count - 1 + (LightBlockCount / 2))]->ChangeStagePos(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum);
 			}
 			else
 			{	// 空白じゃないなら展開をやめる
@@ -228,12 +228,12 @@ void RevolvingLightDoor::Revolve(void)
 		// 上方向へまず光ブロックの半分を展開
 		for(int count = 1; count <= (LightBlockCount / 2); ++count)
 		{
-			checkIndexData.m_YNum = m_StageIndexData.m_YNum - count;
-			checkIndexData.m_XNum = m_StageIndexData.m_XNum;
+			checkIndexData.m_YIndexNum = m_StageIndexData.m_YIndexNum - count;
+			checkIndexData.m_XIndexNum = m_StageIndexData.m_XIndexNum;
 
-			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
+			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum) == BLANK)
 			{	// 何もないならそのスペースに光ブロックを展開する
-				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
+				m_pLightBlocks[(count - 1)]->ChangeStagePos(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum);
 			}
 			else
 			{	// 空白じゃないなら展開をやめる
@@ -244,12 +244,12 @@ void RevolvingLightDoor::Revolve(void)
 		// 下方向へ光ブロック展開
 		for(int count = 1; count <= (LightBlockCount / 2); ++count)
 		{
-			checkIndexData.m_YNum = m_StageIndexData.m_YNum + count;
-			checkIndexData.m_XNum = m_StageIndexData.m_XNum;
+			checkIndexData.m_YIndexNum = m_StageIndexData.m_YIndexNum + count;
+			checkIndexData.m_XIndexNum = m_StageIndexData.m_XIndexNum;
 
-			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YNum, checkIndexData.m_XNum) == BLANK)
+			if(m_pStageDataManager->GetTypeID(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum) == BLANK)
 			{	// 空白ならそのスペースに光ブロックを展開する
-				m_pLightBlocks[(count - 1 + (LightBlockCount / 2))]->ChangeStagePos(checkIndexData.m_YNum, checkIndexData.m_XNum);
+				m_pLightBlocks[(count - 1 + (LightBlockCount / 2))]->ChangeStagePos(checkIndexData.m_YIndexNum, checkIndexData.m_XIndexNum);
 			}
 			else
 			{	// 空白じゃないなら展開をやめる

@@ -13,7 +13,6 @@
 #include "Scene/GameScene/GameScene.h"
 #include "Scene/GameClearScene/GameClearScene.h"
 #include "Scene/GameOverScene/GameOverScene.h"
-#include "Scene/CreditsRollScene/CreditsRollScene.h"
 
 namespace ar
 {
@@ -54,10 +53,6 @@ Scene* SceneFactory::CreateScene(Scene::ID id)
 
 	case Scene::GAME_OVER:
 		pScene = new GameOverScene();
-		break;
-
-	case Scene::CREDITS_ROLL:
-		pScene = new CreditsRollScene();
 		break;
 
 	case Scene::END:

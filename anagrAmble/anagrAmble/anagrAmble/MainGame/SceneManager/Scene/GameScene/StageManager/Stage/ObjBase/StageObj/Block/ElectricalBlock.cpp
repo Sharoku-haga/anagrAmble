@@ -45,14 +45,14 @@ ElectricalBlock::~ElectricalBlock(void)
 
 void ElectricalBlock::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
-	m_RectSize.m_Left = -(m_StageChipSize / 2);
-	m_RectSize.m_Top = -(m_StageChipSize / 2);
-	m_RectSize.m_Right = (m_StageChipSize / 2);
-	m_RectSize.m_Bottom = (m_StageChipSize / 2);
+	// 矩形サイズを設定
+	m_RectSize.m_Left		= -(m_StageChipSize / 2);
+	m_RectSize.m_Top		= -(m_StageChipSize / 2);
+	m_RectSize.m_Right		= (m_StageChipSize / 2);
+	m_RectSize.m_Bottom		= (m_StageChipSize / 2);
 
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, ElectricalOnUV);
 
@@ -67,11 +67,11 @@ void ElectricalBlock::Initialize(void)
 
 void ElectricalBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 	m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, ElectricalOnUV);
 	m_TypeID = ELECTICAL_B;
 

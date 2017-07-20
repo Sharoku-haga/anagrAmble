@@ -52,19 +52,19 @@ void Spear::Move(void)
 void Spear::Stop(void)
 {
 	m_HasMoved = false;
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 }
 
 void Spear::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
-	m_RectSize.m_Left = -(m_StageChipSize / 2) + VertexCorrectionVal;
-	m_RectSize.m_Top = -(m_StageChipSize / 2) + VertexCorrectionVal;
-	m_RectSize.m_Right = (m_StageChipSize / 2) - VertexCorrectionVal;
+	// 矩形サイズを設定
+	m_RectSize.m_Left	= -(m_StageChipSize / 2) + VertexCorrectionVal;
+	m_RectSize.m_Top	= -(m_StageChipSize / 2) + VertexCorrectionVal;
+	m_RectSize.m_Right	= (m_StageChipSize / 2) - VertexCorrectionVal;
 	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 
 	const sl::fRect		uv = { 0.751f, 0.090f, 0.8f, 0.1777f };
@@ -80,7 +80,7 @@ void Spear::Initialize(void)
 	m_MovePosYMAXLimit = m_Pos.y - m_pStageDataManager->GetStageChipSize() + VertexCorrectionVal;
 	m_MovePosYMINLimit = m_Pos.y;
 
-	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YNum - 1), m_StageIndexData.m_XNum) != BLANK)
+	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YIndexNum - 1), m_StageIndexData.m_XIndexNum) != BLANK)
 	{	// 上が空白じゃないなら、動かない
 		m_HasMoved = false;
 	}
@@ -88,13 +88,13 @@ void Spear::Initialize(void)
 
 void Spear::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YNum - 1), m_StageIndexData.m_XNum) != BLANK)
+	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YIndexNum - 1), m_StageIndexData.m_XIndexNum) != BLANK)
 	{	// 上が空白じゃないなら、動かない
 		m_HasMoved = false;
 	}
@@ -113,11 +113,11 @@ void Spear::Run(void)
 {
 
 	if(RESULT_FAILED(m_HasMoved)
-		|| m_pStageDataManager->GetTypeID((m_StageIndexData.m_YNum - 1), m_StageIndexData.m_XNum) != BLANK)
+		|| m_pStageDataManager->GetTypeID((m_StageIndexData.m_YIndexNum - 1), m_StageIndexData.m_XIndexNum) != BLANK)
 	{
 		m_HasMoved = false;
-		m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-		m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+		m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+		m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 		m_pSandwichEffect->SetOwnerPos(m_Pos);
 
 		if(m_HasBeenSandwiched)

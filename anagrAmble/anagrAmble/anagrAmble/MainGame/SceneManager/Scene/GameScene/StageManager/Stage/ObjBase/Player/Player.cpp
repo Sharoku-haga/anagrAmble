@@ -76,10 +76,9 @@ bool Player::StartStage(void)
 bool Player::CompleteStage(void)
 {
 	if(m_Pos.x != m_GoalPos.x)
-	{
-		m_Pos.x = m_GoalPos.x;
-		// モードをリセットする
+	{	// プレイヤーのモードをリセットする
 		m_pPlayerMode->Reset();
+		m_Pos.x = m_GoalPos.x;
 	}
 
 	if(m_pPlayerMotion->RunExitingMotion())
@@ -124,17 +123,7 @@ void Player::Control(void)
 	m_MovableDirection.m_Right	= true;
 	m_MovableDirection.m_Left	= true;
 	
-	// 向きによってステージインデックスの計算方法をかえる
-	if(m_pPlayerMotion->IsFacingRight())
-	{ 
-		m_StageIndexData.m_XNum = static_cast<short>((m_Pos.x - (m_StageChipSize / 2))/ m_StageChipSize);
- 	    m_StageIndexData.m_YNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
-	}
-	else
-	{
-		m_StageIndexData.m_XNum = static_cast<short>((m_Pos.x + (m_StageChipSize / 2)) / m_StageChipSize);
- 	    m_StageIndexData.m_YNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
-	}
+	CalculateStageIndexData();
 
 	// モードによる処理
 	m_pPlayerMode->Control();
@@ -158,7 +147,6 @@ void Player::Control(void)
 void Player::Draw(void)
 {
 	m_pPlayerMode->Draw();
-
 	m_DrawingID.m_VtxID = m_pPlayerMotion->GetCurrentMotionVtxID();
 	m_pLibrary->Draw2D( m_DrawingID, (m_Pos - m_BasePointPos));
 }
@@ -171,13 +159,13 @@ bool Player::IsFacingRight(void)
 void Player::Initialize(void)
 {
 	// 位置座標計算
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize;
 	GameEventManager::Instance().TriggerSynEvent("player_move");
 
 	RegisterEvent();		// イベント登録
 
-	// 矩形サイズを生成
+	// 矩形サイズを設定
 	m_RectSize.m_Left	= -(m_StageChipSize / 2) * WidthChipCount;
 	m_RectSize.m_Top	= -(m_StageChipSize / 2) * HeightChipCount;
 	m_RectSize.m_Right	=  (m_StageChipSize / 2) * WidthChipCount;
@@ -196,18 +184,18 @@ void Player::Initialize(void)
 
 void Player::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize;
 	GameEventManager::Instance().TriggerSynEvent("player_move");
 }
 
 void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 {
 	if(m_pPlayerMotion->IsCurrrentMotionDeath())
-	{	// 死亡動作ならここから下の処理はいらないので、即return;
+	{	// 死亡動作ならここから下の処理はいらないので、即return
 		return;
 	}
 
@@ -343,18 +331,8 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		}
 	}
 
-
-	// 座標が動いたのでステージインデックスを計算しなおす
-	if(m_pPlayerMotion->IsFacingRight())
-	{ 
-		m_StageIndexData.m_XNum = static_cast<short>((m_Pos.x - (m_StageChipSize / 2)) / m_StageChipSize);
- 	    m_StageIndexData.m_YNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
-	}
-	else
-	{
-		m_StageIndexData.m_XNum = static_cast<short>((m_Pos.x + (m_StageChipSize / 2)) / m_StageChipSize);
- 	    m_StageIndexData.m_YNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
-	}
+	// 変更した座標を元にインデックスデータを計算しなおす
+	CalculateStageIndexData();
 
 	GameEventManager::Instance().TriggerSynEvent("player_move");
 }
@@ -381,7 +359,7 @@ void Player::HandleEvent(void)
 				GameEventManager::Instance().ReceiveEvent("goddess_point_minus");
 
 				// 元データから消しておく
-				m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+				m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);
 			}
 			else if(gameEvent == "player_respawn_end")
 			{
@@ -393,7 +371,7 @@ void Player::HandleEvent(void)
 				m_pPlayerMotion->ChangeWaitingMotion();
 
 				// 元データから消しておく
-				m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+				m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);
 			}
 		}
 
@@ -430,7 +408,7 @@ void Player::PrepareSpaceChange(void)
 void  Player::RunSpaceChangeEndProcessing(void)
 {
 	// ストックのラストデータにプレイヤー座標を設定する
-	m_pStageDataManager->SetNewStockStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum, this);
+	m_pStageDataManager->SetNewStockStageChipData(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum, this);
 
 	// 入れ替え終了したら、モードを通常モードに変更する
 	m_pPlayerMode->ChangeNormalMode();
@@ -444,11 +422,24 @@ void Player::RunDeathAnimeEndProcessing(void)
 		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::REVIVE), sl::RESET_PLAY);
 		// モードをリセットする
 		m_pPlayerMode->Reset();
-		
 	}
 	else
 	{	// 加護がないならゲームオーバーイベントをとばす
 		GameEventManager::Instance().ReceiveEvent("game_over");
+	}
+}
+
+void Player::CalculateStageIndexData(void)
+{
+	if(m_pPlayerMotion->IsFacingRight())
+	{ 
+		m_StageIndexData.m_XIndexNum = static_cast<short>((m_Pos.x - (m_StageChipSize / 2)) / m_StageChipSize);
+ 	    m_StageIndexData.m_YIndexNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
+	}
+	else
+	{
+		m_StageIndexData.m_XIndexNum = static_cast<short>((m_Pos.x + (m_StageChipSize / 2)) / m_StageChipSize);
+ 	    m_StageIndexData.m_YIndexNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
 	}
 }
 

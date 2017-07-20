@@ -34,7 +34,6 @@ public:
 	~SandwichedStageSpaceObj(void);
 
 	/** 
-	* 描画関数
 	* 描画処理を行う関数
 	*/
 	void Draw(void);

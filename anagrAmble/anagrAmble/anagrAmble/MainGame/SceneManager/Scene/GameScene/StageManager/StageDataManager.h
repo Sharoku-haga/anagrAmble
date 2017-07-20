@@ -104,13 +104,13 @@ public:
 	* Getter. ステージの横のチップ数を取得する関数
 	* @return ステージの横のチップ数
 	*/
-	inline short GetStageWidthChipNum(void) { return m_StageWidthChipNum; }
+	inline short GetStageWidthChipCount(void) { return m_StageWidthChipCount; }
 
 	/**
 	* Getter. ステージの高さのチップ数を取得する関数
 	* @return ステージの高さのチップ数
 	*/
-	inline short GetStageHeightChipNum(void) { return m_StageHeightChipNum; }
+	inline short GetStageHeightChipCount(void) { return m_StageHeightChipCount; }
 
 	/**
 	* Getter.ステージの背景のテクスチャーファイル名を取得する関数
@@ -120,37 +120,38 @@ public:
 
 	/**
 	* Getter. 指定したｲﾝデックスからそこに存在するオブジェクトを取得する関数
-	* @param[in] indexY y方向のインデックス
-	* @param[in] indexX	x方向のインデックス
+	* @param[in] yIndexNum  y方向のインデックス番号
+	* @param[in] xIndexNum	x方向のインデックス番号
 	* @return 引数のインデックスに存在するオブジェクトID.
 	* インデックスがステージの範囲外を指定していたら0(空白)を返す
 	*/
-	int GetTypeID(int indexY, int indexX);
+	int GetTypeID(int yIndexNum, int xIndexNum);
 
 	/**
 	* Getter. 指定したｲﾝデックスからそこに現在存在するオブジェクトのポインタを取得する関数
 	* その地点が空白、もしくはエラーの場合はnullptrがかえってくる
-	* @param[in] indexY y方向のインデックス
-	* @param[in] indexX	x方向のインデックス
+	* @param[in] yIndexNum y方向のインデックス番号
+	* @param[in] xIndexNum	x方向のインデックス番号
+	* @return 指定したインデックス番号に存在するオブジェクトのポインタ
 	*/
-	 ObjBase* const GetObjBasePointer(int indexY, int indexX);
+	 ObjBase* const GetObjBasePointer(int yIndexNum, int xIndexNum);
 
 	/**
 	* Setter. 現在のステージデータにインデックスのデータをセットする関数
-	* @param[in] indexY y方向のインデックス
-	* @param[in] indexX	x方向のインデックス
+	* @param[in] yIndexNum y方向のインデックス番号
+	* @param[in] xIndexNum	x方向のインデックス番号
 	* @param[in] pObj	上記のインデックスにあるObjBaseクラスのインスタンスへのポインタ
 	*/
-	void SetCurrentStageChipData(int indexY, int indexX, ObjBase* pObj = nullptr);
+	void SetCurrentStageChipData(int yIndexNum, int xIndexNum, ObjBase* pObj = nullptr);
 
 	/**
 	* Setter. ステージデータのストックの最新データにインデックスのデータをセットする関数
 	* 入れ替え処理を行った後にインデックスデータを変更したい場合に使用する
-	* @param[in] indexY y方向のインデックス
-	* @param[in] indexX	x方向のインデックス
+	* @param[in] yIndexNum  y方向のインデックス番号
+	* @param[in] xIndexNum	x方向のインデックス番号
 	* @param[in] pObj	上記のインデックスにあるObjBaseクラスのインスタンスへのポインタ
 	*/
-	void SetNewStockStageChipData(int indexY, int indexX, ObjBase* pObj);
+	void SetNewStockStageChipData(int yIndexNum, int xIndexNum, ObjBase* pObj);
 
 private:
 	static const int									m_StockStageDataOrderCount;	//!< m_StockStageDataのデータ数
@@ -159,8 +160,8 @@ private:
 	float												m_StageWidth;				//!< ステージチップの横の長さ
 	float												m_StageHeight;				//!< ステージチップの縦の長さ
 	float												m_StageChipSize;			//!< ステージチップのサイズ
-	short												m_StageWidthChipNum;		//!< ステージチップの横の数
-	short												m_StageHeightChipNum;		//!< ステージチップの縦の数
+	short												m_StageWidthChipCount;		//!< ステージチップの横の数
+	short												m_StageHeightChipCount;		//!< ステージチップの縦の数
 	std::vector<std::vector<short>>						m_LoadStageIndexData;		//!< ファイルからロードしたステージのインデックスデータを格納する二次元配列(vector)
 	std::vector<std::vector<ObjBase*>>					m_StageOriginalData;		//!< 今回のステージの元データを格納する二次元配列(vector)
 	std::vector<std::vector<ObjBase*>>					m_RespawnStageData;			//!< リスポーンするステージのデータを格納する二次元配列(vector)
@@ -168,6 +169,14 @@ private:
 	std::vector<int>									m_StockStageDataOrder;		//!< ストックしているステージデータの順番
 	std::vector<std::vector<std::vector<ObjBase*>>>		m_StockStageData;			//!< ストックしているステージデータを格納する三次元配列(vector)
 	std::string											m_BackGoundTexFileName;		//!< ステージ背景のテクスチャーファイル名
+
+	/**
+	* 引数のインデックス番号がステージの範囲内に存在するかどうか確認する関数
+	* @param[in] yIndexNum  y方向のインデックス番号
+	* @param[in] xIndexNum	x方向のインデックス番号
+	* @return 結果 true→存在する false→存在しない
+	*/
+	bool ExistsIndexNum(int yIndexNum, int xIndexNum);
 
 };	// class StageDataManager
 

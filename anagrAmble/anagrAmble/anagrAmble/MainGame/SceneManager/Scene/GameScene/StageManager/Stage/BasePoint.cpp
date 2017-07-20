@@ -24,7 +24,7 @@ namespace ar
 namespace
 {
 
-const float PlayerInterVal	= 960.f;		//!< プレイヤーとの間隔
+const float PlayerInterVal	= 960.f;			//!< プレイヤーとの間隔
 const float CorrectionVal	= 100.f;			//!< 補正値。ステージが少しはみだしてしまう為
 
 }
@@ -57,7 +57,7 @@ void BasePoint::Initialize(float stageWidth, Player* pPlayer)
 	// プレイヤーがステージの左端付近にいない場合はベースポイントの位置を動かす
 	if(m_CurrentPlayerPos.x > PlayerInterVal)
 	{
-		// 右端付近にいた場合はステージの１番右端にへ
+		// 右端付近にいた場合はステージの１番右端へ
 		// それ以外はプレイヤー座標に補正をかけて移動
 		if(m_CurrentPlayerPos.x  >  (m_StageWidth - PlayerInterVal))
 		{	

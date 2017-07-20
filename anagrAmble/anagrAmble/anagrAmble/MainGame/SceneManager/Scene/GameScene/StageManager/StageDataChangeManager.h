@@ -19,7 +19,7 @@ class Player;
 class StageDataManager;
 
 //======================================================================//
-//!< ステージデータの入れ替えを管理するクラス
+//!< ステージデータの入れ替え操作を管理するクラス
 //!< シングルトンパターン
 //======================================================================//
 class StageDataChangeManager
@@ -68,13 +68,19 @@ public:
 	* Setter.挟んだ空間の開始インデックスデータをセットする関数
 	* @param[in] rSandwichedSpaceStartIndex  挟んだ空間の開始インデックスデータ
 	*/
-	inline void SetSandwichedSpaceStartIndex(const Stage::INDEX_DATA&	rSandwichedSpaceStartIndex) { m_SandwichedSpaceStartIndex = rSandwichedSpaceStartIndex; }
+	inline void SetSandwichedSpaceStartIndex(const Stage::INDEX_DATA&	rSandwichedSpaceStartIndex) 
+	{ 
+		m_SandwichedSpaceStartIndex = rSandwichedSpaceStartIndex; 
+	}
 
 	/**
 	* Setter.挟んだ空間の終了インデックスデータをセットする関数
 	* @param[in] rSandwichedSpaceEndIndex  挟んだ空間の終了インデックスデータ
 	*/
-	inline void SetSandwichedSpaceEndIndex(const Stage::INDEX_DATA&		rSandwichedSpaceEndIndex) { m_SandwichedSpaceEndIndex = rSandwichedSpaceEndIndex; }
+	inline void SetSandwichedSpaceEndIndex(const Stage::INDEX_DATA&		rSandwichedSpaceEndIndex) 
+	{ 
+		m_SandwichedSpaceEndIndex = rSandwichedSpaceEndIndex;
+	}
 
 	/**
 	* Setter. Playerクラスのインスタンスへのポインタをセットする関数
@@ -83,15 +89,15 @@ public:
 	inline void SetPlayerPointer(Player* pPlayer) { m_pPlayer = pPlayer; }
 	
 	/** Destructor */
-	~StageDataChangeManager(void);
+	~StageDataChangeManager(void) = default;
 
 private:
-	/** 入れ替え用データ構造体 */
+	/** 入れ替えに使用するデータ構造体 */
 	struct ChangeData
 	{
-		short				m_XNum;		//!< X軸方向のインデックス番号
-		short				m_YNum;		//!< Y軸方向のインデックス番号
-		ObjBase*			m_pObj;		//!< 上記の番号の場所にあるObjbaseポインタ
+		short				m_XIndexNum;		//!< X軸方向のインデックス番号
+		short				m_YIndexNum;		//!< Y軸方向のインデックス番号
+		ObjBase*			m_pObj;				//!< 上記の番号の場所にあるObjbaseポインタ
 	};
 
 	StageDataManager*			m_pStageDataManager;				//!< StageDataManagerクラスのインスタンスへのポインタ
@@ -108,6 +114,18 @@ private:
 	*/
 	Stage::INDEX_DATA CalculateChangeStartIndex(void);
 
+	/**
+	* ステージデータを入れ替えを行う関数
+	* @param[in] changeSpaceYCount		入れ替え空間のチップの横の数
+	* @param[in] changeSpaceXCount		入れ替え空間のチップの縦の数
+	* @param[in] rChangeStartIndexData	入れ替え空間の開始インデックスデータ
+	* @param[in] rChangingStageData		入れ替え空間のステージデータ
+	*/
+	void ChangeStageData(short changeSpaceYCount
+						, short changeSpaceXCount
+						, Stage::INDEX_DATA&	rChangeStartIndexData
+						, std::vector<std::vector<ChangeData>>& rChangingStageData);
+
 	/** Constructor */
 	StageDataChangeManager(void) = default;
 
@@ -123,4 +141,3 @@ private:
 //==================================================================================================================================//
 // END OF FILE
 //==================================================================================================================================//
-

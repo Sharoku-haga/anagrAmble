@@ -89,25 +89,25 @@ bool Anchor::CanPlaceStage(void)
 	}
 
 	// ステージインデックスにプレイヤーのインデックスを入れる
-	Stage::INDEX_DATA playerIndex = m_pPlayer->GetStageIndex();
-	m_StageIndexData.m_XNum = playerIndex.m_XNum;
-	m_StageIndexData.m_YNum = playerIndex.m_YNum;
+	Stage::INDEX_DATA playerIndexData = m_pPlayer->GetStageIndex();
+	m_StageIndexData.m_XIndexNum = playerIndexData.m_XIndexNum;
+	m_StageIndexData.m_YIndexNum = playerIndexData.m_YIndexNum;
 
 	// ブロックとブロックの隙間に位置するように座標を調整
-	if(std::abs(m_pPlayer->GetPos().x - playerIndex.m_XNum * m_StageChipSize) > ((m_StageChipSize / 2) + (m_StageChipSize / 4)))
+	if(std::abs(m_pPlayer->GetPos().x - playerIndexData.m_XIndexNum * m_StageChipSize) > ((m_StageChipSize / 2) + (m_StageChipSize / 4)))
 	{
 		// プレイヤーの位置座標からインデックスをずらして位置調整をする
 		short xNumCorrectionVal =  m_pPlayer->IsFacingRight() ?  2 : -2 ;
 
-		m_StageIndexData.m_XNum += xNumCorrectionVal;
+		m_StageIndexData.m_XIndexNum += xNumCorrectionVal;
 	}
 	else
 	{
 		short xNumCorrectionVal = m_pPlayer->IsFacingRight() ? 1 : -1;
-		m_StageIndexData.m_XNum += xNumCorrectionVal;
+		m_StageIndexData.m_XIndexNum += xNumCorrectionVal;
 	}
 
-	if(std::abs(m_StageIndexData.m_XNum - m_pPairAnchor->GetStageIndex().m_XNum) > PairAreaIntervalChipCount)
+	if(std::abs(m_StageIndexData.m_XIndexNum - m_pPairAnchor->GetStageIndex().m_XIndexNum) > PairAreaIntervalChipCount)
 	{	// アンカーの間がペアとのエリア間隔チップ数よりはなれていたらfalse
 		return false;
 	}
@@ -119,52 +119,52 @@ void Anchor::PlacePosStage(void)
 {
 	// ステージインデックスを更新
 	Stage::INDEX_DATA playerIndex = m_pPlayer->GetStageIndex();
-	m_StageIndexData.m_XNum = playerIndex.m_XNum;
-	m_StageIndexData.m_YNum = playerIndex.m_YNum;
+	m_StageIndexData.m_XIndexNum = playerIndex.m_XIndexNum;
+	m_StageIndexData.m_YIndexNum = playerIndex.m_YIndexNum;
 
-	if(playerIndex.m_XNum <= 1 
-		|| playerIndex.m_XNum >= (m_pStageDataManager->GetStageWidthChipNum() - 1))
+	if(playerIndex.m_XIndexNum <= 1 
+		|| playerIndex.m_XIndexNum >= (m_pStageDataManager->GetStageWidthChipCount() - 1))
 	{	// 端にはアンカーがおけないので即return
 		return;
 	}
 
 	// ブロックとブロックの隙間に位置するように座標を調整
-	if(std::abs(m_pPlayer->GetPos().x - playerIndex.m_XNum * m_StageChipSize) > ((m_StageChipSize / 2) + (m_StageChipSize / 4)))
+	if(std::abs(m_pPlayer->GetPos().x - playerIndex.m_XIndexNum * m_StageChipSize) > ((m_StageChipSize / 2) + (m_StageChipSize / 4)))
 	{
 		// プレイヤーの位置座標からインデックスをずらして位置調整をする
 		short xNumCorrectionVal =  m_pPlayer->IsFacingRight() ?  2 : -2 ;
 
 		if( m_pPairAnchor->GetHasPlacePosStage()
-			&& (playerIndex.m_XNum + xNumCorrectionVal) == m_pPairAnchor->GetStageIndex().m_XNum)
+			&& (playerIndex.m_XIndexNum + xNumCorrectionVal) == m_pPairAnchor->GetStageIndex().m_XIndexNum)
 		{	// ぺアとなるアンカーがすでにおかれているなら即return
 			return;
 		}
 
-		if(std::abs((playerIndex.m_XNum + xNumCorrectionVal) - m_pPairAnchor->GetStageIndex().m_XNum) > PairAreaIntervalChipCount)
+		if(std::abs((playerIndex.m_XIndexNum + xNumCorrectionVal) - m_pPairAnchor->GetStageIndex().m_XIndexNum) > PairAreaIntervalChipCount)
 		{	// アンカーの間がペアとのエリア間隔チップ数よりはなれていたら即return
 			return;
 		}
 
-		m_Pos.x = ((playerIndex.m_XNum + xNumCorrectionVal) * m_StageChipSize);
-		m_StageIndexData.m_XNum += xNumCorrectionVal;
+		m_Pos.x = ((playerIndex.m_XIndexNum + xNumCorrectionVal) * m_StageChipSize);
+		m_StageIndexData.m_XIndexNum += xNumCorrectionVal;
 	}
 	else
 	{
 		short xNumCorrectionVal = m_pPlayer->IsFacingRight() ? 1 : -1;
 
 		if(m_pPairAnchor->GetHasPlacePosStage()
-			&& (playerIndex.m_XNum + xNumCorrectionVal) == m_pPairAnchor->GetStageIndex().m_XNum)
+			&& (playerIndex.m_XIndexNum + xNumCorrectionVal) == m_pPairAnchor->GetStageIndex().m_XIndexNum)
 		{	// ぺアとなるアンカーがすでにおかれているなら即return
 			return;
 		}
 
-		if(std::abs((playerIndex.m_XNum + xNumCorrectionVal) - m_pPairAnchor->GetStageIndex().m_XNum) > PairAreaIntervalChipCount)
+		if(std::abs((playerIndex.m_XIndexNum + xNumCorrectionVal) - m_pPairAnchor->GetStageIndex().m_XIndexNum) > PairAreaIntervalChipCount)
 		{	// アンカーの間がペアとのエリア間隔チップ数よりはなれていたら即return
 			return;
 		}
 
-		m_Pos.x = ((playerIndex.m_XNum + xNumCorrectionVal) * m_StageChipSize);
-		m_StageIndexData.m_XNum += xNumCorrectionVal;
+		m_Pos.x = ((playerIndex.m_XIndexNum + xNumCorrectionVal) * m_StageChipSize);
+		m_StageIndexData.m_XIndexNum += xNumCorrectionVal;
 	}
 	
 	m_HasPlacePosStage = true;
@@ -267,27 +267,27 @@ void Anchor::AdjustPos(void)
 void Anchor::MovePlayerFront(void)
 {
 	// ステージインデックスにプレイヤーのインデックスを入れる
-	Stage::INDEX_DATA playerIndex = m_pPlayer->GetStageIndex();
-	m_StageIndexData.m_XNum = playerIndex.m_XNum;
-	m_StageIndexData.m_YNum = playerIndex.m_YNum;
+	Stage::INDEX_DATA playerIndexData = m_pPlayer->GetStageIndex();
+	m_StageIndexData.m_XIndexNum = playerIndexData.m_XIndexNum;
+	m_StageIndexData.m_YIndexNum = playerIndexData.m_YIndexNum;
 
 	// ブロックとブロックの隙間に位置するように座標を調整
-	if(std::abs(m_pPlayer->GetPos().x - playerIndex.m_XNum * m_StageChipSize) > ((m_StageChipSize / 2) + (m_StageChipSize / 4)))
+	if(std::abs(m_pPlayer->GetPos().x - playerIndexData.m_XIndexNum * m_StageChipSize) > ((m_StageChipSize / 2) + (m_StageChipSize / 4)))
 	{
 		// プレイヤーの位置座標からインデックスをずらして位置調整をする
 		short xNumCorrectionVal =  m_pPlayer->IsFacingRight() ?  2 : -2 ;
 
-		m_StageIndexData.m_XNum += xNumCorrectionVal;
+		m_StageIndexData.m_XIndexNum += xNumCorrectionVal;
 	}
 	else
 	{
 		short xNumCorrectionVal = m_pPlayer->IsFacingRight() ? 1 : -1;
-		m_StageIndexData.m_XNum += xNumCorrectionVal;
+		m_StageIndexData.m_XIndexNum += xNumCorrectionVal;
 	}
 
 	// 座標計算
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize;
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize;
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize;
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize;
 }
 
 void Anchor::HandleEvent(void)
@@ -319,7 +319,6 @@ void Anchor::HandleEvent(void)
 		m_pEventListener->DelEvent();
 	}
 }
-
 
 }	// namespace ar
 

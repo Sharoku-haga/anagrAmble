@@ -33,16 +33,13 @@
     <ClInclude Include="sl\Library\Input\DirectInput\diKeyDevice.h" />
     <ClInclude Include="sl\Library\Input\slCustomizeInputManager.h" />
     <ClInclude Include="sl\Library\Input\XInput\xiGamePad.h" />
-    <ClInclude Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.h" />
     <ClInclude Include="sl\Library\slDX11Library.h" />
     <ClInclude Include="sl\Library\Sound\DirectSound\DirectSoundManager.h" />
     <ClInclude Include="sl\Library\Texture\dx11Texture\dx11TextureManager.h" />
     <ClInclude Include="sl\Library\UVAnimation\slUVAnimation.h" />
     <ClInclude Include="sl\Library\UVAnimation\slUVAnimationManager.h" />
-    <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex.h" />
     <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2D.h" />
     <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2DManager.h" />
-    <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11VertexManager.h" />
     <ClInclude Include="sl\Library\Window\dx11Window\dx11Window.h" />
     <ClInclude Include="sl\sl.h" />
     <ClInclude Include="sl\slBuild.h" />
@@ -57,16 +54,13 @@
     <ClCompile Include="sl\Library\Input\DirectInput\diKeyDevice.cpp" />
     <ClCompile Include="sl\Library\Input\slCustomizeInputManager.cpp" />
     <ClCompile Include="sl\Library\Input\XInput\xiGamePad.cpp" />
-    <ClCompile Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.cpp" />
     <ClCompile Include="sl\Library\slDX11Library.cpp" />
     <ClCompile Include="sl\Library\Sound\DirectSound\DirectSoundManager.cpp" />
     <ClCompile Include="sl\Library\Texture\dx11Texture\dx11TextureManager.cpp" />
     <ClCompile Include="sl\Library\UVAnimation\slUVAnimation.cpp" />
     <ClCompile Include="sl\Library\UVAnimation\slUVAnimationManager.cpp" />
-    <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex.cpp" />
     <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2D.cpp" />
     <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2DManager.cpp" />
-    <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11VertexManager.cpp" />
     <ClCompile Include="sl\Library\Window\dx11Window\dx11Window.cpp" />
     <ClCompile Include="sl\slISharokuLibrary.cpp" />
   </ItemGroup>

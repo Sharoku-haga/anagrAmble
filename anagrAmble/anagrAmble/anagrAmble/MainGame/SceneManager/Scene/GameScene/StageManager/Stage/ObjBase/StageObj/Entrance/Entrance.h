@@ -27,7 +27,7 @@ public:
 	* @param[in] texID				テクスチャーID
 	*/
 	Entrance(StageDataManager* pStageDataManager, CollisionManager* pCollisionManager
-		, const Stage::INDEX_DATA& rStageIndexData, int texID);
+			, const Stage::INDEX_DATA& rStageIndexData, int texID);
 
 	/** Destructor */
 	virtual ~Entrance(void);
