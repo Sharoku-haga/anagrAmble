@@ -73,29 +73,29 @@ SandwichedStageSpace::~SandwichedStageSpace(void)
 	sl::DeleteSafely(&m_pEventListener);
 }
 
-void SandwichedStageSpace::InitializeData(Anchor* pAnchorOne, Anchor*	pAnchorTwo)
+void SandwichedStageSpace::InitializeData(Anchor* pAnchorOne, Anchor* pAnchorTwo)
 {
 	Stage::INDEX_DATA anchorOneIndex = pAnchorOne->GetStageIndex();
 	Stage::INDEX_DATA anchorTwoIndex = pAnchorTwo->GetStageIndex();
 
 	// 2つのアンカーからステージの開始インデックスと終了インデックスを求める
-	// なおm_EndIndex.m_YNumの計算で2ひいているのは、インデックス番号を1低いものにする為
-	if(anchorOneIndex.m_XNum < anchorTwoIndex.m_XNum)
+	// X軸方向のインデックスの設定. X軸インデックスが低い数値を開始インデックス、X軸インデックスが高い数値を終了インデックスに設定
+	if(anchorOneIndex.m_XIndexNum < anchorTwoIndex.m_XIndexNum)
 	{
-		m_StartIndex.m_XNum = anchorOneIndex.m_XNum;
-		m_StartIndex.m_YNum =  SpaceYIndexMin;
-		m_EndIndex.m_XNum = anchorTwoIndex.m_XNum;
-		m_EndIndex.m_YNum = (m_pStageDataManager->GetStageHeightChipNum() - 2);
+		m_StartIndex.m_XIndexNum = anchorOneIndex.m_XIndexNum;
+		m_EndIndex.m_XIndexNum = anchorTwoIndex.m_XIndexNum;
 	}
 	else
 	{
-		m_StartIndex.m_XNum = anchorTwoIndex.m_XNum;
-		m_StartIndex.m_YNum =  SpaceYIndexMin;
-		m_EndIndex.m_XNum = anchorOneIndex.m_XNum;
-		m_EndIndex.m_YNum = (m_pStageDataManager->GetStageHeightChipNum() - 2);
+		m_StartIndex.m_XIndexNum = anchorTwoIndex.m_XIndexNum;
+		m_EndIndex.m_XIndexNum = anchorOneIndex.m_XIndexNum;
 	}
 
-	// 描画に必要なデータを設定する
+	// Y軸方向のインデックスの設定. m_EndIndex.m_YIndexNumの計算で2ひいているのは、インデックス番号を1低いものにする為
+	m_StartIndex.m_YIndexNum =  SpaceYIndexMin;
+	m_EndIndex.m_YIndexNum = (m_pStageDataManager->GetStageHeightChipCount() - 2);
+
+	// 描画に必要なデータを設定
 	{
 		SandwichedStageSpaceObj::SetPlayerRect(m_pPlayer->GetCurrentRectData());
 		m_pBackground->SetPlayerRect(m_pPlayer->GetCurrentRectData());
@@ -103,7 +103,7 @@ void SandwichedStageSpace::InitializeData(Anchor* pAnchorOne, Anchor*	pAnchorTwo
 		SandwichedStageSpaceObj::SetIsPlayerFacingRight(m_pPlayer->IsFacingRight());
 		m_pBackground->SetIsPlayerFacingRight(m_pPlayer->IsFacingRight());
 
-		float spaceWidth = (m_EndIndex.m_XNum - m_StartIndex.m_XNum) * m_StageChipSize;
+		float spaceWidth = (m_EndIndex.m_XIndexNum - m_StartIndex.m_XIndexNum) * m_StageChipSize;
 		SandwichedStageSpaceObj::SetSandwichedSpaceWidth(spaceWidth);
 
 		SandwichedStageSpaceObj::SetStageMapChipSize(m_pStageDataManager->GetStageChipSize());
@@ -116,26 +116,12 @@ void SandwichedStageSpace::InitializeData(Anchor* pAnchorOne, Anchor*	pAnchorTwo
 
 void SandwichedStageSpace::DiscardData(void)
 {
-	// 挟まれている空間内のオブジェクトの挟む効果をきる
-	for(short yNum = m_StartIndex.m_YNum; yNum <= m_EndIndex.m_YNum; ++yNum)
-	{
-		for(short xNum = m_StartIndex.m_XNum; xNum < m_EndIndex.m_XNum; ++xNum)
-		{
-			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
-			if(pObj == nullptr
-				|| pObj->GetTypeID() == ObjBase::GROUND_B)
-			{
-				continue;
-			}
+	DetachSandwichEffect();
 
-			pObj->DetachSandwichEffect();
-		}
-	}
-	m_StartIndex.m_XNum = 0;
-	m_StartIndex.m_YNum = 0;
-
-	m_EndIndex.m_XNum = 0;
-	m_EndIndex.m_YNum = 0;
+	m_StartIndex.m_XIndexNum = 0;
+	m_StartIndex.m_YIndexNum = 0;
+	m_EndIndex.m_XIndexNum = 0;
+	m_EndIndex.m_YIndexNum = 0;
 
 	if(m_pObjs.empty())
 	{	// 破棄すべきオブジェクトがないならreturn;
@@ -159,12 +145,11 @@ void SandwichedStageSpace::Control(void)
 	HandleEvent();
 
 	// 挟まれた空間内のオブジェクトの挟む効果が全て終わっているかチェック
-	for(short yNum = m_StartIndex.m_YNum; yNum <= m_EndIndex.m_YNum; ++yNum)
+	for(short yIndexNum = m_StartIndex.m_YIndexNum; yIndexNum <= m_EndIndex.m_YIndexNum; ++yIndexNum)
 	{
-		for(short xNum = m_StartIndex.m_XNum; xNum < m_EndIndex.m_XNum; ++xNum)
+		for(short xIndexNum = m_StartIndex.m_XIndexNum; xIndexNum < m_EndIndex.m_XIndexNum; ++xIndexNum)
 		{
-
-			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
+			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yIndexNum, xIndexNum);
 			if(pObj == nullptr
 				|| pObj->GetTypeID() == ObjBase::GROUND_B)
 			{
@@ -178,24 +163,7 @@ void SandwichedStageSpace::Control(void)
 		}
 	}
 
-	// 挟んだ空間内のオブジェクトの挟む効果を適用する
-	sl::SLVECTOR2 spaceCenterPos;
-	spaceCenterPos.x = ((m_EndIndex.m_XNum * m_StageChipSize) - (m_StartIndex.m_XNum * m_StageChipSize)) / 2 + (m_StartIndex.m_XNum * m_StageChipSize);
-	spaceCenterPos.y = 0.0f;
-	for(short yNum = m_StartIndex.m_YNum; yNum <= m_EndIndex.m_YNum; ++yNum)
-	{
-		for(short xNum = m_StartIndex.m_XNum; xNum < m_EndIndex.m_XNum; ++xNum)
-		{
-			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
-			if(pObj == nullptr
-				|| pObj->GetTypeID() == ObjBase::GROUND_B)
-			{
-				continue;
-			}
-
-			pObj->ApplySandwichEffect(spaceCenterPos);
-		}
-	}
+	ApplySandwichEffect();
 }
 
 void SandwichedStageSpace::Draw(void)
@@ -232,27 +200,13 @@ void SandwichedStageSpace::HandleEvent(void)
 				// データが入れ替わっている場合は一旦オブジェクトを破棄してから再度構成し直す
 				if(RESULT_FAILED(m_pObjs.empty()))
 				{
-					// 挟まれている空間内のオブジェクトの挟む効果をきる
-					for(short yNum = m_StartIndex.m_YNum; yNum <= m_EndIndex.m_YNum; ++yNum)
-					{
-						for(short xNum = m_StartIndex.m_XNum; xNum < m_EndIndex.m_XNum; ++xNum)
-						{
-							ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
-							if(pObj == nullptr
-								|| pObj->GetTypeID() == ObjBase::GROUND_B)
-							{
-								continue;
-							}
-
-							pObj->DetachSandwichEffect();
-						}
-					}
-
-
+					DetachSandwichEffect();
+				
 					for(auto& pObj : m_pObjs)
 					{
 						sl::DeleteSafely(&pObj);
 					}
+
 					m_pObjs.clear();
 					std::vector<SandwichedStageSpaceObj*>().swap(m_pObjs);
 
@@ -271,19 +225,19 @@ void SandwichedStageSpace::CreateSandwichedObj(void)
 {
 	// 挟んだ空間の初期化を行う
 	{
-		sl::SLVECTOR2 pos = { 0.0f, static_cast<float>(m_StartIndex.m_YNum * m_StageChipSize) };
-		float spaceWidth = (m_EndIndex.m_XNum - m_StartIndex.m_XNum) * m_StageChipSize;
-		float spaceHeight = (m_EndIndex.m_YNum - m_StartIndex.m_YNum) * m_StageChipSize + m_StageChipSize;
+		sl::SLVECTOR2 pos = { 0.0f, static_cast<float>(m_StartIndex.m_YIndexNum * m_StageChipSize) };
+		float spaceWidth = (m_EndIndex.m_XIndexNum - m_StartIndex.m_XIndexNum) * m_StageChipSize;
+		float spaceHeight = (m_EndIndex.m_YIndexNum - m_StartIndex.m_YIndexNum) * m_StageChipSize + m_StageChipSize;
 		m_pBackground->InitializeData(pos, spaceWidth, spaceHeight);
 	}
 
 	// 描画オブジェクトを生成する
-	for(short yNum = m_StartIndex.m_YNum; yNum <= m_EndIndex.m_YNum; ++yNum)
+	for(short yIndexNum = m_StartIndex.m_YIndexNum; yIndexNum <= m_EndIndex.m_YIndexNum; ++yIndexNum)
 	{
-		for(short xNum = m_StartIndex.m_XNum; xNum < m_EndIndex.m_XNum; ++xNum)
+		for(short xIndexNum = m_StartIndex.m_XIndexNum; xIndexNum < m_EndIndex.m_XIndexNum; ++xIndexNum)
 		{
 			// 挟んだ空間のオブジェクトの設定する
-			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
+			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yIndexNum, xIndexNum);
 			if(pObj == nullptr
 				|| pObj->GetTypeID() == ObjBase::GROUND_B
 				|| pObj->GetTypeID() == ObjBase::LIGHT_B)
@@ -292,31 +246,14 @@ void SandwichedStageSpace::CreateSandwichedObj(void)
 			}
 
 			sl::SLVECTOR2 pos;
-			pos.x = pObj->GetPos().x - (m_StartIndex.m_XNum * m_StageChipSize);
+			pos.x = pObj->GetPos().x - (m_StartIndex.m_XIndexNum * m_StageChipSize);
 			pos.y = pObj->GetPos().y;
 			sl::DrawingID id = pObj->GetDrawingID();
 			m_pObjs.push_back(new SandwichedStageSpaceObj(pos, id));
 		}
 	}
 
-	sl::SLVECTOR2 spaceCenrtPos;
-	spaceCenrtPos.x = ((m_EndIndex.m_XNum * m_StageChipSize) - (m_StartIndex.m_XNum * m_StageChipSize) ) / 2 + (m_StartIndex.m_XNum * m_StageChipSize);
-	spaceCenrtPos.y = 0.0f;
-	for(short yNum = m_StartIndex.m_YNum; yNum <= m_EndIndex.m_YNum; ++yNum)
-	{
-		for(short xNum = m_StartIndex.m_XNum; xNum < m_EndIndex.m_XNum; ++xNum)
-		{
-			// 挟んだ空間のオブジェクトの設定する
-			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
-			if(pObj == nullptr
-				|| pObj->GetTypeID() == ObjBase::GROUND_B)
-			{
-				continue;
-			}
-
-			pObj->ApplySandwichEffect(spaceCenrtPos);
-		}
-	}
+	ApplySandwichEffect();
 }
 
 void SandwichedStageSpace::Move(void)
@@ -326,7 +263,6 @@ void SandwichedStageSpace::Move(void)
 
 	SandwichedStageSpaceObj::SetIsPlayerFacingRight(m_pPlayer->IsFacingRight());
 	m_pBackground->SetIsPlayerFacingRight(m_pPlayer->IsFacingRight());
-
 
 	Stage::INDEX_DATA playerIndexData = m_pPlayer->GetStageIndex();
 
@@ -338,6 +274,48 @@ void SandwichedStageSpace::PrepareSpaceChange(void)
 {
 	StageDataChangeManager::Instance().SetSandwichedSpaceStartIndex(m_StartIndex);
 	StageDataChangeManager::Instance().SetSandwichedSpaceEndIndex(m_EndIndex);
+}
+
+void SandwichedStageSpace::ApplySandwichEffect(void)
+{
+	sl::SLVECTOR2 spaceCenterPos;
+	spaceCenterPos.x = ((m_EndIndex.m_XIndexNum * m_StageChipSize) - (m_StartIndex.m_XIndexNum * m_StageChipSize)) / 2 
+						+ (m_StartIndex.m_XIndexNum * m_StageChipSize);
+	spaceCenterPos.y = 0.0f;
+
+	for(short yIndexNum = m_StartIndex.m_YIndexNum; yIndexNum <= m_EndIndex.m_YIndexNum; ++yIndexNum)
+	{
+		for(short xIndexNum = m_StartIndex.m_XIndexNum; xIndexNum < m_EndIndex.m_XIndexNum; ++xIndexNum)
+		{
+			// 挟んだ空間のオブジェクトの設定する
+			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yIndexNum, xIndexNum);
+			if(pObj == nullptr
+				|| pObj->GetTypeID() == ObjBase::GROUND_B)
+			{
+				continue;
+			}
+
+			pObj->ApplySandwichEffect(spaceCenterPos);
+		}
+	}
+}
+
+void SandwichedStageSpace::DetachSandwichEffect(void)
+{
+	for(short yIndexNum = m_StartIndex.m_YIndexNum; yIndexNum <= m_EndIndex.m_YIndexNum; ++yIndexNum)
+	{
+		for(short xIndexNum = m_StartIndex.m_XIndexNum; xIndexNum < m_EndIndex.m_XIndexNum; ++xIndexNum)
+		{
+			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yIndexNum, xIndexNum);
+			if(pObj == nullptr
+				|| pObj->GetTypeID() == ObjBase::GROUND_B)
+			{
+				continue;
+			}
+
+			pObj->DetachSandwichEffect();
+		}
+	}
 }
 
 }	// namespace ar

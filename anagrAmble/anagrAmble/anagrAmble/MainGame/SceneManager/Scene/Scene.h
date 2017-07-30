@@ -33,7 +33,6 @@ public:
 		GAME,				//!< ゲームシーン
 		GAME_CLEAR,			//!< ゲームクリアシーン
 		GAME_OVER,			//!< ゲームオーバーシーン
-		CREDITS_ROLL,		//!< エンドロールシーン
 		END,				//!< ゲーム終了
 	};
 

@@ -46,8 +46,7 @@ private:
 	StageDataManager*			m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
 	CollisionManager*			m_pCollisionManager;		//!< CollisionManagerクラスのインスタンスへのポインタ
 	int							m_TexID;					//!< テクスチャーID
-	int							m_NormalBlockVtxID;
-	int							m_GroundBlockVtxID;
+	int							m_GroundBlockVtxID;			//!< 地面ブロックのバーテックスID
 	sl::fRect					m_BlockSize;				//!< ブロック矩形サイズ
 
 	/** 

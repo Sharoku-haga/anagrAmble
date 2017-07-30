@@ -35,9 +35,7 @@ enum CONTROLLER_ACTION_EVENT
 	PAUSE,				//!< ポーズ
 };
 
-
 }	// namespace ar
-
 
 #endif	// AR_CONTROLLER_ENUM_H
 

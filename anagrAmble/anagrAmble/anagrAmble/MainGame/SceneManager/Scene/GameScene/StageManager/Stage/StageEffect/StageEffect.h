@@ -78,7 +78,8 @@ protected:
 	* Draw()内で使用する
 	*/
 	virtual void Render(void) = 0;
-};
+
+};	// class StageEffect
 
 }	// namespace ar
 

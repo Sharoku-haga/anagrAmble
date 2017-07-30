@@ -44,9 +44,10 @@ Goal::~Goal(void)
 
 void  Goal::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize - (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize - (m_StageChipSize / 2);
 
+	// 矩形サイズを設定
 	m_RectSize.m_Left	=  -((m_StageChipSize * SizeChipCount) / 2);
 	m_RectSize.m_Top	=  -((m_StageChipSize * SizeChipCount) / 2);
 	m_RectSize.m_Right	= ((m_StageChipSize * SizeChipCount) / 2);
@@ -62,7 +63,7 @@ void  Goal::Initialize(void)
 	// IDごとの処理
 	if(m_TypeID == GOAL)
 	{	
-		// GOALの場合は番号の順番を逆にする
+		// GOALの場合は番号の順番を逆にアニメーションを設定する
 		std::vector<int> animeOrder;
 	
 		for(int i = 8; i >= 0; --i)
@@ -89,16 +90,16 @@ void  Goal::Initialize(void)
 	GameEventManager::Instance().RegisterEventType("stage_end", m_pEventListener);
 
 	// ゴールの位置を固定する
-	m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+	m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);
 }
 
 void Goal::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize - (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2) + m_StageChipSize;
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize - (m_StageChipSize / 2);
 
 }
 

@@ -50,13 +50,13 @@ PairOfEmblemBlock::~PairOfEmblemBlock(void)
 
 void PairOfEmblemBlock::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
-	m_RectSize.m_Left = -(m_StageChipSize / 2);
-	m_RectSize.m_Top = -(m_StageChipSize / 2);
-	m_RectSize.m_Right = (m_StageChipSize / 2);
+	// 矩形サイズを設定
+	m_RectSize.m_Left	= -(m_StageChipSize / 2);
+	m_RectSize.m_Top	= -(m_StageChipSize / 2);
+	m_RectSize.m_Right	= (m_StageChipSize / 2);
 	m_RectSize.m_Bottom = (m_StageChipSize / 2);
 
 	m_pSwitchOperatingArea = new SwitchOperatingArea(m_pStageDataManager, m_pCollisionManager, m_StageIndexData, this);
@@ -84,11 +84,11 @@ void PairOfEmblemBlock::Initialize(void)
 
 void PairOfEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_pSwitchOperatingArea->SwitchOffState();
 	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
@@ -130,7 +130,7 @@ void PairOfEmblemBlock::CheckPairBlock(void)
 	// タイプにあわせて左右のどちらかの確認を行い、ペアブロックがあればONになり、なければOFFとなる
 	if(m_TypeID == ObjBase::PAIR_OF_EMBLME_B_L)
 	{
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 1)) == ObjBase::PAIR_OF_EMBLME_B_R)
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YIndexNum, (m_StageIndexData.m_XIndexNum + 1)) == ObjBase::PAIR_OF_EMBLME_B_R)
 		{
 			m_TexUV = EmblemLOnUV;
 			m_pSwitchOperatingArea->SwitchOnState();
@@ -148,7 +148,7 @@ void PairOfEmblemBlock::CheckPairBlock(void)
 	}
 	else
 	{
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::PAIR_OF_EMBLME_B_L)
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YIndexNum, (m_StageIndexData.m_XIndexNum - 1)) == ObjBase::PAIR_OF_EMBLME_B_L)
 		{
 			m_TexUV = EmblemROnUV;
 			m_pSwitchOperatingArea->SwitchOnState();

@@ -45,7 +45,7 @@ private:
 		UNIT_MAX,
 	};
 
-	/** 今回プレイした時間に表示する数字と文字の種類*/
+	/** 今回プレイした時間に表示する数字と文字の種類 */
 	enum HIGH_SCORE_DISP_TYPE_ID
 	{
 		TIME_TEXT,					//!< 「TIME」のテキスト

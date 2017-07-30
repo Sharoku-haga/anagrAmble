@@ -69,16 +69,17 @@ public:
 
 private:
 
-	// スイッチの作動範囲の衝突判定を行うときに使用するデータ構造体
+	/** スイッチの作動範囲の衝突判定を行うときに使用するデータ構造体 */
 	struct SwitchOperatingAreaData
 	{
-		short	m_YNum;		//!< Y軸の番号
-		short	m_XNum;		//!< X軸の番号
-		int		m_TypeID;	//!< スイッチ作動範囲のID ONかOFFか
+		short	m_YIndexNum;		//!< Y軸(縦)のインデックス番号
+		short	m_XIndexNum;		//!< X軸(横)のインデックス番号
+		int		m_TypeID;			//!< スイッチ作動範囲のID ONかOFFか
 
-		SwitchOperatingAreaData(short	yNum, short xNum, int typeID)
-			: m_YNum(yNum)
-			, m_XNum(xNum)
+		/** Constructor */
+		SwitchOperatingAreaData(short	yIndexNum, short xIndexNum, int typeID)
+			: m_YIndexNum(yIndexNum)
+			, m_XIndexNum(xIndexNum)
 			, m_TypeID(typeID)
 		{}
 	};

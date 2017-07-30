@@ -32,7 +32,6 @@ const sl::fRect		EmblemFOffUV = {0.7f, 0.0f, 0.75f,  0.088f};			// 真ん中の�
 const sl::fRect		EmblemROnUV = { 0.8f, 0.0f, 0.75f, 0.088f};				// 右側の紋章ONのときのUV値
 const sl::fRect		EmblemROffUV = {0.7f, 0.0f, 0.65f,  0.088f};			// 右側の紋章OFFのときのUV値
 
-
 }
 
 /* Public Functions ------------------------------------------------------------------------------------------- */
@@ -54,10 +53,10 @@ SetOfThreeEmblemBlock::~SetOfThreeEmblemBlock(void)
 
 void SetOfThreeEmblemBlock::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
+	// 矩形サイズを設定
 	m_RectSize.m_Left	= -(m_StageChipSize / 2);
 	m_RectSize.m_Top	= -(m_StageChipSize / 2);
 	m_RectSize.m_Right	= (m_StageChipSize / 2);
@@ -88,11 +87,11 @@ void SetOfThreeEmblemBlock::Initialize(void)
 
 void SetOfThreeEmblemBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_pSwitchOperatingArea->SwitchOffState();
 	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
@@ -135,8 +134,8 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 	switch(m_TypeID)
 	{
 	case ObjBase::SET_OF_THREE_EMBLME_B_R:
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::SET_OF_THREE_EMBLME_B_F
-			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 2)) == ObjBase::SET_OF_THREE_EMBLME_B_L)
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YIndexNum, (m_StageIndexData.m_XIndexNum - 1)) == ObjBase::SET_OF_THREE_EMBLME_B_F
+			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YIndexNum, (m_StageIndexData.m_XIndexNum - 2)) == ObjBase::SET_OF_THREE_EMBLME_B_L)
 		{
 			m_TexUV = EmblemROnUV;
 			m_pSwitchOperatingArea->SwitchOnState();
@@ -155,8 +154,8 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 		break;
 
 	case ObjBase::SET_OF_THREE_EMBLME_B_F:
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 1)) == ObjBase::SET_OF_THREE_EMBLME_B_R
-			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum - 1)) == ObjBase::SET_OF_THREE_EMBLME_B_L)
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YIndexNum, (m_StageIndexData.m_XIndexNum + 1)) == ObjBase::SET_OF_THREE_EMBLME_B_R
+			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YIndexNum, (m_StageIndexData.m_XIndexNum - 1)) == ObjBase::SET_OF_THREE_EMBLME_B_L)
 		{
 			m_TexUV = EmblemFOnUV;
 			m_pSwitchOperatingArea->SwitchOnState();
@@ -170,8 +169,8 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 		break;
 
 	case ObjBase::SET_OF_THREE_EMBLME_B_L:
-		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 1)) == ObjBase::SET_OF_THREE_EMBLME_B_F
-			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YNum, (m_StageIndexData.m_XNum + 2)) == ObjBase::SET_OF_THREE_EMBLME_B_R)
+		if(m_pStageDataManager->GetTypeID(m_StageIndexData.m_YIndexNum, (m_StageIndexData.m_XIndexNum + 1)) == ObjBase::SET_OF_THREE_EMBLME_B_F
+			&& m_pStageDataManager->GetTypeID(m_StageIndexData.m_YIndexNum, (m_StageIndexData.m_XIndexNum + 2)) == ObjBase::SET_OF_THREE_EMBLME_B_R)
 		{
 			m_TexUV = EmblemLOnUV;
 			m_pSwitchOperatingArea->SwitchOnState();

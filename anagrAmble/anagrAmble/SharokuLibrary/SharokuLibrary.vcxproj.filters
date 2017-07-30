@@ -49,12 +49,6 @@
     <Filter Include="sl\Library\Texture\dx11Texture">
       <UniqueIdentifier>{3127b355-24f6-46ff-b57f-f8b2dec2cf84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="sl\Library\Shader">
-      <UniqueIdentifier>{82f69bc8-dfcb-45fe-b194-3f277d8c2fd2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="sl\Library\Shader\dx11ShaderManager">
-      <UniqueIdentifier>{6c567279-36b1-4483-8c5c-67baa6ea651d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="sl\Library\UVAnimation">
       <UniqueIdentifier>{429dba97-50e9-4d4d-9289-5e24e33e3192}</UniqueIdentifier>
     </Filter>
@@ -93,23 +87,14 @@
     <ClInclude Include="sl\Library\Graphics\dx11GraphicsDevice\dx11GraphicsDevice.h">
       <Filter>sl\Library\GraphicsDevice\dx11GraphicsDevice</Filter>
     </ClInclude>
-    <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex.h">
-      <Filter>sl\Library\Vertex\dx11Vertex</Filter>
-    </ClInclude>
     <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2D.h">
       <Filter>sl\Library\Vertex\dx11Vertex</Filter>
     </ClInclude>
     <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2DManager.h">
       <Filter>sl\Library\Vertex\dx11Vertex</Filter>
     </ClInclude>
-    <ClInclude Include="sl\Library\Vertex\dx11Vertex\dx11VertexManager.h">
-      <Filter>sl\Library\Vertex\dx11Vertex</Filter>
-    </ClInclude>
     <ClInclude Include="sl\Library\Texture\dx11Texture\dx11TextureManager.h">
       <Filter>sl\Library\Texture\dx11Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.h">
-      <Filter>sl\Library\Shader\dx11ShaderManager</Filter>
     </ClInclude>
     <ClInclude Include="sl\Common\slVECTOR\slVECTOR2.h">
       <Filter>sl\Common\slVECTOR</Filter>
@@ -164,23 +149,14 @@
     <ClCompile Include="sl\Library\Graphics\dx11GraphicsDevice\dx11GraphicsDevice.cpp">
       <Filter>sl\Library\GraphicsDevice\dx11GraphicsDevice</Filter>
     </ClCompile>
-    <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex.cpp">
-      <Filter>sl\Library\Vertex\dx11Vertex</Filter>
-    </ClCompile>
     <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2D.cpp">
       <Filter>sl\Library\Vertex\dx11Vertex</Filter>
     </ClCompile>
     <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11Vertex2DManager.cpp">
       <Filter>sl\Library\Vertex\dx11Vertex</Filter>
     </ClCompile>
-    <ClCompile Include="sl\Library\Vertex\dx11Vertex\dx11VertexManager.cpp">
-      <Filter>sl\Library\Vertex\dx11Vertex</Filter>
-    </ClCompile>
     <ClCompile Include="sl\Library\Texture\dx11Texture\dx11TextureManager.cpp">
       <Filter>sl\Library\Texture\dx11Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="sl\Library\Shader\dx11ShaderManager\dx11ShaderManager.cpp">
-      <Filter>sl\Library\Shader\dx11ShaderManager</Filter>
     </ClCompile>
     <ClCompile Include="sl\Common\slVECTOR\slVECTOR2.cpp">
       <Filter>sl\Common\slVECTOR</Filter>

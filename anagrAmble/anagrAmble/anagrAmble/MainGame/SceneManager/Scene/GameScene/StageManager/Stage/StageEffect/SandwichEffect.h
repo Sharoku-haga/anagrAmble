@@ -93,7 +93,6 @@ private:
 	float				m_EffectSpeed;						//!< 挟む効果のスピード
 	bool				m_EndEffect;						//!< 挟む効果が終了したかどうかのフラグ true→終了 false→継続					
 
-	
 	/** 
 	* 処理実行関数.純粋仮想関数 
 	* Control()内で使用

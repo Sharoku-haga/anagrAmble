@@ -38,10 +38,10 @@ GoalKey::~GoalKey(void)
 void GoalKey::Initialize(void)
 {
 	// 位置座標を求める
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
+	// 矩形サイズを設定
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
 	m_RectSize.m_Top		= -(m_StageChipSize / 2);
 	m_RectSize.m_Right		= (m_StageChipSize / 2);
@@ -67,11 +67,11 @@ void GoalKey::ChangeStagePos(short yIndexNum, short xIndexNum)
 		return;
 	}
 
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_pSandwichEffect->ChangeStagePos(m_Pos);
 }
@@ -137,8 +137,8 @@ void GoalKey::HandleEvent(void)
 				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::GET_KEY), sl::RESET_PLAY);
 				// 取得されたフラグにして、さらに衝突しないステージの端へ移動させる
 				m_HasBeenGotPlayer = true;
-				m_StageIndexData.m_YNum = 0;
-				m_StageIndexData.m_XNum = 0;
+				m_StageIndexData.m_YIndexNum = 0;
+				m_StageIndexData.m_XIndexNum = 0;
 			}
 		}
 

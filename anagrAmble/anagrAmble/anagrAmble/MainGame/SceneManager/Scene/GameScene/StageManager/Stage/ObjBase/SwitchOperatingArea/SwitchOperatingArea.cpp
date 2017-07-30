@@ -61,9 +61,9 @@ void SwitchOperatingArea::Initialize(void)
 
 void SwitchOperatingArea::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
-	m_Pos					= m_pOwner->GetPos();
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
+	m_Pos = m_pOwner->GetPos();
 }
 
 void SwitchOperatingArea::ProcessCollision(const CollisionManager::CollisionData& rData)

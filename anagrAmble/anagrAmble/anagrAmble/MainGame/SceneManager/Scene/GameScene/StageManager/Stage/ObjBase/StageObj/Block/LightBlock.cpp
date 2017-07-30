@@ -31,10 +31,10 @@ LightBlock::~LightBlock(void)
 
 void LightBlock::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 	
-	// ブロックサイズのRect構造体を作成
+	// 矩形サイズを設定
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
 	m_RectSize.m_Top		= -(m_StageChipSize / 2);
 	m_RectSize.m_Right		= (m_StageChipSize / 2);
@@ -62,22 +62,22 @@ void LightBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 		DetachSandwichEffect();
 	}
 	
-	if(m_pStageDataManager->GetObjBasePointer(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum) == this)
+	if(m_pStageDataManager->GetObjBasePointer(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum) == this)
 	{
-		m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum);
+		m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum);
 	}
 
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_pSandwichEffect->ChangeStagePos(m_Pos);
 
-	if(m_pStageDataManager->GetObjBasePointer(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum) == nullptr)
+	if(m_pStageDataManager->GetObjBasePointer(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum) == nullptr)
 	{
-		m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YNum, m_StageIndexData.m_XNum, this);
+		m_pStageDataManager->SetCurrentStageChipData(m_StageIndexData.m_YIndexNum, m_StageIndexData.m_XIndexNum, this);
 	}
 
 	m_pLibrary->SetVtxColor(m_DrawingID.m_VtxID, 1.0f, 1.0f, 1.0f, 0.8f);

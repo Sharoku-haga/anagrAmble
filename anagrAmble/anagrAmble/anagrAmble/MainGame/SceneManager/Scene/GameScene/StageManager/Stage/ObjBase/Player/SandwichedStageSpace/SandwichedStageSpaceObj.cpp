@@ -26,7 +26,7 @@ const float ColorVal[4] = {1.0f, 1.0f, 1.0f, 0.7f};
 sl::SLVECTOR2				SandwichedStageSpaceObj::m_BasePointPos				= { 0.0f, 0.0f };
 sl::fRect					SandwichedStageSpaceObj::m_PlayerRect				= { 0.0f, 0.0f, 0.0f, 0.0f };
 Stage::INDEX_DATA			SandwichedStageSpaceObj::m_PlayerIndexData			= { 0, 0 };
-float						SandwichedStageSpaceObj::m_StageMapChipSize			= 0.0f;;
+float						SandwichedStageSpaceObj::m_StageMapChipSize			= 0.0f;
 bool						SandwichedStageSpaceObj::m_IsPlayerFacingRight		= false;
 float						SandwichedStageSpaceObj::m_SandwichedSpaceWidth		= 0.0f;
 
@@ -58,13 +58,13 @@ void SandwichedStageSpaceObj::Draw(void)
 	{
 		// プレイヤーの左端がプレイヤーがいるステージチップの左端より大きい場合は、
 		// 2マス右にオブジェクトを移動させ、それ以外は1マス右に移動させる
-		if(m_PlayerRect.m_Left >(m_PlayerIndexData.m_XNum * m_StageMapChipSize))
+		if(m_PlayerRect.m_Left >(m_PlayerIndexData.m_XIndexNum * m_StageMapChipSize))
 		{
-			drawPos.x = (m_PlayerIndexData.m_XNum + 2) * m_StageMapChipSize +  m_Pos.x;
+			drawPos.x = (m_PlayerIndexData.m_XIndexNum + 2) * m_StageMapChipSize +  m_Pos.x;
 		}
 		else
 		{
-			drawPos.x = (m_PlayerIndexData.m_XNum + 1) * m_StageMapChipSize +  m_Pos.x;
+			drawPos.x = (m_PlayerIndexData.m_XIndexNum + 1) * m_StageMapChipSize +  m_Pos.x;
 		}
 		drawPos.y = m_Pos.y;
 	}
@@ -72,13 +72,13 @@ void SandwichedStageSpaceObj::Draw(void)
 	{
 		// プレイヤーの右端がプレイヤーがいるステージチップの右端より小さい場合は、
 		// 2マス左にオブジェクトを移動させ、それ以外は1マス左に移動させる
-		if(m_PlayerRect.m_Right < (m_PlayerIndexData.m_XNum * m_StageMapChipSize))
+		if(m_PlayerRect.m_Right < (m_PlayerIndexData.m_XIndexNum * m_StageMapChipSize))
 		{
-			drawPos.x = (m_PlayerIndexData.m_XNum - 2) * m_StageMapChipSize + (m_Pos.x - m_SandwichedSpaceWidth);
+			drawPos.x = (m_PlayerIndexData.m_XIndexNum - 2) * m_StageMapChipSize + (m_Pos.x - m_SandwichedSpaceWidth);
 		}
 		else
 		{
-			drawPos.x = (m_PlayerIndexData.m_XNum - 1)* m_StageMapChipSize + (m_Pos.x - m_SandwichedSpaceWidth);
+			drawPos.x = (m_PlayerIndexData.m_XIndexNum - 1)* m_StageMapChipSize + (m_Pos.x - m_SandwichedSpaceWidth);
 		}
 		drawPos.y = m_Pos.y;
 	}

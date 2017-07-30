@@ -62,18 +62,18 @@ bool StageDataManager::LoadDataFile(void)
 	}
 
 	// 横と縦のインデックスを読み込む
-	std::fread(&m_StageWidthChipNum, sizeof(short), 1, fp);  
-	std::fread(&m_StageHeightChipNum, sizeof(short), 1, fp);  
+	std::fread(&m_StageWidthChipCount, sizeof(short), 1, fp);  
+	std::fread(&m_StageHeightChipCount, sizeof(short), 1, fp);  
 
 	// 横と縦の長さをもとめる
-	m_StageWidth = (StageChipSize * m_StageWidthChipNum) + StageChipSize;
-	m_StageHeight = (StageChipSize * m_StageHeightChipNum) + StageChipSize;
+	m_StageWidth = (StageChipSize * m_StageWidthChipCount) + StageChipSize;
+	m_StageHeight = (StageChipSize * m_StageHeightChipCount) + StageChipSize;
 
-	m_LoadStageIndexData.resize(m_StageHeightChipNum);
+	m_LoadStageIndexData.resize(m_StageHeightChipCount);
 
 	for (auto& stageY : m_LoadStageIndexData)
 	{
-		stageY.resize(m_StageWidthChipNum);
+		stageY.resize(m_StageWidthChipCount);
 		std::fseek(fp, 0, SEEK_CUR);
 		std::fread(&stageY[0], sizeof(short), stageY.size(), fp);
 	}
@@ -81,11 +81,11 @@ bool StageDataManager::LoadDataFile(void)
 	std::fclose(fp);
 
 	// 現在データのvectorのresizeを行う
-	m_CurrentStageData.resize(m_StageHeightChipNum);
+	m_CurrentStageData.resize(m_StageHeightChipCount);
 
 	for (auto& stageY : m_CurrentStageData)
 	{
-		stageY.resize(m_StageWidthChipNum);
+		stageY.resize(m_StageWidthChipCount);
 	}
 
 	return true;
@@ -133,9 +133,9 @@ void StageDataManager::ReturnmRespawnStageData(void)
 	m_CurrentStageData = m_RespawnStageData;
 
 	// オブジェクトを再配置する
-	for(short i = 0; i < m_StageHeightChipNum ; ++i)
+	for(short i = 0; i < m_StageHeightChipCount ; ++i)
 	{
-		for(short j = 0; j < m_StageWidthChipNum ; ++j)
+		for(short j = 0; j < m_StageWidthChipCount ; ++j)
 		{
 			if(m_CurrentStageData[i][j] == nullptr)
 			{
@@ -179,9 +179,9 @@ void StageDataManager::ReturnStageDataChangeBefore(void)
 	}
 
 	// オブジェクトを再配置する
-	for(short i = 0; i < m_StageHeightChipNum ; ++i)
+	for(short i = 0; i < m_StageHeightChipCount ; ++i)
 	{
-		for(short j = 0; j < m_StageWidthChipNum ; ++j)
+		for(short j = 0; j < m_StageWidthChipCount ; ++j)
 		{
 			if(m_CurrentStageData[i][j] == nullptr)
 			{
@@ -206,54 +206,49 @@ bool StageDataManager::ExistStockStageData(void)
 	return false;
 }
 
-int StageDataManager::GetTypeID(int indexY, int indexX)
+int StageDataManager::GetTypeID(int yIndexNum, int xIndexNum)
 {
-	// インデックスが0未満、もしくはサイズ以上なら-1をかえす
-	if(indexY < 0 || indexY > static_cast<int>(m_StageHeightChipNum - 1)
-		|| indexX < 0 ||  indexX > static_cast<int>(m_StageWidthChipNum - 1))
+	// 引数のインデックス番号が存在しているかチェックし、存在してなければ即-1を返す
+	if(RESULT_FAILED(ExistsIndexNum(yIndexNum, xIndexNum)))
 	{
 		return -1;
 	}
 
 	// データがnullptrなら空白のIDをかえす
-	if(m_CurrentStageData[indexY][indexX] == nullptr)
+	if(m_CurrentStageData[yIndexNum][xIndexNum] == nullptr)
 	{
 		return ObjBase::BLANK;
 	}
 
-	return static_cast<int>(m_CurrentStageData[indexY][indexX]->GetTypeID());
+	return static_cast<int>(m_CurrentStageData[yIndexNum][xIndexNum]->GetTypeID());
 }
 
- ObjBase* const StageDataManager::GetObjBasePointer(int indexY, int indexX)
+ ObjBase* const StageDataManager::GetObjBasePointer(int yIndexNum, int xIndexNum)
 {
-	// インデックスが0未満、もしくはサイズ以上ならnullptrをかえす
-	if(indexY < 0 || indexY > static_cast<int>(m_StageHeightChipNum - 1)
-		|| indexX < 0 ||  indexX > static_cast<int>(m_StageWidthChipNum - 1))
+	// 引数のインデックス番号が存在しているかチェックし、存在してなければnullptrをかえす
+	if(RESULT_FAILED(ExistsIndexNum(yIndexNum, xIndexNum)))
 	{
 		return nullptr;
 	}
 
-	return m_CurrentStageData[indexY][indexX];
+	return m_CurrentStageData[yIndexNum][xIndexNum];
 }
 
-void StageDataManager::SetCurrentStageChipData(int indexY, int indexX, ObjBase* pObj)
+void StageDataManager::SetCurrentStageChipData(int yIndexNum, int xIndexNum, ObjBase* pObj)
 {
-	// インデックスが0未満、もしくはサイズ以上なら即return
-	if(indexY < 0 || indexY > static_cast<int>(m_StageHeightChipNum - 1)
-		|| indexX < 0 ||  indexX > static_cast<int>(m_StageWidthChipNum - 1))
+	// 引数のインデックス番号が存在しているかチェックし、存在してなければ即return
+	if(RESULT_FAILED(ExistsIndexNum(yIndexNum, xIndexNum)))
 	{
 		return;
 	}
 
-	m_CurrentStageData[indexY][indexX] = pObj;
+	m_CurrentStageData[yIndexNum][xIndexNum] = pObj;
 }
 
-void StageDataManager::SetNewStockStageChipData(int indexY, int indexX, ObjBase* pObj)
+void StageDataManager::SetNewStockStageChipData(int yIndexNum, int xIndexNum, ObjBase* pObj)
 {
-	// インデックスが0未満、もしくはサイズ以上なら即return
-	// 念の為チェック
-	if(indexY < 0 || indexY > static_cast<int>(m_StageHeightChipNum - 1)
-		|| indexX < 0 ||  indexX > static_cast<int>(m_StageWidthChipNum - 1))
+	// 引数のインデックス番号が存在しているかチェックし、存在してなければ即return
+	if(RESULT_FAILED(ExistsIndexNum(yIndexNum, xIndexNum)))
 	{
 		return;
 	}
@@ -263,10 +258,23 @@ void StageDataManager::SetNewStockStageChipData(int indexY, int indexX, ObjBase*
 		// ストックデータの中の1番最新のもので現在のステージデータを更新する
 		if(m_StockStageDataOrder[i] == (m_StockStageDataOrderCount - 1))
 		{
-			m_StockStageData[i][indexY][indexX] = pObj;
+			m_StockStageData[i][yIndexNum][xIndexNum] = pObj;
 			break;
 		}
 	}
+}
+
+/* Private Functions ------------------------------------------------------------------------------------------ */
+
+bool StageDataManager::ExistsIndexNum(int yIndexNum, int xIndexNum)
+{
+	if(yIndexNum < 0 || yIndexNum > static_cast<int>(m_StageHeightChipCount - 1)
+		|| xIndexNum < 0 ||  xIndexNum > static_cast<int>(m_StageWidthChipCount - 1))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 }	// namespace ar

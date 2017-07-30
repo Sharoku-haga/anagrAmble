@@ -87,7 +87,7 @@ public:
 
 private:
 	static sl::SLVECTOR2					m_BasePointPos;					//!< ベースポイントの座標
-	static float							m_StageMapChipSize;				//!< ステージマップチップサイズデータ
+	static float							m_StageMapChipSize;				//!< ステージマップチップサイズ
 
 	sl::ISharokuLibrary*					m_pLibrary;						//!< ライブラリ. sl::ISharokuLibraryクラスのインスタンスへのポインタ
 	sl::SLVECTOR2							m_Pos;							//!< 位置座標

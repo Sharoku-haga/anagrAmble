@@ -41,7 +41,7 @@ public:
 	* @param[in] typeID		オブジェクトのID
 	* @param[in] rIndex		ステージのインデックス番号
 	*/
-	void CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex);
+	void CreateStageObj(int typeID, const Stage::INDEX_DATA& rIndex);
 
 	/** 
 	* StageObjの初期化関数

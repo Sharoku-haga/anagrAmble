@@ -35,11 +35,11 @@ StageObjManager::~StageObjManager(void)
 	sl::DeleteSafely(&m_pStageObjFactory);
 }
 
-void StageObjManager::CreateStageObj(int typeID, const Stage::INDEX_DATA rIndex)
+void StageObjManager::CreateStageObj(int typeID, const Stage::INDEX_DATA& rIndex)
 {
 	StageObj* pObj = m_pStageObjFactory->CreateStageObj(typeID, rIndex);
 	m_pStageObj.push_back(pObj);
-	m_pStageDataManager->SetCurrentStageChipData(rIndex.m_YNum, rIndex.m_XNum, pObj);
+	m_pStageDataManager->SetCurrentStageChipData(rIndex.m_YIndexNum, rIndex.m_XIndexNum, pObj);
 }
 
 void StageObjManager::InitializeStageObj(void)

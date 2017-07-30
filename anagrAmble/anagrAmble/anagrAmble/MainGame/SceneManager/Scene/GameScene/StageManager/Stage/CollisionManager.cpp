@@ -96,8 +96,8 @@ void CollisionManager::SetObjBasePointer(ObjBase* pObj)
 
 void CollisionManager::SetSwitchOperatingAreaData(ObjBase* pArea)
 {
-	m_SwitchOperatingAreaData.emplace_back(pArea->GetStageIndex().m_YNum, 
-											pArea->GetStageIndex().m_XNum, 
+	m_SwitchOperatingAreaData.emplace_back(pArea->GetStageIndex().m_YIndexNum, 
+											pArea->GetStageIndex().m_XIndexNum, 
 											pArea->GetTypeID());
 }
 
@@ -123,25 +123,25 @@ void CollisionManager::CheckCollisionPlayer(ObjBase* pObj)
 
 void CollisionManager::CheckCollisionSwitchOperatingArea(const SwitchOperatingAreaData& rArea)
 {
-	short stageHeightChipNum = m_pStageDataManager->GetStageHeightChipNum();
-	short stageWidthChipNum = m_pStageDataManager->GetStageWidthChipNum();
+	short stageHeightChipNum = m_pStageDataManager->GetStageHeightChipCount();
+	short stageWidthChipNum = m_pStageDataManager->GetStageWidthChipCount();
 
 	// エリアの衝突判定を行う範囲(インデックスを求める)
 	// それぞれ1で補正しているのは、配列内側だけチェックしたい為
 	Stage::INDEX_DATA chechStartIndex;			// チェック開始インデックス
-	chechStartIndex.m_YNum = ((rArea.m_YNum - SwitchOperatingAreaCount) > 0) ? (rArea.m_YNum - SwitchOperatingAreaCount) : 1;
-	chechStartIndex.m_XNum = ((rArea.m_XNum - SwitchOperatingAreaCount) > 0) ? (rArea.m_XNum - SwitchOperatingAreaCount) : 1;
+	chechStartIndex.m_YIndexNum = ((rArea.m_YIndexNum - SwitchOperatingAreaCount) > 0) ? (rArea.m_YIndexNum - SwitchOperatingAreaCount) : 1;
+	chechStartIndex.m_XIndexNum = ((rArea.m_XIndexNum - SwitchOperatingAreaCount) > 0) ? (rArea.m_XIndexNum - SwitchOperatingAreaCount) : 1;
 
 	Stage::INDEX_DATA chechEndIndex;			// チェック終了インデックス
-	chechEndIndex.m_YNum = ((rArea.m_YNum + SwitchOperatingAreaCount) < stageHeightChipNum) ? (rArea.m_YNum + SwitchOperatingAreaCount) : (stageHeightChipNum - 1);
-	chechEndIndex.m_XNum = ((rArea.m_XNum + SwitchOperatingAreaCount) < stageWidthChipNum) ? (rArea.m_XNum + SwitchOperatingAreaCount) : (stageWidthChipNum - 1);
+	chechEndIndex.m_YIndexNum = ((rArea.m_YIndexNum + SwitchOperatingAreaCount) < stageHeightChipNum) ? (rArea.m_YIndexNum + SwitchOperatingAreaCount) : (stageHeightChipNum - 1);
+	chechEndIndex.m_XIndexNum = ((rArea.m_XIndexNum + SwitchOperatingAreaCount) < stageWidthChipNum) ? (rArea.m_XIndexNum + SwitchOperatingAreaCount) : (stageWidthChipNum - 1);
 
 	// エリア内のObjBaseとの衝突をチェックする
-	for(int yNum = chechStartIndex.m_YNum ; yNum <= chechEndIndex.m_YNum; ++yNum)
+	for(int yIndexNum = chechStartIndex.m_YIndexNum ; yIndexNum <= chechEndIndex.m_YIndexNum; ++yIndexNum)
 	{
-		for(int xNum = chechStartIndex.m_XNum; xNum <= chechEndIndex.m_XNum; ++xNum)
+		for(int xIndexNum = chechStartIndex.m_XIndexNum; xIndexNum <= chechEndIndex.m_XIndexNum; ++xIndexNum)
 		{
-			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yNum, xNum);
+			ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(yIndexNum, xIndexNum);
 			if(pObj == nullptr)
 			{
 				continue;

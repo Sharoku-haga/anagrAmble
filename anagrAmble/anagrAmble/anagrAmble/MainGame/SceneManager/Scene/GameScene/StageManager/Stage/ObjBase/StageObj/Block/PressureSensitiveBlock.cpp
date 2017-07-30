@@ -47,10 +47,10 @@ PressureSensitiveBlock::~PressureSensitiveBlock(void)
 
 void PressureSensitiveBlock::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
+	// 矩形サイズを設定
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
 	m_RectSize.m_Top		= -(m_StageChipSize / 2);
 	m_RectSize.m_Right		= (m_StageChipSize / 2);
@@ -66,11 +66,11 @@ void PressureSensitiveBlock::Initialize(void)
 
 void PressureSensitiveBlock::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_pSwitchOperatingArea->SwitchOffState();
 	m_pSwitchOperatingArea->ChangeStagePos(yIndexNum, xIndexNum);
@@ -119,7 +119,7 @@ void PressureSensitiveBlock::Run(void)
 	}
 
 	// 上に何かのっていたらON状態にする
-	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YNum - 1), m_StageIndexData.m_XNum) != BLANK)
+	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YIndexNum - 1), m_StageIndexData.m_XIndexNum) != BLANK)
 	{
 		m_pSwitchOperatingArea->SwitchOnState();
 		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON), sl::PLAY);

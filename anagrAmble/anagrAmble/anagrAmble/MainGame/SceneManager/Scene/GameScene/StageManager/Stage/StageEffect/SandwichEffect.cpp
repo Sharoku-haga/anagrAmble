@@ -34,14 +34,16 @@ SandwichEffect::SandwichEffect(const sl::SLVECTOR2& rOwnerPos, const sl::fRect r
 {}
 
 SandwichEffect::~SandwichEffect(void)
-{}
+{
+	m_pLibrary->ReleaseVertex2D(m_DrawingID.m_VtxID);
+}
 
 void SandwichEffect::ProcessBeforeEffectStart(const sl::SLVECTOR2& rSandwichedSpaceCenterPos)
 {
-	m_Pos = m_OwnerPos;
-	m_RectSize = m_BasicRectSize;
-	m_EndEffect = false;
-	m_SandwichedSpaceCenterPos = rSandwichedSpaceCenterPos;
+	m_Pos	= m_OwnerPos;
+	m_RectSize	= m_BasicRectSize;
+	m_EndEffect	= false;
+	m_SandwichedSpaceCenterPos	= rSandwichedSpaceCenterPos;
 
 	// スピードを計算する。離れている分(マップチップ分)だけ速くする
 	// 左側、右側で処理を変更
@@ -62,9 +64,9 @@ void SandwichEffect::ProcessDetachEffect(void)
 	m_EndEffect = true;
 
 	// 矩形を消しておく
-	m_RectSize.m_Left = 0.0f;
-	m_RectSize.m_Top = 0.0f;
-	m_RectSize.m_Right = 0.0f;
+	m_RectSize.m_Left	= 0.0f;
+	m_RectSize.m_Top	= 0.0f;
+	m_RectSize.m_Right	= 0.0f;
 	m_RectSize.m_Bottom = 0.0f;
 }
 
@@ -85,8 +87,8 @@ void SandwichEffect::Initialize(void)
 
 	// 描画関連の初期化
 	m_DrawingID.m_TexID = m_OwnerID.m_TexID;
-	m_RectSize = m_BasicRectSize;
-	sl::fRect uv = m_pLibrary->GetUVRect(m_OwnerID.m_VtxID);
+	m_RectSize			= m_BasicRectSize;
+	sl::fRect uv		= m_pLibrary->GetUVRect(m_OwnerID.m_VtxID);
 	m_DrawingID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 }
 

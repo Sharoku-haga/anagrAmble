@@ -133,7 +133,7 @@ void DirectSoundManager::ReleaseALL(void)
 {
 	for(auto& itr = m_Sounds.begin(); itr != m_Sounds.end(); ++itr)
 	{
-		if (itr->second)
+		if (itr->second != NULL)
 		{
 			itr->second->Release();
 			itr->second = NULL;

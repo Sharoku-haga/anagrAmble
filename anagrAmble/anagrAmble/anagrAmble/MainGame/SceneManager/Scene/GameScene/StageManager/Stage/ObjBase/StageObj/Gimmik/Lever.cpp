@@ -14,7 +14,6 @@
 #include "../../../../../GameSceneSoundID.h"
 #include "../../../StageEffect/SandwichEffect.h"
 
-
 /* Unnamed Namespace ------------------------------------------------------------------------------------------ */
 
 namespace
@@ -50,10 +49,10 @@ Lever::~Lever(void)
 
 void Lever::Initialize(void)
 {
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
-	// ブロックサイズのRect構造体を作成
+	// 矩形サイズを設定
 	m_RectSize.m_Left		= -(m_StageChipSize / 2);
 	m_RectSize.m_Top		= -(m_StageChipSize / 2);
 	m_RectSize.m_Right		= (m_StageChipSize / 2);
@@ -74,11 +73,11 @@ void Lever::Initialize(void)
 
 void Lever::ChangeStagePos(short yIndexNum, short xIndexNum)
 {
-	m_StageIndexData.m_YNum = yIndexNum;
-	m_StageIndexData.m_XNum = xIndexNum;
+	m_StageIndexData.m_YIndexNum = yIndexNum;
+	m_StageIndexData.m_XIndexNum = xIndexNum;
 
-	m_Pos.x = m_StageIndexData.m_XNum * m_StageChipSize + (m_StageChipSize / 2);
-	m_Pos.y = m_StageIndexData.m_YNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.x = m_StageIndexData.m_XIndexNum * m_StageChipSize + (m_StageChipSize / 2);
+	m_Pos.y = m_StageIndexData.m_YIndexNum * m_StageChipSize + (m_StageChipSize / 2);
 
 	m_pSwitchOperatingArea->SwitchOffState();
 

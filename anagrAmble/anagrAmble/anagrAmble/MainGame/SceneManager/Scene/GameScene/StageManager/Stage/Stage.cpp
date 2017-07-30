@@ -26,6 +26,15 @@
 #include "../../../../GameDataManager/ScoreTextDrawer.h"
 #include "../../../../GameDataManager/HighScoreText.h"
 
+/* Unnamed Namespace ------------------------------------------------------------------------------------------ */
+
+namespace
+{
+
+const int SavePointIndexXNum = 85;			// セーブポイントのインデックスX軸の番号
+
+}
+
 namespace ar
 {
 
@@ -134,11 +143,11 @@ void Stage::Initialize(void)
 
 	// オブジェクトを生成し、初期位置へ
 	m_CurrentStageData = m_pStageDataManager->GetLoadStageData();
-	for(unsigned int yNum = 0; yNum < m_CurrentStageData.size(); ++yNum)
+	for(unsigned int yIndexNum = 0; yIndexNum < m_CurrentStageData.size(); ++yIndexNum)
 	{
-		for(unsigned int xNum = 0; xNum < m_CurrentStageData[yNum].size(); ++xNum)
+		for(unsigned int xIndexNum = 0; xIndexNum < m_CurrentStageData[yIndexNum].size(); ++xIndexNum)
 		{
-			CreateObj(m_CurrentStageData[yNum][xNum], yNum, xNum);
+			CreateObj(m_CurrentStageData[yIndexNum][xIndexNum], yIndexNum, xIndexNum);
 		}
 	}
 
@@ -152,7 +161,7 @@ void Stage::Initialize(void)
 	m_pStageDataManager->SaveRespawnStageData();
 
 	// プレイヤーが入れ替えできないようにする為ステージデータから消す
-	m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YNum, m_pPlayer->GetStageIndex().m_XNum);
+	m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YIndexNum, m_pPlayer->GetStageIndex().m_XIndexNum);
 
 	// ベースポイントの設定を行う 
 	m_pBasePoint->Initialize(m_pStageDataManager->GetStageWidth(), m_pPlayer);
@@ -221,12 +230,11 @@ void Stage::Control(void)
 		m_pCollisionManager->UpDate();
 		m_pBackground->Control();
 
-		if(m_pPlayer->GetStageIndex().m_XNum == 85)
+		if(m_pPlayer->GetStageIndex().m_XIndexNum == SavePointIndexXNum)
 		{
-			m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YNum, m_pPlayer->GetStageIndex().m_XNum, m_pPlayer);
+			m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YIndexNum, m_pPlayer->GetStageIndex().m_XIndexNum, m_pPlayer);
 			m_pStageDataManager->SaveRespawnStageData();
-			m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YNum, m_pPlayer->GetStageIndex().m_XNum);
-
+			m_pStageDataManager->SetCurrentStageChipData(m_pPlayer->GetStageIndex().m_YIndexNum, m_pPlayer->GetStageIndex().m_XIndexNum);
 		}
 
 		break;
@@ -320,14 +328,14 @@ void Stage::Draw(void)
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
-void Stage::CreateObj(int typeID, int yNum, int xNum)
+void Stage::CreateObj(int typeID, int yIndexNum, int xIndexNum)
 {
 	INDEX_DATA data;
 	switch(typeID)
 	{
 	case ObjBase::BLANK:
 	{
-		m_pStageDataManager->SetCurrentStageChipData(yNum, xNum);
+		m_pStageDataManager->SetCurrentStageChipData(yIndexNum, xIndexNum);
 
 	}
 		break;
@@ -335,18 +343,18 @@ void Stage::CreateObj(int typeID, int yNum, int xNum)
 	case ObjBase::PLAYER:
 		if(m_pPlayer == nullptr)
 		{
-			data.m_YNum = yNum;
-			data.m_XNum = xNum;
+			data.m_YIndexNum = yIndexNum;
+			data.m_XIndexNum = xIndexNum;
 			m_pPlayer = new Player(m_pStageDataManager, m_pCollisionManager, data, m_PlayerTexID);
-			m_pStageDataManager->SetCurrentStageChipData(yNum, xNum, m_pPlayer);
+			m_pStageDataManager->SetCurrentStageChipData(yIndexNum, xIndexNum, m_pPlayer);
 		}
 
 		break;
 
 	default:
 	{
-		data.m_YNum = yNum;
-		data.m_XNum = xNum;
+		data.m_YIndexNum = yIndexNum;
+		data.m_XIndexNum = xIndexNum;
 		m_pStageObjManager->CreateStageObj(typeID, data);
 	}
 		break;
@@ -395,7 +403,6 @@ void Stage::PrepareSpaceChange(void)
 {
 	m_CurrentState = STAGE_SPACE_CHANGE;
 }
-
 
 }	// namespace ar
 

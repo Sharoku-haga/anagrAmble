@@ -7,7 +7,6 @@
 #ifndef AR_PLAYER_H
 #define AR_PLAYER_H
 
-//#include "PlayerMotion.h"
 #include "../ObjBase.h"
 #include <vector>
 
@@ -147,6 +146,9 @@ private:
 	* "player_death_anime_end"のイベントがおこった際によばれる
 	*/
 	void RunDeathAnimeEndProcessing(void);
+
+	/** ステージインデックスデータを計算する関数 */
+	void CalculateStageIndexData(void);
 
 };	// class Player
 
