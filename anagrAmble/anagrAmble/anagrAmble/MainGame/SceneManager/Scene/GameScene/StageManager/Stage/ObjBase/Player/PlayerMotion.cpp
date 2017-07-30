@@ -19,13 +19,15 @@ namespace ar
 namespace
 {
 
-const		float		MoveSpeed		= 4.f;				// プレイヤーの移動スピード
-const		float		ScrollSpeed		= 0.2f;				// スクロールスピード(入場、退場スピード)
-const		float		JumpSpeed		= 16.f;				// ジャンプスピード
-const		float		JumpPower		= 36.f;				// ジャンプの初動
-const		float		GravityPower	= 0.6f;				// 重力
+const		float		RectSizeCorrectionVal	= 11.f;				// 矩形サイズ補正値
+const		float		MoveSpeed				= 4.f;				// プレイヤーの移動スピード
+const		float		ScrollSpeed				= 0.2f;				// スクロールスピード(入場、退場スピード)
+const		float		JumpSpeed				= 16.f;				// ジャンプスピード
+const		float		JumpPower				= 36.f;				// ジャンプの初動
+const		float		GravityPower			= 0.6f;				// 重力
 
 }
+
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 PlayerMotion::PlayerMotion(const sl::fRect& rPlayerRect)
@@ -350,6 +352,8 @@ void PlayerMotion::InitializeVertex(void)
 		m_VtxID[WAITING] = m_pLibrary->CreateVertex2D(m_RectSize[WAITING], uv);
 		m_UVAnimeID[WAITING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[WAITING], 17, true);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[WAITING], m_UVAnimeID[WAITING], 17, 0, uv, 8);
+		m_RectSize[WAITING].m_Left += RectSizeCorrectionVal;
+		m_RectSize[WAITING].m_Right -= RectSizeCorrectionVal;
 	}
 
 	// 歩き
@@ -374,6 +378,8 @@ void PlayerMotion::InitializeVertex(void)
 		}
 
 		m_pLibrary->SeUVtAnimeOrder(m_VtxID[WALKING], m_UVAnimeID[WALKING], animeOrder);
+		m_RectSize[WALKING].m_Left += RectSizeCorrectionVal;
+		m_RectSize[WALKING].m_Right -= RectSizeCorrectionVal;
 	}
 
 	// 走っている
@@ -383,6 +389,8 @@ void PlayerMotion::InitializeVertex(void)
 		m_VtxID[RUNNING] = m_pLibrary->CreateVertex2D(m_RectSize[RUNNING], uv);
 		m_UVAnimeID[RUNNING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[RUNNING], 10, true);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[RUNNING], m_UVAnimeID[RUNNING], 10, 0, uv, 2);
+		m_RectSize[RUNNING].m_Left += RectSizeCorrectionVal;
+		m_RectSize[RUNNING].m_Right -= RectSizeCorrectionVal;
 	}
 
 	// ジャンプ
@@ -392,6 +400,8 @@ void PlayerMotion::InitializeVertex(void)
 		m_VtxID[JUMPING] = m_pLibrary->CreateVertex2D(m_RectSize[JUMPING], uv);
 		m_UVAnimeID[JUMPING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[JUMPING], 4);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[JUMPING], m_UVAnimeID[JUMPING], 4, 0, uv, 2);
+		m_RectSize[JUMPING].m_Left += RectSizeCorrectionVal;
+		m_RectSize[JUMPING].m_Right -= RectSizeCorrectionVal;
 	}
 
 	// しゃがみ
@@ -402,9 +412,9 @@ void PlayerMotion::InitializeVertex(void)
 		m_UVAnimeID[SQUATING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[SQUATING], 1, true);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[SQUATING], m_UVAnimeID[SQUATING], 1, 0, uv, 3);
 
-		m_RectSize[SQUATING].m_Left = m_BasicRectSize.m_Left;
+		m_RectSize[SQUATING].m_Left = m_BasicRectSize.m_Left + RectSizeCorrectionVal;
 		m_RectSize[SQUATING].m_Top = -0.0f;
-		m_RectSize[SQUATING].m_Right = m_BasicRectSize.m_Right;
+		m_RectSize[SQUATING].m_Right = m_BasicRectSize.m_Right - RectSizeCorrectionVal;
 		m_RectSize[SQUATING].m_Bottom = m_BasicRectSize.m_Bottom;
 	}
 
@@ -429,9 +439,9 @@ void PlayerMotion::InitializeVertex(void)
 		}
 		m_pLibrary->SeUVtAnimeOrder(m_VtxID[SQUAT_WALKING], m_UVAnimeID[SQUAT_WALKING], animeOrder);
 
-		m_RectSize[SQUAT_WALKING].m_Left = m_BasicRectSize.m_Left;
+		m_RectSize[SQUAT_WALKING].m_Left = m_BasicRectSize.m_Left + RectSizeCorrectionVal;
 		m_RectSize[SQUAT_WALKING].m_Top = 0.0f;
-		m_RectSize[SQUAT_WALKING].m_Right = m_BasicRectSize.m_Right;
+		m_RectSize[SQUAT_WALKING].m_Right = m_BasicRectSize.m_Right - RectSizeCorrectionVal;
 		m_RectSize[SQUAT_WALKING].m_Bottom = m_BasicRectSize.m_Bottom;
 	}
 
@@ -442,6 +452,9 @@ void PlayerMotion::InitializeVertex(void)
 		m_VtxID[FALLING] = m_pLibrary->CreateVertex2D(m_BasicRectSize, uv);
 		m_UVAnimeID[FALLING] = m_pLibrary->RegisterUVAnimeID(m_VtxID[FALLING], 1);
 		m_pLibrary->CreateUVAnimeData(m_VtxID[FALLING], m_UVAnimeID[FALLING], 1, 0, uv, 10);
+
+		m_RectSize[FALLING].m_Left += RectSizeCorrectionVal;
+		m_RectSize[FALLING].m_Right -= RectSizeCorrectionVal;
 	}
 
 	// 死亡

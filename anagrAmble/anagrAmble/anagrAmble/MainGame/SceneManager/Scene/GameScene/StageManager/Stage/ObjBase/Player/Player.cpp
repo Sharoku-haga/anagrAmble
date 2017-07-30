@@ -180,6 +180,7 @@ void Player::Initialize(void)
 	m_MovableDirection.m_Down	= false;
 	m_MovableDirection.m_Right	= false;
 	m_MovableDirection.m_Left	= false;
+
 }
 
 void Player::ChangeStagePos(short yIndexNum, short xIndexNum)
@@ -280,7 +281,6 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 	{
 		m_MovableDirection.m_Right = false;
 		m_Pos.x -= ((m_CurrentRectData.m_Right - rData.m_ObjRect.m_Left) + RightCollisionCorrectionVal);
-
 	}
 
 	// 左方向

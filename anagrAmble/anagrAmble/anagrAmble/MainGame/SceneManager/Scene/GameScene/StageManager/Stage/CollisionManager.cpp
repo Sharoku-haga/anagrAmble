@@ -20,7 +20,7 @@ namespace ar
 namespace
 {
 
-const short		SwitchOperatingAreaCount = 4;		// スイッチ作動範囲のエリア数
+const short		SwitchOperatingAreaCount	= 4;		// スイッチ作動範囲のエリア数
 
 }
 
@@ -30,35 +30,29 @@ CollisionManager::CollisionManager(StageDataManager*	pStageDataManager)
 	: m_pStageDataManager(pStageDataManager)
 {}
 
-CollisionManager::~CollisionManager(void)
-{}
-
-void CollisionManager::UpDate(void)
+void CollisionManager::Update(void)
 {
 	// スイッチ作動範囲が登録されているなら専用の衝突判定を行う
-	if(RESULT_FAILED(m_SwitchOperatingAreaData.empty()))
+	// まずOFF状態からチェックし、その後にON状態をチェックする
+	if(RESULT_FAILED(m_SwitchOperatingAreaOffData.empty())
+		|| RESULT_FAILED(m_SwitchOperatingAreaOnData.empty()))
 	{
-		// OFFだけチェックする
-		for(auto& AreaData : m_SwitchOperatingAreaData)
+		for(auto& AreaData : m_SwitchOperatingAreaOffData)
 		{
-			if(AreaData.m_TypeID == ObjBase::SWITCH_OPERATING_AREA_OFF)
-			{
-				CheckCollisionSwitchOperatingArea(AreaData);
-			}
+			CheckCollisionSwitchOperatingArea(AreaData);
 		}
 
-		// ONだけチェックする
-		for(auto& AreaData : m_SwitchOperatingAreaData)
+		m_SwitchOperatingAreaOffData.clear();
+		std::vector<SwitchOperatingAreaData>().swap(m_SwitchOperatingAreaOffData);
+
+		for(auto& AreaData : m_SwitchOperatingAreaOnData)
 		{
-			if(AreaData.m_TypeID == ObjBase::SWITCH_OPERATING_AREA_ON)
-			{
-				CheckCollisionSwitchOperatingArea(AreaData);
-			}
+			CheckCollisionSwitchOperatingArea(AreaData);
 		}
 	
-		// データをクリアする
-		m_SwitchOperatingAreaData.clear();
-		std::vector<SwitchOperatingAreaData>().swap(m_SwitchOperatingAreaData);
+		m_SwitchOperatingAreaOnData.clear();
+		std::vector<SwitchOperatingAreaData>().swap(m_SwitchOperatingAreaOnData);
+
 	}
 
 	if(m_pStageObj.empty() || m_pPlayer == nullptr)
@@ -94,18 +88,26 @@ void CollisionManager::SetObjBasePointer(ObjBase* pObj)
 	m_pStageObj.push_back(pObj);
 }
 
-void CollisionManager::SetSwitchOperatingAreaData(ObjBase* pArea)
+void CollisionManager::SetSwitchOperatingAreaOffData(ObjBase* pArea)
 {
-	m_SwitchOperatingAreaData.emplace_back(pArea->GetStageIndex().m_YIndexNum, 
-											pArea->GetStageIndex().m_XIndexNum, 
-											pArea->GetTypeID());
+	m_SwitchOperatingAreaOffData.emplace_back(pArea->GetStageIndex().m_YIndexNum
+											, pArea->GetStageIndex().m_XIndexNum
+											, pArea->GetTypeID());
+}
+
+void CollisionManager::SetSwitchOperatingAreaOnData(ObjBase* pArea)
+{
+	m_SwitchOperatingAreaOffData.emplace_back(pArea->GetStageIndex().m_YIndexNum
+											, pArea->GetStageIndex().m_XIndexNum
+											, pArea->GetTypeID());
 }
 
 /* Private Functions ------------------------------------------------------------------------------------------ */
 
 void CollisionManager::CheckCollisionPlayer(ObjBase* pObj)
 {
-	if(CheckCollisionRect(m_pPlayer, pObj))
+
+	if(CheckRectCollision(m_pPlayer, pObj))
 	{	
 		CollisionData playerCollisionData;
 		playerCollisionData.m_ObjType	= pObj->GetTypeID();
@@ -155,7 +157,7 @@ void CollisionManager::CheckCollisionSwitchOperatingArea(const SwitchOperatingAr
 	}
 }
 
-bool CollisionManager::CheckCollisionRect(ObjBase* pObjA, ObjBase* pObjB)
+bool CollisionManager::CheckRectCollision(ObjBase* pObjA, ObjBase* pObjB)
 {
 	sl::fRect objARect = pObjA->GetCurrentRectData();
 	sl::fRect objBRect = pObjB->GetCurrentRectData();
