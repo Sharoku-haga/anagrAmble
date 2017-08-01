@@ -227,7 +227,7 @@ void Stage::Control(void)
 	case EXECUTE:
 		m_pPlayer->Control();
 		m_pStageObjManager->Control();
-		m_pCollisionManager->UpDate();
+		m_pCollisionManager->Update();
 		m_pBackground->Control();
 
 		if(m_pPlayer->GetStageIndex().m_XIndexNum == SavePointIndexXNum)
@@ -242,7 +242,7 @@ void Stage::Control(void)
 	case STAGE_SPACE_CHANGE:
 		if(StageDataChangeManager::Instance().ChangeSpace())
 		{
-			m_pCollisionManager->UpDate();
+			m_pCollisionManager->Update();
 			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::CHANGE_SPACE), sl::RESET_PLAY);
 			GameEventManager::Instance().TriggerSynEvent("space_change_end");
 		}
@@ -253,7 +253,7 @@ void Stage::Control(void)
 		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::RETURN_CHAGED_SPACE), sl::RESET_PLAY);
 		if(StageDataChangeManager::Instance().ReturnChangedSpace())
 		{
-			m_pCollisionManager->UpDate();
+			m_pCollisionManager->Update();
 			// 入れ替え戻しが完了したら終了イベントをとばす
 			GameEventManager::Instance().ReceiveEvent("space_change_return_end");
 			GameEventManager::Instance().TriggerSynEvent("player_move");
@@ -269,7 +269,7 @@ void Stage::Control(void)
 		// リスポーン処理は前に入れ替えた場所まで戻る処理を行う
 		if(StageDataChangeManager::Instance().ReturnBeforeStageData())
 		{
-			m_pCollisionManager->UpDate();
+			m_pCollisionManager->Update();
 			// 処理が完了したら終了イベントをとばす
 			GameEventManager::Instance().ReceiveEvent("player_respawn_end");
 			GameEventManager::Instance().TriggerSynEvent("player_move");

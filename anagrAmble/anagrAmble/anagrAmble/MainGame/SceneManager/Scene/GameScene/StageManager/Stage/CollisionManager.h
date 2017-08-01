@@ -41,13 +41,13 @@ public:
 	explicit CollisionManager(StageDataManager*	pStageDataManager);
 
 	/** Destructor */
-	~CollisionManager(void);
+	~CollisionManager(void) = default;
 
 	/** 
 	* 更新関数
 	* 毎フレーム呼ばれて衝突判定の処理を行う関数
 	*/
-	void UpDate(void);
+	void Update(void);
 
 	/** 
 	 * 衝突判定を行うステージ上のオブジェクトのインスタンスへのポインタを登録する関数 
@@ -56,10 +56,17 @@ public:
 	void SetObjBasePointer(ObjBase* pObj);
 
 	/** 
-	 * 衝突判定を行うスイッチの作動範囲のデータを登録する関数 
-	 * @param[in] pObj データを登録したいObjBaseクラスのインスタンス(スイッチの作動範囲)へのポインタ
+	 * 衝突判定を行うOFF状態であるスイッチの作動範囲のデータを登録する関数 
+	 * @param[in] pObj データを登録したいObjBaseクラスのインスタンス(OFF状態であるスイッチの作動範囲)へのポインタ
 	 */
-	void SetSwitchOperatingAreaData(ObjBase* pArea);
+	void SetSwitchOperatingAreaOffData(ObjBase* pArea);
+
+	
+	/** 
+	 * 衝突判定を行うON状態であるスイッチの作動範囲のデータを登録する関数 
+	 * @param[in] pObj データを登録したいObjBaseクラスのインスタンス(ON状態であるスイッチの作動範囲)へのポインタ
+	 */
+	void SetSwitchOperatingAreaOnData(ObjBase* pArea);
 
 	/** 
 	 * 衝突判定を行うプレイヤーオブジェクトを登録する関数 
@@ -84,10 +91,11 @@ private:
 		{}
 	};
 
-	StageDataManager*								m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
-	std::vector<ObjBase*>							m_pStageObj;				//!< 衝突判定を行うObjBase群
-	std::vector<SwitchOperatingAreaData>			m_SwitchOperatingAreaData;	//!< スイッチの作動範囲をチェックするときに使用するデータ
-	Player*											m_pPlayer;					//!< 衝突判定を行うプレイヤー
+	StageDataManager*								m_pStageDataManager;			//!< StageDataManagerクラスのインスタンスへのポインタ
+	std::vector<ObjBase*>							m_pStageObj;					//!< 衝突判定を行うObjBase群
+	std::vector<SwitchOperatingAreaData>			m_SwitchOperatingAreaOffData;	//!< OFF状態であるスイッチの作動範囲をチェックするときに使用するデータ
+	std::vector<SwitchOperatingAreaData>			m_SwitchOperatingAreaOnData;	//!< ON状態であるスイッチの作動範囲をチェックするときに使用するデータ
+	Player*											m_pPlayer;						//!< 衝突判定を行うプレイヤー
 
 	/**
 	* プレイヤーとの衝突判定を行う関数
@@ -100,14 +108,14 @@ private:
 	* @param[in] rArea チェックを行いたいスイッチの作動範囲のデータ
 	*/
 	void CheckCollisionSwitchOperatingArea(const SwitchOperatingAreaData& rArea);
-
+	
 	/**
-	* 矩形で衝突判定を行う関数.
+	* 矩形の衝突判定を行う関数.
 	* @param[in] pObjA 衝突判定を行いたいObjBaseのインスタンスへのポインタ
 	* @param[in] pObjB 衝突判定を行いたいObjBaseのインスタンスへのポインタ
 	* @return 衝突しているかどうか true→衝突している false→衝突していない
 	*/
-	bool CheckCollisionRect(ObjBase* pObjA, ObjBase* pObjB);
+	bool CheckRectCollision(ObjBase* pObjA, ObjBase* pObjB);
 
 };	// class CollisionManager
 

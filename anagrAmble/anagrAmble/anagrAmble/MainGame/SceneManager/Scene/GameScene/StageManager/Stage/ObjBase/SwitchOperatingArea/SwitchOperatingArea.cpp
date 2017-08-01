@@ -30,8 +30,7 @@ SwitchOperatingArea::~SwitchOperatingArea(void)
 
 void SwitchOperatingArea::Control(void)
 {
-	// 衝突判定用データへ追加
-	m_pCollisionManager->SetSwitchOperatingAreaData(this);
+	ResisterCollision();
 }
 
 void SwitchOperatingArea::SwitchOnState(void)
@@ -76,7 +75,14 @@ void SwitchOperatingArea::HandleEvent(void)
 
 void SwitchOperatingArea::ResisterCollision(void)
 {
-	m_pCollisionManager->SetSwitchOperatingAreaData(this);
+	if(m_TypeID == ObjBase::SWITCH_OPERATING_AREA_ON)
+	{
+		m_pCollisionManager->SetSwitchOperatingAreaOnData(this);
+	}
+	else
+	{
+		m_pCollisionManager->SetSwitchOperatingAreaOffData(this);
+	}
 }
 
 }	// namespace ar
