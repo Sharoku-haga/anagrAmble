@@ -88,6 +88,15 @@
     <Filter Include="anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI">
       <UniqueIdentifier>{52326ca6-dd27-4d5d-afde-9bc3e22b5ba6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\ScoreCharacterDrawer">
+      <UniqueIdentifier>{45e02630-ba82-491a-9e52-efded20f667c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\NumberDrawer">
+      <UniqueIdentifier>{b134c613-6101-4439-a6e0-754917f269ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="anagrAmble\MainGame\SceneManager\ScoreTimeText">
+      <UniqueIdentifier>{e9ae5063-ee08-4441-9862-d3dba624c8f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -297,17 +306,32 @@
     <ClCompile Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI\StageTimer.cpp">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\GameDataManager\HighScoreText.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    <ClCompile Include="MainGame\SceneManager\ScoreCharacterDrawer\LargeScoreCharacterDrawer.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreCharacterDrawer</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\GameDataManager\NumberDrawer.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    <ClCompile Include="MainGame\SceneManager\ScoreCharacterDrawer\ScoreCharacterDrawer.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreCharacterDrawer</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\GameDataManager\ScoreTextDrawer.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    <ClCompile Include="MainGame\SceneManager\ScoreCharacterDrawer\SmallScoreCharacterDrawer.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreCharacterDrawer</Filter>
     </ClCompile>
-    <ClCompile Include="MainGame\SceneManager\GameDataManager\ThisPlayedTimeText.cpp">
-      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    <ClCompile Include="MainGame\SceneManager\NumberDrawer\LargeNumberDrawer.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\NumberDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\NumberDrawer\NumberDrawer.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\NumberDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\NumberDrawer\SmallNumberDrawer.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\NumberDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\ScoreTimeText\ScoreTimeText.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreTimeText</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\ScoreTimeText\HighScoreText.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreTimeText</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame\SceneManager\ScoreTimeText\ThisScoreTimeText.cpp">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreTimeText</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -530,17 +554,32 @@
     <ClInclude Include="MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI\StageTimer.h">
       <Filter>anagrAmble\MainGame\SceneManager\Scene\GameScene\StageManager\Stage\UI</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\GameDataManager\HighScoreText.h">
-      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    <ClInclude Include="MainGame\SceneManager\ScoreCharacterDrawer\LargeScoreCharacterDrawer.h">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreCharacterDrawer</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\GameDataManager\NumberDrawer.h">
-      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    <ClInclude Include="MainGame\SceneManager\ScoreCharacterDrawer\ScoreCharacterDrawer.h">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreCharacterDrawer</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\GameDataManager\ScoreTextDrawer.h">
-      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    <ClInclude Include="MainGame\SceneManager\ScoreCharacterDrawer\SmallScoreCharacterDrawer.h">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreCharacterDrawer</Filter>
     </ClInclude>
-    <ClInclude Include="MainGame\SceneManager\GameDataManager\ThisPlayedTimeText.h">
-      <Filter>anagrAmble\MainGame\SceneManager\GameDataManager</Filter>
+    <ClInclude Include="MainGame\SceneManager\NumberDrawer\LargeNumberDrawer.h">
+      <Filter>anagrAmble\MainGame\SceneManager\NumberDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\NumberDrawer\NumberDrawer.h">
+      <Filter>anagrAmble\MainGame\SceneManager\NumberDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\NumberDrawer\SmallNumberDrawer.h">
+      <Filter>anagrAmble\MainGame\SceneManager\NumberDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\ScoreTimeText\ScoreTimeText.h">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreTimeText</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\ScoreTimeText\HighScoreText.h">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreTimeText</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame\SceneManager\ScoreTimeText\ThisScoreTimeText.h">
+      <Filter>anagrAmble\MainGame\SceneManager\ScoreTimeText</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

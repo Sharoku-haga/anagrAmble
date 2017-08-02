@@ -22,9 +22,12 @@
 #include "StageBackground.h"
 #include "UI/GoddessPointUI.h"
 #include "UI/StageTimer.h"
-#include "../../../../GameDataManager/NumberDrawer.h"
-#include "../../../../GameDataManager/ScoreTextDrawer.h"
-#include "../../../../GameDataManager/HighScoreText.h"
+#include "../../../../NumberDrawer/NumberDrawer.h"
+#include "../../../../NumberDrawer/SmallNumberDrawer.h"
+#include "../../../../ScoreCharacterDrawer/ScoreCharacterDrawer.h"
+#include "../../../../ScoreCharacterDrawer/SmallScoreCharacterDrawer.h"
+#include "../../../../ScoreTimeText/ScoreTimeText.h"
+#include "../../../../ScoreTimeText/HighScoreText.h"
 
 /* Unnamed Namespace ------------------------------------------------------------------------------------------ */
 
@@ -52,7 +55,7 @@ Stage::Stage(GameDataManager* pGameDataManager, StageDataManager*	pStageDataMana
 	, m_pBackground(nullptr)
 	, m_pGoddessPointUI(nullptr)
 	, m_pNumberDrawer(nullptr)
-	, m_pScoreTextDrawer(nullptr)
+	, m_pScoreCharacterDrawer(nullptr)
 	, m_pStageTimer(nullptr)
 	, m_pHighScoreText(nullptr)
 	, m_CurrentState(ENTER)
@@ -62,7 +65,7 @@ Stage::~Stage(void)
 {
 	sl::DeleteSafely(&m_pHighScoreText);
 	sl::DeleteSafely(&m_pStageTimer);
-	sl::DeleteSafely(&m_pScoreTextDrawer);
+	sl::DeleteSafely(&m_pScoreCharacterDrawer);
 	sl::DeleteSafely(&m_pNumberDrawer);
 	sl::DeleteSafely(&m_pGoddessPointUI);
 	sl::DeleteSafely(&m_pBackground);
@@ -174,19 +177,19 @@ void Stage::Initialize(void)
 	m_pGoddessPointUI = new GoddessPointUI(goddessPointUITexID, m_pPlayer->GetGoddessPointCount());
 	m_pGoddessPointUI->Initialize();
 
-	m_pNumberDrawer = new NumberDrawer(Scene::GAME, uiNumberTexID);
+	m_pNumberDrawer = new SmallNumberDrawer(uiNumberTexID);
 	m_pNumberDrawer->Initialize();
 	
-	m_pScoreTextDrawer = new ScoreTextDrawer(Scene::GAME, uiNumberTexID);
-	m_pScoreTextDrawer->Initialize();
+	m_pScoreCharacterDrawer = new SmallScoreCharacterDrawer(uiNumberTexID);
+	m_pScoreCharacterDrawer->Initialize();
 	
-	m_pStageTimer = new StageTimer(m_pGameDataManager, m_pNumberDrawer, m_pScoreTextDrawer);
+	m_pStageTimer = new StageTimer(m_pGameDataManager, m_pNumberDrawer, m_pScoreCharacterDrawer);
 	m_pStageTimer->Initialize();
 
-	m_pHighScoreText = new HighScoreText(m_pGameDataManager->GetHighScoreGameTime(),m_pNumberDrawer, m_pScoreTextDrawer);
+	m_pHighScoreText = new HighScoreText(m_pNumberDrawer, m_pScoreCharacterDrawer);
 	// ハイスコアの位置座標 チップの7番目ぐらいから描画
 	sl::SLVECTOR2 highScorePos = {(m_pStageDataManager->GetStageChipSize() * 8 + (m_pStageDataManager->GetStageChipSize() / 2)), (m_pStageDataManager->GetStageChipSize() / 4)};
-	m_pHighScoreText->Initialize(highScorePos);
+	m_pHighScoreText->Initialize(m_pGameDataManager->GetHighScoreTime(), highScorePos);
 
 	// イベント登録
 	// ゴール到達イベント

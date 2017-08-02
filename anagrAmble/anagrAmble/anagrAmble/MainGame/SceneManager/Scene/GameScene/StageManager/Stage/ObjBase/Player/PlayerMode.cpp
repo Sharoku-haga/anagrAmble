@@ -98,9 +98,9 @@ void PlayerMode::Control(void)
 		}
 
 		if(m_pAnchors[0]->GetHasPlacePosStage() && m_pAnchors[1]->GetHasPlacePosStage())
-		{	// どちらのアンカ-もステージにおかれたら モードを通常モードへ
+		{	// どちらのアンカ-もステージにおかれたら モードをエリア入れ換えモードへ
 			m_pSandwichedStageSpace->InitializeData(m_pAnchors[0], m_pAnchors[1]);
-			m_CurrentModeType = NORMAL;
+			m_CurrentModeType = AREA_CHENGE;
 		}
 
 		if(m_pLibrary->CheckCustomizeState(MODE_CHANGE, sl::PUSH))
