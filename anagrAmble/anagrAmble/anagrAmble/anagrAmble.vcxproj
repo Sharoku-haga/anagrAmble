@@ -125,10 +125,9 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainGame\MainGame.cpp" />
     <ClCompile Include="MainGame\SceneManager\GameDataManager\GameDataManager.cpp" />
-    <ClCompile Include="MainGame\SceneManager\GameDataManager\HighScoreText.cpp" />
-    <ClCompile Include="MainGame\SceneManager\GameDataManager\NumberDrawer.cpp" />
-    <ClCompile Include="MainGame\SceneManager\GameDataManager\ScoreTextDrawer.cpp" />
-    <ClCompile Include="MainGame\SceneManager\GameDataManager\ThisPlayedTimeText.cpp" />
+    <ClCompile Include="MainGame\SceneManager\NumberDrawer\LargeNumberDrawer.cpp" />
+    <ClCompile Include="MainGame\SceneManager\NumberDrawer\NumberDrawer.cpp" />
+    <ClCompile Include="MainGame\SceneManager\NumberDrawer\SmallNumberDrawer.cpp" />
     <ClCompile Include="MainGame\SceneManager\SceneFactory.cpp" />
     <ClCompile Include="MainGame\SceneManager\SceneManager.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\GameClearScene\GameClearBackground.cpp" />
@@ -195,15 +194,20 @@
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleMenu.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="MainGame\SceneManager\Scene\TitleScene\TitleText.cpp" />
+    <ClCompile Include="MainGame\SceneManager\ScoreCharacterDrawer\LargeScoreCharacterDrawer.cpp" />
+    <ClCompile Include="MainGame\SceneManager\ScoreCharacterDrawer\ScoreCharacterDrawer.cpp" />
+    <ClCompile Include="MainGame\SceneManager\ScoreCharacterDrawer\SmallScoreCharacterDrawer.cpp" />
+    <ClCompile Include="MainGame\SceneManager\ScoreTimeText\HighScoreText.cpp" />
+    <ClCompile Include="MainGame\SceneManager\ScoreTimeText\ScoreTimeText.cpp" />
+    <ClCompile Include="MainGame\SceneManager\ScoreTimeText\ThisScoreTimeText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\ControllerEnum.h" />
     <ClInclude Include="MainGame\MainGame.h" />
     <ClInclude Include="MainGame\SceneManager\GameDataManager\GameDataManager.h" />
-    <ClInclude Include="MainGame\SceneManager\GameDataManager\HighScoreText.h" />
-    <ClInclude Include="MainGame\SceneManager\GameDataManager\NumberDrawer.h" />
-    <ClInclude Include="MainGame\SceneManager\GameDataManager\ScoreTextDrawer.h" />
-    <ClInclude Include="MainGame\SceneManager\GameDataManager\ThisPlayedTimeText.h" />
+    <ClInclude Include="MainGame\SceneManager\NumberDrawer\LargeNumberDrawer.h" />
+    <ClInclude Include="MainGame\SceneManager\NumberDrawer\NumberDrawer.h" />
+    <ClInclude Include="MainGame\SceneManager\NumberDrawer\SmallNumberDrawer.h" />
     <ClInclude Include="MainGame\SceneManager\SceneFactory.h" />
     <ClInclude Include="MainGame\SceneManager\SceneManager.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\GameClearScene\GameClearBackground.h" />
@@ -274,6 +278,12 @@
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleSceneSoundID.h" />
     <ClInclude Include="MainGame\SceneManager\Scene\TitleScene\TitleText.h" />
+    <ClInclude Include="MainGame\SceneManager\ScoreCharacterDrawer\LargeScoreCharacterDrawer.h" />
+    <ClInclude Include="MainGame\SceneManager\ScoreCharacterDrawer\ScoreCharacterDrawer.h" />
+    <ClInclude Include="MainGame\SceneManager\ScoreCharacterDrawer\SmallScoreCharacterDrawer.h" />
+    <ClInclude Include="MainGame\SceneManager\ScoreTimeText\HighScoreText.h" />
+    <ClInclude Include="MainGame\SceneManager\ScoreTimeText\ScoreTimeText.h" />
+    <ClInclude Include="MainGame\SceneManager\ScoreTimeText\ThisScoreTimeText.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

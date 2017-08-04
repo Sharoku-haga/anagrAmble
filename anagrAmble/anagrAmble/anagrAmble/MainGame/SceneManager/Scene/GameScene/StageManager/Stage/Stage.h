@@ -23,9 +23,9 @@ class StageObjManager;
 class StageBackground;
 class GoddessPointUI;
 class NumberDrawer;
-class ScoreTextDrawer;
+class ScoreCharacterDrawer;
 class StageTimer;
-class HighScoreText;
+class ScoreTimeText;
 
 //======================================================================//
 //!< ゲームステージクラス
@@ -75,24 +75,24 @@ private:
 		EXIT,				//!< 終了処理
 	};
 
-	sl::ISharokuLibrary*				m_pLibrary;				//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
-	GameDataManager*					m_pGameDataManager;		//!< GameDataManagerクラスのインスタンスへのポインタ
-	EventListener*						m_pEventListener;		//!< EventListenerクラスのインスタンスへのポインタ
-	StageDataManager*					m_pStageDataManager;	//!< StageDataManagerクラスのインスタンスへのポインタ
-	CollisionManager*					m_pCollisionManager;	//!< CollisionManagerクラスのインスタンスへのポインタ
-	BasePoint*							m_pBasePoint;			//!< BasePointクラスのインスタンスへのポインタ
-	Player*								m_pPlayer;				//!< Playerクラスのインスタンスへのポインタ
-	StageObjManager*					m_pStageObjManager;		//!< StageObjManagerクラスのインスタンスへのポインタ
-	StageBackground*					m_pBackground;			//!< StageBackgroundクラスのインスタンスへのポインタ
-	GoddessPointUI*						m_pGoddessPointUI;		//!< GoddessPointUIクラスのインスタンスへのポインタ
-	NumberDrawer*						m_pNumberDrawer;		//!< NumberDrawerクラスのインスタンスへのポインタ
-	ScoreTextDrawer*					m_pScoreTextDrawer;		//!< ScoreTextDrawerクラスのインスタンスへのポインタ
-	StageTimer*							m_pStageTimer;			//!< StageTimerクラスのインスタンスへのポインタ
-	HighScoreText*						m_pHighScoreText;		//!< HighScoreTextクラスのインスタンスへのポインタ
-	std::vector<std::vector<short>>		m_CurrentStageData;		//!< 現在のステージデータを格納する二次元配列(vector)
-	STATE								m_CurrentState;			//!< 現在のステージの状態
-	int									m_PlayerTexID;			//!< プレイヤーのテクスチャーID
-	int									m_StageObjTexID;		//!< ステージオブジェクトのテクチャーID
+	sl::ISharokuLibrary*				m_pLibrary;					//!< sl::ISharokuLibraryクラスのインスタンスへのポインタ
+	GameDataManager*					m_pGameDataManager;			//!< GameDataManagerクラスのインスタンスへのポインタ
+	EventListener*						m_pEventListener;			//!< EventListenerクラスのインスタンスへのポインタ
+	StageDataManager*					m_pStageDataManager;		//!< StageDataManagerクラスのインスタンスへのポインタ
+	CollisionManager*					m_pCollisionManager;		//!< CollisionManagerクラスのインスタンスへのポインタ
+	BasePoint*							m_pBasePoint;				//!< BasePointクラスのインスタンスへのポインタ
+	Player*								m_pPlayer;					//!< Playerクラスのインスタンスへのポインタ
+	StageObjManager*					m_pStageObjManager;			//!< StageObjManagerクラスのインスタンスへのポインタ
+	StageBackground*					m_pBackground;				//!< StageBackgroundクラスのインスタンスへのポインタ
+	GoddessPointUI*						m_pGoddessPointUI;			//!< GoddessPointUIクラスのインスタンスへのポインタ
+	NumberDrawer*						m_pNumberDrawer;			//!< NumberDrawerクラスのインスタンスへのポインタ
+	ScoreCharacterDrawer*				m_pScoreCharacterDrawer;	//!< ScoreCharacterDrawerクラスのインスタンスへのポインタ
+	StageTimer*							m_pStageTimer;				//!< StageTimerクラスのインスタンスへのポインタ
+	ScoreTimeText*						m_pHighScoreText;			//!< ハイスコアを表示するテキスト.ScoreTimeTextクラスのインスタンスへのポインタ
+	std::vector<std::vector<short>>		m_CurrentStageData;			//!< 現在のステージデータを格納する二次元配列(vector)
+	STATE								m_CurrentState;				//!< 現在のステージの状態
+	int									m_PlayerTexID;				//!< プレイヤーのテクスチャーID
+	int									m_StageObjTexID;			//!< ステージオブジェクトのテクチャーID
 
 	/** 
 	* オブジェクトを作成し、初期位置に配置させる関数

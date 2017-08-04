@@ -15,14 +15,11 @@ namespace ar
 /* Public Functions ------------------------------------------------------------------------------------------- */
 
 GameDataManager::GameDataManager(void)
-	: m_PlayedGameTime(0)
-	, m_HighScoreGameTime(0)
+	: m_ThisScoreTime(0)
+	, m_HighScoreTime(0)
 {
 	m_SelectStageName = "Stage";
 }
-
-GameDataManager::~GameDataManager(void)
-{}
 
 void GameDataManager::Initialize(void)
 {
@@ -31,10 +28,10 @@ void GameDataManager::Initialize(void)
 
 void GameDataManager::ProcessGameClear(void)
 {
-	if(m_PlayedGameTime < m_HighScoreGameTime
-		|| m_HighScoreGameTime == 0)
+	if(m_ThisScoreTime < m_HighScoreTime
+		|| m_HighScoreTime == 0)
 	{
-		m_HighScoreGameTime = m_PlayedGameTime;
+		m_HighScoreTime = m_ThisScoreTime;
 	}
 	
 	SaveHighScoreData();
@@ -47,7 +44,7 @@ void GameDataManager::LoadHighScoreData(void)
 	//ファイルポインタ
 	FILE *file;
 	fopen_s(&file, "../Resource/ScoreData/score.dat", "rb");
-	fread(&m_HighScoreGameTime, sizeof(m_HighScoreGameTime), 1, file);
+	fread(&m_HighScoreTime, sizeof(m_HighScoreTime), 1, file);
 	fclose(file);
 }
 
@@ -56,7 +53,7 @@ void GameDataManager::SaveHighScoreData(void)
 	//ファイルポインタ
 	FILE *file;
 	fopen_s(&file,"../Resource/ScoreData/score.dat", "wb");
-	fwrite(&m_HighScoreGameTime, sizeof(m_HighScoreGameTime), 1, file);
+	fwrite(&m_HighScoreTime, sizeof(m_HighScoreTime), 1, file);
 	fclose(file);
 }
 

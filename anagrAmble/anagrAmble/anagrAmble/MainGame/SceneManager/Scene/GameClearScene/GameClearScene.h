@@ -15,9 +15,8 @@ namespace ar
 class GameDataManager;
 class GameClearBackground;
 class NumberDrawer;
-class ScoreTextDrawer;
-class HighScoreText;
-class ThisPlayedTimeText;
+class ScoreCharacterDrawer;
+class ScoreTimeText;
 
 //======================================================================//
 //!< anagrAmbleにおけるゲームクリアシーンのクラス
@@ -44,13 +43,13 @@ private:
 		FADE_OUT_SCREEN,			//!< 画面フェードアウト処理
 	};
 
-	GameDataManager*			m_pGameDataManager;		//!< GameDataManagerクラスのインスタンスへのポインタ
-	NumberDrawer*				m_pNumberDrawer;		//!< NumberDrawerクラスのインスタンスへのポインタ 
-	ScoreTextDrawer*			m_pScoreTextDrawer;		//!< ScoreTextDrawerクラスのインスタンスへのポインタ
-	HighScoreText*				m_pHighScoreText;		//!< HighScoreTextクラスのインスタンスへのポインタ
-	ThisPlayedTimeText*			m_pThisPlayedTimeText;	//!< ThisPlayedTimeTextクラスのインスタンスへのポインタ
-	GameClearBackground*		m_pBackground;			//!< 背景. GameClearBackgroundクラスのインスタンスへのポインタ 
-	STATE						m_CurrentState;			//!< 現在のシーンの状態
+	GameDataManager*			m_pGameDataManager;				//!< GameDataManagerクラスのインスタンスへのポインタ
+	NumberDrawer*				m_pNumberDrawer;				//!< NumberDrawerクラスのインスタンスへのポインタ 
+	ScoreCharacterDrawer*		m_pScoreCharacterDrawer;		//!< ScoreCharacterDrawerクラスのインスタンスへのポインタ
+	ScoreTimeText*				m_pHighScoreText;				//!< ハイスコア表示テキスト.ScoreTimeTextクラスのインスタンスへのポインタ
+	ScoreTimeText*				m_pThisScoreTimeText;			//!< 今回のスコ時間表示アテキスト.表ScoreTimeTextクラスのインスタンスへのポインタ
+	GameClearBackground*		m_pBackground;					//!< 背景. GameClearBackgroundクラスのインスタンスへのポインタ 
+	STATE						m_CurrentState;					//!< 現在のシーンの状態
 
 	/** 
 	* コントロール関数 

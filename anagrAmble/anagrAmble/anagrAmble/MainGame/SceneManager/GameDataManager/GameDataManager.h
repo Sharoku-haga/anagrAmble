@@ -23,7 +23,7 @@ public:
 	GameDataManager(void);
 
 	/** Destructor */
-	~GameDataManager(void);
+	~GameDataManager(void) = default;
 
 	/** 初期化関数 */
 	void Initialize(void);
@@ -38,22 +38,22 @@ public:
 	inline std::string	GetSelectStageName(void) { return m_SelectStageName; }
 
 	/**
-	* Getter.プレイしたゲーム時間を取得する関数
+	* Getter.ハイスコアを取得する関数
 	* @return ハイスコアゲーム時間
 	*/
-	inline unsigned long GetHighScoreGameTime(void) { return m_HighScoreGameTime; }
+	inline unsigned long GetHighScoreTime(void) { return m_HighScoreTime; }
 
 	/**
-	* Getter.プレイしたゲーム時間を取得する関数
+	* Getter.今回のスコア時間を取得する関数
 	* @return プレイしたゲーム時間
 	*/
-	inline unsigned long GetPlayedGameTime(void) { return m_PlayedGameTime; }
+	inline unsigned long GetThisScoreTime(void) { return m_ThisScoreTime; }
 
 	/**
-	* Setter 今回プレイしたゲーム時間をセットする関数
+	* Setter 今回のスコア時間をセットする関数
 	* @param[in] thisPlayedGameTime 今回プレイしたゲーム時間
 	*/
-	inline void SetPlayedGameTime(unsigned long thisPlayedGameTime) { m_PlayedGameTime = thisPlayedGameTime; }
+	inline void SetThisScoreTime(unsigned long thisScoreTime) { m_ThisScoreTime = thisScoreTime; }
 
 	/**
 	* Setter.選択しているステージ名をセットする関数
@@ -63,8 +63,8 @@ public:
 
 private:
 	std::string		m_SelectStageName;		//!< 選択しているステージ名
-	unsigned long	m_PlayedGameTime;		//!< プレイしたゲーム時間(ゲームをプレイするごとに変動する)
-	unsigned long	m_HighScoreGameTime;	//!< ハイスコアのプレイしたゲーム時間
+	unsigned long	m_ThisScoreTime;		//!< 今回のスコア時間(ゲームをプレイするごとに変動する)
+	unsigned long	m_HighScoreTime;		//!< 現在のハイスコア
 
 	/** ハイスコアデータを読み込む関数 */
 	void LoadHighScoreData(void);

@@ -19,7 +19,7 @@ namespace ar
 namespace
 {
 
-const		float		RectSizeCorrectionVal	= 11.f;				// 矩形サイズ補正値
+const		float		RectSizeCorrectionVal	= 3.f;				// 矩形サイズ補正値
 const		float		MoveSpeed				= 4.f;				// プレイヤーの移動スピード
 const		float		ScrollSpeed				= 0.2f;				// スクロールスピード(入場、退場スピード)
 const		float		JumpSpeed				= 16.f;				// ジャンプスピード

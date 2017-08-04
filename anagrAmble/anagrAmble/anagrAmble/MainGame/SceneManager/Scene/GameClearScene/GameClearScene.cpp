@@ -8,10 +8,13 @@
 
 #include "GameClearScene.h"
 #include "../../GameDataManager/GameDataManager.h"
-#include "../../GameDataManager/NumberDrawer.h"
-#include "../../GameDataManager/ScoreTextDrawer.h"
-#include "../../GameDataManager/HighScoreText.h"
-#include "../../GameDataManager/ThisPlayedTimeText.h"
+#include "../../NumberDrawer/NumberDrawer.h"
+#include "../../NumberDrawer/LargeNumberDrawer.h"
+#include "../../ScoreCharacterDrawer/ScoreCharacterDrawer.h"
+#include "../../ScoreCharacterDrawer/LargeScoreCharacterDrawer.h"
+#include "../../ScoreTimeText/ScoreTimeText.h"
+#include "../../ScoreTimeText/HighScoreText.h"
+#include "../../ScoreTimeText/ThisScoreTimeText.h"
 #include "GameClearBackground.h"
 #include "GameClearSceneSoundID.h"
 #include "../../../ControllerEnum.h"
@@ -24,7 +27,7 @@ namespace ar
 GameClearScene::GameClearScene(GameDataManager*	pGameDataManager)
 	: m_pGameDataManager(pGameDataManager)
 	, m_pNumberDrawer(nullptr)
-	, m_pScoreTextDrawer(nullptr)
+	, m_pScoreCharacterDrawer(nullptr)
 	, m_pBackground(nullptr)
 	, m_CurrentState(FADE_IN_SCREEN)
 {
@@ -33,20 +36,20 @@ GameClearScene::GameClearScene(GameDataManager*	pGameDataManager)
 	// スコア関連作成
 	{
 		int texID = m_pLibrary->LoadTexture("../Resource/GameScene/UiNumber.png");
-		m_pNumberDrawer = new NumberDrawer(Scene::GAME_CLEAR, texID);
+		m_pNumberDrawer = new LargeNumberDrawer(texID);
 		m_pNumberDrawer->Initialize();
-		m_pScoreTextDrawer = new ScoreTextDrawer(Scene::GAME_CLEAR, texID);
-		m_pScoreTextDrawer->Initialize();
+		m_pScoreCharacterDrawer = new LargeScoreCharacterDrawer(texID);
+		m_pScoreCharacterDrawer->Initialize();
 
-		m_pHighScoreText = new HighScoreText(m_pGameDataManager->GetHighScoreGameTime(), m_pNumberDrawer, m_pScoreTextDrawer);
+		m_pHighScoreText = new HighScoreText(m_pNumberDrawer, m_pScoreCharacterDrawer);
 		// ハイスコアの位置座標 
 		sl::SLVECTOR2 highScorePos = {690.0f, 700.f};
-		m_pHighScoreText->Initialize(highScorePos);
+		m_pHighScoreText->Initialize(m_pGameDataManager->GetHighScoreTime(), highScorePos);
 
-		m_pThisPlayedTimeText = new ThisPlayedTimeText(m_pGameDataManager->GetPlayedGameTime(), m_pNumberDrawer, m_pScoreTextDrawer);
+		m_pThisScoreTimeText = new ThisScoreTimeText(m_pNumberDrawer, m_pScoreCharacterDrawer);
 			// タイムの位置座標 
-		sl::SLVECTOR2 playedTimePos = {690.0f, 800.f};
-		m_pThisPlayedTimeText->Initialize(playedTimePos);
+		sl::SLVECTOR2 thisScoreTimePos = {690.0f, 800.f};
+		m_pThisScoreTimeText->Initialize(m_pGameDataManager->GetThisScoreTime(), thisScoreTimePos);
 	}
 
 	// 背景作成
@@ -67,9 +70,9 @@ GameClearScene::~GameClearScene(void)
 	m_pGameDataManager->ProcessGameClear();
 	m_pLibrary->ReleaseSound(static_cast<int>(GAME_CLEAR_SCENE_SOUND_ID::BACK_GROUND));
 	sl::DeleteSafely(&m_pBackground);
-	sl::DeleteSafely(&m_pThisPlayedTimeText);
+	sl::DeleteSafely(&m_pThisScoreTimeText);
 	sl::DeleteSafely(&m_pHighScoreText);
-	sl::DeleteSafely(&m_pScoreTextDrawer);
+	sl::DeleteSafely(&m_pScoreCharacterDrawer);
 	sl::DeleteSafely(&m_pNumberDrawer);
 	m_pLibrary->ReleaseVertexALL();
 	m_pLibrary->ReleaseTexALL();
@@ -125,7 +128,7 @@ void GameClearScene::Draw(void)
 
 	case DISPLAY_SCREEN:
 			m_pHighScoreText->Draw();
-			m_pThisPlayedTimeText->Draw();
+			m_pThisScoreTimeText->Draw();
 		break;
 
 	case FADE_OUT_SCREEN:
@@ -134,7 +137,6 @@ void GameClearScene::Draw(void)
 	default:
 		break;
 	}
-
 }
 
 }	// namespace ar
