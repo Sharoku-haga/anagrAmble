@@ -33,6 +33,7 @@ const		float		CollisionCorrectionVal			= 12.f;				// 衝突における判定の
 const		float		DownCollisionCorrectionVal		= 1.0f;				// 下の衝突判定補正値
 const		float		RightCollisionCorrectionVal		= -1.0f;			// 右の衝突判定補正値
 const		float		LeftCollisionCorrectionVal		= -0.5f;			// 左の衝突判定補正値
+const		float		DeathAreaCorrectionVal			= 15.f;				// 死亡判定エリアの補正値
 const		float		FallLimitVal					= 1368.f;			// 落下限界値. 
 const		float		BeltConverSpeed					= 15.f;				// ベルトコンベアーのスピード
 	
@@ -209,7 +210,8 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		break;
 
 	case ELECTICAL_B:
-		if(RESULT_FAILED(m_pPlayerMotion->IsCurrrentMotionDeath()))
+		if(RESULT_FAILED(m_pPlayerMotion->IsCurrrentMotionDeath())
+			&& CheckCollisionDeathArea(rData.m_ObjRect))
 		{
 			m_pPlayerMotion->ChangeDeathMotion();
 			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT), sl::PLAY);
@@ -244,7 +246,8 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 		break;
 
 	case SPEAR:
-		if(RESULT_FAILED(m_pPlayerMotion->IsCurrrentMotionDeath()))
+		if(RESULT_FAILED(m_pPlayerMotion->IsCurrrentMotionDeath())
+			&& CheckCollisionDeathArea(rData.m_ObjRect))
 		{
 			m_pPlayerMotion->ChangeDeathMotion();
 			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT), sl::PLAY);
@@ -441,6 +444,25 @@ void Player::CalculateStageIndexData(void)
 		m_StageIndexData.m_XIndexNum = static_cast<short>((m_Pos.x + (m_StageChipSize / 2)) / m_StageChipSize);
  	    m_StageIndexData.m_YIndexNum  = static_cast<short>(m_Pos.y / m_StageChipSize);
 	}
+}
+
+bool Player::CheckCollisionDeathArea(const sl::fRect& rCollidedObjRect)
+{
+	sl::fRect deathAreaRect;
+	deathAreaRect.m_Left	= m_CurrentRectData.m_Left + DeathAreaCorrectionVal;
+	deathAreaRect.m_Bottom	= m_CurrentRectData.m_Bottom;
+	deathAreaRect.m_Right	= m_CurrentRectData.m_Right - DeathAreaCorrectionVal;
+	deathAreaRect.m_Top		= m_CurrentRectData.m_Bottom;
+
+	if(deathAreaRect.m_Right > rCollidedObjRect.m_Left
+		&& deathAreaRect.m_Top < rCollidedObjRect.m_Bottom
+		&& deathAreaRect.m_Left < rCollidedObjRect.m_Right
+		&& deathAreaRect.m_Bottom > rCollidedObjRect.m_Top)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 }	// namespace ar

@@ -116,8 +116,8 @@ private:
 
 	/**
 	* ステージデータを入れ替えを行う関数
-	* @param[in] changeSpaceYCount		入れ替え空間のチップの横の数
-	* @param[in] changeSpaceXCount		入れ替え空間のチップの縦の数
+	* @param[in] changeSpaceYCount		入れ替え空間のチップの縦の数
+	* @param[in] changeSpaceXCount		入れ替え空間のチップの横の数
 	* @param[in] rChangeStartIndexData	入れ替え空間の開始インデックスデータ
 	* @param[in] rChangingStageData		入れ替え空間のステージデータ
 	*/
@@ -125,6 +125,20 @@ private:
 						, short changeSpaceXCount
 						, Stage::INDEX_DATA&	rChangeStartIndexData
 						, std::vector<std::vector<ChangeData>>& rChangingStageData);
+
+	/** 
+	* 1番上の列のデータを変更する関数
+	* @param[in] changeSpaceXCount		入れ替え空間のチップの横の数
+	* @param[in] changeStartIndexXNum	入れ替え空間の開始の横のインデックス番号
+	*/
+	void ChangeTopRowData(short changeSpaceXCount, short changeStartIndexXNum);
+
+	/** 
+	* 1番下の列のデータを変更する関数
+	* @param[in] changeSpaceXCount		入れ替え空間のチップの横の数
+	* @param[in] changeStartIndexXNum	入れ替え空間の開始の横のインデックス番号
+	*/
+	void ChangeBottomRowData(short changeSpaceXCount, short changeStartIndexXNum);
 
 	/** Constructor */
 	StageDataChangeManager(void) = default;

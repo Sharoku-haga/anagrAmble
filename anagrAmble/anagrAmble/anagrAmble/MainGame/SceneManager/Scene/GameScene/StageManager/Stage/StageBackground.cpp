@@ -32,6 +32,7 @@ StageBackground::StageBackground(BasePoint* pBasePoint, int texID)
 	m_RectSize = m_pLibrary->GetClientSize();
 	m_RectSize.m_Left  -= PosCorrectionVal;
 	m_RectSize.m_Right += PosCorrectionVal;
+	m_RectSize.m_Bottom += PosCorrectionVal;
 	sl::fRect	uv = { 0.0f, 0.0f, 1.0f, 1.0f};
 	m_ID.m_VtxID = m_pLibrary->CreateVertex2D(m_RectSize, uv);
 	m_pLibrary->SetVtxColor(m_ID.m_VtxID, 1.0f, 1.0f, 1.0f, 1.0f);
