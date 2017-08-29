@@ -50,7 +50,7 @@ TitleScene::TitleScene(void)
 
 		m_pLibrary->LoadSound(static_cast<int>(TITLE_SCENE_SOUND_ID::BACK_GROUND)
 			, "../Sounds/BGM/Stage.wav");
-
+		
 		m_pLibrary->LoadSound(static_cast<int>(TITLE_SCENE_SOUND_ID::SELECT)
 			, "../Sounds/SE/Select.wav");
 	}

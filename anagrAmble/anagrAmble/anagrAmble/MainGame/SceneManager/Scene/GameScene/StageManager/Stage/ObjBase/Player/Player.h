@@ -150,6 +150,13 @@ private:
 	/** ステージインデックスデータを計算する関数 */
 	void CalculateStageIndexData(void);
 
+	/**
+	* プレイヤーに衝突したオブジェクトが死亡判定エリアに入っているかどうか確認する関数
+	* @param[in] rCollidedObjRect
+	* @return 結果 true→入っている false→入っていない
+	*/
+	bool CheckCollisionDeathArea(const sl::fRect& rCollidedObjRect);
+
 };	// class Player
 
 }	// namespace ar

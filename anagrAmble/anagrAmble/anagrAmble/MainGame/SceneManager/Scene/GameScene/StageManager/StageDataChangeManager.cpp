@@ -105,6 +105,7 @@ bool StageDataChangeManager::ChangeSpace(void)
 			}
 		}
 
+		changeStartIndexData.m_XIndexNum = (changeStartIndexData.m_XIndexNum - changeSpaceXCount);
 		ChangeStageData(changeSpaceYCount, changeSpaceXCount, changeStartIndexData, changingStageData);
 	}
 
@@ -208,6 +209,12 @@ void StageDataChangeManager::ChangeStageData(short changeSpaceYCount
 		}
 	}
 
+	// 1番上の列のデータ(状態)を変更する
+	ChangeTopRowData(changeSpaceXCount, rChangeStartIndexData.m_XIndexNum);
+	
+	// 1番下の列のデータ(状態)を変更する
+	ChangeBottomRowData(changeSpaceXCount, rChangeStartIndexData.m_XIndexNum);
+
 	// 挟んだ空間内に入れ替え用に入れておいたデータを適用する
 	for(short yIndexNum = 0; yIndexNum < changeSpaceYCount; ++yIndexNum)
 	{
@@ -229,6 +236,44 @@ void StageDataChangeManager::ChangeStageData(short changeSpaceYCount
 			pObj->ChangeStagePos(rChangingStageData[yIndexNum][xIndexNum].m_YIndexNum, (m_SandwichedSpaceStartIndex.m_XIndexNum + xIndexNum));
 			m_pStageDataManager->SetCurrentStageChipData(rChangingStageData[yIndexNum][xIndexNum].m_YIndexNum, (m_SandwichedSpaceStartIndex.m_XIndexNum + xIndexNum), pObj);
 		}
+	}
+
+	// 1番上の列のデータ(状態)を変更する
+	ChangeTopRowData(changeSpaceXCount, m_SandwichedSpaceStartIndex.m_XIndexNum);
+	
+	// 1番下の列のデータ(状態)を変更する
+	ChangeBottomRowData(changeSpaceXCount, m_SandwichedSpaceStartIndex.m_XIndexNum);
+}
+
+void StageDataChangeManager::ChangeTopRowData(short changeSpaceXCount, short startIndexXNum)
+{
+	for(short xIndexNum = 0; xIndexNum < changeSpaceXCount; ++xIndexNum)
+	{
+		ObjBase* pObj = m_pStageDataManager->GetObjBasePointer(0, (startIndexXNum + xIndexNum));
+
+		if(pObj == nullptr)
+		{
+			continue;
+		}
+
+		pObj->ChangeStagePos(0, (startIndexXNum + xIndexNum));
+	}
+}
+
+void StageDataChangeManager::ChangeBottomRowData(short changeSpaceXCount, short startIndexXNum)
+{
+	for(short xIndexNum = 0; xIndexNum < changeSpaceXCount; ++xIndexNum)
+	{
+		ObjBase* pObj = m_pStageDataManager->GetObjBasePointer((m_pStageDataManager->GetStageHeightChipCount() - 1)
+															, (startIndexXNum + xIndexNum));
+
+		if(pObj == nullptr)
+		{
+			continue;
+		}
+
+		pObj->ChangeStagePos((m_pStageDataManager->GetStageHeightChipCount() - 1)
+							, (startIndexXNum + xIndexNum));
 	}
 }
 
