@@ -13,6 +13,7 @@
 #include "../../../../../GameEventManager/EventListener.h"
 #include "../../../../../GameSceneSoundID.h"
 #include "../../../StageEffect/SandwichEffect.h"
+#include "../../../../../../../SoundManager/SceneSoundManager.h"
 
 /* Unnamed Namespace ------------------------------------------------------------------------------------------ */
 
@@ -153,7 +154,7 @@ void Lever::HandleEvent(void)
 					m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, LeverOffUV);
 					m_pSandwichEffect->ChangeUV();
 					m_IsOnState = false;
-					m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
+					SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
 				}
 				else
 				{
@@ -161,7 +162,7 @@ void Lever::HandleEvent(void)
 					m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, LeverOnUV);
 					m_pSandwichEffect->ChangeUV();
 					m_IsOnState = true;
-					m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
+					SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER), sl::RESET_PLAY);
 				}
 			}
 		}

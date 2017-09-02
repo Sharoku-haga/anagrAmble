@@ -11,8 +11,6 @@
 enum class TITLE_SCENE_SOUND_ID : int
 {
 	BACK_GROUND,			//!< バック音
-	SELECT,					//!< セレクト音
-	ENTER = 99,					//!< 決定音
 };
 
 #endif	// AR_TITLE_SCENE_SOUND_ID_H

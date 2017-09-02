@@ -12,6 +12,7 @@
 #include "../../../../../GameEventManager/EventListener.h"
 #include "../../../../../GameSceneSoundID.h"
 #include "../../../StageEffect/SandwichEffect.h"
+#include "../../../../../../../SoundManager/SceneSoundManager.h"
 
 
 namespace ar
@@ -134,7 +135,7 @@ void GoalKey::HandleEvent(void)
 				&& RESULT_FAILED(m_HasBeenGotPlayer))
 			{
 				GameEventManager::Instance().ReceiveEvent("goal_key_get");
-				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::GET_KEY), sl::RESET_PLAY);
+				SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::GET_KEY), sl::RESET_PLAY);
 				// 取得されたフラグにして、さらに衝突しないステージの端へ移動させる
 				m_HasBeenGotPlayer = true;
 				m_StageIndexData.m_YIndexNum = 0;

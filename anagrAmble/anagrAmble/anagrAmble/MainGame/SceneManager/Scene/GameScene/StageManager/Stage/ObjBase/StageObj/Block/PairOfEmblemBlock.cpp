@@ -13,6 +13,7 @@
 #include "../../../../../GameEventManager/EventListener.h"
 #include "../../../../../GameSceneSoundID.h"
 #include "../../../StageEffect/SandwichEffect.h"
+#include "../../../../../../../SoundManager/SceneSoundManager.h"
 
 namespace ar
 {
@@ -137,7 +138,7 @@ void PairOfEmblemBlock::CheckPairBlock(void)
 			if(m_Pos.x > m_BasePointPos.x
 				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
 			{	// 左からチェックされるため右い音を鳴らすソースを実装
-				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::PLAY);
+				SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::PLAY);
 			}
 		}
 		else

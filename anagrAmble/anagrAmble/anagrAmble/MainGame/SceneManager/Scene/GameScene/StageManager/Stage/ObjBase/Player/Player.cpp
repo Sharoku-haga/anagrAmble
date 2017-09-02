@@ -17,6 +17,7 @@
 #include "../../../../GameEventManager/EventListener.h"
 #include "../../../StageDataChangeManager.h"
 #include "../../../../GameSceneSoundID.h"
+#include "../../../../../../SoundManager/SceneSoundManager.h"
 
 namespace ar
 {
@@ -214,9 +215,9 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 			&& CheckCollisionDeathArea(rData.m_ObjRect))
 		{
 			m_pPlayerMotion->ChangeDeathMotion();
-			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT), sl::PLAY);
+			SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT), sl::PLAY);
 		}
-	
+		return;
 		break;
 
 	case LEVER:
@@ -250,7 +251,7 @@ void Player::ProcessCollision(const CollisionManager::CollisionData& rData)
 			&& CheckCollisionDeathArea(rData.m_ObjRect))
 		{
 			m_pPlayerMotion->ChangeDeathMotion();
-			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT), sl::PLAY);
+			SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT), sl::PLAY);
 		}
 		break;
 
@@ -422,7 +423,7 @@ void Player::RunDeathAnimeEndProcessing(void)
 	if(m_GoddessPointCount > 0)
 	{	// 加護があるなら復活させる
 		GameEventManager::Instance().ReceiveEvent("player_respawn_start");
-		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::REVIVE), sl::RESET_PLAY);
+		SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::REVIVE), sl::RESET_PLAY);
 		// モードをリセットする
 		m_pPlayerMode->Reset();
 	}
@@ -452,7 +453,7 @@ bool Player::CheckCollisionDeathArea(const sl::fRect& rCollidedObjRect)
 	deathAreaRect.m_Left	= m_CurrentRectData.m_Left + DeathAreaCorrectionVal;
 	deathAreaRect.m_Bottom	= m_CurrentRectData.m_Bottom;
 	deathAreaRect.m_Right	= m_CurrentRectData.m_Right - DeathAreaCorrectionVal;
-	deathAreaRect.m_Top		= m_CurrentRectData.m_Bottom;
+	deathAreaRect.m_Top		= m_CurrentRectData.m_Top;
 
 	if(deathAreaRect.m_Right > rCollidedObjRect.m_Left
 		&& deathAreaRect.m_Top < rCollidedObjRect.m_Bottom

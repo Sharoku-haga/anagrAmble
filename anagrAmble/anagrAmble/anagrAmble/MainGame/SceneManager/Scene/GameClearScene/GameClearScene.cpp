@@ -18,6 +18,8 @@
 #include "GameClearBackground.h"
 #include "GameClearSceneSoundID.h"
 #include "../../../ControllerEnum.h"
+#include "../../SoundManager/CommonSoundManager.h"
+#include "../../SoundManager/SceneSoundManager.h"
 
 namespace ar
 {
@@ -59,16 +61,16 @@ GameClearScene::GameClearScene(GameDataManager*	pGameDataManager)
 	}
 
 	// 音楽の読み込み
-	//m_pLibrary->LoadSound(static_cast<int>(GAME_CLEAR_SCENE_SOUND_ID::BACK_GROUND)
+	//SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_CLEAR_SCENE_SOUND_ID::BACK_GROUND)
 	//		, "../Sounds/BGM/GameClear.wav");
-	m_pLibrary->LoadSound(static_cast<int>(GAME_CLEAR_SCENE_SOUND_ID::BACK_GROUND)
+	SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_CLEAR_SCENE_SOUND_ID::BACK_GROUND)
 			, "../Sounds/BGM/Stage.wav");
 }
 
 GameClearScene::~GameClearScene(void)
 {
 	m_pGameDataManager->ProcessGameClear();
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_CLEAR_SCENE_SOUND_ID::BACK_GROUND));
+	SceneSoundManager::Instance().ReleaseSoundALL();
 	sl::DeleteSafely(&m_pBackground);
 	sl::DeleteSafely(&m_pThisScoreTimeText);
 	sl::DeleteSafely(&m_pHighScoreText);
@@ -106,7 +108,7 @@ Scene::ID GameClearScene::Control(void)
 		if(m_pLibrary->CheckCustomizeState(ENTER, sl::ON))
 		{	// 決定ボタンが押されたらTitleSceneへ移行
 			m_NextSceneID = Scene::TITLE;
-			m_pLibrary->PlayBackSound(static_cast<int>(GAME_CLEAR_SCENE_SOUND_ID::ENTER), sl::RESET_PLAY);
+			CommonSoundManager::Instance().PlayBackSound(CommonSoundManager::ENTER,  sl::RESET_PLAY);
 		}
 		break;
 
@@ -114,7 +116,7 @@ Scene::ID GameClearScene::Control(void)
 		// do nothing
 		break;
 	}
-	m_pLibrary->PlayBackSound(static_cast<int>(GAME_CLEAR_SCENE_SOUND_ID::BACK_GROUND), sl::PLAY_LOOP);
+	SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_CLEAR_SCENE_SOUND_ID::BACK_GROUND), sl::PLAY_LOOP);
 	return m_NextSceneID;
 }
 

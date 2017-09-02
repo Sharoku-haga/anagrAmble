@@ -25,11 +25,7 @@ enum class GAME_SCENE_SOUND_ID : int
 	ELECTICAL,					//!< 電気音
 	GET_KEY,					//!< 鍵を手に入れた音
 	PRESSURE_SENSITIVE_ON,		//!< 感圧音
-	SELECT,						//!< 選択音
 	DOOR,						//!< ドアの音
-
-	ENTER = 99,					//!< 決定音
-
 };
 
 #endif	// AR_GAME_SCENE_SOUND_ID_H

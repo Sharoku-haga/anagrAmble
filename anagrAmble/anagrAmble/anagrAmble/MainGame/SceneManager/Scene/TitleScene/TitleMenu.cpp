@@ -12,6 +12,8 @@
 #include "Button\ButtonFactory.h"
 #include "TitleSceneSoundID.h"
 #include "../../../ControllerEnum.h"
+#include "../../SoundManager/CommonSoundManager.h"
+#include "../../SoundManager//SceneSoundManager.h"
 
 namespace ar
 {
@@ -88,12 +90,12 @@ Scene::ID TitleMenu::Control(void)
 		switch(m_CurrentSelectBtn)
 		{
 		case GAME_START:
-			m_pLibrary->PlayBackSound(static_cast<int>(TITLE_SCENE_SOUND_ID::ENTER), sl::RESET_PLAY);
+			CommonSoundManager::Instance().PlayBackSound(CommonSoundManager::ENTER,  sl::RESET_PLAY);
 			return Scene::GAME;
 			break;
 
 		case GAME_END:
-			m_pLibrary->PlayBackSound(static_cast<int>(TITLE_SCENE_SOUND_ID::ENTER), sl::RESET_PLAY);
+			CommonSoundManager::Instance().PlayBackSound(CommonSoundManager::ENTER,  sl::RESET_PLAY);
 			return Scene::END;
 			break;
 
@@ -124,7 +126,7 @@ void TitleMenu::SelectButton(void)
 	case GAME_START:
 		if(m_pLibrary->CheckCustomizeState(DOWN, sl::PUSH))
 		{
-			m_pLibrary->PlayBackSound(static_cast<int>(TITLE_SCENE_SOUND_ID::SELECT), sl::RESET_PLAY);
+			CommonSoundManager::Instance().PlayBackSound(CommonSoundManager::SELECT, sl::RESET_PLAY);
 			m_CurrentSelectBtn = GAME_END;
 			m_MovesButton = true;
 			m_ButtonMoveTimeCount = 0;
@@ -134,7 +136,7 @@ void TitleMenu::SelectButton(void)
 	case GAME_END:
 		if(m_pLibrary->CheckCustomizeState(UP, sl::PUSH))
 		{
-			m_pLibrary->PlayBackSound(static_cast<int>(TITLE_SCENE_SOUND_ID::SELECT), sl::RESET_PLAY);
+			CommonSoundManager::Instance().PlayBackSound(CommonSoundManager::SELECT, sl::RESET_PLAY);
 			m_CurrentSelectBtn = GAME_START;
 			m_MovesButton = true;
 			m_ButtonMoveTimeCount = 0;

@@ -28,6 +28,7 @@
 #include "../../../../ScoreCharacterDrawer/SmallScoreCharacterDrawer.h"
 #include "../../../../ScoreTimeText/ScoreTimeText.h"
 #include "../../../../ScoreTimeText/HighScoreText.h"
+#include "../../../../SoundManager/SceneSoundManager.h"
 
 /* Unnamed Namespace ------------------------------------------------------------------------------------------ */
 
@@ -74,23 +75,6 @@ Stage::~Stage(void)
 	sl::DeleteSafely(&m_pBasePoint);
 	sl::DeleteSafely(&m_pCollisionManager);
 	sl::DeleteSafely(&m_pEventListener);
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::DOOR));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::GET_KEY));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::REVIVE));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::DEATH));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::WALK));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::JUMP));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::RUN));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::ANCHOR));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::RETURN_CHAGED_SPACE));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::CHANGE_SPACE));
-	m_pLibrary->ReleaseSound(static_cast<int>(GAME_SCENE_SOUND_ID::BACK_GROUND));
-
 }
 
 void Stage::Initialize(void)
@@ -103,37 +87,37 @@ void Stage::Initialize(void)
 
 	// 音楽読み込み
 	{
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::BACK_GROUND)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::BACK_GROUND)
 			, "../Sounds/BGM/Stage.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::CHANGE_SPACE)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::CHANGE_SPACE)
 			, "../Sounds/SE/ChangeSpace.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::RETURN_CHAGED_SPACE)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::RETURN_CHAGED_SPACE)
 			, "../Sounds/SE/ReturnChagedSpace.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::ANCHOR)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::ANCHOR)
 			, "../Sounds/SE/Anchor.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::RUN)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::RUN)
 			, "../Sounds/SE/Run.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::JUMP)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::JUMP)
 			, "../Sounds/SE/Run.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::WALK)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::WALK)
 			, "../Sounds/SE/Walk.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::DEATH)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::DEATH)
 			, "../Sounds/SE/Death.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::REVIVE)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::REVIVE)
 			, "../Sounds/SE/Revive.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::HIT)
 			, "../Sounds/SE/Hit.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::LEVER)
 			, "../Sounds/SE/Lever.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON)
 			, "../Sounds/SE/EmblemON.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL)
 			, "../Sounds/SE/Electrical.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::GET_KEY)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::GET_KEY)
 			, "../Sounds/SE/GetKey.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON)
 			, "../Sounds/SE/PressureSensitiveON.wav");
-		m_pLibrary->LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::DOOR)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(GAME_SCENE_SOUND_ID::DOOR)
 			, "../Sounds/SE/Door.wav");
 	}
 
@@ -208,7 +192,7 @@ void Stage::Initialize(void)
 
 void Stage::Control(void)
 {
-	m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::BACK_GROUND), sl::PLAY_LOOP);
+	SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::BACK_GROUND), sl::PLAY_LOOP);
 	HandleEvent();
 
 	switch(m_CurrentState)
@@ -246,14 +230,14 @@ void Stage::Control(void)
 		if(StageDataChangeManager::Instance().ChangeSpace())
 		{
 			m_pCollisionManager->Update();
-			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::CHANGE_SPACE), sl::RESET_PLAY);
+			SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::CHANGE_SPACE), sl::RESET_PLAY);
 			GameEventManager::Instance().TriggerSynEvent("space_change_end");
 		}
 		m_CurrentState = EXECUTE;
 		break;
 
 	case STAGE_SPACE_RETURN:
-		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::RETURN_CHAGED_SPACE), sl::RESET_PLAY);
+		SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::RETURN_CHAGED_SPACE), sl::RESET_PLAY);
 		if(StageDataChangeManager::Instance().ReturnChangedSpace())
 		{
 			m_pCollisionManager->Update();
