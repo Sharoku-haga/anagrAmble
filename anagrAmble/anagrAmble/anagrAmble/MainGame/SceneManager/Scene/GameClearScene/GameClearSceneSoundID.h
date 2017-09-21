@@ -11,8 +11,6 @@
 enum class GAME_CLEAR_SCENE_SOUND_ID : int
 {
 	BACK_GROUND,				//!< バック音
-
-	ENTER = 99,					//!< 決定音
 };
 
 #endif	// AR_GAME_CLEAR_SCENE_SOUND_ID_H

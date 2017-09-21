@@ -200,6 +200,8 @@
     <ClCompile Include="MainGame\SceneManager\ScoreTimeText\HighScoreText.cpp" />
     <ClCompile Include="MainGame\SceneManager\ScoreTimeText\ScoreTimeText.cpp" />
     <ClCompile Include="MainGame\SceneManager\ScoreTimeText\ThisScoreTimeText.cpp" />
+    <ClCompile Include="MainGame\SceneManager\SoundManager\CommonSoundManager.cpp" />
+    <ClCompile Include="MainGame\SceneManager\SoundManager\SceneSoundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame\ControllerEnum.h" />
@@ -284,6 +286,8 @@
     <ClInclude Include="MainGame\SceneManager\ScoreTimeText\HighScoreText.h" />
     <ClInclude Include="MainGame\SceneManager\ScoreTimeText\ScoreTimeText.h" />
     <ClInclude Include="MainGame\SceneManager\ScoreTimeText\ThisScoreTimeText.h" />
+    <ClInclude Include="MainGame\SceneManager\SoundManager\CommonSoundManager.h" />
+    <ClInclude Include="MainGame\SceneManager\SoundManager\SceneSoundManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

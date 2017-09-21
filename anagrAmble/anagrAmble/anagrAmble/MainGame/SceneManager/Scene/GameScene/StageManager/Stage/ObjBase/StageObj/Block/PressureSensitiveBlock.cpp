@@ -11,6 +11,7 @@
 #include "../../SwitchOperatingArea/SwitchOperatingArea.h"
 #include "../../../../../GameSceneSoundID.h"
 #include "../../../StageEffect/SandwichEffect.h"
+#include "../.../../../../../../../../SoundManager/SceneSoundManager.h"
 
 namespace ar
 {
@@ -107,7 +108,7 @@ void PressureSensitiveBlock::Run(void)
 	{
 		m_HasCollidedWithPlayer = false;
 		m_pSwitchOperatingArea->SwitchOnState();
-		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON), sl::PLAY);
+		SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON), sl::PLAY);
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
 		m_pSandwichEffect->ChangeUV();
 	}
@@ -122,7 +123,7 @@ void PressureSensitiveBlock::Run(void)
 	if(m_pStageDataManager->GetTypeID((m_StageIndexData.m_YIndexNum - 1), m_StageIndexData.m_XIndexNum) != BLANK)
 	{
 		m_pSwitchOperatingArea->SwitchOnState();
-		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON), sl::PLAY);
+		SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::PRESSURE_SENSITIVE_ON), sl::PLAY);
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, BlockOnUV);
 		m_pSandwichEffect->ChangeUV();
 	}

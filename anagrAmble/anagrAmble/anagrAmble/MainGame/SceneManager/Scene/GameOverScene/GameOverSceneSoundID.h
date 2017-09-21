@@ -1,18 +1,16 @@
-//==================================================================================================================================//
+ï»¿//==================================================================================================================================//
 //!< @file		GameOverSceneSoundID.h
-//!< @brief		GameOverScene‚ÅŽg—p‚·‚éƒTƒEƒ“ƒhID‚Ìƒwƒbƒ_ƒtƒ@ƒCƒ‹
+//!< @brief		GameOverSceneã§ä½¿ç”¨ã™ã‚‹ã‚µã‚¦ãƒ³ãƒ‰IDã®ãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«
 //!< @author	T.Haga
 //==================================================================================================================================//
 
 #ifndef AR_GAME_OVER_SCENE_SOUND_ID_H 
 #define AR_GAME_OVER_SCENE_SOUND_ID_H
 
-/** GameOverScene‚ÅŽg—p‚·‚éSound‚ÌID */
+/** GameOverSceneã§ä½¿ç”¨ã™ã‚‹Soundã®ID */
 enum class GAME_OVER_SCENE_SOUND_ID : int
 {
-	BACK_GROUND,				//!< ƒoƒbƒN‰¹
-
-	ENTER = 99,					//!< Œˆ’è‰¹
+	BACK_GROUND,				//!< ãƒãƒƒã‚¯éŸ³
 };
 
 #endif	// AR_GAME_OVER_SCENE_SOUND_ID_H

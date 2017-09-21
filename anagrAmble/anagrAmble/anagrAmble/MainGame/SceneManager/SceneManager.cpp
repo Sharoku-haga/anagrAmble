@@ -10,6 +10,8 @@
 #include "SceneManager.h"
 #include "SceneFactory.h"
 #include "GameDataManager/GameDataManager.h"
+#include "SoundManager/CommonSoundManager.h"
+#include "SoundManager/SceneSoundManager.h"
 #include "Scene/TitleScene/TitleSceneSoundID.h"
 
 namespace ar
@@ -26,8 +28,8 @@ SceneManager::SceneManager(void)
 	, m_pGameDataManager(nullptr)
 {	
 #ifdef _DEBUG
-	//m_NextSceneID = Scene::TITLE;
-	m_NextSceneID = Scene::GAME;
+	m_NextSceneID = Scene::TITLE;
+	//m_NextSceneID = Scene::GAME;
 	//m_NextSceneID = Scene::GAME_CLEAR;
 	//m_NextSceneID = Scene::GAME_OVER;
 #endif	// _DEBUG
@@ -38,13 +40,16 @@ SceneManager::SceneManager(void)
 
 	SceneFactory::Initialize(m_pGameDataManager);
 
-	// 全シーン共通なのでここで読み込む
-	sl::ISharokuLibrary::Instance()->LoadSound(static_cast<int>(TITLE_SCENE_SOUND_ID::ENTER)
-			, "../Sounds/SE/Decision.wav");
+	CommonSoundManager::Instance().Initialize();	
+	CommonSoundManager::Instance().LoadSound(CommonSoundManager::SELECT, "../Sounds/SE/Select.wav");
+	CommonSoundManager::Instance().LoadSound(CommonSoundManager::ENTER, "../Sounds/SE/Decision.wav");
+	
+	SceneSoundManager::Instance().Initialize();
 }
 
 SceneManager::~SceneManager(void)
 {
+	CommonSoundManager::Instance().ReleaseSoundALL();
 	sl::ISharokuLibrary::Instance()->ReleaseSoundALL();
 	sl::DeleteSafely(&m_pScene);
 	sl::DeleteSafely(&m_pGameDataManager);

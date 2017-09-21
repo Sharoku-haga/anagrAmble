@@ -11,6 +11,7 @@
 #include "../../../StageEffect/ElectricEffect.h"
 #include "../../../../../GameSceneSoundID.h"
 #include "../../../StageEffect/SandwichEffect.h"
+#include "../../../../../../../SoundManager/SceneSoundManager.h"
 
 namespace ar
 {
@@ -89,7 +90,7 @@ void ElectricalBlock::ProcessCollision(const CollisionManager::CollisionData& rD
 		// スイッチがON状態なら通電状態を解除する
 		m_pLibrary->SetVtxUV(m_DrawingID.m_VtxID, ElectricalOffUV);
 		m_TypeID = NORMAL_B;
-		m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL), sl::STOP);
+		SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL), sl::STOP);
 		break;
 
 	case SWITCH_OPERATING_AREA_OFF:
@@ -138,7 +139,7 @@ void ElectricalBlock::Run(void)
 		if(m_Pos.x > m_BasePointPos.x
 			&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
 		{
-			m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL), sl::PLAY);
+			SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::ELECTICAL), sl::PLAY);
 		}
 	}
 }

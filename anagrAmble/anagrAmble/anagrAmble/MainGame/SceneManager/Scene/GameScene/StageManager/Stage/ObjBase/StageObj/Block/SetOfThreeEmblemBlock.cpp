@@ -13,6 +13,7 @@
 #include "../../../../../GameEventManager/EventListener.h"
 #include "../../../../../GameSceneSoundID.h"
 #include "../../../StageEffect/SandwichEffect.h"
+#include "../../../../../../../SoundManager/SceneSoundManager.h"
 
 
 namespace ar
@@ -141,8 +142,8 @@ void SetOfThreeEmblemBlock::CheckSetofThreeBlock(void)
 			m_pSwitchOperatingArea->SwitchOnState();
 			if(m_Pos.x > m_BasePointPos.x
 				&& m_Pos.x < (m_BasePointPos.x + m_DisplayArea.m_Right))
-			{	// 左からチェックされるため右い音を鳴らすソースを実装
-				m_pLibrary->PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::RESET_PLAY);
+			{	// 左からチェックされるため右から音を鳴らすソースを実装
+				SceneSoundManager::Instance().PlayBackSound(static_cast<int>(GAME_SCENE_SOUND_ID::EMBLME_ON), sl::RESET_PLAY);
 			}
 		}
 		else

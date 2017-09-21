@@ -11,6 +11,7 @@
 #include "TitleText.h"
 #include "TitleMenu.h"
 #include "TitleSceneSoundID.h"
+#include "../../SoundManager/SceneSoundManager.h"
 #include "../SharokuLibrary/sl/sl.h"
 
 namespace ar
@@ -45,21 +46,17 @@ TitleScene::TitleScene(void)
 
 	// 音楽ファイル読み込み
 	{
-		//m_pLibrary->LoadSound(static_cast<int>(TITLE_SCENE_SOUND_ID::BACK_GROUND)
+		//SceneSoundManager::Instance().LoadSound(static_cast<int>(TITLE_SCENE_SOUND_ID::BACK_GROUND)
 		//	, "../Sounds/BGM/Title.wav");
-
-		m_pLibrary->LoadSound(static_cast<int>(TITLE_SCENE_SOUND_ID::BACK_GROUND)
+		SceneSoundManager::Instance().LoadSound(static_cast<int>(TITLE_SCENE_SOUND_ID::BACK_GROUND)
 			, "../Sounds/BGM/Stage.wav");
-		
-		m_pLibrary->LoadSound(static_cast<int>(TITLE_SCENE_SOUND_ID::SELECT)
-			, "../Sounds/SE/Select.wav");
+
 	}
 }
 
 TitleScene::~TitleScene(void)
 {
-	m_pLibrary->ReleaseSound(static_cast<int>(TITLE_SCENE_SOUND_ID::SELECT));
-	m_pLibrary->ReleaseSound(static_cast<int>(TITLE_SCENE_SOUND_ID::BACK_GROUND));
+	SceneSoundManager::Instance().ReleaseSoundALL();
 	sl::DeleteSafely(&m_pMenu);
 	sl::DeleteSafely(&m_pText);
 	sl::DeleteSafely(&m_pBackground);
@@ -71,7 +68,7 @@ TitleScene::~TitleScene(void)
 
 Scene::ID TitleScene::Control(void)
 {
-	m_pLibrary->PlayBackSound(static_cast<int>(TITLE_SCENE_SOUND_ID::BACK_GROUND), sl::PLAY_LOOP);
+	SceneSoundManager::Instance().PlayBackSound(static_cast<int>(TITLE_SCENE_SOUND_ID::BACK_GROUND), sl::PLAY_LOOP);
 	m_NextSceneID = m_pMenu->Control();
 	return m_NextSceneID;
 }
